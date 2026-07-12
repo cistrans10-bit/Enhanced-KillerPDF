@@ -1,0 +1,56 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Greed: dark emerald chrome with a lighter emerald doc pane, warm cream text, white icons, heavy grain -->
+    <SolidColorBrush x:Key="BgDark"         Color="#002e1c" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgPanel"        Color="#003824" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgHover"        Color="#00593a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgSidebar"      Color="#002115" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgRecentPanel"  Color="#05452c" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgFlyout"       Color="#02331f" po:Freeze="True"/>
+    <LinearGradientBrush x:Key="TabStripFadeBrush" StartPoint="0,0" EndPoint="0,1" po:Freeze="True">
+        <GradientStop Offset="0.0" Color="#00000000"/>
+        <GradientStop Offset="0.55" Color="#1f000000"/>
+        <GradientStop Offset="1.0" Color="#82000000"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="BgModal"        Color="#001e13" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BorderDim"      Color="#0f4a30" po:Freeze="True"/>
+    <SolidColorBrush x:Key="Accent"         Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="HeaderAccent"   Color="#3fbf6f" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionAccent" Color="#138a42" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AccentLogo"     Color="#17b85a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="InstallBtnBg"   Color="#15803f" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AccentBorder"   Color="#07371f" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DropBorder"     Color="#07371f" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PaneBorder"     Color="#07371f" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AccentDim"      Color="#44ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionBg" Color="#44ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionFg" Color="#ffffff" po:Freeze="True"/>
+    <!-- Open settings row uses the translucent-white SelectionBg (matches selected page/tool). -->
+    <SolidColorBrush x:Key="SettingsOpenRowBg" Color="#44ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TextPrimary"    Color="#fffde8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TextSecondary"  Color="#e0d49a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FilenameBrush"  Color="#a6a99a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TextDim"        Color="#c0aa68" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TextFooter"     Color="#3a8a5a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DangerRed"      Color="#ff6666" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgDragHandle"   Color="#4a8a64" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DragLine"       Color="#0f3f27" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgScrollThumb"  Color="#aae0d49a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ScrollThumbHover" Color="#f2ead0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SliderTrack"    Color="#00120b" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RadioAccent"    Color="#e0d49a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgOverlay"      Color="#CC003322" po:Freeze="True"/>
+    <sys:Double x:Key="GrainOpacity">0.26</sys:Double>
+    <sys:Double x:Key="IconShadowOpacity">1.0</sys:Double>
+    <sys:Double x:Key="HeaderShadowOpacity">0.95</sys:Double>
+
+    <SolidColorBrush x:Key="BgCanvas"                                                       Color="#0a5234" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"                      Color="#44ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"                  Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"     Color="#44ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#ffffff" po:Freeze="True"/>
+
+</ResourceDictionary>

@@ -1,0 +1,33 @@
+# Build output
+bin/
+obj/
+*.user
+
+# Visual Studio
+.vs/
+*.suo
+
+# Publish
+publish/
+*.pubxml.user
+
+# Local notes / scratch
+*.odt
+
+# Cloudflare Wrangler
+.wrangler/
+
+# OS junk
+Thumbs.db
+.DS_Store
+
+*.exe
+bin/
+obj/
+
+*.tmp
+
+# Heavy source art - stored locally only, not shipped and not part of the project.
+# Anchored with a leading slash so it only ignores KillerPDF/brand, NOT pdf-landing/brand
+# (the small web logos the landing site links to).
+/brand/

@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+
+    <!-- Dark family - RED accent overlay. Overrides only the accent-hue keys; everything
+         neutral (and the fixed greens: InstallBtnBg, AccentLogo) comes from Dark.xaml. -->
+    <SolidColorBrush x:Key="Accent"          Color="#DD504B" po:Freeze="True"/>
+    <SolidColorBrush x:Key="HeaderAccent"    Color="#DD504B" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionAccent" Color="#DD504B" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AccentDim"       Color="#2A0D0D" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionBg"     Color="#5E1C1C" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgScrollThumb"   Color="#55DD504B" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ScrollThumbHover" Color="#DD504B" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RadioAccent"     Color="#DD504B" po:Freeze="True"/>
+
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"                      Color="#2A0D0D" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"                  Color="#DD504B" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"     Color="#2A0D0D" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#DD504B" po:Freeze="True"/>
+
+</ResourceDictionary>

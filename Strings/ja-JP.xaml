@@ -1,0 +1,538 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ================================================================
+         KillerPDF  -  Japanese (ja-JP) strings
+         ================================================================ -->
+
+    <!-- ── ツールバーのツールチップ ───────────────────────────────────── -->
+    <sys:String x:Key="Str_TT_Open">開く (Ctrl+O)</sys:String>
+    <sys:String x:Key="Str_TT_NewBlank">新規空白ドキュメント (Ctrl+N)</sys:String>
+    <sys:String x:Key="Str_TT_CloseFile">ファイルを閉じる (Ctrl+W)</sys:String>
+    <sys:String x:Key="Str_TT_Save">保存 (Ctrl+S)</sys:String>
+
+    <!-- ── ドロップゾーン / 空の状態 ──────────────────────────────────── -->
+    <sys:String x:Key="Str_Drop_Title">ここに PDF をドロップ</sys:String>
+    <sys:String x:Key="Str_Drop_Sub">またはクリックして参照</sys:String>
+    <sys:Double x:Key="ZoomBoxWidth">96</sys:Double>
+    <sys:String x:Key="Str_TT_SaveAs">名前を付けて保存 (Ctrl+Shift+S)</sys:String>
+    <sys:String x:Key="Str_TT_SaveFlattened">フラット化して保存 (全ページをラスタライズ - 完全に編集不可)</sys:String>
+    <sys:String x:Key="Str_TT_Print">印刷 (Ctrl+P)</sys:String>
+    <sys:String x:Key="Str_TT_MergePDFs">PDF を結合 (この PDF に他の PDF を追加)</sys:String>
+    <sys:String x:Key="Str_TT_ExtractPages">ページを抽出 (選択ページを新しい PDF に保存)</sys:String>
+    <sys:String x:Key="Str_TT_DeletePages">選択ページを削除</sys:String>
+    <sys:String x:Key="Str_TT_MovePageUp">ページを上に移動 (並べ替え)</sys:String>
+    <sys:String x:Key="Str_TT_MovePageDown">ページを下に移動 (並べ替え)</sys:String>
+    <sys:String x:Key="Str_TT_SelectTool">選択ツール - 注釈をクリック、テキストをドラッグして選択、ダブルクリックで編集</sys:String>
+    <sys:String x:Key="Str_TT_TextTool">テキストツール - クリックしてテキストを追加</sys:String>
+    <sys:String x:Key="Str_TT_HighlightTool">ハイライトツール - ドラッグしてハイライト</sys:String>
+    <sys:String x:Key="Str_TT_StrikeTool">打消し線 - テキスト上をドラッグ</sys:String>
+    <sys:String x:Key="Str_TT_UnderlineTool">下線 - テキスト上をドラッグ</sys:String>
+    <sys:String x:Key="Str_TT_DrawTool">描画ツール - フリーハンドインク</sys:String>
+    <sys:String x:Key="Str_TT_SignatureTool">署名 - 署名を作成して配置</sys:String>
+    <sys:String x:Key="Str_TT_ImageTool">画像ツール - クリックしてページに画像を挿入</sys:String>
+    <sys:String x:Key="Str_TT_CropTool">トリミングツール - ドラッグしてトリミング範囲を設定し、ページに適用</sys:String>
+    <sys:String x:Key="Str_TT_RotateTool">ページ変換 - 回転 / 傾き補正 (拡大縮小は近日対応)</sys:String>
+    <sys:String x:Key="Str_TT_ClearAnnotations">すべての注釈をクリア</sys:String>
+    <sys:String x:Key="Str_TT_Search">検索 (Ctrl+F)</sys:String>
+    <sys:String x:Key="Str_TT_UndoLast">元に戻す (Ctrl+Z)</sys:String>
+    <sys:String x:Key="Str_TT_MultiPageGrid">マルチページグリッド表示</sys:String>
+    <sys:String x:Key="Str_TT_ZoomOut">ズームアウト (Ctrl+-)</sys:String>
+    <sys:String x:Key="Str_TT_ZoomLevel">ズームレベル (Ctrl+ホイール · Ctrl+=/- · Ctrl+0=リセット)</sys:String>
+    <sys:String x:Key="Str_TT_ZoomIn">ズームイン (Ctrl+=)</sys:String>
+    <sys:String x:Key="Str_TT_GoToPage">ページへ移動 (Enterで移動)</sys:String>
+    <sys:String x:Key="Str_TT_CollapseSidebar">サイドバーを折りたたむ</sys:String>
+    <sys:String x:Key="Str_TT_ExpandSidebar">サイドバーを展開</sys:String>
+    <sys:String x:Key="Str_TT_KeyboardShortcuts">キーボードショートカット (Ctrl+?)</sys:String>
+    <sys:String x:Key="Str_TT_Settings">設定</sys:String>
+    <sys:String x:Key="Str_TT_About">KillerPDF について</sys:String>
+
+    <!-- ── バージョン情報オーバーレイ ──────────────────────────────────── -->
+    <sys:String x:Key="Str_About_Version">バージョン</sys:String>
+    <sys:String x:Key="Str_About_Publisher">発行元</sys:String>
+    <sys:String x:Key="Str_About_Thumbprint">拇印</sys:String>
+    <sys:String x:Key="Str_About_ExeSha">EXE SHA256</sys:String>
+    <sys:String x:Key="Str_About_Computing">計算中...</sys:String>
+    <sys:String x:Key="Str_Tagline">Windows 向けの高速で無料の PDF ツールキット。{0} の一部です。</sys:String>
+
+    <!-- ── サイドバータブ ────────────────────────────────────────── -->
+    <sys:String x:Key="Str_TabPages">ページ</sys:String>
+    <sys:String x:Key="Str_TabOutlines">アウトライン</sys:String>
+
+    <!-- ── 設定パネル ──────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Settings">設定</sys:String>
+    <sys:String x:Key="Str_Theme">テーマ</sys:String>
+    <sys:String x:Key="Str_Language">言語</sys:String>
+    <sys:String x:Key="Str_Toolbar">ツールバー</sys:String>
+    <sys:String x:Key="Str_Toolbar_SmallIcons">小さいアイコン</sys:String>
+    <sys:String x:Key="Str_Toolbar_LargeIcons">大きいアイコン</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextBeside">アイコンの横にテキスト</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextUnder">アイコンの下にテキスト</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextOnly">テキストのみ</sys:String>
+    <sys:String x:Key="Str_Lang_English">English</sys:String>
+    <sys:String x:Key="Str_Lang_Spanish">Español</sys:String>
+    <sys:String x:Key="Str_Lang_Chinese">中文 (繁體)</sys:String>
+    <sys:String x:Key="Str_Lang_Japanese">日本語</sys:String>
+
+    <!-- ── キーボードショートカットオーバーレイ ─────────────────────────────── -->
+    <sys:String x:Key="Str_KS_Title">キーボードショートカット</sys:String>
+    <sys:String x:Key="Str_KS_File">ファイル</sys:String>
+    <sys:String x:Key="Str_KS_Open">開く</sys:String>
+    <sys:String x:Key="Str_KS_CloseFile">ファイルを閉じる</sys:String>
+    <sys:String x:Key="Str_KS_CloseAll">すべて閉じる</sys:String>
+    <sys:String x:Key="Str_KS_NewBlank">新規空白ドキュメント</sys:String>
+    <sys:String x:Key="Str_KS_SaveAs">名前を付けて保存</sys:String>
+    <sys:String x:Key="Str_KS_Print">印刷</sys:String>
+    <sys:String x:Key="Str_KS_Navigation">ナビゲーション</sys:String>
+    <sys:String x:Key="Str_KS_PrevNext">前のページ / 次のページ</sys:String>
+    <sys:String x:Key="Str_KS_ScrollView">スクロール（端でページをめくる）</sys:String>
+    <sys:String x:Key="Str_KS_ZoomCursor">ズームイン / アウト (カーソル位置基準)</sys:String>
+    <sys:String x:Key="Str_KS_ZoomInOut">ズームイン / アウト</sys:String>
+    <sys:String x:Key="Str_KS_ResetZoom">ズームを 100% にリセット</sys:String>
+    <sys:String x:Key="Str_KS_PanView">ビューをパン</sys:String>
+    <sys:String x:Key="Str_KS_Editing">編集</sys:String>
+    <sys:String x:Key="Str_KS_Undo">元に戻す</sys:String>
+    <sys:String x:Key="Str_KS_DeleteAnnot">選択した注釈を削除</sys:String>
+    <sys:String x:Key="Str_KS_ConfirmCancel">テキストまたはトリミングを確定 / キャンセル</sys:String>
+    <sys:String x:Key="Str_KS_SearchSelect">検索 &amp; 選択</sys:String>
+    <sys:String x:Key="Str_KS_Ocr">OCR</sys:String>
+
+    <!-- ドキュメント情報ダイアログ -->
+    <sys:String x:Key="Str_TT_DocInfo">ドキュメント情報 (F12)</sys:String>
+    <sys:String x:Key="Str_DocInfo_Suffix">ドキュメント情報</sys:String>
+    <sys:String x:Key="Str_DocInfo_Title">タイトル</sys:String>
+    <sys:String x:Key="Str_DocInfo_Author">作成者</sys:String>
+    <sys:String x:Key="Str_DocInfo_Subject">件名</sys:String>
+    <sys:String x:Key="Str_DocInfo_Keywords">キーワード</sys:String>
+    <sys:String x:Key="Str_DocInfo_Creator">作成ソフト</sys:String>
+    <sys:String x:Key="Str_DocInfo_Save">保存</sys:String>
+    <sys:String x:Key="Str_DocInfo_Cancel">キャンセル</sys:String>
+    <sys:String x:Key="Str_KS_Find">検索</sys:String>
+    <sys:String x:Key="Str_KS_NextPrevResult">次の結果 / 前の結果</sys:String>
+    <sys:String x:Key="Str_KS_SelectAll">ページ内のすべてのテキストを選択</sys:String>
+    <sys:String x:Key="Str_KS_CopyText">選択テキストをコピー</sys:String>
+    <sys:String x:Key="Str_KS_Help">ヘルプ</sys:String>
+    <sys:String x:Key="Str_KS_ThisList">このショートカット一覧</sys:String>
+    <sys:String x:Key="Str_KS_About">バージョン情報ダイアログ</sys:String>
+    <sys:String x:Key="Str_KS_OnlineHelp">完全ガイド &amp; 使い方 (オンライン)</sys:String>
+    <sys:String x:Key="Str_KS_Tools">ツール</sys:String>
+    <sys:String x:Key="Str_KS_Paste">画像 / テキストを貼り付け</sys:String>
+    <sys:String x:Key="Str_KS_MultiSelect">選択に追加</sys:String>
+
+    <!-- ── ステータスバー ────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Ready">準備完了</sys:String>
+    <sys:String x:Key="Str_Portable">ポータブル</sys:String>
+    <sys:String x:Key="Str_InstallBtn">KillerPDF をインストール...</sys:String>
+
+    <!-- ── ステータスメッセージ (書式指定文字列 - string.Formatを使用) ─────── -->
+    <sys:String x:Key="Str_Opened">{0} を開きました - {1} ページ</sys:String>
+    <sys:String x:Key="Str_OpenedReadOnly">{0} を開きました (読み取り専用 - 所有者制限) - {1} ページ</sys:String>
+    <sys:String x:Key="Str_OpenedReadOnlyXRef">{0} を開きました (読み取り専用 - 非標準 XRef テーブル) - {1} ページ</sys:String>
+    <sys:String x:Key="Str_OpenedRepaired">{0} を開きました (修復済みコピー - 変更を保存するには保存が必要) - {1} ページ</sys:String>
+    <sys:String x:Key="Str_OpenedRasterRepair">{0} を開きました (ラスタライズ修復 - 変更を保存するには保存が必要) - {1} ページ</sys:String>
+    <sys:String x:Key="Str_PageOf">{0} / {1} ページ</sys:String>
+    <sys:String x:Key="Str_PageOfLinks">{0} / {1} ページ  ({2} リンク)</sys:String>
+    <sys:String x:Key="Str_PageFormFields">{0} / {1} ページ - このページには入力可能なフォームフィールドが含まれています</sys:String>
+    <sys:String x:Key="Str_PageRenderError">ページ {0} - レンダリングできませんでした</sys:String>
+    <sys:String x:Key="Str_RenderError">レンダリングエラー : {0}</sys:String>
+    <sys:String x:Key="Str_Rotated">{0} ページを回転しました</sys:String>
+    <sys:String x:Key="Str_Cropped">{0} ページをトリミングしました</sys:String>
+    <sys:String x:Key="Str_CropFailed">トリミングに失敗しました : {0}</sys:String>
+    <sys:String x:Key="Str_RemovedCrop">{0} ページから CropBox を削除しました</sys:String>
+    <sys:String x:Key="Str_RemoveCropFailed">トリミング解除に失敗しました : {0}</sys:String>
+    <sys:String x:Key="Str_Extracted">{0} ページを {1} に抽出しました</sys:String>
+    <sys:String x:Key="Str_Deleted">{0} ページを削除しました - {1} ページ残っています</sys:String>
+    <sys:String x:Key="Str_Printed">{0} ページをプリンターに送信しました</sys:String>
+    <sys:String x:Key="Str_LinkRemoved">リンクを削除しました。</sys:String>
+    <sys:String x:Key="Str_InvalidRange">無効な範囲です - 例 : 1-3,5,7</sys:String>
+    <sys:String x:Key="Str_CropNoDoc">トリミング : 開かれているドキュメントがありません</sys:String>
+    <sys:String x:Key="Str_CropNoPage">トリミング : ページが選択されていません</sys:String>
+    <sys:String x:Key="Str_CropNoDims">トリミング : ページ寸法が利用できません</sys:String>
+    <sys:String x:Key="Str_RotateFailed">回転に失敗しました : {0}</sys:String>
+
+    <!-- ── ダイアログ文字列 ───────────────────────────────────────── -->
+    <sys:String x:Key="Str_Dlg_InstallTitle">KillerPDF をインストール</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallMsg">KillerPDF をユーザープロファイルにインストールしますか？
+
+アプリは %LocalAppData%\KillerPDF にコピーされ、スタートメニューにショートカットが作成されます。
+いつでも「プログラムの追加と削除」からアンインストールできます。</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedClose">保存されていない変更があります。保存せずにこのファイルを閉じますか？</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedExit">保存されていない変更があります。保存せずに KillerPDF を終了しますか？</sys:String>
+    <sys:String x:Key="Str_Dlg_PageOutOfRange">この文書には、Adobe Reader が対応する範囲（1 辺あたり 3～14,400 ポイント）外のサイズのページが {0} ページあります。Adobe ではこれらのページは白紙で表示されます。
+
+対応するサイズに拡大・縮小しますか？ページの見た目と縦横比は変わりません。</sys:String>
+    <sys:String x:Key="Str_Dlg_FailedOpen">PDF を開けませんでした :
+{0}</sys:String>
+    <sys:String x:Key="Str_Dlg_AppTitle">KillerPDF</sys:String>
+    <sys:String x:Key="Str_Dlg_CloseAllDocs">{0} 個の開いているドキュメントがあります。アプリを終了するときにすべて閉じますか？</sys:String>
+    <sys:String x:Key="Str_Dlg_CloseAllDocsOne">1個の開いているドキュメントがあります。アプリを終了するときに閉じますか？</sys:String>
+    <sys:String x:Key="Str_Dlg_RememberChoice">この選択を記憶する</sys:String>
+
+
+    <!-- ── テーマ名 ───────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Theme_Dark">ダーク</sys:String>
+    <sys:String x:Key="Str_Theme_Light">ライト</sys:String>
+    <sys:String x:Key="Str_Theme_Black">ブラック</sys:String>
+    <sys:String x:Key="Str_Theme_Blood">ブラッド</sys:String>
+    <sys:String x:Key="Str_Theme_Greed">グリード</sys:String>
+    <sys:String x:Key="Str_Theme_Cyanotic">シアノティック</sys:String>
+
+    <!-- ── ズームドロップダウン ─────────────────────────────────────── -->
+    <sys:String x:Key="Str_Zoom_FitWidth">幅に合わせる</sys:String>
+    <sys:String x:Key="Str_Zoom_FitPage">ページに合わせる</sys:String>
+    <sys:String x:Key="Str_FitWidth">{0} / {1} ページ - 幅に合わせる ({2}%)</sys:String>
+    <sys:String x:Key="Str_FitPage">{0} / {1} ページ - ページに合わせる ({2}%)</sys:String>
+
+    <!-- ── KSオーバーレイのフォントサイズ (sys:Double) ──────────────────────────── -->
+    <sys:Double x:Key="Str_KS_FontSize">11</sys:Double>
+
+
+    <!-- ── 表示モード ──────────────────────────────────────────── -->
+    <sys:String x:Key="Str_ViewMode">表示モード</sys:String>
+    <sys:String x:Key="Str_View_Single">単ページ</sys:String>
+    <sys:String x:Key="Str_View_Continuous">連続</sys:String>
+    <sys:String x:Key="Str_View_TwoPage">見開き</sys:String>
+    <sys:String x:Key="Str_View_Grid">グリッド</sys:String>
+    <sys:String x:Key="Str_Continuous_EditMsg">編集ツールを使用するには単ページ表示に切り替えてください</sys:String>
+
+    <!-- ── オーバーフローメニュー + メニュー項目ラベル ──────────────────────────── -->
+    <sys:String x:Key="Str_Lbl_Merge">PDF を結合</sys:String>
+    <sys:String x:Key="Str_Lbl_Extract">ページを抽出</sys:String>
+    <sys:String x:Key="Str_Lbl_Delete">ページを削除</sys:String>
+    <sys:String x:Key="Str_Lbl_MoveUp">ページを上に移動</sys:String>
+    <sys:String x:Key="Str_Lbl_MoveDown">ページを下に移動</sys:String>
+    <sys:String x:Key="Str_Lbl_Text">テキスト</sys:String>
+    <sys:String x:Key="Str_Lbl_Highlight">ハイライト</sys:String>
+    <sys:String x:Key="Str_Lbl_Strike">打消し線</sys:String>
+    <sys:String x:Key="Str_Lbl_Underline">下線</sys:String>
+    <sys:String x:Key="Str_Lbl_Bold">太字</sys:String>
+    <sys:String x:Key="Str_Lbl_Italic">斜体</sys:String>
+    <sys:String x:Key="Str_Lbl_Draw">描画</sys:String>
+    <sys:String x:Key="Str_Lbl_Crop">トリミング</sys:String>
+    <sys:String x:Key="Str_Lbl_Rotate">変換</sys:String>
+    <sys:String x:Key="Str_Lbl_Stamp">スタンプ</sys:String>
+    <sys:String x:Key="Str_Lbl_Image">画像を追加</sys:String>
+    <sys:String x:Key="Str_Lbl_Signature">署名</sys:String>
+    <sys:String x:Key="Str_Lbl_Undo">元に戻す</sys:String>
+    <sys:String x:Key="Str_Lbl_Clear">すべてクリア</sys:String>
+    <sys:String x:Key="Str_Lbl_New">新規</sys:String>
+    <sys:String x:Key="Str_Lbl_Open">開く</sys:String>
+    <sys:String x:Key="Str_Lbl_Close">閉じる</sys:String>
+    <sys:String x:Key="Str_Lbl_Save">保存</sys:String>
+    <sys:String x:Key="Str_Lbl_Flatten">フラット化</sys:String>
+    <sys:String x:Key="Str_Lbl_Print">印刷</sys:String>
+    <sys:String x:Key="Str_Lbl_Select">選択</sys:String>
+    <sys:String x:Key="Str_Lbl_ZoomOut">ズームアウト</sys:String>
+    <sys:String x:Key="Str_Lbl_ZoomIn">ズームイン</sys:String>
+    <sys:String x:Key="Str_Lbl_Search">検索</sys:String>
+
+    <!-- ── 右クリックメニューラベル ───────────────────────────────────── -->
+    <sys:String x:Key="Str_Ctx_CopyText">テキストをコピー</sys:String>
+    <sys:String x:Key="Str_Ctx_Print">印刷</sys:String>
+    <sys:String x:Key="Str_Ctx_OcrPage">OCR 実行 (テキストをコピー)</sys:String>
+    <sys:String x:Key="Str_Lbl_Ocr">OCR</sys:String>
+    <sys:String x:Key="Str_TT_Ocr">OCR 実行 (テキストをコピー)</sys:String>
+    <sys:String x:Key="Str_Ocr_Region">OCR 領域...</sys:String>
+    <sys:String x:Key="Str_Ocr_SearchablePdf">検索可能な PDF を作成...</sys:String>
+    <sys:String x:Key="Str_Ocr_ExtractText">すべてのテキストを抽出...</sys:String>
+    <sys:String x:Key="Str_Ocr_Language">言語</sys:String>
+    <sys:String x:Key="Str_Ocr_NoDoc">先に PDF を開いてください</sys:String>
+    <sys:String x:Key="Str_Ocr_ComingSoon">{0} - 近日対応</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectTool">選択ツール</sys:String>
+    <sys:String x:Key="Str_Ctx_TextTool">テキストツール</sys:String>
+    <sys:String x:Key="Str_Ctx_HighlightTool">ハイライトツール</sys:String>
+    <sys:String x:Key="Str_Ctx_DrawTool">描画ツール</sys:String>
+    <sys:String x:Key="Str_Ctx_RotateCW">ページを右回転</sys:String>
+    <sys:String x:Key="Str_Ctx_RotateCCW">ページを左回転</sys:String>
+    <sys:String x:Key="Str_Ctx_StampNumbers">ページ番号をスタンプ...</sys:String>
+    <sys:String x:Key="Str_Ctx_DeleteSel">選択を削除</sys:String>
+    <sys:String x:Key="Str_Ctx_UndoLast">元に戻す</sys:String>
+    <sys:String x:Key="Str_Ctx_ClearPage">ページの注釈をクリア</sys:String>
+    <sys:String x:Key="Str_Ctx_InsertBlank">後に空白ページを挿入</sys:String>
+    <sys:String x:Key="Str_Ctx_RotateCWShort">右回転</sys:String>
+    <sys:String x:Key="Str_Ctx_RotateCCWShort">左回転</sys:String>
+    <sys:String x:Key="Str_Ctx_ExtractPages">ページを抽出</sys:String>
+    <sys:String x:Key="Str_Ctx_DeletePages">ページを削除</sys:String>
+
+    <!-- ── ページ番号スタンプダイアログ ─────────────────────────────────── -->
+    <sys:String x:Key="Str_Stamp_Title">ページ番号をスタンプ</sys:String>
+    <sys:String x:Key="Str_Stamp_StartAt">開始番号</sys:String>
+    <sys:String x:Key="Str_Stamp_Format">書式</sys:String>
+    <sys:String x:Key="Str_Stamp_Hint">ページ番号には {n}、総ページ数には {N} を使用します</sys:String>
+    <sys:String x:Key="Str_Stamp_Hint2">例 : "{n} / {N} ページ"</sys:String>
+    <sys:String x:Key="Str_Stamp_Position">位置</sys:String>
+    <sys:String x:Key="Str_Stamp_FontSize">フォントサイズ (pt)</sys:String>
+    <sys:String x:Key="Str_Stamp_Cancel">キャンセル</sys:String>
+    <sys:String x:Key="Str_Stamp_Stamp">スタンプ</sys:String>
+    <sys:String x:Key="Str_Stamp_Suffix">ページにスタンプ</sys:String>
+    <sys:String x:Key="Str_Stamp_SecNumbers">ページ番号</sys:String>
+    <sys:String x:Key="Str_Stamp_SecWatermark">透かし</sys:String>
+    <sys:String x:Key="Str_Stamp_Color">色</sys:String>
+    <sys:String x:Key="Str_Stamp_Pages">ページ</sys:String>
+    <sys:String x:Key="Str_Stamp_WmText">テキスト</sys:String>
+    <sys:String x:Key="Str_Stamp_WmImage">画像</sys:String>
+    <sys:String x:Key="Str_Stamp_WmTextLabel">透かしテキスト</sys:String>
+    <sys:String x:Key="Str_Stamp_ChooseImage">画像を選択...</sys:String>
+    <sys:String x:Key="Str_Stamp_Scale">拡大率</sys:String>
+    <sys:String x:Key="Str_Stamp_Angle">角度</sys:String>
+    <sys:String x:Key="Str_Stamp_Opacity">不透明度</sys:String>
+    <sys:String x:Key="Str_Stamp_Mirror">見開きページでミラー (外側)</sys:String>
+    <sys:String x:Key="Str_Stamp_Applied">{0} ページにスタンプを適用しました</sys:String>
+    <sys:String x:Key="Str_TT_StampTool">ページにスタンプ</sys:String>
+    <sys:String x:Key="Str_Ctx_StampPages">ページにスタンプ</sys:String>
+    <sys:String x:Key="Str_Pos_BottomCenter">下部中央</sys:String>
+    <sys:String x:Key="Str_Pos_BottomRight">下部右</sys:String>
+    <sys:String x:Key="Str_Pos_BottomLeft">下部左</sys:String>
+    <sys:String x:Key="Str_Pos_TopCenter">上部中央</sys:String>
+    <sys:String x:Key="Str_Pos_TopRight">上部右</sys:String>
+    <sys:String x:Key="Str_Pos_TopLeft">上部左</sys:String>
+
+    <!-- ── 印刷ダイアログ ────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Print_Title">KillerPDF - 印刷</sys:String>
+    <sys:String x:Key="Str_Print_Printer">プリンター</sys:String>
+    <sys:String x:Key="Str_Print_Orientation">向き</sys:String>
+    <sys:String x:Key="Str_Print_Portrait">縦</sys:String>
+    <sys:String x:Key="Str_Print_Landscape">横</sys:String>
+    <sys:String x:Key="Str_Print_Scale">拡大率</sys:String>
+    <sys:String x:Key="Str_Print_Fit">ページに合わせる</sys:String>
+    <sys:String x:Key="Str_Print_Actual">実際のサイズ (100%)</sys:String>
+    <sys:String x:Key="Str_Print_Custom">カスタム %</sys:String>
+    <sys:String x:Key="Str_Print_ScaleHint">拡大率 (例 : 50 または 50.23)</sys:String>
+    <sys:String x:Key="Str_Print_Copies">部数</sys:String>
+    <sys:String x:Key="Str_Print_Pages">ページ</sys:String>
+    <sys:String x:Key="Str_Print_PagesHint">例 : 1-3,5 (空欄=すべて)</sys:String>
+    <sys:String x:Key="Str_Print_NoPages">ページがありません</sys:String>
+    <sys:String x:Key="Str_Print_Margins">余白</sys:String>
+    <sys:String x:Key="Str_Margin_None">なし</sys:String>
+    <sys:String x:Key="Str_Margin_Narrow">狭い</sys:String>
+    <sys:String x:Key="Str_Margin_Normal">標準</sys:String>
+    <sys:String x:Key="Str_Margin_Wide">広い</sys:String>
+    <sys:String x:Key="Str_Print_PagesPerSheet">1枚あたりのページ数</sys:String>
+    <sys:String x:Key="Str_Print_TwoSided">両面印刷</sys:String>
+    <sys:String x:Key="Str_Print_Color">カラー</sys:String>
+    <sys:String x:Key="Str_Print_BW">白黒</sys:String>
+    <sys:String x:Key="Str_Pos_Center">中央</sys:String>
+    <sys:String x:Key="Str_Pos_Custom">カスタム (プレビュー上でドラッグ)</sys:String>
+    <sys:String x:Key="Str_Pos_Top">上</sys:String>
+    <sys:String x:Key="Str_Pos_Bottom">下</sys:String>
+    <sys:String x:Key="Str_Pos_Left">左</sys:String>
+    <sys:String x:Key="Str_Pos_Right">右</sys:String>
+
+    <!-- ── 保存 / 最近使ったファイルメニュー + 署名ダイアログ ──────────────────── -->
+    <sys:String x:Key="Str_Menu_Save">保存</sys:String>
+    <sys:String x:Key="Str_Menu_SaveAs">名前を付けて保存...</sys:String>
+    <sys:String x:Key="Str_Menu_SaveNothing">保存するものはありません</sys:String>
+    <sys:String x:Key="Str_Menu_RecentNone">最近使ったファイルはありません</sys:String>
+    <sys:String x:Key="Str_Menu_ClearList">一覧をクリア</sys:String>
+    <sys:String x:Key="Str_Menu_RemoveFromRecents">最近使ったファイルから削除</sys:String>
+
+    <!-- 画像をPDFとして読み込み / ZIPに圧縮 -->
+    <sys:String x:Key="Str_Menu_Import">画像を PDF として読み込み</sys:String>
+    <sys:String x:Key="Str_Menu_CompressZip">ZIP に圧縮</sys:String>
+    <sys:String x:Key="Str_Filter_Images">画像</sys:String>
+    <sys:String x:Key="Str_Filter_AllFiles">すべてのファイル</sys:String>
+    <sys:String x:Key="Str_Filter_Zip">ZIP アーカイブ</sys:String>
+    <sys:String x:Key="Str_Status_Imported">{0} 枚の画像を読み込みました - 未保存です</sys:String>
+    <sys:String x:Key="Str_Err_ImportFailed">読み込みに失敗しました :</sys:String>
+    <sys:String x:Key="Str_Err_NoImages">読み込める画像がありませんでした。</sys:String>
+    <sys:String x:Key="Str_Drop_Prompt">{0} 個のファイルをドロップしました。どのように開きますか？</sys:String>
+    <sys:String x:Key="Str_Drop_Merge">1つの PDF に結合</sys:String>
+    <sys:String x:Key="Str_Drop_Separate">個別に開く</sys:String>
+    <sys:String x:Key="Str_Drop_NothingOpenable">開ける PDF または画像が見つかりませんでした。</sys:String>
+    <sys:String x:Key="Str_Drop_ManyTabs">{0} 個のタブを個別に開きます。続行しますか？</sys:String>
+    <sys:String x:Key="Str_Drop_TooMany">このフォルダーまたはアーカイブには {0} 個のファイルがあります。KillerPDF は最初の {1} 個のみを開きます。続行しますか？</sys:String>
+    <sys:String x:Key="Str_Status_Merged">{0} 個のファイルを結合しました - 未保存です</sys:String>
+    <sys:String x:Key="Str_Drop_Merging">ファイルを結合中...</sys:String>
+    <sys:String x:Key="Str_Drop_MergeCancelled">結合をキャンセルしました</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedCloseAll">すべてのドキュメントを閉じますか？保存されていない変更は失われます。</sys:String>
+    <sys:String x:Key="Str_Msg_OpenFirst">先に PDF を開いてください。</sys:String>
+    <sys:String x:Key="Str_Dlg_SaveBeforeZip">ZIP に圧縮する前に変更を保存しますか？</sys:String>
+    <sys:String x:Key="Str_Status_Zipped">{0} に ZIP 圧縮しました - {1} (元は {2})</sys:String>
+    <sys:String x:Key="Str_Err_ZipFailed">ZIP 圧縮に失敗しました :</sys:String>
+    <sys:String x:Key="Str_Sig_Title">署名</sys:String>
+    <sys:String x:Key="Str_Sig_None">保存された署名はありません</sys:String>
+    <sys:String x:Key="Str_Sig_Create">署名を作成</sys:String>
+    <sys:String x:Key="Str_Sig_Import">画像を読み込み</sys:String>
+    <sys:String x:Key="Str_Sig_DrawHere">ここに署名を描画してください</sys:String>
+    <sys:String x:Key="Str_Sig_Clear">クリア</sys:String>
+    <sys:String x:Key="Str_Sig_SaveSig">署名を保存</sys:String>
+
+    <!-- トリミング確認バーのツールチップ -->
+    <sys:String x:Key="Str_TT_CropThisPage">このページをトリミング (Enter)</sys:String>
+    <sys:String x:Key="Str_TT_CropRange">指定範囲のページをトリミング</sys:String>
+    <sys:String x:Key="Str_TT_CropRemove">このページから CropBox を削除</sys:String>
+    <sys:String x:Key="Str_TT_CropRemoveAll">全ページから CropBox を削除</sys:String>
+    <sys:String x:Key="Str_TT_CropCancel">キャンセル (Escape)</sys:String>
+
+    <!-- ── 線ツール、レイヤー / グループメニュー (v1.5.x 追加) ───────────────── -->
+    <sys:String x:Key="Str_Lbl_Line">線</sys:String>
+    <sys:String x:Key="Str_TT_LineTool">線 - ドラッグして直線を描画</sys:String>
+    <sys:String x:Key="Str_Ctx_Edit">編集</sys:String>
+    <sys:String x:Key="Str_Ctx_Raise">前面へ</sys:String>
+    <sys:String x:Key="Str_Ctx_Lower">背面へ</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectCover">カバーを選択</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectText">テキストを選択</sys:String>
+    <sys:String x:Key="Str_Ctx_Unpair">テキスト + カバーのペアを解除</sys:String>
+    <sys:String x:Key="Str_Ctx_Group">選択をグループ化</sys:String>
+    <sys:String x:Key="Str_Ctx_Ungroup">グループ解除</sys:String>
+    <sys:String x:Key="Str_Ctx_RemoveFromGroup">グループから削除</sys:String>
+    <sys:String x:Key="Str_Ctx_Copy">コピー</sys:String>
+    <sys:String x:Key="Str_Ctx_Paste">貼り付け</sys:String>
+    <!-- ── 注釈バーラベル ────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Bar_Color">色 :</sys:String>
+    <sys:String x:Key="Str_Bar_Fill">塗り :</sys:String>
+    <sys:String x:Key="Str_Bar_Size">サイズ :</sys:String>
+    <sys:String x:Key="Str_Bar_Opacity">不透明度 :</sys:String>
+    <sys:String x:Key="Str_Bar_FillOpacity">塗りの不透明度 :</sys:String>
+    <sys:String x:Key="Str_Bar_Font">フォント :</sys:String>
+    <sys:String x:Key="Str_Bar_Level">レベル</sys:String>
+    <sys:String x:Key="Str_Bar_Eraser">消しゴム</sys:String>
+    <sys:String x:Key="Str_Bar_MoreColors">その他の色...</sys:String>
+    <sys:String x:Key="Str_Sig_Signatures">署名</sys:String>
+    <sys:String x:Key="Str_Sig_Initials">イニシャル</sys:String>
+    <sys:String x:Key="Str_Sig_Pen">ペン</sys:String>
+    <sys:String x:Key="Str_Sig_Thin">細</sys:String>
+    <sys:String x:Key="Str_Sig_Medium">中</sys:String>
+    <sys:String x:Key="Str_Sig_Thick">太</sys:String>
+    <!-- ── デジタル署名ダイアログ ───────────────────────────────────── -->
+    <sys:String x:Key="Str_Sign_Desc">{0} を証明書で封印し、署名済みコピーを保存します。</sys:String>
+    <sys:String x:Key="Str_Sign_Certificate">証明書</sys:String>
+    <sys:String x:Key="Str_Sign_FromFile">ファイルから (.pfx / .p12)</sys:String>
+    <sys:String x:Key="Str_Sign_FromStore">Windows 証明書ストアから</sys:String>
+    <sys:String x:Key="Str_Sign_Browse">参照...</sys:String>
+    <sys:String x:Key="Str_Sign_Password">パスワード</sys:String>
+    <sys:String x:Key="Str_Sign_Reason">理由 (省略可)</sys:String>
+    <sys:String x:Key="Str_Sign_Location">場所 (省略可)</sys:String>
+    <sys:String x:Key="Str_Sign_Contact">連絡先 (省略可)</sys:String>
+    <sys:String x:Key="Str_Sign_SaveAs">署名済みコピーを保存</sys:String>
+    <sys:String x:Key="Str_Sign_Sign">署名</sys:String>
+    <sys:String x:Key="Str_Sign_Cancel">キャンセル</sys:String>
+    <sys:String x:Key="Str_Sign_TitleSuffix">デジタル署名</sys:String>
+    <sys:String x:Key="Str_Lbl_DigitalSig">デジタル署名...</sys:String>
+    <sys:String x:Key="Str_Sidebar">サイドバー</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">左</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">右</sys:String>
+    <sys:String x:Key="Str_KS_ToggleSidebar">サイドバーの切り替え</sys:String>
+    <sys:String x:Key="Str_KS_NextTab">次のタブ (Shift: 前のタブ)</sys:String>
+    <sys:String x:Key="Str_Ctx_DeletePage">ページを削除</sys:String>
+    <sys:String x:Key="Str_Ctx_DuplicatePage">ページを複製</sys:String>
+    <sys:String x:Key="Str_Ctx_AddBlankPage">空白ページを追加</sys:String>
+    <sys:String x:Key="Str_Ctx_CloseTab">タブを閉じる</sys:String>
+    <sys:String x:Key="Str_Ctx_CloseOthers">他のタブを閉じる</sys:String>
+
+    <!-- 変換ツール -->
+    <sys:String x:Key="Str_Tf_Suffix">変換</sys:String>
+    <sys:String x:Key="Str_Tf_Rotate">回転</sys:String>
+    <sys:String x:Key="Str_Tf_Scale">拡大縮小</sys:String>
+    <sys:String x:Key="Str_Tf_Flip">反転</sys:String>
+    <sys:String x:Key="Str_Tf_Skew">傾き補正</sys:String>
+    <sys:String x:Key="Str_Tf_Angle">角度</sys:String>
+    <sys:String x:Key="Str_Tf_Size">サイズ</sys:String>
+    <sys:String x:Key="Str_Tf_WhenScaling">拡大縮小時 :</sys:String>
+    <sys:String x:Key="Str_Tf_ResizePage">ページ全体をリサイズ</sys:String>
+    <sys:String x:Key="Str_Tf_KeepSize">ページサイズを維持 (余白を追加)</sys:String>
+    <sys:String x:Key="Str_Tf_FlipH">左右反転</sys:String>
+    <sys:String x:Key="Str_Tf_FlipV">上下反転</sys:String>
+    <sys:String x:Key="Str_Tf_LevelLine">水平線を描画</sys:String>
+    <sys:String x:Key="Str_Tf_SkewHint">水平にすべきもの (端、テキスト行など)に沿ってドラッグします。ページがそれに合わせて回転します。</sys:String>
+    <sys:String x:Key="Str_Tf_Output">出力 : {0} × {1} in</sys:String>
+    <sys:String x:Key="Str_Tf_ResetAll">すべてリセット</sys:String>
+    <sys:String x:Key="Str_Tf_Reset">リセット</sys:String>
+    <sys:String x:Key="Str_Tf_Cancel">キャンセル</sys:String>
+    <sys:String x:Key="Str_Tf_Apply">適用</sys:String>
+    <sys:String x:Key="Str_Tf_Warn">ページの変換 (回転または拡大縮小)はラスタライズを伴います ：ページは画像として再保存されるため、選択可能なテキストは失われます。後で OCR を実行して再び検索可能にすることができます。</sys:String>
+    <sys:String x:Key="Str_Tf_DontWarn">再度警告しない</sys:String>
+    <sys:String x:Key="Str_Tf_Done">ページ {0} を変換しました</sys:String>
+    <sys:String x:Key="Str_Tf_NoRender">ページをレンダリングできませんでした - しばらくしてから再試行してください。</sys:String>
+    <sys:String x:Key="Str_Tf_Failed">変換に失敗しました: {0}</sys:String>
+
+    <!-- トリミングバー -->
+    <sys:String x:Key="Str_Crop_Position">位置</sys:String>
+    <sys:String x:Key="Str_Crop_Size">サイズ</sys:String>
+    <sys:String x:Key="Str_Crop_Pages">ページ</sys:String>
+    <sys:String x:Key="Str_Crop_All">すべて</sys:String>
+    <sys:String x:Key="Str_Crop_Apply">トリミング</sys:String>
+    <sys:String x:Key="Str_Crop_RangeTip">ページ範囲 (例 : 1-3,5) (空欄 = 現在のページ)</sys:String>
+    <sys:String x:Key="Str_Crop_AllTip">すべてのページをトリミング</sys:String>
+
+    <!-- 表示モード + 全画面ショートカット -->
+    <sys:String x:Key="Str_KS_View">表示</sys:String>
+    <sys:String x:Key="Str_KS_FullScreen">全画面</sys:String>
+    <sys:String x:Key="Str_FullScreen_Hint">F11 または Esc で全画面を終了します</sys:String>
+
+    <!-- リンク (右クリックメニュー / 確認) -->
+    <sys:String x:Key="Str_LinksSection">リンク</sys:String>
+    <sys:String x:Key="Str_Ctx_OpenLink">リンクを開く</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyLink">リンクアドレスをコピー</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyEmail">メールアドレスをコピー</sys:String>
+    <sys:String x:Key="Str_Ctx_RemoveLink">PDF からリンクを削除</sys:String>
+    <sys:String x:Key="Str_LinkConfirmTitle">リンクを開きますか？</sys:String>
+    <sys:String x:Key="Str_LinkConfirmBody">このリンクをブラウザーで開きますか？</sys:String>
+    <sys:String x:Key="Str_LinkConfirmSetting">リンクを開く前に確認する</sys:String>
+    <sys:String x:Key="Str_LinkDontAsk">今後確認しない</sys:String>
+    <sys:String x:Key="Str_LinkOpenFailed">リンクを開けませんでした</sys:String>
+    <sys:String x:Key="Str_LinkBlocked">ブロックされたリンク (未対応の種類)：</sys:String>
+    <sys:String x:Key="Str_LinkRemoveFailed">リンクの削除に失敗しました：</sys:String>
+
+    <!-- 終了ダイアログ -->
+    <sys:String x:Key="Str_Dlg_QuitMsg">KillerPDF を終了しますか？</sys:String>
+    <sys:String x:Key="Str_Chk_CloseTabs">開いているタブを閉じる</sys:String>
+    <sys:String x:Key="Str_Btn_Quit">終了</sys:String>
+    <sys:String x:Key="Str_Btn_CancelDlg">キャンセル</sys:String>
+
+    <!-- Status-bar + dialog strings (extracted from code) -->
+    <sys:String x:Key="Str_St_DataCleared">すべてのKillerPDFデータを消去しました</sys:String>
+    <sys:String x:Key="Str_St_OcrRegionCancelled">OCR領域の選択をキャンセルしました</sys:String>
+    <sys:String x:Key="Str_St_Erased">消去しました</sys:String>
+    <sys:String x:Key="Str_St_Ungrouped">グループを解除しました</sys:String>
+    <sys:String x:Key="Str_St_RemovedFromGroup">グループから削除しました</sys:String>
+    <sys:String x:Key="Str_St_NothingToUndo">元に戻す操作はありません</sys:String>
+    <sys:String x:Key="Str_St_UndidAnnotation">直前の注釈を元に戻しました</sys:String>
+    <sys:String x:Key="Str_St_UndidTextEdit">テキスト編集を元に戻しました</sys:String>
+    <sys:String x:Key="Str_St_RemovedStamps">押印したページ番号を削除しました</sys:String>
+    <sys:String x:Key="Str_St_RestoredAnnotations">消去した注釈を復元しました</sys:String>
+    <sys:String x:Key="Str_St_Undone">元に戻しました</sys:String>
+    <sys:String x:Key="Str_St_UndidDocChange">ドキュメントの変更を元に戻しました</sys:String>
+    <sys:String x:Key="Str_St_ClearedPageAnnotations">このページの注釈を消去しました</sys:String>
+    <sys:String x:Key="Str_St_NoAnnotationsToClear">消去する注釈がありません</sys:String>
+    <sys:String x:Key="Str_St_RepairCancelled">修復をキャンセルしました</sys:String>
+    <sys:String x:Key="Str_St_Cancelled">キャンセルしました</sys:String>
+    <sys:String x:Key="Str_St_DocInfoUpdated">ドキュメント情報を更新しました。変更を保持するにはファイルを保存してください</sys:String>
+    <sys:String x:Key="Str_St_FlattenCancelled">フラット化をキャンセルしました（ファイルは書き込まれていません）</sys:String>
+    <sys:String x:Key="Str_St_FlattenPrintFailed">印刷用に注釈をフラット化できませんでした。注釈なしで印刷します。</sys:String>
+    <sys:String x:Key="Str_St_HqDownloadCancelled">高品質ダウンロードをキャンセルしました</sys:String>
+    <sys:String x:Key="Str_St_LangDownloadCancelled">言語のダウンロードをキャンセルしました</sys:String>
+    <sys:String x:Key="Str_St_OcrCancelled">OCRをキャンセルしました</sys:String>
+    <sys:String x:Key="Str_St_OcrDragBox">認識する領域をドラッグして囲んでください</sys:String>
+    <sys:String x:Key="Str_St_OcrRegionTooSmall">OCR領域が小さすぎます</sys:String>
+    <sys:String x:Key="Str_St_OcrNoText">OCR：選択した領域にテキストが見つかりませんでした</sys:String>
+    <sys:String x:Key="Str_St_SearchablePdfCancelled">検索可能なPDFの作成をキャンセルしました（ファイルは書き込まれていません）</sys:String>
+    <sys:String x:Key="Str_St_TextExtractCancelled">テキスト抽出をキャンセルしました（ファイルは書き込まれていません）</sys:String>
+    <sys:String x:Key="Str_St_NoTextOnPage">このページにテキストが見つかりませんでした</sys:String>
+    <sys:String x:Key="Str_St_NoTextSelected">テキストが選択されていません。ドラッグしてテキストを選択してください</sys:String>
+    <sys:String x:Key="Str_St_NoTextInSelection">選択範囲にテキストが見つかりませんでした</sys:String>
+    <sys:String x:Key="Str_St_SignaturePlaced">署名を配置しました。ドラッグで位置を変更し、角のハンドルでサイズを変更できます</sys:String>
+    <sys:String x:Key="Str_St_FieldCleared">フィールドを消去しました</sys:String>
+    <sys:String x:Key="Str_St_FieldSigned">フィールドに署名しました</sys:String>
+    <sys:String x:Key="Str_St_SignatureSaved">署名を保存しました。ページをクリックして配置してください</sys:String>
+    <sys:String x:Key="Str_St_ImageLoaded">画像を読み込みました。ページをクリックして配置してください</sys:String>
+    <sys:String x:Key="Str_St_EditingText">テキストを編集中です。上部でサイズや色を変更し、Enterで保存します</sys:String>
+    <sys:String x:Key="Str_St_AlreadyEditHere">ここには既に編集があります。テキストをクリックして再編集するか、カバーをドラッグしてください</sys:String>
+    <sys:String x:Key="Str_St_NoTextLine">この位置にテキスト行が見つかりませんでした</sys:String>
+    <sys:String x:Key="Str_St_LineAlreadyEdited">この行は既に編集済みです。テキストをクリックして変更してください</sys:String>
+    <sys:String x:Key="Str_St_ImagePlaced">画像を配置しました。ドラッグで位置を変更し、角のハンドルでサイズを変更できます</sys:String>
+    <sys:String x:Key="Str_St_ClipImageUnreadable">クリップボードの画像を読み取れませんでした</sys:String>
+    <sys:String x:Key="Str_St_PastedImage">画像を貼り付けました。ドラッグで位置を変更し、角のハンドルでサイズを変更できます</sys:String>
+    <sys:String x:Key="Str_St_ClipNoText">クリップボードに貼り付けるテキストがありません</sys:String>
+    <sys:String x:Key="Str_St_PastedText">テキストを貼り付けました。ドラッグで位置を変更し、Deleteで削除します</sys:String>
+    <sys:String x:Key="Str_St_ClipEmpty">クリップボードに貼り付けるものがありません</sys:String>
+    <sys:String x:Key="Str_Dlg_SaveBeforeUpdate">更新する前に変更を保存してください。</sys:String>
+    <sys:String x:Key="Str_Dlg_Uninstalled">KillerPDFをアンインストールしました。</sys:String>
+    <sys:String x:Key="Str_Dlg_SelectExtract">抽出するページを選択してください。</sys:String>
+    <sys:String x:Key="Str_Dlg_SelectDelete">削除するページを選択してください。</sys:String>
+    <sys:String x:Key="Str_Dlg_NoPrinter">利用可能なプリンターがありません。</sys:String>
+    <sys:String x:Key="Str_Dlg_NoValidPages">その範囲に有効なページがありません。</sys:String>
+    <sys:String x:Key="Str_Dlg_SignedSavedTo">署名済みのコピーの保存先：</sys:String>
+    <sys:String x:Key="Str_Dlg_DrawSignatureFirst">最初に署名を描いてください。</sys:String>
+</ResourceDictionary>

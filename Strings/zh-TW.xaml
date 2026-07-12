@@ -1,0 +1,509 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ================================================================
+         KillerPDF  —  Traditional Chinese (zh-TW) strings
+         Stub file — translations to be provided by leox243 (PR #61).
+         All keys fall back to English until filled in.
+         ================================================================ -->
+
+    <!-- ── Toolbar tooltips ─────────────────────────────────────────── -->
+    <sys:String x:Key="Str_TT_Open">開啟 (Ctrl+O)</sys:String>
+
+    <!-- ── Drop zone / empty state ──────────────────────────────────── -->
+    <sys:String x:Key="Str_Drop_Title">將 PDF 拖放到此處</sys:String>
+    <sys:String x:Key="Str_Drop_Sub">或點擊瀏覽</sys:String>
+    <sys:String x:Key="Str_TT_NewBlank">新增空白文件 (Ctrl+N)</sys:String>
+    <sys:String x:Key="Str_TT_CloseFile">關閉檔案 (Ctrl+W)</sys:String>
+    <sys:String x:Key="Str_TT_Save">儲存 (Ctrl+S)</sys:String>
+    <sys:Double x:Key="ZoomBoxWidth">96</sys:Double>
+    <sys:String x:Key="Str_TT_SaveAs">另存新檔 (Ctrl+Shift+S)</sys:String>
+    <sys:String x:Key="Str_TT_SaveFlattened">儲存平面化 PDF（點陣化所有頁面，完全不可編輯）</sys:String>
+    <sys:String x:Key="Str_TT_Print">列印 (Ctrl+P)</sys:String>
+    <sys:String x:Key="Str_TT_MergePDFs">合併 PDF（將其他 PDF 加入此文件）</sys:String>
+    <sys:String x:Key="Str_TT_ExtractPages">擷取頁面（將選取的頁面另存為新 PDF）</sys:String>
+    <sys:String x:Key="Str_TT_DeletePages">刪除選取的頁面</sys:String>
+    <sys:String x:Key="Str_TT_MovePageUp">向上移動頁面（重新排序）</sys:String>
+    <sys:String x:Key="Str_TT_MovePageDown">向下移動頁面（重新排序）</sys:String>
+    <sys:String x:Key="Str_TT_SelectTool">選取工具 - 點選注釋、拖曳選取文字、雙擊編輯</sys:String>
+    <sys:String x:Key="Str_TT_TextTool">文字工具 - 點選以新增文字</sys:String>
+    <sys:String x:Key="Str_TT_HighlightTool">螢光筆工具 - 拖曳以螢光標記</sys:String>
+    <sys:String x:Key="Str_TT_StrikeTool">刪除線 - 拖曳劃過文字</sys:String>
+    <sys:String x:Key="Str_TT_UnderlineTool">底線 - 拖曳劃過文字</sys:String>
+    <sys:String x:Key="Str_TT_DrawTool">繪圖工具 - 自由手繪</sys:String>
+    <sys:String x:Key="Str_TT_SignatureTool">簽名 - 建立並放置簽名</sys:String>
+    <sys:String x:Key="Str_TT_ImageTool">圖片工具 - 點選以插入圖片至頁面</sys:String>
+    <sys:String x:Key="Str_TT_CropTool">裁切工具 - 拖曳設定裁切區域，然後套用至頁面</sys:String>
+    <sys:String x:Key="Str_TT_ClearAnnotations">清除所有注釋</sys:String>
+    <sys:String x:Key="Str_TT_UndoLast">復原上一步 (Ctrl+Z)</sys:String>
+    <sys:String x:Key="Str_TT_MultiPageGrid">多頁格檢視</sys:String>
+    <sys:String x:Key="Str_TT_ZoomOut">縮小 (Ctrl+-)</sys:String>
+    <sys:String x:Key="Str_TT_ZoomLevel">縮放比例 (Ctrl+滾輪 · Ctrl+=/- · Ctrl+0=重設)</sys:String>
+    <sys:String x:Key="Str_TT_ZoomIn">放大 (Ctrl+=)</sys:String>
+    <sys:String x:Key="Str_TT_GoToPage">前往頁面（按 Enter 導航）</sys:String>
+    <sys:String x:Key="Str_TT_CollapseSidebar">收合側邊欄</sys:String>
+    <sys:String x:Key="Str_TT_ExpandSidebar">展開側邊欄</sys:String>
+    <sys:String x:Key="Str_TT_KeyboardShortcuts">鍵盤快速鍵 (Ctrl+?)</sys:String>
+    <sys:String x:Key="Str_TT_Settings">設定</sys:String>
+    <sys:String x:Key="Str_TT_About">關於 KillerPDF</sys:String>
+
+    <!-- ── About overlay ─────────────────────────────────────────────── -->
+    <sys:String x:Key="Str_About_Version">版本</sys:String>
+    <sys:String x:Key="Str_About_Publisher">發行者</sys:String>
+    <sys:String x:Key="Str_About_Thumbprint">憑證指紋</sys:String>
+    <sys:String x:Key="Str_About_ExeSha">EXE SHA256</sys:String>
+    <sys:String x:Key="Str_About_Computing">計算中...</sys:String>
+    <sys:String x:Key="Str_Tagline">適用於 Windows 的快速、免費 PDF 工具組。{0} 的一部分。</sys:String>
+
+    <!-- ── Sidebar tabs ──────────────────────────────────────────────── -->
+    <sys:String x:Key="Str_TabPages">頁面</sys:String>
+    <sys:String x:Key="Str_TabOutlines">大綱</sys:String>
+
+    <!-- ── Settings panel ───────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Settings">設定</sys:String>
+    <sys:String x:Key="Str_Theme">佈景主題</sys:String>
+    <sys:String x:Key="Str_Language">語言</sys:String>
+    <sys:String x:Key="Str_Toolbar">工具列</sys:String>
+    <sys:String x:Key="Str_Toolbar_SmallIcons">小圖示</sys:String>
+    <sys:String x:Key="Str_Toolbar_LargeIcons">大圖示</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextBeside">圖示加文字</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextUnder">圖示下方文字</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextOnly">僅文字</sys:String>
+    <sys:String x:Key="Str_Lang_English">English</sys:String>
+    <sys:String x:Key="Str_Lang_Spanish">Español</sys:String>
+    <sys:String x:Key="Str_Lang_Chinese">中文 (繁體)</sys:String>
+
+    <!-- ── Keyboard shortcuts overlay ───────────────────────────────── -->
+    <sys:String x:Key="Str_KS_Title">鍵盤快速鍵</sys:String>
+    <sys:String x:Key="Str_KS_File">檔案</sys:String>
+    <sys:String x:Key="Str_KS_Open">開啟</sys:String>
+    <sys:String x:Key="Str_KS_CloseFile">關閉檔案</sys:String>
+    <sys:String x:Key="Str_KS_CloseAll">全部關閉</sys:String>
+    <sys:String x:Key="Str_KS_NewBlank">新增空白文件</sys:String>
+    <sys:String x:Key="Str_KS_SaveAs">另存新檔</sys:String>
+    <sys:String x:Key="Str_KS_Print">列印</sys:String>
+    <sys:String x:Key="Str_KS_Navigation">導航</sys:String>
+    <sys:String x:Key="Str_KS_PrevNext">上一頁 / 下一頁</sys:String>
+    <sys:String x:Key="Str_KS_ScrollView">捲動（到頁面邊緣時翻頁）</sys:String>
+    <sys:String x:Key="Str_KS_ZoomCursor">放大 / 縮小（以游標為中心）</sys:String>
+    <sys:String x:Key="Str_KS_ZoomInOut">放大 / 縮小</sys:String>
+    <sys:String x:Key="Str_KS_ResetZoom">重設縮放至 100%</sys:String>
+    <sys:String x:Key="Str_KS_PanView">平移檢視</sys:String>
+    <sys:String x:Key="Str_KS_Editing">編輯</sys:String>
+    <sys:String x:Key="Str_KS_Undo">復原</sys:String>
+    <sys:String x:Key="Str_KS_DeleteAnnot">刪除選取的注釋</sys:String>
+    <sys:String x:Key="Str_KS_ConfirmCancel">確認 / 取消文字或裁切</sys:String>
+    <sys:String x:Key="Str_KS_SearchSelect">搜尋與選取</sys:String>
+    <sys:String x:Key="Str_KS_Find">尋找 / 搜尋</sys:String>
+    <sys:String x:Key="Str_KS_NextPrevResult">下一個 / 上一個結果</sys:String>
+    <sys:String x:Key="Str_KS_SelectAll">選取頁面上所有文字</sys:String>
+    <sys:String x:Key="Str_KS_CopyText">複製選取的文字</sys:String>
+    <sys:String x:Key="Str_KS_Help">說明</sys:String>
+    <sys:String x:Key="Str_KS_ThisList">此快速鍵清單</sys:String>
+    <sys:String x:Key="Str_KS_About">關於對話方塊</sys:String>
+    <sys:String x:Key="Str_KS_OnlineHelp">完整指南與線上教學</sys:String>
+    <sys:String x:Key="Str_KS_Tools">工具</sys:String>
+    <sys:String x:Key="Str_KS_Paste">貼上圖片／文字</sys:String>
+    <sys:String x:Key="Str_KS_MultiSelect">加入選取</sys:String>
+
+    <!-- ── Status bar ────────────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Ready">就緒</sys:String>
+    <sys:String x:Key="Str_Portable">可攜版</sys:String>
+    <sys:String x:Key="Str_InstallBtn">安裝 KillerPDF...</sys:String>
+
+    <!-- ── Status messages (format strings — use string.Format) ─────── -->
+    <sys:String x:Key="Str_Opened">已開啟 {0} - {1} 頁</sys:String>
+    <sys:String x:Key="Str_OpenedReadOnly">已開啟 {0}（唯讀 - 擁有者限制）- {1} 頁</sys:String>
+    <sys:String x:Key="Str_OpenedReadOnlyXRef">已開啟 {0}（唯讀 - 非標準 XRef 表）- {1} 頁</sys:String>
+    <sys:String x:Key="Str_OpenedRepaired">已開啟 {0}（已修復副本 - 請儲存以保留變更）- {1} 頁</sys:String>
+    <sys:String x:Key="Str_OpenedRasterRepair">已開啟 {0}（點陣化修復 - 請儲存以保留變更）- {1} 頁</sys:String>
+    <sys:String x:Key="Str_PageOf">第 {0} 頁，共 {1} 頁</sys:String>
+    <sys:String x:Key="Str_PageOfLinks">第 {0} 頁，共 {1} 頁（{2} 個連結）</sys:String>
+    <sys:String x:Key="Str_PageFormFields">第 {0} 頁，共 {1} 頁 — 此頁面包含可填寫的表單欄位</sys:String>
+    <sys:String x:Key="Str_PageRenderError">第 {0} 頁 - 無法呈現</sys:String>
+    <sys:String x:Key="Str_RenderError">呈現錯誤：{0}</sys:String>
+    <sys:String x:Key="Str_Rotated">已旋轉 {0} 頁</sys:String>
+    <sys:String x:Key="Str_Cropped">已裁切 {0} 頁</sys:String>
+    <sys:String x:Key="Str_CropFailed">裁切失敗：{0}</sys:String>
+    <sys:String x:Key="Str_RemovedCrop">已從 {0} 頁移除 CropBox</sys:String>
+    <sys:String x:Key="Str_RemoveCropFailed">移除裁切失敗：{0}</sys:String>
+    <sys:String x:Key="Str_Extracted">已將 {0} 頁擷取至 {1}</sys:String>
+    <sys:String x:Key="Str_Deleted">已刪除 {0} 頁 - 剩餘 {1} 頁</sys:String>
+    <sys:String x:Key="Str_Printed">已將 {0} 頁傳送至印表機</sys:String>
+    <sys:String x:Key="Str_LinkRemoved">連結已移除。</sys:String>
+    <sys:String x:Key="Str_InvalidRange">範圍無效 — 請使用例如 1-3,5,7</sys:String>
+    <sys:String x:Key="Str_CropNoDoc">裁切：未開啟文件</sys:String>
+    <sys:String x:Key="Str_CropNoPage">裁切：未選取頁面</sys:String>
+    <sys:String x:Key="Str_CropNoDims">裁切：頁面尺寸無法取得</sys:String>
+    <sys:String x:Key="Str_RotateFailed">旋轉失敗：{0}</sys:String>
+
+    <!-- ── Dialog strings ───────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Dlg_InstallTitle">安裝 KillerPDF</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallMsg">要將 KillerPDF 安裝到您的使用者設定檔嗎？
+
+這將把應用程式複製到 %LocalAppData%\KillerPDF 並建立開始功能表捷徑。
+您可以隨時透過新增或移除程式來解除安裝。</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedClose">您有未儲存的變更。要在不儲存的情況下關閉此檔案嗎？</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedExit">您有未儲存的變更。要在不儲存的情況下關閉 KillerPDF 嗎？</sys:String>
+    <sys:String x:Key="Str_Dlg_PageOutOfRange">此文件有 {0} 個頁面的尺寸超出 Adobe Reader 支援的範圍（每邊 3 到 14400 點），Adobe 會將這些頁面顯示為空白。
+
+要將它們縮放至支援的尺寸嗎？頁面的外觀和比例保持不變。</sys:String>
+    <sys:String x:Key="Str_Dlg_FailedOpen">無法開啟 PDF：
+{0}</sys:String>
+    <sys:String x:Key="Str_Dlg_AppTitle">KillerPDF</sys:String>
+    <sys:String x:Key="Str_Dlg_CloseAllDocs">您有 {0} 個開啟的文件。結束應用程式時是否讓 KillerPDF 全部關閉？</sys:String>
+    <sys:String x:Key="Str_Dlg_CloseAllDocsOne">您有 1 個開啟的文件。結束應用程式時是否讓 KillerPDF 將其關閉？</sys:String>
+    <sys:String x:Key="Str_Dlg_RememberChoice">記住我的選擇</sys:String>
+
+
+    <!-- ── Theme names ────────────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Theme_Dark">深色</sys:String>
+    <sys:String x:Key="Str_Theme_Light">淺色</sys:String>
+    <sys:String x:Key="Str_Theme_Black">黑色</sys:String>
+    <sys:String x:Key="Str_Theme_Blood">血色</sys:String>
+    <sys:String x:Key="Str_Theme_Greed">貪婪</sys:String>
+    <sys:String x:Key="Str_Theme_Cyanotic">青色</sys:String>
+
+    <!-- ── Zoom dropdown ──────────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Zoom_FitWidth">適合寬度</sys:String>
+    <sys:String x:Key="Str_Zoom_FitPage">適合頁面</sys:String>
+    <sys:String x:Key="Str_FitWidth">第 {0} 頁，共 {1} 頁 - 適合寬度 ({2}%)</sys:String>
+    <sys:String x:Key="Str_FitPage">第 {0} 頁，共 {1} 頁 - 適合頁面 ({2}%)</sys:String>
+
+    <!-- ── KS overlay font size (sys:Double) ──────────────────────────── -->
+    <sys:Double x:Key="Str_KS_FontSize">12.5</sys:Double>
+
+
+    <!-- ── View mode ──────────────────────────────────────────────────── -->
+    <sys:String x:Key="Str_ViewMode">檢視模式</sys:String>
+    <sys:String x:Key="Str_View_Single">單頁</sys:String>
+    <sys:String x:Key="Str_View_Continuous">連續捲動</sys:String>
+    <sys:String x:Key="Str_View_TwoPage">雙頁</sys:String>
+    <sys:String x:Key="Str_View_Grid">格狀</sys:String>
+    <sys:String x:Key="Str_Continuous_EditMsg">請切換至單頁模式以使用編輯工具</sys:String>
+
+    <!-- ── Overflow menu + menu item labels ───────────────────────────── -->
+    <sys:String x:Key="Str_Lbl_Merge">合併 PDF</sys:String>
+    <sys:String x:Key="Str_Lbl_Extract">擷取頁面</sys:String>
+    <sys:String x:Key="Str_Lbl_Delete">刪除頁面</sys:String>
+    <sys:String x:Key="Str_Lbl_MoveUp">向上移動頁面</sys:String>
+    <sys:String x:Key="Str_Lbl_MoveDown">向下移動頁面</sys:String>
+    <sys:String x:Key="Str_Lbl_Text">文字</sys:String>
+    <sys:String x:Key="Str_Lbl_Highlight">螢光標記</sys:String>
+    <sys:String x:Key="Str_Lbl_Strike">刪除線</sys:String>
+    <sys:String x:Key="Str_Lbl_Underline">底線</sys:String>
+    <sys:String x:Key="Str_Lbl_Bold">粗體</sys:String>
+    <sys:String x:Key="Str_Lbl_Italic">斜體</sys:String>
+    <sys:String x:Key="Str_Lbl_Draw">繪圖</sys:String>
+    <sys:String x:Key="Str_Lbl_Crop">裁切</sys:String>
+    <sys:String x:Key="Str_Lbl_Image">加入圖片</sys:String>
+    <sys:String x:Key="Str_Lbl_Signature">簽名</sys:String>
+    <sys:String x:Key="Str_Lbl_Undo">復原</sys:String>
+    <sys:String x:Key="Str_Lbl_Clear">清除註釋</sys:String>
+    <sys:String x:Key="Str_Lbl_New">新增</sys:String>
+    <sys:String x:Key="Str_Lbl_Open">開啟</sys:String>
+    <sys:String x:Key="Str_Lbl_Close">關閉</sys:String>
+    <sys:String x:Key="Str_Lbl_Save">儲存</sys:String>
+    <sys:String x:Key="Str_Lbl_Flatten">平面化</sys:String>
+    <sys:String x:Key="Str_Lbl_Print">列印</sys:String>
+    <sys:String x:Key="Str_Lbl_Select">選取</sys:String>
+    <sys:String x:Key="Str_Lbl_ZoomOut">縮小</sys:String>
+    <sys:String x:Key="Str_Lbl_ZoomIn">放大</sys:String>
+
+    <!-- ── Right-click menu labels ────────────────────────────────────── -->
+    <sys:String x:Key="Str_Ctx_CopyText">複製文字</sys:String>
+    <sys:String x:Key="Str_Ctx_Print">列印</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectTool">選取工具</sys:String>
+    <sys:String x:Key="Str_Ctx_TextTool">文字工具</sys:String>
+    <sys:String x:Key="Str_Ctx_HighlightTool">螢光筆工具</sys:String>
+    <sys:String x:Key="Str_Ctx_DrawTool">繪圖工具</sys:String>
+    <sys:String x:Key="Str_Ctx_RotateCW">順時針旋轉頁面</sys:String>
+    <sys:String x:Key="Str_Ctx_RotateCCW">逆時針旋轉頁面</sys:String>
+    <sys:String x:Key="Str_Ctx_StampNumbers">標記頁碼...</sys:String>
+    <sys:String x:Key="Str_Ctx_DeleteSel">刪除選取</sys:String>
+    <sys:String x:Key="Str_Ctx_UndoLast">復原上一步</sys:String>
+    <sys:String x:Key="Str_Ctx_ClearPage">清除頁面註釋</sys:String>
+    <sys:String x:Key="Str_Ctx_InsertBlank">在後方插入空白頁</sys:String>
+    <sys:String x:Key="Str_Ctx_RotateCWShort">順時針旋轉</sys:String>
+    <sys:String x:Key="Str_Ctx_RotateCCWShort">逆時針旋轉</sys:String>
+    <sys:String x:Key="Str_Ctx_ExtractPages">擷取頁面</sys:String>
+    <sys:String x:Key="Str_Ctx_DeletePages">刪除頁面</sys:String>
+
+    <!-- ── Stamp Page Numbers dialog ──────────────────────────────────── -->
+    <sys:String x:Key="Str_Stamp_Title">標記頁碼</sys:String>
+    <sys:String x:Key="Str_Stamp_StartAt">起始號碼</sys:String>
+    <sys:String x:Key="Str_Stamp_Format">格式</sys:String>
+    <sys:String x:Key="Str_Stamp_Hint">{}{n} = 頁碼，{N} = 總頁數。例如「Page {n} of {N}」</sys:String>
+    <sys:String x:Key="Str_Stamp_Position">位置</sys:String>
+    <sys:String x:Key="Str_Stamp_FontSize">字型大小 (pt)</sys:String>
+    <sys:String x:Key="Str_Stamp_Hint2">範例：&quot;第 {n} 頁，共 {N} 頁&quot;</sys:String>
+    <sys:String x:Key="Str_Stamp_Suffix">蓋章頁面</sys:String>
+    <sys:String x:Key="Str_Stamp_SecNumbers">頁碼</sys:String>
+    <sys:String x:Key="Str_Stamp_SecWatermark">浮水印</sys:String>
+    <sys:String x:Key="Str_Stamp_Color">顏色</sys:String>
+    <sys:String x:Key="Str_Stamp_Pages">頁面</sys:String>
+    <sys:String x:Key="Str_Stamp_WmText">文字</sys:String>
+    <sys:String x:Key="Str_Stamp_WmImage">圖片</sys:String>
+    <sys:String x:Key="Str_Stamp_WmTextLabel">浮水印文字</sys:String>
+    <sys:String x:Key="Str_Stamp_ChooseImage">選擇圖片...</sys:String>
+    <sys:String x:Key="Str_Stamp_Scale">縮放</sys:String>
+    <sys:String x:Key="Str_Stamp_Angle">角度</sys:String>
+    <sys:String x:Key="Str_Stamp_Opacity">不透明度</sys:String>
+    <sys:String x:Key="Str_Stamp_Mirror">在對開頁上鏡射（外側邊緣）</sys:String>
+    <sys:String x:Key="Str_Stamp_Applied">已蓋章 {0} 頁</sys:String>
+    <sys:String x:Key="Str_Pos_Custom">自訂（在預覽上拖曳）</sys:String>
+    <sys:String x:Key="Str_TT_StampTool">蓋章頁面</sys:String>
+    <sys:String x:Key="Str_Ctx_StampPages">蓋章頁面</sys:String>
+    <sys:String x:Key="Str_Stamp_Cancel">取消</sys:String>
+    <sys:String x:Key="Str_Stamp_Stamp">套用</sys:String>
+    <sys:String x:Key="Str_Pos_BottomCenter">底部置中</sys:String>
+    <sys:String x:Key="Str_Pos_BottomRight">右下</sys:String>
+    <sys:String x:Key="Str_Pos_BottomLeft">左下</sys:String>
+    <sys:String x:Key="Str_Pos_TopCenter">頂部置中</sys:String>
+    <sys:String x:Key="Str_Pos_TopRight">右上</sys:String>
+    <sys:String x:Key="Str_Pos_TopLeft">左上</sys:String>
+
+    <!-- ── Print dialog ───────────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Print_Title">KillerPDF - 列印</sys:String>
+    <sys:String x:Key="Str_Print_Printer">印表機</sys:String>
+    <sys:String x:Key="Str_Print_Orientation">方向</sys:String>
+    <sys:String x:Key="Str_Print_Portrait">直向</sys:String>
+    <sys:String x:Key="Str_Print_Landscape">橫向</sys:String>
+    <sys:String x:Key="Str_Print_Scale">縮放</sys:String>
+    <sys:String x:Key="Str_Print_Fit">符合頁面</sys:String>
+    <sys:String x:Key="Str_Print_Actual">實際大小 (100%)</sys:String>
+    <sys:String x:Key="Str_Print_Custom">自訂 %</sys:String>
+    <sys:String x:Key="Str_Print_ScaleHint">縮放百分比（例如 50 或 50.23）</sys:String>
+    <sys:String x:Key="Str_Print_Copies">份數</sys:String>
+    <sys:String x:Key="Str_Print_Pages">頁面</sys:String>
+    <sys:String x:Key="Str_Print_PagesHint">例如 1-3,5（空白 = 全部）</sys:String>
+    <sys:String x:Key="Str_Print_NoPages">無頁面</sys:String>
+    <sys:String x:Key="Str_Print_Margins">邊界</sys:String>
+    <sys:String x:Key="Str_Margin_None">無</sys:String>
+    <sys:String x:Key="Str_Margin_Narrow">窄</sys:String>
+    <sys:String x:Key="Str_Margin_Normal">標準</sys:String>
+    <sys:String x:Key="Str_Margin_Wide">寬</sys:String>
+    <sys:String x:Key="Str_Print_PagesPerSheet">每張頁數</sys:String>
+    <sys:String x:Key="Str_Print_TwoSided">雙面列印</sys:String>
+    <sys:String x:Key="Str_Print_Color">彩色</sys:String>
+    <sys:String x:Key="Str_Print_BW">黑白</sys:String>
+    <sys:String x:Key="Str_Pos_Center">置中</sys:String>
+    <sys:String x:Key="Str_Pos_Top">頂部</sys:String>
+    <sys:String x:Key="Str_Pos_Bottom">底部</sys:String>
+    <sys:String x:Key="Str_Pos_Left">靠左</sys:String>
+    <sys:String x:Key="Str_Pos_Right">靠右</sys:String>
+
+    <!-- ── Save / recent menus + signature dialog ──────────────────── -->
+    <sys:String x:Key="Str_Menu_Save">儲存</sys:String>
+    <sys:String x:Key="Str_Menu_SaveAs">另存新檔...</sys:String>
+    <sys:String x:Key="Str_Menu_SaveNothing">沒有可儲存的內容</sys:String>
+    <sys:String x:Key="Str_Menu_RecentNone">沒有最近的檔案</sys:String>
+    <sys:String x:Key="Str_Menu_ClearList">清除清單</sys:String>
+    <sys:String x:Key="Str_Menu_RemoveFromRecents">從最近移除</sys:String>
+
+    <!-- 將圖片匯入為 PDF / 壓縮為 ZIP -->
+    <sys:String x:Key="Str_Menu_Import">將圖片匯入為 PDF</sys:String>
+    <sys:String x:Key="Str_Menu_CompressZip">壓縮為 ZIP</sys:String>
+    <sys:String x:Key="Str_Filter_Images">圖片</sys:String>
+    <sys:String x:Key="Str_Filter_AllFiles">所有檔案</sys:String>
+    <sys:String x:Key="Str_Filter_Zip">ZIP 壓縮檔</sys:String>
+    <sys:String x:Key="Str_Status_Imported">已匯入 {0} 張圖片 - 尚未儲存</sys:String>
+    <sys:String x:Key="Str_Err_ImportFailed">匯入失敗：</sys:String>
+    <sys:String x:Key="Str_Err_NoImages">無法讀取任何圖片。</sys:String>
+    <sys:String x:Key="Str_Drop_Prompt">您拖放了 {0} 個檔案。您想如何開啟它們？</sys:String>
+    <sys:String x:Key="Str_Drop_Merge">合併為單一 PDF</sys:String>
+    <sys:String x:Key="Str_Drop_Separate">分別開啟</sys:String>
+    <sys:String x:Key="Str_Drop_NothingOpenable">找不到可開啟的 PDF 或圖片。</sys:String>
+    <sys:String x:Key="Str_Drop_ManyTabs">這將開啟 {0} 個獨立分頁。要繼續嗎？</sys:String>
+    <sys:String x:Key="Str_Drop_TooMany">此資料夾或壓縮檔包含 {0} 個檔案。KillerPDF 只會開啟前 {1} 個。要繼續嗎？</sys:String>
+    <sys:String x:Key="Str_Status_Merged">已合併 {0} 個檔案 - 尚未儲存</sys:String>
+    <sys:String x:Key="Str_Drop_Merging">正在合併檔案...</sys:String>
+    <sys:String x:Key="Str_Drop_MergeCancelled">已取消合併</sys:String>
+    <sys:String x:Key="Str_Dlg_UnsavedCloseAll">關閉所有文件？未儲存的變更將會遺失。</sys:String>
+    <sys:String x:Key="Str_Msg_OpenFirst">請先開啟一個 PDF。</sys:String>
+    <sys:String x:Key="Str_Dlg_SaveBeforeZip">壓縮為 ZIP 前儲存變更？</sys:String>
+    <sys:String x:Key="Str_Status_Zipped">已壓縮為 {0} - {1}（原 {2}）</sys:String>
+    <sys:String x:Key="Str_Err_ZipFailed">壓縮為 ZIP 失敗：</sys:String>
+    <sys:String x:Key="Str_Sig_Title">簽名</sys:String>
+    <sys:String x:Key="Str_Sig_None">沒有已儲存的簽名</sys:String>
+    <sys:String x:Key="Str_Sig_Create">建立簽名</sys:String>
+    <sys:String x:Key="Str_Sig_Import">匯入圖片</sys:String>
+    <sys:String x:Key="Str_Sig_DrawHere">在此繪製您的簽名</sys:String>
+    <sys:String x:Key="Str_Sig_Clear">清除</sys:String>
+    <sys:String x:Key="Str_Sig_SaveSig">儲存簽名</sys:String>
+
+    <!-- Crop confirm bar tooltips -->
+    <sys:String x:Key="Str_TT_CropThisPage">裁切此頁 (Enter)</sys:String>
+    <sys:String x:Key="Str_TT_CropRange">裁切指定範圍內的頁面</sys:String>
+    <sys:String x:Key="Str_TT_CropRemove">從此頁移除 CropBox（和 TrimBox）</sys:String>
+    <sys:String x:Key="Str_TT_CropRemoveAll">從所有頁面移除 CropBox</sys:String>
+    <sys:String x:Key="Str_TT_CropCancel">取消 (Escape)</sys:String>
+
+    <!-- ── 直線工具、圖層 / 群組選單（v1.5.x 新增） ─────────────────────── -->
+    <sys:String x:Key="Str_Lbl_Line">直線</sys:String>
+    <sys:String x:Key="Str_TT_LineTool">直線 - 拖曳以繪製直線</sys:String>
+    <sys:String x:Key="Str_Ctx_Edit">編輯</sys:String>
+    <sys:String x:Key="Str_Ctx_Raise">上移</sys:String>
+    <sys:String x:Key="Str_Ctx_Lower">下移</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectCover">選擇遮蓋</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectText">選擇文字</sys:String>
+    <sys:String x:Key="Str_Ctx_Unpair">取消文字與遮蓋的配對</sys:String>
+    <sys:String x:Key="Str_Ctx_Group">群組所選</sys:String>
+    <sys:String x:Key="Str_Ctx_Ungroup">取消群組</sys:String>
+    <sys:String x:Key="Str_Ctx_RemoveFromGroup">從群組移除</sys:String>
+    <sys:String x:Key="Str_Ctx_Copy">複製</sys:String>
+    <sys:String x:Key="Str_Ctx_Paste">貼上</sys:String>
+    <!-- ── 註解列標籤 ──────────────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Bar_Color">顏色：</sys:String>
+    <sys:String x:Key="Str_Bar_Fill">填滿：</sys:String>
+    <sys:String x:Key="Str_Bar_Size">大小：</sys:String>
+    <sys:String x:Key="Str_Bar_Opacity">不透明度：</sys:String>
+    <sys:String x:Key="Str_Bar_FillOpacity">填滿不透明度：</sys:String>
+    <sys:String x:Key="Str_Bar_Font">字型：</sys:String>
+    <sys:String x:Key="Str_Bar_Level">水平</sys:String>
+    <sys:String x:Key="Str_Bar_Eraser">橡皮擦</sys:String>
+    <sys:String x:Key="Str_Bar_MoreColors">更多顏色...</sys:String>
+    <sys:String x:Key="Str_Sig_Signatures">簽名</sys:String>
+    <sys:String x:Key="Str_Sig_Initials">姓名縮寫</sys:String>
+    <sys:String x:Key="Str_Sig_Pen">畫筆</sys:String>
+    <sys:String x:Key="Str_Sig_Thin">細</sys:String>
+    <sys:String x:Key="Str_Sig_Medium">中</sys:String>
+    <sys:String x:Key="Str_Sig_Thick">粗</sys:String>
+    <!-- ── 數位簽章對話框 ──────────────────────────────────────────────── -->
+    <sys:String x:Key="Str_Sign_Desc">使用憑證密封 {0} 並儲存簽署副本。</sys:String>
+    <sys:String x:Key="Str_Sign_Certificate">憑證</sys:String>
+    <sys:String x:Key="Str_Sign_FromFile">來自檔案 (.pfx / .p12)</sys:String>
+    <sys:String x:Key="Str_Sign_FromStore">來自 Windows 憑證存放區</sys:String>
+    <sys:String x:Key="Str_Sign_Browse">瀏覽...</sys:String>
+    <sys:String x:Key="Str_Sign_Password">密碼</sys:String>
+    <sys:String x:Key="Str_Sign_Reason">原因（選填）</sys:String>
+    <sys:String x:Key="Str_Sign_Location">位置（選填）</sys:String>
+    <sys:String x:Key="Str_Sign_Contact">聯絡方式（選填）</sys:String>
+    <sys:String x:Key="Str_Sign_SaveAs">簽署副本另存為</sys:String>
+    <sys:String x:Key="Str_Sign_Sign">簽署</sys:String>
+    <sys:String x:Key="Str_Sign_Cancel">取消</sys:String>
+    <sys:String x:Key="Str_Sign_TitleSuffix">數位簽章</sys:String>
+    <sys:String x:Key="Str_Lbl_DigitalSig">數位簽章...</sys:String>
+    <sys:String x:Key="Str_Sidebar">側邊欄</sys:String>
+    <sys:String x:Key="Str_Sidebar_Left">左側</sys:String>
+    <sys:String x:Key="Str_Sidebar_Right">右側</sys:String>
+    <sys:String x:Key="Str_KS_ToggleSidebar">切換側邊欄</sys:String>
+    <sys:String x:Key="Str_KS_NextTab">下一個分頁（Shift：上一個）</sys:String>
+    <sys:String x:Key="Str_Lbl_Search">搜尋</sys:String>
+    <sys:String x:Key="Str_TT_Search">搜尋 (Ctrl+F)</sys:String>
+    <sys:String x:Key="Str_Ctx_DeletePage">刪除頁面</sys:String>
+    <sys:String x:Key="Str_Ctx_DuplicatePage">複製頁面</sys:String>
+    <sys:String x:Key="Str_Ctx_AddBlankPage">新增空白頁</sys:String>
+    <sys:String x:Key="Str_Ctx_CloseTab">關閉分頁</sys:String>
+    <sys:String x:Key="Str_Ctx_CloseOthers">關閉其他分頁</sys:String>
+
+    <!-- ── OCR 與頁面變形（新增） ───────────────────────────────────────── -->
+    <sys:String x:Key="Str_Ocr_Region">OCR 區域...</sys:String>
+    <sys:String x:Key="Str_Ocr_SearchablePdf">製作可搜尋的 PDF...</sys:String>
+    <sys:String x:Key="Str_Ocr_ExtractText">擷取所有文字...</sys:String>
+    <sys:String x:Key="Str_Ocr_Language">語言</sys:String>
+    <sys:String x:Key="Str_Ocr_NoDoc">請先開啟一個 PDF</sys:String>
+    <sys:String x:Key="Str_Ocr_ComingSoon">{0} - 即將推出</sys:String>
+    <sys:String x:Key="Str_TT_Ocr">OCR 頁面（複製文字）</sys:String>
+    <sys:String x:Key="Str_Lbl_Ocr">OCR</sys:String>
+    <sys:String x:Key="Str_Ctx_OcrPage">OCR 頁面（複製文字）</sys:String>
+    <sys:String x:Key="Str_Lbl_Rotate">變形</sys:String>
+    <sys:String x:Key="Str_Lbl_Stamp">蓋章</sys:String>
+    <sys:String x:Key="Str_TT_RotateTool">變形頁面 - 旋轉／校正傾斜（縮放即將推出）</sys:String>
+    <sys:String x:Key="Str_Tf_Suffix">變形</sys:String>
+    <sys:String x:Key="Str_Tf_Rotate">旋轉</sys:String>
+    <sys:String x:Key="Str_Tf_Scale">縮放</sys:String>
+    <sys:String x:Key="Str_Tf_Flip">翻轉</sys:String>
+    <sys:String x:Key="Str_Tf_Skew">傾斜</sys:String>
+    <sys:String x:Key="Str_Tf_Angle">角度</sys:String>
+    <sys:String x:Key="Str_Tf_Size">大小</sys:String>
+    <sys:String x:Key="Str_Tf_WhenScaling">縮放時：</sys:String>
+    <sys:String x:Key="Str_Tf_ResizePage">調整整個頁面大小</sys:String>
+    <sys:String x:Key="Str_Tf_KeepSize">保持頁面大小（加上邊界）</sys:String>
+    <sys:String x:Key="Str_Tf_FlipH">水平翻轉</sys:String>
+    <sys:String x:Key="Str_Tf_FlipV">垂直翻轉</sys:String>
+    <sys:String x:Key="Str_Tf_LevelLine">繪製一條水平線</sys:String>
+    <sys:String x:Key="Str_Tf_SkewHint">沿著任何應該保持水平的物件拖曳（邊緣、一行文字）。頁面會旋轉以對齊。</sys:String>
+    <sys:String x:Key="Str_Tf_Output">輸出：{0} × {1} 英吋</sys:String>
+    <sys:String x:Key="Str_Tf_ResetAll">全部重設</sys:String>
+    <sys:String x:Key="Str_Tf_Reset">重設</sys:String>
+    <sys:String x:Key="Str_Tf_Cancel">取消</sys:String>
+    <sys:String x:Key="Str_Tf_Apply">套用</sys:String>
+    <sys:String x:Key="Str_Tf_Warn">變形頁面（旋轉或縮放）會將其點陣化：頁面會重新儲存為圖片，因此頁面上任何可選取的文字都會遺失。您之後可以執行 OCR 讓它再次可搜尋。</sys:String>
+    <sys:String x:Key="Str_Tf_DontWarn">不要再警告我</sys:String>
+    <sys:String x:Key="Str_Tf_Done">已變形第 {0} 頁</sys:String>
+    <sys:String x:Key="Str_Tf_NoRender">無法呈現頁面 - 請稍後再試。</sys:String>
+    <sys:String x:Key="Str_Tf_Failed">變形失敗：{0}</sys:String>
+    <sys:String x:Key="Str_Crop_Position">位置</sys:String>
+    <sys:String x:Key="Str_Crop_Size">大小</sys:String>
+    <sys:String x:Key="Str_Crop_Pages">頁面</sys:String>
+    <sys:String x:Key="Str_Crop_All">全部</sys:String>
+    <sys:String x:Key="Str_Crop_Apply">裁切</sys:String>
+    <sys:String x:Key="Str_Crop_RangeTip">頁面範圍，例如 1-3,5（空白 = 目前頁面）</sys:String>
+    <sys:String x:Key="Str_Crop_AllTip">裁切每一頁</sys:String>
+    <sys:String x:Key="Str_KS_View">檢視</sys:String>
+    <sys:String x:Key="Str_KS_FullScreen">全螢幕</sys:String>
+    <sys:String x:Key="Str_FullScreen_Hint">按 F11 或 Esc 離開全螢幕</sys:String>
+    <!-- Quit prompt -->
+    <sys:String x:Key="Str_Dlg_QuitMsg">結束 KillerPDF？</sys:String>
+    <sys:String x:Key="Str_Chk_CloseTabs">關閉我開啟的分頁</sys:String>
+    <sys:String x:Key="Str_Btn_Quit">結束</sys:String>
+    <sys:String x:Key="Str_Btn_CancelDlg">取消</sys:String>
+
+
+    <!-- Status-bar + dialog strings (extracted from code) -->
+    <sys:String x:Key="Str_St_DataCleared">已清除所有 KillerPDF 資料</sys:String>
+    <sys:String x:Key="Str_St_OcrRegionCancelled">已取消 OCR 區域</sys:String>
+    <sys:String x:Key="Str_St_Erased">已擦除</sys:String>
+    <sys:String x:Key="Str_St_Ungrouped">已取消群組</sys:String>
+    <sys:String x:Key="Str_St_RemovedFromGroup">已從群組移除</sys:String>
+    <sys:String x:Key="Str_St_NothingToUndo">沒有可復原的項目</sys:String>
+    <sys:String x:Key="Str_St_UndidAnnotation">已復原上一個註解</sys:String>
+    <sys:String x:Key="Str_St_UndidTextEdit">已復原文字編輯</sys:String>
+    <sys:String x:Key="Str_St_RemovedStamps">已移除加蓋的頁碼</sys:String>
+    <sys:String x:Key="Str_St_RestoredAnnotations">已還原清除的註解</sys:String>
+    <sys:String x:Key="Str_St_Undone">已復原</sys:String>
+    <sys:String x:Key="Str_St_UndidDocChange">已復原文件變更</sys:String>
+    <sys:String x:Key="Str_St_ClearedPageAnnotations">已清除本頁的註解</sys:String>
+    <sys:String x:Key="Str_St_NoAnnotationsToClear">沒有可清除的註解</sys:String>
+    <sys:String x:Key="Str_St_RepairCancelled">已取消修復</sys:String>
+    <sys:String x:Key="Str_St_Cancelled">已取消</sys:String>
+    <sys:String x:Key="Str_St_DocInfoUpdated">已更新文件資訊-請儲存檔案以保留變更</sys:String>
+    <sys:String x:Key="Str_St_FlattenCancelled">已取消平面化（未寫入檔案）</sys:String>
+    <sys:String x:Key="Str_St_FlattenPrintFailed">無法為列印平面化註解；將不含註解進行列印。</sys:String>
+    <sys:String x:Key="Str_St_HqDownloadCancelled">已取消高品質下載</sys:String>
+    <sys:String x:Key="Str_St_LangDownloadCancelled">已取消語言下載</sys:String>
+    <sys:String x:Key="Str_St_OcrCancelled">已取消 OCR</sys:String>
+    <sys:String x:Key="Str_St_OcrDragBox">在要辨識的區域上拖曳出方框</sys:String>
+    <sys:String x:Key="Str_St_OcrRegionTooSmall">OCR 區域太小</sys:String>
+    <sys:String x:Key="Str_St_OcrNoText">OCR：在所選區域中找不到文字</sys:String>
+    <sys:String x:Key="Str_St_SearchablePdfCancelled">已取消可搜尋 PDF（未寫入檔案）</sys:String>
+    <sys:String x:Key="Str_St_TextExtractCancelled">已取消文字擷取（未寫入檔案）</sys:String>
+    <sys:String x:Key="Str_St_NoTextOnPage">本頁找不到文字</sys:String>
+    <sys:String x:Key="Str_St_NoTextSelected">未選取文字-請拖曳以選取文字</sys:String>
+    <sys:String x:Key="Str_St_NoTextInSelection">選取範圍中找不到文字</sys:String>
+    <sys:String x:Key="Str_St_SignaturePlaced">已放置簽名-拖曳以重新定位，使用角落控點調整大小</sys:String>
+    <sys:String x:Key="Str_St_FieldCleared">已清除欄位</sys:String>
+    <sys:String x:Key="Str_St_FieldSigned">已簽署欄位</sys:String>
+    <sys:String x:Key="Str_St_SignatureSaved">已儲存簽名-在頁面上按一下即可放置</sys:String>
+    <sys:String x:Key="Str_St_ImageLoaded">已載入影像-在頁面上按一下即可放置</sys:String>
+    <sys:String x:Key="Str_St_EditingText">正在編輯文字-在上方變更大小/顏色，按 Enter 儲存</sys:String>
+    <sys:String x:Key="Str_St_AlreadyEditHere">此處已有編輯-按一下其文字可重新編輯，或拖曳遮蓋層</sys:String>
+    <sys:String x:Key="Str_St_NoTextLine">在此位置找不到文字行</sys:String>
+    <sys:String x:Key="Str_St_LineAlreadyEdited">此行已編輯-按一下其文字即可變更</sys:String>
+    <sys:String x:Key="Str_St_ImagePlaced">已放置影像-拖曳以重新定位，使用角落控點調整大小</sys:String>
+    <sys:String x:Key="Str_St_ClipImageUnreadable">無法讀取剪貼簿影像</sys:String>
+    <sys:String x:Key="Str_St_PastedImage">已貼上影像-拖曳以重新定位，使用角落控點調整大小</sys:String>
+    <sys:String x:Key="Str_St_ClipNoText">剪貼簿中沒有可貼上的文字</sys:String>
+    <sys:String x:Key="Str_St_PastedText">已貼上文字-拖曳以重新定位，按 Delete 移除</sys:String>
+    <sys:String x:Key="Str_St_ClipEmpty">剪貼簿中沒有可貼上的內容</sys:String>
+    <sys:String x:Key="Str_Dlg_SaveBeforeUpdate">請先儲存變更再進行更新。</sys:String>
+    <sys:String x:Key="Str_Dlg_Uninstalled">KillerPDF 已解除安裝。</sys:String>
+    <sys:String x:Key="Str_Dlg_SelectExtract">請選取要擷取的頁面。</sys:String>
+    <sys:String x:Key="Str_Dlg_SelectDelete">請選取要刪除的頁面。</sys:String>
+    <sys:String x:Key="Str_Dlg_NoPrinter">沒有可用的印表機。</sys:String>
+    <sys:String x:Key="Str_Dlg_NoValidPages">該範圍中沒有有效的頁面。</sys:String>
+    <sys:String x:Key="Str_Dlg_SignedSavedTo">已簽署的副本儲存至：</sys:String>
+    <sys:String x:Key="Str_Dlg_DrawSignatureFirst">請先繪製簽名。</sys:String>
+</ResourceDictionary>
