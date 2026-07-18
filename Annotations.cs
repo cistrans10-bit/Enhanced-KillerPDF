@@ -48,7 +48,7 @@ namespace KillerPDF
             var tb = new TextBlock
             {
                 Text = ta.Content,
-                Foreground = new SolidColorBrush(ta.GetColor()),
+                Foreground = new SolidColorBrush(DisplayDocumentColor(ta.GetColor())),
                 FontFamily = famsel,
                 FontWeight = ta.Bold ? FontWeights.Bold : FontWeights.Normal,
                 FontStyle = ta.Italic ? FontStyles.Italic : FontStyles.Normal,
@@ -66,7 +66,7 @@ namespace KillerPDF
             {
                 Width = Math.Max(1, ta.Width),
                 Height = Math.Max(1, ta.Height),
-                Background = ta.HasFill ? new SolidColorBrush(ta.GetFill()) : Brushes.Transparent,
+                Background = ta.HasFill ? new SolidColorBrush(DisplayDocumentColor(ta.GetFill())) : Brushes.Transparent,
                 ClipToBounds = true,
                 IsHitTestVisible = false,
                 Child = tb
@@ -124,7 +124,7 @@ namespace KillerPDF
                     case CoverAnnotation cov:
                         var covRect = new Rectangle
                         {
-                            Fill = new SolidColorBrush(cov.GetColor()),
+                            Fill = new SolidColorBrush(DisplayDocumentColor(cov.GetColor())),
                             Width = cov.Bounds.Width, Height = cov.Bounds.Height
                         };
                         // While being typed into, dash-outline the cover so it's visible behind the live
@@ -146,14 +146,14 @@ namespace KillerPDF
                         {
                             // Carved highlight: rectangle minus the eraser strokes, one anti-aliased fill.
                             _activeCanvas.Children.Add(new System.Windows.Shapes.Path
-                            { Fill = new SolidColorBrush(ha.GetColor()), Data = hgeo, IsHitTestVisible = false });
+                            { Fill = new SolidColorBrush(DisplayDocumentColor(ha.GetColor())), Data = hgeo, IsHitTestVisible = false });
                         }
                         else
                         {
                             var hr = ha.DrawRect();
                             var rect = new Rectangle
                             {
-                                Fill = new SolidColorBrush(ha.GetColor()),
+                                Fill = new SolidColorBrush(DisplayDocumentColor(ha.GetColor())),
                                 Width = hr.Width,
                                 Height = hr.Height
                             };
@@ -166,7 +166,7 @@ namespace KillerPDF
                         if (ia.Points.Count < 2) continue;
                         var poly = new Polyline
                         {
-                            Stroke = new SolidColorBrush(ia.GetColor()),
+                            Stroke = new SolidColorBrush(DisplayDocumentColor(ia.GetColor())),
                             StrokeThickness = ia.StrokeWidth,
                             StrokeLineJoin = PenLineJoin.Round,
                             StrokeStartLineCap = PenLineCap.Round,
@@ -202,7 +202,7 @@ namespace KillerPDF
                                 if (stroke.Count < 2) continue;
                                 var sigPoly = new Polyline
                                 {
-                                    Stroke = Brushes.Black,
+                                    Stroke = new SolidColorBrush(DisplayDocumentColor(Colors.Black)),
                                     StrokeThickness = sa.StrokeWidth * sa.Scale,
                                     StrokeLineJoin = PenLineJoin.Round,
                                     StrokeStartLineCap = PenLineCap.Round,
@@ -248,22 +248,25 @@ namespace KillerPDF
 
         // Decode a placed annotation's Base64 image once and cache the frozen result on the annotation,
         // so repeated renders (e.g. every mousemove of a resize-drag) reuse it instead of re-decoding.
-        private static System.Windows.Media.Imaging.BitmapSource? GetAnnotationBitmap(PlacedAnnotation a, string? data)
+        private System.Windows.Media.Imaging.BitmapSource? GetAnnotationBitmap(PlacedAnnotation a, string? data)
         {
-            if (a.CachedBitmap != null) return a.CachedBitmap;
-            if (string.IsNullOrEmpty(data)) return null;
-            try
+            if (a.CachedBitmap is null)
             {
-                var bmp = new System.Windows.Media.Imaging.BitmapImage();
-                bmp.BeginInit();
-                bmp.StreamSource = new System.IO.MemoryStream(Convert.FromBase64String(data));
-                bmp.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
-                bmp.EndInit();
-                bmp.Freeze();
-                a.CachedBitmap = bmp;
-                return bmp;
+                if (string.IsNullOrEmpty(data)) return null;
+                try
+                {
+                    var bmp = new System.Windows.Media.Imaging.BitmapImage();
+                    bmp.BeginInit();
+                    bmp.StreamSource = new System.IO.MemoryStream(Convert.FromBase64String(data));
+                    bmp.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
+                    bmp.EndInit();
+                    bmp.Freeze();
+                    a.CachedBitmap = bmp;
+                }
+                catch { return null; }
             }
-            catch { return null; }
+            var cached = a.CachedBitmap;
+            return cached is null ? null : DisplayDocumentBitmap(cached);
         }
 
         private void ClearSelection()
@@ -1127,7 +1130,7 @@ namespace KillerPDF
                             new DoubleAnimation(0, 7, new Duration(TimeSpan.FromSeconds(0.5)))
                             { RepeatBehavior = RepeatBehavior.Forever });
                     }
-                    else rect.Fill = new SolidColorBrush(previewFill);
+                    else rect.Fill = new SolidColorBrush(DisplayDocumentColor(previewFill));
                     Canvas.SetLeft(rect, pos.X);
                     Canvas.SetTop(rect, pos.Y);
                     _activeCanvas.Children.Add(rect);
@@ -1145,7 +1148,7 @@ namespace KillerPDF
                     {
                         // Eraser brush shows a translucent grey stroke so it reads as erasing, not inking.
                         Stroke = _drawErase ? new SolidColorBrush(Color.FromArgb(120, 200, 200, 200))
-                                            : new SolidColorBrush(_drawColor),
+                                            : new SolidColorBrush(DisplayDocumentColor(_drawColor)),
                         StrokeThickness = _drawWidth,
                         StrokeLineJoin = PenLineJoin.Round,
                         StrokeStartLineCap = PenLineCap.Round,
@@ -1169,7 +1172,7 @@ namespace KillerPDF
                     _activeInk.Points.Add(pos);
                     var lpoly = new Polyline
                     {
-                        Stroke = new SolidColorBrush(_drawColor),
+                        Stroke = new SolidColorBrush(DisplayDocumentColor(_drawColor)),
                         StrokeThickness = _drawWidth,
                         StrokeStartLineCap = PenLineCap.Round,
                         StrokeEndLineCap = PenLineCap.Round
@@ -1249,9 +1252,10 @@ namespace KillerPDF
             }
             else
             {
-                _brushPreview.Stroke = new SolidColorBrush(_drawColor);
+                var displayDraw = DisplayDocumentColor(_drawColor);
+                _brushPreview.Stroke = new SolidColorBrush(displayDraw);
                 _brushPreview.StrokeDashArray = null;
-                _brushPreview.Fill = new SolidColorBrush(Color.FromArgb(40, _drawColor.R, _drawColor.G, _drawColor.B));
+                _brushPreview.Fill = new SolidColorBrush(Color.FromArgb(40, displayDraw.R, displayDraw.G, displayDraw.B));
             }
             if (!ReferenceEquals(_brushPreview.Parent, canvas))
             {

@@ -42,11 +42,11 @@ namespace KillerPDF
 
             public Dictionary<int, List<PageAnnotation>> Annotations = [];
             public Dictionary<int, (int w, int h)> RenderDims = [];
-            // LRU render cache: rasterized page bitmaps keyed by (page, size-bucket, rotation). Lets a
+            // LRU render cache: rasterized page bitmaps keyed by (page, size-bucket, rotation, dark mode). Lets a
             // switch back to a recent tab reuse the bitmaps instead of re-running pdfium. Concurrent because
             // the continuous/secondary streamers read it from a background thread. Cleared on edits that change
             // a page's pixels or page order, and dropped entirely when the tab falls out of the LRU window.
-            public readonly System.Collections.Concurrent.ConcurrentDictionary<(int page, int bucket, int rot), System.Windows.Media.Imaging.BitmapSource> RenderCache = new();
+            public readonly System.Collections.Concurrent.ConcurrentDictionary<(int page, int bucket, int rot, bool dark), System.Windows.Media.Imaging.BitmapSource> RenderCache = new();
             public Dictionary<int, int> PageRotations = [];
             public Dictionary<int, string> FormTextValues = [];
             public Dictionary<int, bool> FormCheckValues = [];
@@ -192,14 +192,14 @@ namespace KillerPDF
         private const int RenderCacheTabCap = 3;
 
         // Background-thread safe: a cached frozen bitmap for this render, or null (the caller must rasterize).
-        private static System.Windows.Media.Imaging.BitmapSource? TryGetCachedRender(DocumentSession? s, int page, int bucket, int rot)
-            => (s != null && s.RenderCache.TryGetValue((page, bucket, rot), out var b)) ? b : null;
+        private static System.Windows.Media.Imaging.BitmapSource? TryGetCachedRender(DocumentSession? s, int page, int bucket, int rot, bool dark)
+            => (s != null && s.RenderCache.TryGetValue((page, bucket, rot, dark), out var b)) ? b : null;
 
-        private static void CacheRender(DocumentSession? s, int page, int bucket, int rot, System.Windows.Media.Imaging.BitmapSource bmp)
+        private static void CacheRender(DocumentSession? s, int page, int bucket, int rot, bool dark, System.Windows.Media.Imaging.BitmapSource bmp)
         {
             if (s == null) return;
             if (bmp.CanFreeze && !bmp.IsFrozen) bmp.Freeze();
-            s.RenderCache[(page, bucket, rot)] = bmp;
+            s.RenderCache[(page, bucket, rot, dark)] = bmp;
         }
 
         // Mark a tab most-recently-used; drop the bitmap caches of tabs that fall outside the LRU window.
@@ -285,6 +285,7 @@ namespace KillerPDF
             DropZone.Visibility = Visibility.Visible;
             PopulateRecentFilesList();
             PagePreviewPanel.Visibility = Visibility.Collapsed;
+            UpdateThumbnailBarVisibility();
             CloseSearchBar();
             HideDrawSettings();
             HideTextSettings();

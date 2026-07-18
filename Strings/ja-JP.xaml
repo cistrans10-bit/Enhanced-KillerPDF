@@ -70,6 +70,15 @@
     <sys:String x:Key="Str_Toolbar_TextBeside">アイコンの横にテキスト</sys:String>
     <sys:String x:Key="Str_Toolbar_TextUnder">アイコンの下にテキスト</sys:String>
     <sys:String x:Key="Str_Toolbar_TextOnly">テキストのみ</sys:String>
+    <sys:String x:Key="Str_Toolbar_Position">ツールバーの位置</sys:String>
+    <sys:String x:Key="Str_Bar_Docked">ドッキング</sys:String>
+    <sys:String x:Key="Str_Bar_Floating">フローティング</sys:String>
+    <sys:String x:Key="Str_Bar_Hidden">非表示</sys:String>
+    <sys:String x:Key="Str_ThumbnailBar">サムネイルバー</sys:String>
+    <sys:String x:Key="Str_DocumentDarkMode">ドキュメントページをダーク表示</sys:String>
+    <sys:String x:Key="Str_TT_DocumentDarkMode">ダークページを切り替え</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailDock">サムネイルバーを固定またはフローティング</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailHide">サムネイルバーを隠す</sys:String>
     <sys:String x:Key="Str_Lang_English">English</sys:String>
     <sys:String x:Key="Str_Lang_Spanish">Español</sys:String>
     <sys:String x:Key="Str_Lang_Chinese">中文 (繁體)</sys:String>

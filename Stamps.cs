@@ -30,7 +30,8 @@ namespace KillerPDF
         {
             if (_doc is null) return;
             int pageIdx = PageList.SelectedIndex < 0 ? 0 : PageList.SelectedIndex;
-            var src = RenderPageBitmap(pageIdx, 1100, BurnPageAnnotationsToTemp(pageIdx));
+            var previewSource = RenderPageBitmap(pageIdx, 1100, BurnPageAnnotationsToTemp(pageIdx));
+            var src = previewSource is null ? null : DisplayDocumentBitmap(previewSource);
             if (src is null) { SetStatus(Loc("Str_Tf_NoRender")); return; }
 
             var page = _doc.Pages[pageIdx];
@@ -38,7 +39,8 @@ namespace KillerPDF
             var win = new StampWindow(this, src, pwpt, phpt, _doc.PageCount, pageIdx, _docStampSpec,
                 idx =>   // page-render callback for the preview stepper
                 {
-                    var s = RenderPageBitmap(idx, 1100, BurnPageAnnotationsToTemp(idx));
+                    var rendered = RenderPageBitmap(idx, 1100, BurnPageAnnotationsToTemp(idx));
+                    var s = rendered is null ? null : DisplayDocumentBitmap(rendered);
                     var (w, h) = EffectivePageSize(_doc!.Pages[idx]);
                     return (s, w, h);
                 });
@@ -134,7 +136,7 @@ namespace KillerPDF
                 .Replace("{N}", (_doc?.PageCount ?? 1).ToString());
             if (text.Length == 0) return;
 
-            var tb = new TextBlock { Text = text, FontFamily = UiKit.UiFont, FontSize = Math.Max(1, fontCanvas), Foreground = new SolidColorBrush(spec.NumColor), IsHitTestVisible = false };
+            var tb = new TextBlock { Text = text, FontFamily = UiKit.UiFont, FontSize = Math.Max(1, fontCanvas), Foreground = new SolidColorBrush(DisplayDocumentColor(spec.NumColor)), IsHitTestVisible = false };
             var sz = MeasureEl(tb);
             int posH = spec.NumPosH;
             double x, y;
@@ -164,8 +166,9 @@ namespace KillerPDF
             double w, h;
             if (spec.WmIsImage && !string.IsNullOrEmpty(spec.WmImagePath) && System.IO.File.Exists(spec.WmImagePath))
             {
-                BitmapImage? bmp = LoadImageFile(spec.WmImagePath!);
+                BitmapSource? bmp = LoadImageFile(spec.WmImagePath!);
                 if (bmp is null) return;
+                bmp = DisplayDocumentBitmap(bmp);
                 w = rdW * 0.5 * spec.WmScale;
                 h = w * bmp.PixelHeight / Math.Max(1, bmp.PixelWidth);
                 el = new Image { Source = bmp, Width = w, Height = h, Opacity = spec.WmOpacity, Stretch = Stretch.Fill, IsHitTestVisible = false };
@@ -174,7 +177,7 @@ namespace KillerPDF
             {
                 if (string.IsNullOrEmpty(spec.WmText)) return;
                 double fontCanvas = spec.WmFontPt * rdH / Math.Max(1, phpt);
-                var tb = new TextBlock { Text = spec.WmText, FontFamily = new FontFamily(string.IsNullOrWhiteSpace(spec.WmFont) ? "Segoe UI" : spec.WmFont), FontWeight = FontWeights.Bold, FontSize = Math.Max(1, fontCanvas), Foreground = new SolidColorBrush(spec.WmColor), Opacity = spec.WmOpacity, IsHitTestVisible = false };
+                var tb = new TextBlock { Text = spec.WmText, FontFamily = new FontFamily(string.IsNullOrWhiteSpace(spec.WmFont) ? "Segoe UI" : spec.WmFont), FontWeight = FontWeights.Bold, FontSize = Math.Max(1, fontCanvas), Foreground = new SolidColorBrush(DisplayDocumentColor(spec.WmColor)), Opacity = spec.WmOpacity, IsHitTestVisible = false };
                 var sz = MeasureEl(tb);
                 w = sz.Width; h = sz.Height;
                 el = tb;

@@ -68,6 +68,15 @@
     <sys:String x:Key="Str_Toolbar_TextBeside">Texto junto a iconos</sys:String>
     <sys:String x:Key="Str_Toolbar_TextUnder">Texto bajo los iconos</sys:String>
     <sys:String x:Key="Str_Toolbar_TextOnly">Solo texto</sys:String>
+    <sys:String x:Key="Str_Toolbar_Position">POSICIÓN DE LA BARRA</sys:String>
+    <sys:String x:Key="Str_Bar_Docked">Acoplada</sys:String>
+    <sys:String x:Key="Str_Bar_Floating">Flotante</sys:String>
+    <sys:String x:Key="Str_Bar_Hidden">Oculta</sys:String>
+    <sys:String x:Key="Str_ThumbnailBar">BARRA DE MINIATURAS</sys:String>
+    <sys:String x:Key="Str_DocumentDarkMode">Páginas del documento oscuras</sys:String>
+    <sys:String x:Key="Str_TT_DocumentDarkMode">Alternar páginas oscuras</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailDock">Acoplar o hacer flotante la barra de miniaturas</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailHide">Ocultar la barra de miniaturas</sys:String>
     <sys:String x:Key="Str_Lang_English">English</sys:String>
     <sys:String x:Key="Str_Lang_Spanish">Español</sys:String>
     <sys:String x:Key="Str_Lang_Chinese">中文 (繁體)</sys:String>

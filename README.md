@@ -16,6 +16,7 @@ KillerPDF is what I wanted: local-only, portable, no account, no telemetry. The 
 
 - High-quality rendering via PDFium
 - Four view modes - Single Page, Continuous scroll, Two-Page, and Grid - that persist across sessions
+- Preview-style horizontal thumbnail filmstrip with floating, docked, and hidden layouts
 - Tabbed documents: open several PDFs at once, each restoring its page, zoom, and view mode
 - Full-text search across the whole document with highlighting; drag-select to copy text
 - Outline/bookmark navigation and clickable links, including internal cross-references and TOC back-links
@@ -63,7 +64,8 @@ KillerPDF is what I wanted: local-only, portable, no account, no telemetry. The 
 ### Customize
 
 - Six themes - Dark, Light, Black, Blood, Greed, Cyanotic - with per-theme accent colors, switchable live
-- Toolbar style (icon size, text placement) and a resizable sidebar that docks left or right
+- Independent dark document pages that invert the viewer and thumbnails without changing saved or printed output
+- Toolbar style (icon size, text placement), docked/floating/hidden placement, and a resizable sidebar that docks left or right
 - Localized UI in 8 languages (English, Spanish, Traditional and Simplified Chinese, German, French, Turkish, Bengali); contribute via `Strings/TRANSLATING.md`
 - Full keyboard shortcut overlay (Ctrl+?) with a link to the online guide
 

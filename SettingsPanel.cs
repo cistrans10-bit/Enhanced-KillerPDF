@@ -71,6 +71,7 @@ namespace KillerPDF
             SidebarLeftRadio.IsChecked   = !_sidebarRight;
             SidebarRightRadio.IsChecked  = _sidebarRight;
             SidebarCurrentLabel.Text     = Loc(_sidebarRight ? "Str_Sidebar_Right" : "Str_Sidebar_Left");
+            SyncViewerChromeSettings();
             // Sync the Links section: confirm is ON unless the user has opted out ("Don't ask again").
             LinkConfirmCheck.IsChecked = App.GetSetting(SkipLinkConfirmSetting) != "1";
             PositionSettingsPanel();

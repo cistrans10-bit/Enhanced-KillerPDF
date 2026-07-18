@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using Docnet.Core;
 using Docnet.Core.Models;
+using KillerPDF.Services;
 
 namespace KillerPDF
 {
@@ -15,7 +16,7 @@ namespace KillerPDF
     /// Thumbnail is loaded lazily on a background thread; the UI binds to
     /// the <see cref="Thumbnail"/> property and updates via PropertyChanged.
     /// </summary>
-    internal sealed class PageThumbnailVm(int pageIndex, string filePath, int rotation = 0) : INotifyPropertyChanged
+    internal sealed class PageThumbnailVm(int pageIndex, string filePath, int rotation = 0, bool darkMode = false) : INotifyPropertyChanged
     {
         // Limit concurrent pdfium doc-reader opens to avoid contention
         private static readonly SemaphoreSlim _loadSem = new(2, 2);
@@ -25,6 +26,7 @@ namespace KillerPDF
 
         public int    PageIndex { get; } = pageIndex;
         public string Label     => $"Page {PageIndex + 1}";
+        public bool   DarkMode  { get; } = darkMode;
 
         private readonly string _filePath = filePath;
         private readonly int    _rotation = ((rotation % 360) + 360) % 360; // degrees: 0, 90, 180, 270
@@ -68,14 +70,14 @@ namespace KillerPDF
             await _loadSem.WaitAsync().ConfigureAwait(false);
             try
             {
-                var src = BuildThumb(_filePath, PageIndex, _rotation);
+                var src = BuildThumb(_filePath, PageIndex, _rotation, DarkMode);
                 if (src != null) SetThumbnail(src);
             }
             catch { /* thumbnail not critical */ }
             finally { _loadSem.Release(); }
         }
 
-        internal static BitmapSource? BuildThumb(string filePath, int pageIndex, int rotation = 0)
+        internal static BitmapSource? BuildThumb(string filePath, int pageIndex, int rotation = 0, bool darkMode = false)
         {
             try
             {
@@ -93,6 +95,7 @@ namespace KillerPDF
                 // Apply in-memory rotation (temp file stores /Rotate=0; _pageRotations holds true angle)
                 if (rotation != 0)
                     (raw, tw, th) = MainWindow.RotateBitmapStatic(raw, tw, th, rotation);
+                DisplayColorTransform.PrepareBgraForDisplay(raw, darkMode);
                 return EncodeToBitmapSource(raw, tw, th);
             }
             catch { return null; }
@@ -102,8 +105,11 @@ namespace KillerPDF
         /// Encode already-decoded BGRA pixels (with rotation applied) to a frozen BitmapFrame.
         /// Called by the RefreshPageList bulk loader which manages its own doc reader.
         /// </summary>
-        internal static BitmapSource? BuildThumbFromRaw(byte[] bgra, int width, int height)
-            => EncodeToBitmapSource(bgra, width, height);
+        internal static BitmapSource? BuildThumbFromRaw(byte[] bgra, int width, int height, bool darkMode = false)
+        {
+            DisplayColorTransform.PrepareBgraForDisplay(bgra, darkMode);
+            return EncodeToBitmapSource(bgra, width, height);
+        }
 
         /// <summary>
         /// Encode raw BGRA (pdfium) → PNG → frozen BitmapFrame entirely on the calling thread.

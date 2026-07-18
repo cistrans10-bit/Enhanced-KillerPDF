@@ -63,13 +63,23 @@ namespace KillerPDF
             var v = entering ? Visibility.Collapsed : Visibility.Visible;
 
             TitleBarBorder.Visibility     = v;
-            ToolbarRowBorder.Visibility   = v;
             TabStripBorder.Visibility     = v;
             FooterBorder.Visibility       = v;
             SidebarOuterGrid.Visibility   = v;
             SidebarToggleStrip.Visibility = v;
             SidebarSplitter.Visibility    = v;
             SidebarShadow.Visibility      = v;
+
+            // These two controls have their own persisted Hidden/Floating/Docked modes, so exit must
+            // restore that policy instead of blindly forcing them visible.
+            if (entering)
+            {
+                ToolbarRowBorder.Visibility = Visibility.Collapsed;
+                ThumbnailBarBorder.Visibility = Visibility.Collapsed;
+                // Docked thumbnails reserve a document-grid row; collapse that reservation too so
+                // distraction-free mode has no empty strip along the bottom.
+                ThumbnailBarRow.Height = new GridLength(0);
+            }
 
             if (entering)
             {
@@ -133,6 +143,7 @@ namespace KillerPDF
                 WindowState = WindowState.Normal;
                 Left = _fsPrevLeft; Top = _fsPrevTop; Width = _fsPrevW; Height = _fsPrevH;
                 if (_fsPrevState == WindowState.Maximized) WindowState = WindowState.Maximized;
+                ApplyViewerChromeLayout();
             }
 
             // Re-apply the frame treatment: squared (no border, square corners, full clip) in full screen,

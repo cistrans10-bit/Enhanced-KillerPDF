@@ -124,10 +124,10 @@ namespace KillerPDF
                     {
                         Text = placed.Content,
                         Background = TextEditBackground(),
-                        Foreground = new SolidColorBrush(pcol),
+                        Foreground = new SolidColorBrush(DisplayDocumentColor(pcol)),
                         BorderBrush = (SolidColorBrush)FindResource("Accent"),
                         SelectionBrush = AccentBrush(),
-                        CaretBrush = new SolidColorBrush(pcol),
+                        CaretBrush = new SolidColorBrush(DisplayDocumentColor(pcol)),
                         Template = FlatTextBoxTemplate(),
                         BorderThickness = new Thickness(1),
                         FontFamily = UiKit.UiFont,
@@ -348,10 +348,10 @@ namespace KillerPDF
             {
                 Text = text,
                 Background = Brushes.Transparent,   // the opaque cover behind supplies the backdrop
-                Foreground = new SolidColorBrush(inkColor),
+                Foreground = new SolidColorBrush(DisplayDocumentColor(inkColor)),
                 BorderBrush = (SolidColorBrush)FindResource("Accent"),
                 SelectionBrush = AccentBrush(),
-                CaretBrush = new SolidColorBrush(inkColor),
+                CaretBrush = new SolidColorBrush(DisplayDocumentColor(inkColor)),
                 Template = FlatTextBoxTemplate(),
                 BorderThickness = new Thickness(1),
                 FontFamily = new FontFamily(fontName),
@@ -400,7 +400,7 @@ namespace KillerPDF
         // translucent neutral gray. Gray (not white) so the empty editable box stays visible on both
         // light/white pages and dark pages; it's only shown during editing and never committed.
         private Brush TextEditBackground()
-            => _textFillColor.A > 0 ? new SolidColorBrush(_textFillColor)
+            => _textFillColor.A > 0 ? new SolidColorBrush(DisplayDocumentColor(_textFillColor))
                                     : new SolidColorBrush(Color.FromArgb(64, 128, 128, 128));
 
         // True when 'pos' (in _activeCanvas coordinates) falls inside the text box currently being
@@ -432,10 +432,10 @@ namespace KillerPDF
             var tb = new TextBox
             {
                 Background = TextEditBackground(),
-                Foreground = new SolidColorBrush(_textColor),
+                Foreground = new SolidColorBrush(DisplayDocumentColor(_textColor)),
                 BorderBrush = (SolidColorBrush)FindResource("Accent"),
                 SelectionBrush = AccentBrush(),
-                CaretBrush = new SolidColorBrush(_textColor),
+                CaretBrush = new SolidColorBrush(DisplayDocumentColor(_textColor)),
                 Template = FlatTextBoxTemplate(),
                 BorderThickness = new Thickness(1),
                 FontFamily = UiKit.UiFont,
@@ -669,7 +669,9 @@ namespace KillerPDF
                     Underline = _textUnderline,
                     Width = boxW
                 };
-                ta.SetColor(tb.Foreground is SolidColorBrush scb ? scb.Color : Colors.Black);
+                // The live TextBox uses a display-transformed brush in document dark mode. Persist the
+                // original document-space color so saved/flattened output never inherits that inversion.
+                ta.SetColor(_textColor);
                 // A cover-paired edit gets no fill of its own - the opaque cover behind it is the backdrop.
                 ta.SetFill(_pendingCover is not null ? Colors.Transparent : _textFillColor);
                 // Free-form height if the box was manually resized; otherwise fit to the wrapped text.
@@ -733,12 +735,20 @@ namespace KillerPDF
             return null;
         }
 
-        private static Color ReadBgraPixel(System.Windows.Media.Imaging.BitmapSource bmp, int x, int y)
+        private Color ReadBgraPixel(System.Windows.Media.Imaging.BitmapSource bmp, int x, int y)
         {
             x = Math.Max(0, Math.Min(x, bmp.PixelWidth - 1));
             y = Math.Max(0, Math.Min(y, bmp.PixelHeight - 1));
             var px = new byte[4];
             bmp.CopyPixels(new Int32Rect(x, y, 1, 1), px, 4, 0);   // Bgra32: B,G,R,A
+            // PageImage contains the display raster. Undo the display-only inversion before sampling so
+            // an edit created in dark mode still stores the PDF's original paper and ink colors.
+            if (_documentDarkMode)
+            {
+                px[0] = (byte)(255 - px[0]);
+                px[1] = (byte)(255 - px[1]);
+                px[2] = (byte)(255 - px[2]);
+            }
             // Composite over white (the PDF page background) so transparent pixels - common on repaired
             // or scanned renders - read as white, not black. Returns an opaque color for sampling.
             double a = px[3] / 255.0;

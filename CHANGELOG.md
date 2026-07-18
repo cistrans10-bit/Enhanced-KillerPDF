@@ -4,6 +4,13 @@ All notable changes to KillerPDF are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- Docked, floating, and hidden toolbar placement, persisted between sessions.
+- Preview-style horizontal thumbnail bar with floating, docked, and hidden layouts, synchronized with the page sidebar.
+- Independent dark document pages across the viewer, thumbnails, annotations, and tool previews without changing print, export, OCR, or saved PDF colors.
+
 ## [1.6.2] - 2026-07-11
 
 ### Added
@@ -289,4 +296,3 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ### Added
 - Post-publish MSBuild target that automatically bundles a GPL3-compliant source zip alongside the published EXE.
 - CHANGELOG.md.
-

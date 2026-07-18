@@ -174,11 +174,13 @@ namespace KillerPDF
             if (_doc is null || _currentFile is null)
             {
                 PageList.ItemsSource = null;
+                UpdateThumbnailBarVisibility();
                 return;
             }
 
             int    pageCount = _doc.PageCount;
             string filePath  = _currentFile;
+            bool   darkMode  = _documentDarkMode;
 
             // Snapshot rotations on the UI thread before going to background.
             var rotSnap = new Dictionary<int, int>(_pageRotations);
@@ -192,15 +194,16 @@ namespace KillerPDF
             for (int i = 0; i < pageCount; i++)
             {
                 rotSnap.TryGetValue(i, out int rot);
-                items[i] = new PageThumbnailVm(i, filePath, rot);
+                items[i] = new PageThumbnailVm(i, filePath, rot, darkMode);
                 // Seed with stale thumbnail - better than blank while reloading
-                if (oldItems != null && i < oldItems.Length)
+                if (oldItems != null && i < oldItems.Length && oldItems[i].DarkMode == darkMode)
                 {
                     var prev = oldItems[i].Thumbnail;
                     if (prev != null) items[i].SetThumbnailDirect(prev);
                 }
             }
             PageList.ItemsSource = items;
+            UpdateThumbnailBarVisibility();
 
             // Load thumbnails sequentially on a background thread via a single doc reader.
             _ = System.Threading.Tasks.Task.Run(() =>
@@ -222,7 +225,7 @@ namespace KillerPDF
                             rotSnap.TryGetValue(i, out int rot);
                             if (rot != 0)
                                 (raw, tw, th) = RotateBitmap(raw, tw, th, rot);
-                            var src = PageThumbnailVm.BuildThumbFromRaw(raw, tw, th);
+                            var src = PageThumbnailVm.BuildThumbFromRaw(raw, tw, th, darkMode);
                             if (src != null && !ct.IsCancellationRequested)
                                 items[i].SetThumbnail(src);
                         }

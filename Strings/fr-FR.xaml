@@ -181,6 +181,15 @@ Les redimensionner à une taille prise en charge ? Les pages conservent leur app
     <sys:String x:Key="Str_Toolbar_TextBeside">Texte à côté des icônes</sys:String>
     <sys:String x:Key="Str_Toolbar_TextUnder">Texte sous les icônes</sys:String>
     <sys:String x:Key="Str_Toolbar_TextOnly">Texte seul</sys:String>
+    <sys:String x:Key="Str_Toolbar_Position">POSITION DE LA BARRE D'OUTILS</sys:String>
+    <sys:String x:Key="Str_Bar_Docked">Ancrée</sys:String>
+    <sys:String x:Key="Str_Bar_Floating">Flottante</sys:String>
+    <sys:String x:Key="Str_Bar_Hidden">Masquée</sys:String>
+    <sys:String x:Key="Str_ThumbnailBar">BARRE DE MINIATURES</sys:String>
+    <sys:String x:Key="Str_DocumentDarkMode">Pages du document sombres</sys:String>
+    <sys:String x:Key="Str_TT_DocumentDarkMode">Activer les pages sombres</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailDock">Ancrer ou libérer la barre de miniatures</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailHide">Masquer la barre de miniatures</sys:String>
     <sys:String x:Key="Str_Lang_Chinese">中文 (繁體)</sys:String>
 
     <!-- Keyboard shortcuts (remainder) -->

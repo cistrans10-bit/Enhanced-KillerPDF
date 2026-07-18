@@ -286,6 +286,7 @@ namespace KillerPDF
         public MainWindow()
         {
             InitializeComponent();
+            ReadViewerChromeSettings();
             var v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             if (v != null) VersionLabel.Text = $"v{v.Major}.{v.Minor}.{v.Build}";
             // Accept dropped files/folders/archives anywhere on the window (not just the empty drop zone),
@@ -405,6 +406,7 @@ namespace KillerPDF
             {
                 RestoreWindowSettings();
                 ApplySidebarSide();   // place the sidebar on the saved side (default left)
+                ApplyViewerChromeLayout();
                 if (_toolbarStyle != ToolbarStyle.SmallIcons) ApplyToolbarAppearance();
 
                 var args = Environment.GetCommandLineArgs();

@@ -50,7 +50,9 @@ namespace KillerPDF
         private void ApplyTextStyleToActiveBox()
         {
             if (_activeTextBox is null) return;
-            _activeTextBox.Foreground = new SolidColorBrush(_textColor);
+            var displayText = DisplayDocumentColor(_textColor);
+            _activeTextBox.Foreground = new SolidColorBrush(displayText);
+            _activeTextBox.CaretBrush = new SolidColorBrush(displayText);
             _activeTextBox.Background = TextEditBackground();   // reflect the chosen fill live
             StyleEditBox(_activeTextBox);                       // typeface + B/I/S live
             int pg = _activeTextBox.Tag is int tp ? tp : PageList.SelectedIndex;

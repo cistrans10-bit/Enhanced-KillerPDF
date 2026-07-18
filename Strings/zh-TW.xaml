@@ -70,6 +70,15 @@
     <sys:String x:Key="Str_Toolbar_TextBeside">圖示加文字</sys:String>
     <sys:String x:Key="Str_Toolbar_TextUnder">圖示下方文字</sys:String>
     <sys:String x:Key="Str_Toolbar_TextOnly">僅文字</sys:String>
+    <sys:String x:Key="Str_Toolbar_Position">工具列位置</sys:String>
+    <sys:String x:Key="Str_Bar_Docked">停駐</sys:String>
+    <sys:String x:Key="Str_Bar_Floating">浮動</sys:String>
+    <sys:String x:Key="Str_Bar_Hidden">隱藏</sys:String>
+    <sys:String x:Key="Str_ThumbnailBar">縮圖列</sys:String>
+    <sys:String x:Key="Str_DocumentDarkMode">深色文件頁面</sys:String>
+    <sys:String x:Key="Str_TT_DocumentDarkMode">切換深色文件頁面</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailDock">停駐或浮動縮圖列</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailHide">隱藏縮圖列</sys:String>
     <sys:String x:Key="Str_Lang_English">English</sys:String>
     <sys:String x:Key="Str_Lang_Spanish">Español</sys:String>
     <sys:String x:Key="Str_Lang_Chinese">中文 (繁體)</sys:String>

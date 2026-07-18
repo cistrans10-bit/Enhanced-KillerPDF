@@ -146,7 +146,7 @@ namespace KillerPDF
 
             var tile = new Border
             {
-                Background        = Brushes.White,
+                Background        = DocumentPageBackground,
                 VerticalAlignment = VerticalAlignment.Top,
                 Margin            = new Thickness(0, 0, 12, 12),
                 Child             = grid,
@@ -220,7 +220,7 @@ namespace KillerPDF
                     Width      = _continuousPageW,
                     Height     = slotH,
                     Margin     = new Thickness(0, 0, 0, 12),
-                    Background = Brushes.White,   // empty-page scaffold while the bitmap streams in (not a dark box)
+                    Background = DocumentPageBackground,
                     Tag = i,
                     Child = slotGrid
                 };
@@ -272,6 +272,7 @@ namespace KillerPDF
 
             // Capture per-page rotations on the UI thread before going async
             var rotations = new Dictionary<int, int>(_pageRotations);
+            bool darkMode = _documentDarkMode;
 
             var session = _active;
             await System.Threading.Tasks.Task.Run(() =>
@@ -285,7 +286,7 @@ namespace KillerPDF
                         int rot = rotations.TryGetValue(i, out int rr) ? rr : 0;
 
                         // Cache hit: skip pdfium, just attach the cached bitmap to its slot.
-                        var cb = TryGetCachedRender(session, i, renderW, rot);
+                        var cb = TryGetCachedRender(session, i, renderW, rot, darkMode);
                         if (cb != null)
                         {
                             int fic = i;
@@ -305,6 +306,7 @@ namespace KillerPDF
                         if (w <= 0 || h <= 0 || raw is null) continue;
                         if (rot != 0)
                             (raw, w, h) = RotateBitmap(raw, w, h, rot);
+                        DisplayColorTransform.PrepareBgraForDisplay(raw, darkMode);
 
                         int fi = i, fw = w, fh = h, prot = rot;
                         byte[] bytes = raw;
@@ -320,7 +322,7 @@ namespace KillerPDF
                             int ddw = Math.Max(1, (int)Math.Round(targetW));
                             int ddh = Math.Max(1, (int)Math.Round(targetW * fh / fw));
                             var bmp = BuildScaledBitmap(fw, fh, bytes, ddw, ddh);
-                            CacheRender(session, fi, renderW, prot, bmp);
+                            CacheRender(session, fi, renderW, prot, darkMode, bmp);
                             SetContinuousSlot(fi, bmp);
                         });
                     }
@@ -345,7 +347,7 @@ namespace KillerPDF
             pageImg.Source  = bmp;
             pageImg.Width   = dipW;
             pageImg.Height  = dipH;
-            slot.Background = Brushes.White;
+            slot.Background = DocumentPageBackground;
 
             // Size the slot and overlay from the ACTUAL rendered page so a cropped page (which renders
             // shorter than its MediaBox estimate) fills its slot with no white bars.
@@ -399,6 +401,7 @@ namespace KillerPDF
 
             double targetW = _continuousPageW;
             int baseW = Math.Max(800, Math.Min(2048, (int)(targetW * 2)));
+            bool darkMode = _documentDarkMode;
             var dpiInfo = VisualTreeHelper.GetDpi(this);
             double dpiScale = Math.Max(dpiInfo.DpiScaleX, dpiInfo.DpiScaleY);
             int hiW = (int)Math.Min(4096, targetW * 2 * dpiScale * Math.Max(1.0, _zoomLevel));
@@ -435,7 +438,7 @@ namespace KillerPDF
             {
                 if (wantHi && visible.Contains(p)) continue;
                 int rot = _pageRotations.TryGetValue(p, out int rr) ? rr : 0;
-                var baseBmp = TryGetCachedRender(session, p, baseW, rot);
+                var baseBmp = TryGetCachedRender(session, p, baseW, rot, darkMode);
                 if (baseBmp != null) SetContinuousSlot(p, baseBmp);
                 _continuousSharpPages.Remove(p);
             }
@@ -464,6 +467,7 @@ namespace KillerPDF
                         if (w <= 0 || h <= 0 || raw is null) continue;
                         int rot = rotations.TryGetValue(p, out int rr) ? rr : 0;
                         if (rot != 0) (raw, w, h) = RotateBitmap(raw, w, h, rot);
+                        DisplayColorTransform.PrepareBgraForDisplay(raw, darkMode);
 
                         int fp = p, fw = w, fh = h;
                         byte[] bytes = raw;
@@ -513,12 +517,13 @@ namespace KillerPDF
                 _lastRenderZoom = _zoomLevel;
 
                 int pgRot = _pageRotations.TryGetValue(pageIndex, out int pr0) ? pr0 : 0;
+                bool darkMode = _documentDarkMode;
 
                 // Reuse this tab's cached bitmap for (page, resolution, rotation) if present; otherwise
                 // rasterize once and cache it. On a switch back to a recent tab this skips pdfium entirely.
                 int width, height;
                 System.Windows.Media.Imaging.BitmapSource bitmap;
-                var cached = TryGetCachedRender(_active, pageIndex, scaledMax, pgRot);
+                var cached = TryGetCachedRender(_active, pageIndex, scaledMax, pgRot, darkMode);
                 if (cached != null)
                 {
                     bitmap = cached;
@@ -542,6 +547,7 @@ namespace KillerPDF
                         SetStatus(string.Format(Loc("Str_PageRenderError"), pageIndex + 1));
                         return;
                     }
+                    DisplayColorTransform.PrepareBgraForDisplay(rawBytes, darkMode);
                     // Bake the bitmap DPI from the canonical render-dim size (longest side -> 2048 DIP, the
                     // SAME zoom-independent basis continuous and the secondary tiles use) so the extra pixels
                     // display within a fixed DIP area regardless of zoom. LayoutTransform supplies the zoom.
@@ -552,7 +558,7 @@ namespace KillerPDF
                     wb.WritePixels(new Int32Rect(0, 0, width, height), rawBytes, width * 4, 0);
                     wb.Freeze();
                     bitmap = wb;
-                    CacheRender(_active, pageIndex, scaledMax, pgRot, bitmap);
+                    CacheRender(_active, pageIndex, scaledMax, pgRot, darkMode, bitmap);
                 }
 
                 // Canonical render-dim space: longest side -> 2048 DIP, identical to the continuous and
@@ -717,6 +723,7 @@ namespace KillerPDF
             RemoveSecondaryTilesNotIn(keepPages);
 
             string currentFile = _currentFile;
+            bool darkMode = _documentDarkMode;
 
             // Collect rotations on the UI thread before the background task.
             var secRotations = new Dictionary<int, int>();
@@ -746,7 +753,7 @@ namespace KillerPDF
                             int rot = secRotations.TryGetValue(i, out int rr) ? rr : 0;
 
                             // Cache hit: skip pdfium entirely, just attach the cached tile bitmap.
-                            var cachedTile = TryGetCachedRender(session, i, tileBucket, rot);
+                            var cachedTile = TryGetCachedRender(session, i, tileBucket, rot, darkMode);
                             if (cachedTile != null)
                             {
                                 int pic = i;
@@ -772,6 +779,7 @@ namespace KillerPDF
                             if (w <= 0 || h <= 0 || rawBytes is null) continue;
                             if (rot != 0)
                                 (rawBytes, w, h) = RotateBitmap(rawBytes, w, h, rot);
+                            DisplayColorTransform.PrepareBgraForDisplay(rawBytes, darkMode);
 
                             int pi = i, pw = w, ph = h, prot = rot;
                             byte[] bytes = rawBytes;
@@ -784,7 +792,7 @@ namespace KillerPDF
                                     int ddw = Math.Max(1, (int)Math.Round(primaryDipW));
                                     int ddh = Math.Max(1, (int)Math.Round(primaryDipW * ph / pw));
                                     var bmp = BuildScaledBitmap(pw, ph, bytes, ddw, ddh);
-                                    CacheRender(session, pi, tileBucket, prot, bmp);
+                                    CacheRender(session, pi, tileBucket, prot, darkMode, bmp);
                                     AddSecondaryTile(pi, bmp, primaryDipW);
                                 });
                             }
@@ -848,7 +856,7 @@ namespace KillerPDF
 
             var tile = new Border
             {
-                Background = Brushes.White,
+                Background = DocumentPageBackground,
                 VerticalAlignment = VerticalAlignment.Top,
                 Margin = new Thickness(0, 0, 12, 12),
                 Child = pageGrid
@@ -893,6 +901,9 @@ namespace KillerPDF
             LoadOutlines();
             DropZone.Visibility = Visibility.Collapsed;
             PagePreviewPanel.Visibility = Visibility.Visible;
+            // RefreshPageList runs before the preview becomes visible during first-open. Re-apply the
+            // selected filmstrip mode once the document surface is live so its overlay/docked row appears.
+            UpdateThumbnailBarVisibility();
             if (_closeFileBtnRef != null) _closeFileBtnRef.IsEnabled = true;
             _pageJumpBox.IsEnabled = true;
             _pageTotalLabel.Text = $"/ {_doc!.PageCount}";

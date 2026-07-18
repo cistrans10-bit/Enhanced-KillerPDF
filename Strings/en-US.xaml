@@ -70,6 +70,15 @@
     <sys:String x:Key="Str_Toolbar_TextBeside">Text beside icons</sys:String>
     <sys:String x:Key="Str_Toolbar_TextUnder">Text under icons</sys:String>
     <sys:String x:Key="Str_Toolbar_TextOnly">Text only</sys:String>
+    <sys:String x:Key="Str_Toolbar_Position">TOOLBAR POSITION</sys:String>
+    <sys:String x:Key="Str_Bar_Docked">Docked</sys:String>
+    <sys:String x:Key="Str_Bar_Floating">Floating</sys:String>
+    <sys:String x:Key="Str_Bar_Hidden">Hidden</sys:String>
+    <sys:String x:Key="Str_ThumbnailBar">THUMBNAIL BAR</sys:String>
+    <sys:String x:Key="Str_DocumentDarkMode">Dark document pages</sys:String>
+    <sys:String x:Key="Str_TT_DocumentDarkMode">Toggle dark document pages</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailDock">Dock or float the thumbnail bar</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailHide">Hide the thumbnail bar</sys:String>
     <sys:String x:Key="Str_Lang_English">English</sys:String>
     <sys:String x:Key="Str_Lang_Spanish">Español</sys:String>
     <sys:String x:Key="Str_Lang_Chinese">中文 (繁體)</sys:String>

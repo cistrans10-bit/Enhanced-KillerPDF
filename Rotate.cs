@@ -35,7 +35,8 @@ namespace KillerPDF
             // what Apply will produce (otherwise annotations are invisible in the Transform window). Kept at a
             // modest resolution (the preview only shows at ~600px) so the live scale/rotate compose stays
             // fast; Apply re-renders at full resolution independently.
-            var src = RenderPageBitmap(pageIdx, 1100, BurnPageAnnotationsToTemp(pageIdx));
+            var previewSource = RenderPageBitmap(pageIdx, 1100, BurnPageAnnotationsToTemp(pageIdx));
+            var src = previewSource is null ? null : DisplayDocumentBitmap(previewSource);
             if (src is null) { SetStatus(Loc("Str_Tf_NoRender")); return; }
 
             // First-use warning that a transform rasterizes the page; persists the opt-out.

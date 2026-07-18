@@ -68,6 +68,15 @@
     <sys:String x:Key="Str_Toolbar_TextBeside">Simge yanında metin</sys:String>
     <sys:String x:Key="Str_Toolbar_TextUnder">Simge altında metin</sys:String>
     <sys:String x:Key="Str_Toolbar_TextOnly">Yalnızca metin</sys:String>
+    <sys:String x:Key="Str_Toolbar_Position">ARAÇ ÇUBUĞU KONUMU</sys:String>
+    <sys:String x:Key="Str_Bar_Docked">Sabit</sys:String>
+    <sys:String x:Key="Str_Bar_Floating">Yüzen</sys:String>
+    <sys:String x:Key="Str_Bar_Hidden">Gizli</sys:String>
+    <sys:String x:Key="Str_ThumbnailBar">KÜÇÜK RESİM ÇUBUĞU</sys:String>
+    <sys:String x:Key="Str_DocumentDarkMode">Koyu belge sayfaları</sys:String>
+    <sys:String x:Key="Str_TT_DocumentDarkMode">Koyu belge sayfalarını aç veya kapat</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailDock">Küçük resim çubuğunu sabitle veya yüzdür</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailHide">Küçük resim çubuğunu gizle</sys:String>
     <sys:String x:Key="Str_Lang_English">İngilizce</sys:String>
     <sys:String x:Key="Str_Lang_Spanish">İspanyolca</sys:String>
     <sys:String x:Key="Str_Lang_Chinese">Çince (Geleneksel)</sys:String>

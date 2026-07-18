@@ -1153,7 +1153,8 @@
         </Border>
 
         <!-- Toolbar -->
-        <Border Grid.Row="1" x:Name="ToolbarRowBorder" Background="{DynamicResource BgSidebar}">
+        <Border Grid.Row="1" x:Name="ToolbarRowBorder" Background="{DynamicResource BgSidebar}"
+                BorderBrush="{DynamicResource PaneBorder}" BorderThickness="0,0,0,1">
             <Grid>
             <Border IsHitTestVisible="False" Opacity="{DynamicResource GrainOpacity}" Background="{StaticResource GrainBrushShared}"/>
             <Grid x:Name="ToolbarGrid" SizeChanged="ToolbarGrid_SizeChanged" Margin="4,2">
@@ -1736,9 +1737,15 @@
             <!-- Document pane: row 1 of the document column. -->
             <Border Grid.Row="1" Grid.Column="2" x:Name="DocPaneBorder" Background="{DynamicResource BgCanvas}"
                     BorderBrush="{DynamicResource PaneBorder}" BorderThickness="1">
-                <Grid>
+                <Grid x:Name="DocViewportGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <!-- Reserved only when the Preview-style thumbnail bar is docked. In floating
+                             mode the same bar moves into row 0 as an overlay and this row stays at zero. -->
+                        <RowDefinition x:Name="ThumbnailBarRow" Height="0"/>
+                    </Grid.RowDefinitions>
                     <!-- Film grain - sits on the canvas background, behind the document -->
-                    <Border IsHitTestVisible="False" Opacity="{DynamicResource GrainOpacity}">
+                    <Border Grid.Row="0" IsHitTestVisible="False" Opacity="{DynamicResource GrainOpacity}">
                         <Border.Background>
                             <ImageBrush x:Name="GrainBrush"
                                         TileMode="Tile"
@@ -1749,7 +1756,7 @@
                     </Border>
 
                     <!-- Drop zone -->
-                    <Border x:Name="DropZone" Background="Transparent"
+                    <Border Grid.Row="0" x:Name="DropZone" Background="Transparent"
                             AllowDrop="True" Drop="DropZone_Drop" DragOver="DropZone_DragOver"
                             MouseLeftButtonDown="DropZone_Click">
                         <Grid>
@@ -1792,7 +1799,7 @@
                     </Border>
 
                     <!-- PDF page with annotation overlay -->
-                    <ScrollViewer x:Name="PagePreviewPanel" Visibility="Collapsed"
+                    <ScrollViewer Grid.Row="0" x:Name="PagePreviewPanel" Visibility="Collapsed"
                                   HorizontalScrollBarVisibility="Auto"
                                   VerticalScrollBarVisibility="Auto"
                                   Background="Transparent"
@@ -1863,6 +1870,100 @@
                             </Grid>
                         </Border>
                     </ScrollViewer>
+
+                    <!-- Preview-style horizontal filmstrip. The same control is restyled and moved
+                         between a compact floating pill and a full-width docked row in ViewerChrome.cs. -->
+                    <Border Grid.Row="0" x:Name="ThumbnailBarBorder"
+                            Visibility="Collapsed" Panel.ZIndex="450"
+                            Background="{DynamicResource BgSidebar}"
+                            BorderBrush="{DynamicResource PaneBorder}" BorderThickness="1"
+                            CornerRadius="12" Padding="6" ClipToBounds="True">
+                        <DockPanel LastChildFill="True">
+                            <Button x:Name="DocumentDarkModeButton" DockPanel.Dock="Left"
+                                    AutomationProperties.AutomationId="DocumentDarkModeButton"
+                                    AutomationProperties.Name="{DynamicResource Str_TT_DocumentDarkMode}"
+                                    Content="&#x263E;" FontFamily="Segoe UI Symbol" FontSize="17"
+                                    Width="30" Height="30" Padding="0" Margin="0,0,4,0"
+                                    Style="{StaticResource ToolbarButton}"
+                                    Click="DocumentDarkModeButton_Click"
+                                    ToolTip="{DynamicResource Str_TT_DocumentDarkMode}"/>
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="4,0,0,0">
+                                <Button x:Name="ThumbnailDockButton" Content="&#xE718;"
+                                        AutomationProperties.AutomationId="ThumbnailDockButton"
+                                        AutomationProperties.Name="{DynamicResource Str_TT_ThumbnailDock}"
+                                        FontFamily="Segoe MDL2 Assets" FontSize="13"
+                                        Width="30" Height="30" Padding="0"
+                                        Style="{StaticResource ToolbarButton}"
+                                        Click="ThumbnailDockButton_Click"
+                                        ToolTip="{DynamicResource Str_TT_ThumbnailDock}"/>
+                                <Button Content="&#xE711;" FontFamily="Segoe MDL2 Assets" FontSize="12"
+                                        AutomationProperties.AutomationId="ThumbnailBarCloseButton"
+                                        AutomationProperties.Name="{DynamicResource Str_TT_ThumbnailHide}"
+                                        Width="30" Height="30" Padding="0"
+                                        Style="{StaticResource ToolbarButton}"
+                                        Click="ThumbnailBarCloseButton_Click"
+                                        ToolTip="{DynamicResource Str_TT_ThumbnailHide}"/>
+                            </StackPanel>
+                            <ListBox x:Name="BottomThumbnailList"
+                                     Background="Transparent" BorderThickness="0" Padding="0"
+                                     SelectionMode="Single" FocusVisualStyle="{x:Null}"
+                                     ItemsSource="{Binding ItemsSource, ElementName=PageList}"
+                                     SelectedIndex="{Binding SelectedIndex, ElementName=PageList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     ScrollViewer.CanContentScroll="True"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                     VirtualizingPanel.IsVirtualizing="True"
+                                     VirtualizingPanel.VirtualizationMode="Recycling"
+                                     PreviewMouseWheel="BottomThumbnailList_PreviewMouseWheel"
+                                     SelectionChanged="BottomThumbnailList_SelectionChanged">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Margin" Value="2,0"/>
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+                                                    <Border x:Name="ItemRing" Background="Transparent"
+                                                            BorderBrush="{DynamicResource BorderDim}" BorderThickness="1"
+                                                            CornerRadius="5" Padding="2">
+                                                        <ContentPresenter/>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="ItemRing" Property="Background" Value="{DynamicResource BgHover}"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter TargetName="ItemRing" Property="BorderBrush" Value="{DynamicResource Accent}"/>
+                                                            <Setter TargetName="ItemRing" Property="BorderThickness" Value="2"/>
+                                                            <Setter TargetName="ItemRing" Property="Background" Value="{DynamicResource AccentDim}"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type local:PageThumbnailVm}">
+                                        <Image Source="{Binding Thumbnail}" Stretch="Uniform"
+                                               Width="{Binding Tag, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                               Height="{Binding Tag, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                               ToolTip="{Binding Label}"
+                                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DockPanel>
+                    </Border>
                 </Grid>
             </Border>
 
@@ -2369,6 +2470,23 @@
                                                  GroupName="ToolbarGroup"
                                                  Style="{StaticResource ThemeRadio}"
                                                  Checked="ToolbarOnlyRadio_Checked"/>
+                                    <TextBlock Text="{DynamicResource Str_Toolbar_Position}"
+                                               Style="{StaticResource SettingsSubheader}" Margin="0,6,0,8"/>
+                                    <RadioButton x:Name="ToolbarDockedRadio"
+                                                 Content="{DynamicResource Str_Bar_Docked}"
+                                                 GroupName="ToolbarPlacementGroup"
+                                                 Style="{StaticResource ThemeRadio}"
+                                                 Checked="ToolbarDockedRadio_Checked"/>
+                                    <RadioButton x:Name="ToolbarFloatingRadio"
+                                                 Content="{DynamicResource Str_Bar_Floating}"
+                                                 GroupName="ToolbarPlacementGroup"
+                                                 Style="{StaticResource ThemeRadio}"
+                                                 Checked="ToolbarFloatingRadio_Checked"/>
+                                    <RadioButton x:Name="ToolbarHiddenRadio"
+                                                 Content="{DynamicResource Str_Bar_Hidden}"
+                                                 GroupName="ToolbarPlacementGroup"
+                                                 Style="{StaticResource ThemeRadio}"
+                                                 Checked="ToolbarHiddenRadio_Checked"/>
                         </StackPanel>
                     <!-- Sidebar position picker (Left / Right) -->
                     <TextBlock Text="{DynamicResource Str_Sidebar}" Style="{StaticResource SettingsSubheader}"
@@ -2422,6 +2540,25 @@
                                      GroupName="SidebarGroup" Style="{StaticResource ThemeRadio}"
                                      Checked="SidebarRightRadio_Checked"/>
                     </StackPanel>
+
+                    <TextBlock Text="{DynamicResource Str_ThumbnailBar}" Style="{StaticResource SettingsSubheader}"
+                               Margin="0,12,0,8"/>
+                    <RadioButton x:Name="ThumbnailBarFloatingRadio"
+                                 Content="{DynamicResource Str_Bar_Floating}"
+                                 GroupName="ThumbnailBarGroup" Style="{StaticResource ThemeRadio}"
+                                 Checked="ThumbnailBarFloatingRadio_Checked"/>
+                    <RadioButton x:Name="ThumbnailBarDockedRadio"
+                                 Content="{DynamicResource Str_Bar_Docked}"
+                                 GroupName="ThumbnailBarGroup" Style="{StaticResource ThemeRadio}"
+                                 Checked="ThumbnailBarDockedRadio_Checked"/>
+                    <RadioButton x:Name="ThumbnailBarHiddenRadio"
+                                 Content="{DynamicResource Str_Bar_Hidden}"
+                                 GroupName="ThumbnailBarGroup" Style="{StaticResource ThemeRadio}"
+                                 Checked="ThumbnailBarHiddenRadio_Checked"/>
+                    <CheckBox x:Name="DocumentDarkModeCheck"
+                              Content="{DynamicResource Str_DocumentDarkMode}"
+                              Style="{StaticResource ThemeCheck}"
+                              Checked="DocumentDarkModeCheck_Toggled" Unchecked="DocumentDarkModeCheck_Toggled"/>
 
                     <TextBlock Text="{DynamicResource Str_ViewMode}" Style="{StaticResource SettingsSubheader}"
                                Margin="0,12,0,8"/>

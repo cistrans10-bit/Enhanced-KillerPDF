@@ -68,6 +68,15 @@
     <sys:String x:Key="Str_Toolbar_TextBeside">Text neben Symbol</sys:String>
     <sys:String x:Key="Str_Toolbar_TextUnder">Text unter Symbol</sys:String>
     <sys:String x:Key="Str_Toolbar_TextOnly">Nur Text</sys:String>
+    <sys:String x:Key="Str_Toolbar_Position">POSITION DER SYMBOLLEISTE</sys:String>
+    <sys:String x:Key="Str_Bar_Docked">Angedockt</sys:String>
+    <sys:String x:Key="Str_Bar_Floating">Schwebend</sys:String>
+    <sys:String x:Key="Str_Bar_Hidden">Ausgeblendet</sys:String>
+    <sys:String x:Key="Str_ThumbnailBar">MINIATURENLEISTE</sys:String>
+    <sys:String x:Key="Str_DocumentDarkMode">Dunkle Dokumentseiten</sys:String>
+    <sys:String x:Key="Str_TT_DocumentDarkMode">Dunkle Dokumentseiten umschalten</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailDock">Miniaturenleiste andocken oder lösen</sys:String>
+    <sys:String x:Key="Str_TT_ThumbnailHide">Miniaturenleiste ausblenden</sys:String>
     <sys:String x:Key="Str_Lang_English">English</sys:String>
     <sys:String x:Key="Str_Lang_Spanish">Español</sys:String>
     <sys:String x:Key="Str_Lang_Chinese">中文 (繁體)</sys:String>
