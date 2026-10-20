@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RootNamespace>KillerPdf.Engine</RootNamespace>
+    <AssemblyName>KillerPdf.Engine</AssemblyName>
+    <Version>1.8.91</Version>
+    <PackageId>KillerPdf.Engine</PackageId>
+    <Title>The KillerPDF.Engine</Title>
+    <Authors>Steve the Killer</Authors>
+    <Copyright>Copyright (c) 2026 Steve the Killer</Copyright>
+    <Description>An independent .NET PDF 2.0 document engine for reading, validating, authoring, editing, signing, encrypting, and writing PDF files.</Description>
+    <PackageTags>pdf;pdf-2.0;pdf-a;pdf-ua;validation;authoring;signing;encryption;document-processing;csharp</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageProjectUrl>https://killerpdf.net/engine.html</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SteveTheKiller/KillerPDF</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageReleaseNotes>https://github.com/SteveTheKiller/KillerPDF/blob/main/engine/CHANGELOG.md</PackageReleaseNotes>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <Target Name="VerifyAppEngineVersion" BeforeTargets="PrepareForBuild;GenerateNuspec">
+    <XmlPeek XmlInputPath="$(MSBuildThisFileDirectory)../../KillerPDF.csproj" Query="/Project/PropertyGroup/Version/text()">
+      <Output TaskParameter="Result" PropertyName="KillerAppVersion" />
+    </XmlPeek>
+    <Error Condition="'$(Version)' != '$(KillerAppVersion)'" Text="Engine version $(Version) must match app version $(KillerAppVersion). Update both before building or packaging." />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="9.0.21" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

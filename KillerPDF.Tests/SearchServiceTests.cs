@@ -10,7 +10,7 @@ namespace KillerPDF.Tests
         [Fact]
         public void Search_EmptyQuery_ReturnsEmpty()
         {
-            var result = _svc.Search("irrelevant.pdf", "");
+            var result = SearchService.Search("irrelevant.pdf", "");
             Assert.Empty(result.ResultPages);
             Assert.Equal(0, result.TotalHits);
         }
@@ -18,7 +18,7 @@ namespace KillerPDF.Tests
         [Fact]
         public void Search_WhitespaceQuery_ReturnsEmpty()
         {
-            var result = _svc.Search("irrelevant.pdf", "   ");
+            var result = SearchService.Search("irrelevant.pdf", "   ");
             Assert.Empty(result.ResultPages);
             Assert.Equal(0, result.TotalHits);
         }
@@ -26,7 +26,7 @@ namespace KillerPDF.Tests
         [Fact]
         public void Search_EmptyFilePath_ReturnsEmpty()
         {
-            var result = _svc.Search("", "hello");
+            var result = SearchService.Search("", "hello");
             Assert.Empty(result.ResultPages);
             Assert.Equal(0, result.TotalHits);
         }
@@ -35,7 +35,7 @@ namespace KillerPDF.Tests
         public void Search_MissingFile_ReturnsEmpty()
         {
             // Should not throw; non-existent file produces no results.
-            var result = _svc.Search(@"C:\does\not\exist.pdf", "hello");
+            var result = SearchService.Search(@"C:\does\not\exist.pdf", "hello");
             Assert.Empty(result.ResultPages);
             Assert.Equal(0, result.TotalHits);
         }

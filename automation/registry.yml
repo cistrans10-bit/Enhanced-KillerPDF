@@ -1,0 +1,31 @@
+version: 1
+scripts:
+  payload_security:
+    path: build/payload-security.ps1
+    purpose: Select exact owned binaries, validate Authenticode, and generate final-byte manifests.
+    inputs: Prepared payload directory or final managed launcher.
+    outputs: Validation errors or manifest; temporary extracted owned binaries.
+    failure_behavior: Throw on missing or invalid first-party signatures.
+    mutates: build-output-and-temporary-files-only
+  gui_startup:
+    path: build/Test-GuiStartup.ps1
+    purpose: Exercise real MainWindow startup in an isolated process with bounded exit.
+    inputs: App or portable EXE, timeout, optional fresh evidence directory.
+    outputs: Retained temporary startup, stdout, and stderr logs.
+    failure_behavior: Throw on nonzero exit, timeout, failure report, or incomplete milestones.
+    mutates: temporary-files-and-test-owned-process-only
+  payload_security_tests:
+    path: build/Test-PayloadSecurity.ps1
+    purpose: Verify signature targets, negative gates, manifest bytes, and release ordering without signing.
+    inputs: Current packaging scripts.
+    outputs: Assertions and exit status.
+    failure_behavior: Throw on an incorrect acceptance or rejection.
+    mutates: temporary-fixture-files-only
+  gui_startup_runner_tests:
+    path: build/Test-GuiStartupRunner.ps1
+    purpose: Verify exit, proof, contradiction, and timeout handling using a disposable executable.
+    inputs: Windows PowerShell 5.1 and the GUI runner.
+    outputs: Assertions and retained fixture diagnostics.
+    failure_behavior: Throw on an incorrect runner result.
+    mutates: temporary-files-and-test-owned-process-only
+documentation: docs/startup-packaging.md

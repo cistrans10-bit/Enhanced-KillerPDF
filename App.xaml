@@ -9,52 +9,203 @@
                 <ResourceDictionary Source="Themes/Dark.xaml"/>
                 <!-- [1] Strings (overridden at startup by LocaleManager.Initialize) -->
                 <ResourceDictionary Source="Strings/en-US.xaml"/>
-                <!-- [2] Outline vector icon set (macOS-style toolbar/chrome icons) -->
-                <ResourceDictionary Source="Icons.xaml"/>
+                <!-- NOTHING GOES HERE. Slot [2] belongs to LocaleManager (the locale override,
+                     removed entirely for English), and [0]/[1] are the theme and the en-US base.
+                     All three are addressed BY INDEX, so an extra dictionary in this collection
+                     is silently overwritten or deleted at startup. Window-scoped resources are
+                     the place for anything else - see Controls/FileDialog.xaml. -->
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Chrome close-button corner. Defined at app scope (not just on MainWindow) so the dialog
                  windows that borrow the ChromeCloseButton style can resolve it too - otherwise the
-                 DynamicResource is unfound inside a dialog and the red hover box renders square.
-                 Kept near Windows' own DWM "round" corner preference (~8px) rather than scaled with
-                 RadWindow below, since it has to visually match the OS-drawn window corner. -->
-            <CornerRadius x:Key="ChromeCloseCorner">0,8,0,0</CornerRadius>
+                 DynamicResource is unfound inside a dialog and the red hover box renders square. -->
+            <CornerRadius x:Key="ChromeCloseCorner">0,7,0,0</CornerRadius>
+
+            <!-- Themed slider (size/opacity bars): groove + thumb that match the scrollbar palette.
+                 OverridesDefaultStyle so none of WPF's default blue track/selection can show through.
+                 App scope for the same reason as ChromeCloseCorner: the Transform and Stamp dialogs
+                 apply DarkSlider, and its template resolves the thumb/repeat styles by DynamicResource
+                 from THEIR windows - window-scoped styles were unfound there, so the repeat buttons and
+                 thumb fell back to stock WPF chrome behind the themed track. -->
+            <Style x:Key="DarkSliderRepeat" TargetType="RepeatButton">
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RepeatButton">
+                            <Border Background="Transparent"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="DarkSliderThumb" TargetType="Thumb">
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                <Setter Property="Width" Value="12"/>
+                <Setter Property="Height" Value="14"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Thumb">
+                            <!-- Keep the scrollbar color while tying the thumb to the active accent. -->
+                            <Border x:Name="tb" Background="{DynamicResource ScrollThumbHoverBrush}"
+                                    BorderBrush="{DynamicResource RadioAccent}" BorderThickness="1.5" CornerRadius="3"/>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="tb" Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+                                </Trigger>
+                                <Trigger Property="IsDragging" Value="True">
+                                    <Setter TargetName="tb" Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="DarkSlider" TargetType="Slider">
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Slider">
+                            <Grid VerticalAlignment="Center" Background="Transparent">
+                                <Border Height="4" CornerRadius="2" VerticalAlignment="Center"
+                                        Background="{DynamicResource SliderTrack}"/>
+                                <Track x:Name="PART_Track">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Style="{DynamicResource DarkSliderRepeat}" Command="{x:Static Slider.DecreaseLarge}"/>
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{DynamicResource DarkSliderThumb}"/>
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Style="{DynamicResource DarkSliderRepeat}" Command="{x:Static Slider.IncreaseLarge}"/>
+                                    </Track.IncreaseRepeatButton>
+                                </Track>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
             <!-- ============================================================================
-                 DESIGN TOKENS - the single source of truth every tool/dialog references.
+                 PRODUCT-SPECIFIC DESIGN TOKENS. Shared trademark palette tokens come from KillerUI;
+                 these local resources cover KillerPDF-only tools and dialogs.
                  Theme COLORS live in Themes/*.xaml; these are the theme-independent type,
                  shape, and elevation primitives. Code-built UI reads the same keys through
                  UiKit (UiKit.cs), so XAML and code can never drift apart.
                  ============================================================================ -->
 
             <!-- Type families -->
-            <FontFamily x:Key="UiFont">Segoe UI, Microsoft JhengHei UI, Nirmala UI</FontFamily>
-            <!-- The "KillerPDF" wordmark fonts (embedded, subset to the wordmark letters). "Killer" and "PDF"
-                 can use different faces. One place to change the logo typefaces everywhere. -->
-            <FontFamily x:Key="WordmarkFont">/KillerPDF;component/Fonts/#Typewriter A602</FontFamily>
-            <FontFamily x:Key="WordmarkFontPdf">/KillerPDF;component/Fonts/#Typewriter A602</FontFamily>
-            <FontFamily x:Key="MonoFont">Consolas</FontFamily>
+            <FontFamily x:Key="UiFont">./Fonts/#Killer Sans UI, Segoe UI, Microsoft JhengHei UI, Nirmala UI</FontFamily>
+            <!-- Assembly-relative: release payloads run as KillerPDF.App.exe while legacy and
+                 IDE builds run as KillerPDF.exe. Hard-coding either assembly name makes the
+                 embedded wordmark faces silently fall back in the other build. The name after
+                 # must match the font's name table; an approximate name makes WPF substitute the
+                 system font. -->
+            <!-- Family brand faces (licenses in Fonts/): Punktype (commercial license) for "Killer",
+                 Lacquer (OFL) for the app name, and Killer Sans (OFL) for headings and the footer.
+                 The wordmark sizes put the app name's capitals at 1.55x the height of Killer's, the
+                 same as the websites. -->
+            <FontFamily x:Key="WordmarkFont">./Fonts/#Punktype</FontFamily>
+            <FontFamily x:Key="WordmarkFontPdf">./Fonts/#Lacquer</FontFamily>
+            <FontFamily x:Key="BrandSansFont">./Fonts/#Killer Sans</FontFamily>
+            <FontFamily x:Key="MonoFont">./Fonts/#Killer Sans UI, Segoe UI, Microsoft JhengHei UI, Nirmala UI</FontFamily>
             <FontFamily x:Key="IconFont">Segoe MDL2 Assets</FontFamily>
 
             <!-- Corner radii (one rounding scale for the whole app) -->
-            <CornerRadius x:Key="RadControl">10</CornerRadius>
-            <CornerRadius x:Key="RadCard">14</CornerRadius>
-            <CornerRadius x:Key="RadWindow">18</CornerRadius>
+            <CornerRadius x:Key="RadControl">4</CornerRadius>
+            <CornerRadius x:Key="RadCard">6</CornerRadius>
+            <CornerRadius x:Key="RadWindow">7</CornerRadius>
+
+            <!-- Shared document/panel recess. Modern themes give these rings transparent brushes
+                 and zero thickness; 98SE supplies the full outer + inner directional bevel. -->
+            <Style x:Key="PaneBevelOverlay" TargetType="{x:Type Control}">
+                <Setter Property="IsHitTestVisible" Value="False"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Control}">
+                            <Grid>
+                                <Border BorderBrush="{DynamicResource PaneBevelDarkBrush}"
+                                        BorderThickness="{DynamicResource PaneBevelLightThickness}"/>
+                                <Border BorderBrush="{DynamicResource PaneBevelLightBrush}"
+                                        BorderThickness="{DynamicResource PaneBevelDarkThickness}"/>
+                                <Border Margin="{DynamicResource PaneBevelInnerMargin}"
+                                        BorderBrush="{DynamicResource PaneBevelDark2Brush}"
+                                        BorderThickness="{DynamicResource PaneBevel2LightThickness}"/>
+                                <Border Margin="{DynamicResource PaneBevelInnerMargin}"
+                                        BorderBrush="{DynamicResource PaneBevelLight2Brush}"
+                                        BorderThickness="{DynamicResource PaneBevel2DarkThickness}"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
             <!-- Elevation: a single shared instance per shadow can be applied to many elements -->
             <DropShadowEffect x:Key="ShadowText"   Color="Black" BlurRadius="3"  ShadowDepth="1" Direction="270" Opacity="0.6"/>
             <DropShadowEffect x:Key="ShadowIcon"   Color="Black" BlurRadius="4"  ShadowDepth="1" Direction="270" Opacity="0.9"/>
-            <DropShadowEffect x:Key="ShadowBar"    Color="Black" BlurRadius="6"  ShadowDepth="3" Direction="270" Opacity="0.38"/>
-            <DropShadowEffect x:Key="ShadowDialog" Color="Black" BlurRadius="18" ShadowDepth="3" Direction="270" Opacity="0.6"/>
+            <DropShadowEffect x:Key="ShadowBar"    Color="Black" BlurRadius="6"  ShadowDepth="3" Direction="270" Opacity="{DynamicResource BarShadowOpacity}"/>
+            <!-- Quality for the same reason as PaneShadow below: at radius 18 the default
+                 Performance bias blocks up visibly on a dialog's rounded corners. -->
+            <DropShadowEffect x:Key="ShadowDialog" Color="Black" BlurRadius="18" ShadowDepth="3" Direction="270" Opacity="0.6"
+                              RenderingBias="Quality"/>
+            <!-- Elevation for the content pane. Two hard-won constraints below, both measured on
+                 the running window rather than reasoned about - every attempt to reason this one
+                 out was wrong. Read both before changing any number here.
+                 BLUR MUST NOT EXCEED ~2x THE GUTTER WIDTH. A DropShadowEffect spreads about half
+                 its BlurRadius laterally, the gutter is 8px, and anything past that gets truncated
+                 by the window frame mid-falloff and terminates as a step - which is a hard edge no
+                 amount of RenderingBias fixes. Measured at blur 22: across the gutter the shadow
+                 ran 139 / 157 / 174 / 188 against an unshadowed 220, so it was still at ~85% of
+                 its travel when the window edge cut it off. Blur 16 (the family value) completes
+                 the falloff inside 8px. If the gutter is ever widened, the blur can grow with it.
+                 Opacity stays at 0.78 rather than the family 0.6: KillerPDF's card is usually
+                 filled edge to edge by a WHITE page, so the boundary is a near-full-range value
+                 jump and the family opacity is swallowed by it - the right gutter needs more
+                 depth, and a lower opacity left a hard edge on the gradient. (2026-07-31) -->
+            <!-- ShadowDepth 0, deliberately, and this is the ONE place in the family that wants it.
+                 MEASURED on the running window, sampling the 8px gutter down the right edge: with
+                 depth 2 the gutter was still light at 3px below the card's top border and only
+                 reached full shadow ~12px down. Any non-zero depth offsets the whole cast, so the
+                 lateral shadow is missing at the top and ramps in as it descends - and that onset
+                 is what reads as a hard edge at the corner. Going 5 -> 2 only shortened the ramp.
+                 Zero makes it a symmetric halo, which wraps the rounded corners evenly.
+                 The family rule against depth 0 ("a halo with nothing below to land on") was about
+                 the FOOTER cast, and no longer applies here: the footer is Panel.ZIndex -1 now, so
+                 it sits under the card and takes the shadow, and the blur alone puts plenty on it
+                 without an offset. Verify that still holds if the blur is reduced further.
+                 The requirement: the drop shadow has to run under the rounded edge smoothly, with
+                 no hard edge left in the gradient. (2026-07-31) -->
+            <!-- RenderingBias Quality is REQUIRED here, not a nicety. The default (Performance)
+                 renders the blur into a reduced-resolution intermediate and scales it back up, so
+                 the falloff comes out as chunky stair-stepped blocks - worst exactly at a rounded
+                 corner, where the curve makes the downsampling obvious. It scales with BlurRadius,
+                 and showed up here while this was briefly at 22. Any large-radius shadow in the
+                 family needs it; the small ones (ShadowText/Icon/Bar, radius 3-6) are under the
+                 threshold where it reads, and Quality costs real render time.
+                 The corner shadows showed hard edges, caught at 491% in GIMP. (2026-07-31) -->
+            <!-- Family standard (KillerShell reference): BlurRadius 16, ShadowDepth 5, Direction 270 -
+                 a downward cast over the footer, not an even halo. -->
+            <DropShadowEffect x:Key="PaneShadow"   Color="Black" BlurRadius="16" ShadowDepth="5" Direction="270" Opacity="{DynamicResource PaneShadowOpacity}"
+                              RenderingBias="Quality"/>
+
+            <!-- GrainBrushShared deliberately does NOT live here - see MainWindow.Resources.
+                 WPF freezes Freezables in APPLICATION-level dictionaries for cross-thread safety,
+                 so an ImageBrush declared here throws "Cannot set a property ... it is in a
+                 read-only state" the moment ApplyGrainTexture assigns its ImageSource. Any brush
+                 whose properties are written at runtime must stay at window scope. -->
 
             <!-- Global themed tooltip (replaces the plain white system box) -->
             <Style TargetType="ToolTip">
-                <Setter Property="Background" Value="{DynamicResource BgModal}"/>
-                <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource AccentBorder}"/>
+                <Setter Property="Background" Value="{DynamicResource MenuBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Padding" Value="8,4"/>
-                <Setter Property="FontFamily" Value="Segoe UI, Microsoft JhengHei UI, Nirmala UI"/>
+                <Setter Property="FontFamily" Value="{DynamicResource UiFont}"/>
                 <Setter Property="FontSize" Value="12"/>
                 <Setter Property="HasDropShadow" Value="False"/>
                 <Setter Property="Template">
@@ -63,7 +214,7 @@
                             <Border Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="10"
+                                    CornerRadius="4"
                                     Padding="{TemplateBinding Padding}">
                                 <Border.Effect>
                                     <DropShadowEffect Color="Black" BlurRadius="8" ShadowDepth="2" Direction="270" Opacity="0.45"/>
@@ -81,12 +232,66 @@
             <local:ThumbViewportFloorConverter x:Key="ThumbFloor"/>
             <Style TargetType="ScrollBar">
                 <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Width" Value="10"/>
-                <Setter Property="MinWidth" Value="10"/>
+                <Setter Property="Width" Value="{DynamicResource ScrollBarThickness}"/>
+                <Setter Property="MinWidth" Value="{DynamicResource ScrollBarThickness}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ScrollBar">
+                            <DockPanel LastChildFill="True">
+                                <RepeatButton x:Name="LineUp" DockPanel.Dock="Top" Command="ScrollBar.LineUpCommand"
+                                              Content="0" Focusable="False" IsTabStop="False"
+                                              Width="{DynamicResource ScrollArrowSize}" Height="{DynamicResource ScrollArrowSize}">
+                                    <RepeatButton.Template>
+                                        <ControlTemplate TargetType="RepeatButton">
+                                            <Grid>
+                                                <Border Background="{DynamicResource CaptionButtonBrush}"/>
+                                                <Border x:Name="b1" Margin="{DynamicResource ScrollArrowTopBevelMargin}"
+                                                        BorderBrush="{DynamicResource BevelLightBrush}" BorderThickness="{DynamicResource BevelLightThickness}"/>
+                                                <Border x:Name="b2" Margin="{DynamicResource ScrollArrowTopBevelMargin}"
+                                                        BorderBrush="{DynamicResource BevelDarkBrush}" BorderThickness="{DynamicResource BevelDarkThickness}"/>
+                                                <Path Data="M 0,4 L 3.5,0 L 7,4 Z" Width="7" Height="4" Stretch="None"
+                                                      Fill="{DynamicResource CaptionGlyphBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                      RenderTransformOrigin="0.5,0.5">
+                                                    <Path.RenderTransform><RotateTransform Angle="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"/></Path.RenderTransform>
+                                                </Path>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="b1" Property="BorderBrush" Value="{DynamicResource BevelDarkBrush}"/>
+                                                    <Setter TargetName="b2" Property="BorderBrush" Value="{DynamicResource BevelLightBrush}"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </RepeatButton.Template>
+                                </RepeatButton>
+                                <RepeatButton x:Name="LineDown" DockPanel.Dock="Bottom" Command="ScrollBar.LineDownCommand"
+                                              Content="180" Focusable="False" IsTabStop="False"
+                                              Width="{DynamicResource ScrollArrowSize}" Height="{DynamicResource ScrollArrowSize}">
+                                    <RepeatButton.Template>
+                                        <ControlTemplate TargetType="RepeatButton">
+                                            <Grid>
+                                                <Border Background="{DynamicResource CaptionButtonBrush}"/>
+                                                <Border x:Name="b1" BorderBrush="{DynamicResource BevelLightBrush}" BorderThickness="{DynamicResource BevelLightThickness}"/>
+                                                <Border x:Name="b2" BorderBrush="{DynamicResource BevelDarkBrush}" BorderThickness="{DynamicResource BevelDarkThickness}"/>
+                                                <Path Data="M 0,4 L 3.5,0 L 7,4 Z" Width="7" Height="4" Stretch="None"
+                                                      Fill="{DynamicResource CaptionGlyphBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                      RenderTransformOrigin="0.5,0.5">
+                                                    <Path.RenderTransform><RotateTransform Angle="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"/></Path.RenderTransform>
+                                                </Path>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="b1" Property="BorderBrush" Value="{DynamicResource BevelDarkBrush}"/>
+                                                    <Setter TargetName="b2" Property="BorderBrush" Value="{DynamicResource BevelLightBrush}"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </RepeatButton.Template>
+                                </RepeatButton>
                             <Grid>
+                                <Border Background="{DynamicResource ScrollTrackBrush}"/>
+                                <Border BorderBrush="{DynamicResource ScrollTrackBevelDark}" BorderThickness="{DynamicResource BevelLightThickness}"/>
+                                <Border BorderBrush="{DynamicResource ScrollTrackBevelLight}" BorderThickness="{DynamicResource BevelDarkThickness}"/>
                                 <Track x:Name="PART_Track" IsDirectionReversed="True"
                                        Minimum="{TemplateBinding Minimum}"
                                        Maximum="{TemplateBinding Maximum}"
@@ -105,14 +310,14 @@
                                         </MultiBinding>
                                     </Track.ViewportSize>
                                     <Track.DecreaseRepeatButton>
-                                        <RepeatButton Command="ScrollBar.PageUpCommand" Focusable="False" IsTabStop="False">
+                                        <RepeatButton x:Name="PageBack" Command="ScrollBar.PageUpCommand" Focusable="False" IsTabStop="False">
                                             <RepeatButton.Template>
                                                 <ControlTemplate TargetType="RepeatButton"><Border Background="Transparent"/></ControlTemplate>
                                             </RepeatButton.Template>
                                         </RepeatButton>
                                     </Track.DecreaseRepeatButton>
                                     <Track.IncreaseRepeatButton>
-                                        <RepeatButton Command="ScrollBar.PageDownCommand" Focusable="False" IsTabStop="False">
+                                        <RepeatButton x:Name="PageForward" Command="ScrollBar.PageDownCommand" Focusable="False" IsTabStop="False">
                                             <RepeatButton.Template>
                                                 <ControlTemplate TargetType="RepeatButton"><Border Background="Transparent"/></ControlTemplate>
                                             </RepeatButton.Template>
@@ -125,20 +330,22 @@
                                                     <Setter Property="Template">
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="Thumb">
-                                                                <Border x:Name="thumbBorder"
-                                                                        Background="{DynamicResource BgScrollThumb}"
-                                                                        CornerRadius="5"
-                                                                        Margin="3,0"/>
+                                                                <Grid x:Name="thumbBorder" Margin="{DynamicResource ScrollThumbMargin}">
+                                                                    <Border x:Name="thumbFill" Background="{DynamicResource ScrollThumbBrush}"
+                                                                            CornerRadius="{DynamicResource ScrollThumbRadius}"/>
+                                                                    <Border BorderBrush="{DynamicResource BevelLightBrush}" BorderThickness="{DynamicResource BevelLightThickness}"/>
+                                                                    <Border BorderBrush="{DynamicResource BevelDarkBrush}" BorderThickness="{DynamicResource BevelDarkThickness}"/>
+                                                                </Grid>
                                                                 <ControlTemplate.Triggers>
-                                                                    <!-- Horizontal bar: keep the thumb thin on the vertical axis instead -->
+                                                                    <!-- Horizontal spacing is theme-specific so 98SE can keep its full-height beveled thumb. -->
                                                                     <DataTrigger Binding="{Binding Orientation, RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}}}" Value="Horizontal">
-                                                                        <Setter TargetName="thumbBorder" Property="Margin" Value="0,3"/>
+                                                                        <Setter TargetName="thumbBorder" Property="Margin" Value="{DynamicResource ScrollThumbMarginH}"/>
                                                                     </DataTrigger>
                                                                     <!-- Highlight + fatten while hovering the thumb itself (keeps the press/drag reliable;
                                                                          binding this to the whole bar's IsMouseOver made the thumb shrink on mouse-down and
                                                                          dropped the grab). -->
                                                                     <Trigger Property="IsMouseOver" Value="True">
-                                                                        <Setter TargetName="thumbBorder" Property="Background" Value="{DynamicResource ScrollThumbHover}"/>
+                                                                        <Setter TargetName="thumbFill" Property="Background" Value="{DynamicResource ScrollThumbHoverBrush}"/>
                                                                         <Setter TargetName="thumbBorder" Property="Margin" Value="2,2"/>
                                                                         <Setter TargetName="thumbBorder" Property="Effect">
                                                                             <Setter.Value>
@@ -156,13 +363,30 @@
                                     </Track.Thumb>
                                 </Track>
                             </Grid>
+                            </DockPanel>
+                            <ControlTemplate.Triggers>
+                                <!-- A vertical track counts downward, so it needs IsDirectionReversed;
+                                     a horizontal one counts rightward and must not, or dragging the thumb
+                                     left scrolls the content right. The paging commands flip with it. -->
+                                <Trigger Property="Orientation" Value="Horizontal">
+                                    <Setter TargetName="PART_Track"   Property="IsDirectionReversed" Value="False"/>
+                                    <Setter TargetName="PageBack"     Property="Command" Value="ScrollBar.PageLeftCommand"/>
+                                    <Setter TargetName="PageForward"  Property="Command" Value="ScrollBar.PageRightCommand"/>
+                                    <Setter TargetName="LineUp" Property="DockPanel.Dock" Value="Left"/>
+                                    <Setter TargetName="LineDown" Property="DockPanel.Dock" Value="Right"/>
+                                    <Setter TargetName="LineUp" Property="Command" Value="ScrollBar.LineLeftCommand"/>
+                                    <Setter TargetName="LineDown" Property="Command" Value="ScrollBar.LineRightCommand"/>
+                                    <Setter TargetName="LineUp" Property="Content" Value="270"/>
+                                    <Setter TargetName="LineDown" Property="Content" Value="90"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
                 <Style.Triggers>
                     <Trigger Property="Orientation" Value="Horizontal">
-                        <Setter Property="Height" Value="10"/>
-                        <Setter Property="MinHeight" Value="10"/>
+                        <Setter Property="Height" Value="{DynamicResource ScrollBarThickness}"/>
+                        <Setter Property="MinHeight" Value="{DynamicResource ScrollBarThickness}"/>
                         <Setter Property="Width" Value="Auto"/>
                     </Trigger>
                 </Style.Triggers>

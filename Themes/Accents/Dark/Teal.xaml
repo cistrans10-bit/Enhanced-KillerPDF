@@ -4,18 +4,25 @@
 
     <!-- Dark family - TEAL/turquoise accent overlay. Overrides only the accent-hue keys; everything
          neutral (and the fixed greens: InstallBtnBg, AccentLogo) comes from Dark.xaml. -->
-    <SolidColorBrush x:Key="Accent"          Color="#1FB8A8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="HeaderAccent"    Color="#1FB8A8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryBrush"        Color="#1FB8A8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#1FB8A8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#1FB8A8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#1FB8A8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="HeaderLineBrush"     Color="#1FB8A8" po:Freeze="True"/>
     <SolidColorBrush x:Key="SelectionAccent" Color="#1FB8A8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="AccentDim"       Color="#0D2B2A" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SelectionBg"     Color="#1C5E5C" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgScrollThumb"   Color="#1C5E5C" po:Freeze="True"/>
-    <SolidColorBrush x:Key="ScrollThumbHover" Color="#1FB8A8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RowSelectedBrush"    Color="#0D2B2A" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OutlinePressedBrush" Color="#0D2B2A" po:Freeze="True"/>
+    <LinearGradientBrush x:Key="SelectionBg"     po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#387573" Offset="0"/><GradientStop Color="#104E4C" Offset="1"/></LinearGradientBrush>
+    <SolidColorBrush x:Key="ScrollThumbBrush"      Color="#1C5E5C" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ScrollThumbHoverBrush" Color="#1FB8A8" po:Freeze="True"/>
     <SolidColorBrush x:Key="RadioAccent"     Color="#1FB8A8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RadioAccentText" Color="#1FB8A8" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"                      Color="#0D2B2A" po:Freeze="True"/>
     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"                  Color="#1FB8A8" po:Freeze="True"/>
     <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"     Color="#0D2B2A" po:Freeze="True"/>
     <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#1FB8A8" po:Freeze="True"/>
 
+    <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#E0E0E0"/>
+    <SolidColorBrush x:Key="AccentLogo"        Color="#1FB8A8" po:Freeze="True"/>
 </ResourceDictionary>

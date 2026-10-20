@@ -4,7 +4,11 @@ using System.Windows.Media;
 
 namespace KillerPDF
 {
-    public enum EditTool { Select, Text, Highlight, Strikethrough, Underline, Draw, Signature, Image, Crop, Line, Rotate }
+    public enum EditTool { Select, Text, FormField, Highlight, Strikethrough, Underline, Draw, Signature, Image, Crop, Line, Rotate, Shape, Measure }
+
+    /// <summary>Sub-mode of the Shapes tool (#127 Phase 3): drag a rectangle or ellipse, or click
+    /// out a free-form polygon vertex by vertex.</summary>
+    public enum ShapeKind { Rectangle, Ellipse, Polygon }
 
     /// <summary>How a HighlightAnnotation paints over its bounds.</summary>
     public enum HighlightStyle { Fill, Strikethrough, Underline }
@@ -44,6 +48,9 @@ namespace KillerPDF
         public Point Position { get; set; }
         public string Content { get; set; } = "";
         public double FontSize { get; set; } = 14;
+        // Additional distance between adjacent characters, in canvas units. Zero preserves text
+        // created before the letter-spacing control was introduced.
+        public double LetterSpacing { get; set; }
         // Typeface and style. FontName is a font-family name (any installed system font). Bold/Italic/Strike
         // apply to the whole box. Defaults keep text placed before these existed rendering as plain Segoe UI.
         public string FontName { get; set; } = "Segoe UI";
@@ -85,6 +92,18 @@ namespace KillerPDF
 
         public Color GetColor() => Color.FromArgb(ColorA, ColorR, ColorG, ColorB);
         public void SetColor(Color c) { ColorR = c.R; ColorG = c.G; ColorB = c.B; ColorA = c.A; }
+
+        // Shapes (#127 Phase 3): a non-zero alpha fills the region enclosed by the stroke (the
+        // Shapes tool commits closed outlines - the last point repeats the first). Plain ink
+        // strokes and lines leave FillA = 0 and render exactly as before.
+        public byte FillR { get; set; }
+        public byte FillG { get; set; }
+        public byte FillB { get; set; }
+        public byte FillA { get; set; }
+
+        public bool HasFill => FillA > 0;
+        public Color GetFillColor() => Color.FromArgb(FillA, FillR, FillG, FillB);
+        public void SetFillColor(Color c) { FillR = c.R; FillG = c.G; FillB = c.B; FillA = c.A; }
     }
 
     // One brush-eraser pass over a highlight: a stroke (canvas-space points) of the given radius. The
@@ -113,20 +132,17 @@ namespace KillerPDF
 
         /// <summary>
         /// The actual rectangle painted for this annotation. Fill uses the whole bounds;
-        /// strikethrough is a thin band at the vertical centre; underline sits at the bottom.
+        /// strikethrough is a thin band at the vertical center; underline sits at the bottom.
         /// </summary>
         public Rect DrawRect()
         {
             double t = Math.Max(2.0, Bounds.Height * 0.10);
-            switch (Style)
+            return Style switch
             {
-                case HighlightStyle.Strikethrough:
-                    return new Rect(Bounds.X, Bounds.Y + Bounds.Height / 2 - t / 2, Bounds.Width, t);
-                case HighlightStyle.Underline:
-                    return new Rect(Bounds.X, Bounds.Y + Bounds.Height - t, Bounds.Width, t);
-                default:
-                    return Bounds;
-            }
+                HighlightStyle.Strikethrough => new Rect(Bounds.X, Bounds.Y + Bounds.Height / 2 - t / 2, Bounds.Width, t),
+                HighlightStyle.Underline => new Rect(Bounds.X, Bounds.Y + Bounds.Height - t, Bounds.Width, t),
+                _ => Bounds,
+            };
         }
     }
 

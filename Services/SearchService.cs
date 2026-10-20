@@ -15,7 +15,7 @@ namespace KillerPDF.Services
         /// Scans every page of <paramref name="filePath"/> for <paramref name="query"/> (case-insensitive).
         /// Returns an empty result when query is blank or the file cannot be opened.
         /// </summary>
-        public SearchResult Search(string filePath, string query)
+        public static SearchResult Search(string filePath, string query)
         {
             var result = new SearchResult();
             if (string.IsNullOrWhiteSpace(query) || string.IsNullOrWhiteSpace(filePath))
@@ -50,11 +50,11 @@ namespace KillerPDF.Services
             // A multi-word phrase can span adjacent words; a single token never does, so for single-token
             // queries we only do the per-word substring match (the cross-word union box below would
             // otherwise highlight whole runs of words leading up to the matching one).
-            bool isPhrase = query.Trim().IndexOf(' ') >= 0;
+            bool isPhrase = query.Trim().Contains(' ');
 
             for (int i = 0; i < words.Count; i++)
             {
-                if (words[i].Text.IndexOf(query, System.StringComparison.OrdinalIgnoreCase) >= 0)
+                if (words[i].Text.Contains(query, System.StringComparison.OrdinalIgnoreCase))
                 {
                     var bb = words[i].BoundingBox;
                     result.Add((bb.Left, bb.Bottom, bb.Right, bb.Top));
@@ -68,7 +68,7 @@ namespace KillerPDF.Services
                 for (int j = i + 1; j < words.Count && combined.Length < query.Length + 20; j++)
                 {
                     combined += " " + words[j].Text;
-                    if (combined.IndexOf(query, System.StringComparison.OrdinalIgnoreCase) >= 0)
+                    if (combined.Contains(query, System.StringComparison.OrdinalIgnoreCase))
                     {
                         double minX = double.MaxValue, minY = double.MaxValue;
                         double maxX = double.MinValue, maxY = double.MinValue;

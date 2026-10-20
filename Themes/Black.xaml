@@ -4,10 +4,11 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <!-- High contrast theme -->
-    <SolidColorBrush x:Key="BgDark"         Color="#000000" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgPanel"        Color="#0a0a0a" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgHover"        Color="#333333" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgSidebar"      Color="#000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SurfaceBrush"    Color="#000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PaneBrush"       Color="#0a0a0a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RowHoverBrush"   Color="#333333" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuHoverBrush"  Color="#333333" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BackgroundBrush" Color="#000000" po:Freeze="True"/>
     <SolidColorBrush x:Key="BgRecentPanel"  Color="#0a0a0a" po:Freeze="True"/>
     <SolidColorBrush x:Key="BgFlyout"       Color="#060606" po:Freeze="True"/>
     <LinearGradientBrush x:Key="TabStripFadeBrush" StartPoint="0,0" EndPoint="0,1" po:Freeze="True">
@@ -15,36 +16,65 @@
         <GradientStop Offset="0.55" Color="#1f000000"/>
         <GradientStop Offset="1.0" Color="#82000000"/>
     </LinearGradientBrush>
-    <SolidColorBrush x:Key="BgModal"        Color="#000000" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BorderDim"      Color="#787878" po:Freeze="True"/>
-    <SolidColorBrush x:Key="Accent"         Color="#00ff66" po:Freeze="True"/>
-    <SolidColorBrush x:Key="HeaderAccent"   Color="#00ff66" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SelectionAccent" Color="#0033cc" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuBackgroundBrush" Color="#121212" po:Freeze="True"/>
+    <!-- #2a2a2a, matching AppBorderBrush below. #787878 is a mid-gray that reads as a light box
+         drawn around every card, dialog and keycap on a theme whose whole point is black. The
+         other four apps were corrected 2026-08-09; this one was missed. -->
+    <SolidColorBrush x:Key="CardBorderBrush" Color="#2a2a2a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryBrush"    Color="#00ff66" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#00ff66" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#00ff66" po:Freeze="True"/>
+    <!-- Near-black, not white. This is the text ON a filled accent button, and every accent in
+         the Black family is a neon: white on them measures 1.27 to 4.38 contrast (teal and green
+         are the worst, effectively invisible), near-black measures 4.52 to 15.53. KillerScan,
+         Killendar and KillerShell already use this exact value. -->
+    <SolidColorBrush x:Key="OnPrimaryBrush"  Color="#0a0a0a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OutlineBtnBrush" Color="#00ff66" po:Freeze="True"/>
+    <SolidColorBrush x:Key="HeaderLineBrush" Color="#00ff66" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionAccent" Color="#1a8f48" po:Freeze="True"/>
     <SolidColorBrush x:Key="AccentLogo"     Color="#00ff66" po:Freeze="True"/>
     <SolidColorBrush x:Key="InstallBtnBg"   Color="#1a8f48" po:Freeze="True"/>
-    <SolidColorBrush x:Key="AccentBorder"   Color="#808080" po:Freeze="True"/>
-    <SolidColorBrush x:Key="DropBorder"     Color="#808080" po:Freeze="True"/>
-    <SolidColorBrush x:Key="PaneBorder"     Color="#292929" po:Freeze="True"/>
-    <SolidColorBrush x:Key="AccentDim"      Color="#003322" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SelectionBg" Color="#003314" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuBorderBrush" Color="#1c1c1c" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DropBorder"     Color="#1c1c1c" po:Freeze="True"/>
+    <!-- Internal dividers stay near-black; the outer app frame remains visible
+         against the OLED-black chrome. -->
+    <SolidColorBrush x:Key="PaneBorderBrush" Color="#1c1c1c" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AppBorderBrush"  Color="#2a2a2a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RowSelectedBrush"    Color="#003322" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OutlinePressedBrush" Color="#003322" po:Freeze="True"/>
+    <LinearGradientBrush x:Key="SelectionBg" po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#286B40" Offset="0"/><GradientStop Color="#0D4826" Offset="1"/></LinearGradientBrush>
     <SolidColorBrush x:Key="SelectionFg" Color="#ffffff" po:Freeze="True"/>
     <SolidColorBrush x:Key="SettingsOpenRowBg" Color="#333333" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TextPrimary"    Color="#ffffff" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TextSecondary"  Color="#cccccc" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TextBrush"      Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MutedTextBrush" Color="#cccccc" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuTextBrush"  Color="#cccccc" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ChromeTextBrush" Color="#e6e6e6" po:Freeze="True"/>
     <SolidColorBrush x:Key="FilenameBrush"  Color="#cccccc" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TextDim"        Color="#aaaaaa" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DimTextBrush"   Color="#aaaaaa" po:Freeze="True"/>
     <SolidColorBrush x:Key="TextFooter"     Color="#aaaaaa" po:Freeze="True"/>
     <SolidColorBrush x:Key="DangerRed"      Color="#ff4444" po:Freeze="True"/>
+    <!-- Match KillerNotes' caption close treatment. DangerRed remains the brighter
+         Black-theme warning color; the title-bar hover uses the quieter family red. -->
+    <SolidColorBrush x:Key="CaptionCloseHoverBrush" Color="#e04444" po:Freeze="True"/>
     <SolidColorBrush x:Key="BgDragHandle"   Color="#888888" po:Freeze="True"/>
     <SolidColorBrush x:Key="DragLine"       Color="#313131" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgScrollThumb"  Color="#8800ff66" po:Freeze="True"/>
-    <SolidColorBrush x:Key="ScrollThumbHover" Color="#00ff66" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ScrollThumbBrush"      Color="#8800ff66" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ScrollThumbHoverBrush" Color="#00ff66" po:Freeze="True"/>
+    <!-- Added for the kit components 2026-07-31. -->
+    <SolidColorBrush x:Key="TableHeaderBrush" Color="#000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RowAltBrush"      Color="#18FFFFFF" po:Freeze="True"/>
+    <SolidColorBrush x:Key="InputBorderBrush" Color="#1c1c1c" po:Freeze="True"/>
+    <SolidColorBrush x:Key="InputHoverBrush"  Color="#aaaaaa" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TreeLineBrush"    Color="#383838" po:Freeze="True"/>
     <SolidColorBrush x:Key="SliderTrack"    Color="#6e6e6e" po:Freeze="True"/>
     <SolidColorBrush x:Key="RadioAccent"    Color="#00ff66" po:Freeze="True"/>
     <SolidColorBrush x:Key="BgOverlay"      Color="#CC000000" po:Freeze="True"/>
-    <sys:Double x:Key="GrainOpacity">0.2</sys:Double>
+    <sys:Double x:Key="GrainOpacity">0.24</sys:Double>
     <sys:Double x:Key="IconShadowOpacity">0.9</sys:Double>
     <sys:Double x:Key="HeaderShadowOpacity">0.5</sys:Double>
+    <sys:Double x:Key="PaneShadowOpacity">0.60</sys:Double>
+    <sys:Double x:Key="BarShadowOpacity">0.38</sys:Double>
+    <sys:Double x:Key="FlyoutShadowOpacity">0.55</sys:Double>
 
     <SolidColorBrush x:Key="BgCanvas"                                                       Color="#0d0d0d" po:Freeze="True"/>
     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"                      Color="#003322" po:Freeze="True"/>
@@ -52,4 +82,35 @@
     <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"     Color="#003322" po:Freeze="True"/>
     <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#00ff66" po:Freeze="True"/>
 
+    <!-- Shortcut keyboard view: category colors (Nav lightened a step so pure purple reads on black) -->
+    <SolidColorBrush x:Key="KsCatFile"      Color="#00fff9" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatTools"     Color="#ffd319" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatEdit"      Color="#ff2975" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatNav"       Color="#a64dff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatView"      Color="#f222ff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatSearch"    Color="#00b3ff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatHelp"      Color="#39ff14" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatOcr"       Color="#ff901f" po:Freeze="True"/>
+
+    <DropShadowEffect x:Key="TextStroke" Color="Black" BlurRadius="3" ShadowDepth="0.8" Direction="270" Opacity="0.7"/>
+
+    <!-- Keep the shared chrome geometry identical to KillerNotes. -->
+    <CornerRadius x:Key="WindowCornerRadius">7</CornerRadius>
+    <CornerRadius x:Key="PanelCornerRadius">6</CornerRadius>
+    <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="SmallCornerRadius">3</CornerRadius>
+    <CornerRadius x:Key="FlyoutCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="AccentSwatchCornerRadius">9</CornerRadius>
+    <SolidColorBrush x:Key="TitleBarBrush" Color="#000000" po:Freeze="True"/>
+
+    <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#FF00FF66" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DialogTitleBarBrush" Color="#FF000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#FF333333" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FooterBackgroundBrush" Color="#FF000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuSeparatorBrush" Color="#FF2A2A2A" po:Freeze="True"/>
+    <sys:Double x:Key="TitleBarHeight" xmlns:sys="clr-namespace:System;assembly=mscorlib">32</sys:Double>
+    <!-- Modern wordmark sizes preserve the existing title typography. -->
+    <sys:Double x:Key="TitleWordmarkSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">15</sys:Double>
+    <sys:Double x:Key="TitleWordmarkBoldSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">22.52</sys:Double>
+    <sys:Double x:Key="WordmarkShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.45</sys:Double>
 </ResourceDictionary>

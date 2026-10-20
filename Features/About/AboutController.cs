@@ -1,0 +1,353 @@
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
+using System.Windows;
+
+namespace KillerPDF.Features
+{
+    /// <summary>
+    /// Everything the About card does that is not drawing: reading the signature and release date,
+    /// hashing the exe, asking GitHub whether there is a newer release, and performing the
+    /// one-click self-update.
+    ///
+    /// Holds no controls. Talks to the window only through <see cref="IAboutHost"/>, so the whole
+    /// of this file is testable against a stub host.
+    /// </summary>
+    internal sealed class AboutController
+    {
+        // The certificate subject is the legal name ("Open Source Developer Stephen Riley"), so the
+        // About card ties it back to the name people know. Gated on the subject actually being
+        // Steve's: a fork signed by somebody else must not claim the alias, and an unsigned build
+        // has no subject at all. Family standard, see code/CLAUDE.md.
+        private const string SignerName = "Stephen Riley";
+        private const string AkaName    = "Steve the Killer";
+
+        private const string Repo = "https://github.com/SteveTheKiller/KillerPDF";
+
+        private readonly IAboutHost _host;
+
+        /// <summary>"vX.Y.Z" of the available update, set by the update check. Null until one is found.</summary>
+        private string? _updateTag;
+        private bool _startupCheckStarted;
+        private bool _updateInProgress;
+
+        internal AboutController(IAboutHost host) => _host = host;
+
+        /// <summary>The running build's SemVer, including a prerelease label when present.</summary>
+        internal static string Version => AppVersion.Display;
+
+        /// <summary>Release date baked in from the csproj's ReleaseDate property, so a user can see
+        /// how old their build is. A file timestamp would not survive being copied and the PE linker
+        /// stamp is a build date, not a release date. Empty when the attribute is missing (an older
+        /// build), in which case the version line shows the version alone.</summary>
+        internal static string ReleaseDate
+        {
+            get
+            {
+                foreach (var a in System.Reflection.CustomAttributeExtensions.GetCustomAttributes
+                             <System.Reflection.AssemblyMetadataAttribute>(
+                                 System.Reflection.Assembly.GetExecutingAssembly()))
+                    if (a.Key == "ReleaseDate") return a.Value ?? string.Empty;
+                return string.Empty;
+            }
+        }
+
+        /// <summary>Populates the card and shows it. The SHA-256 is slow, so it lands later.</summary>
+        internal void Show()
+        {
+            var (sigValid, sigSubject, sigThumbprint) = App.GetExeSignerInfo();
+
+            _host.Publisher   = sigValid ? sigSubject : _host.Loc("Str_Margin_None");
+            _host.Thumbprint  = string.IsNullOrEmpty(sigThumbprint) ? _host.Loc("Str_Margin_None") : sigThumbprint;
+            _host.Sha256      = _host.Loc("Str_About_Computing");
+            _host.ReleaseDate = ReleaseDate;
+
+            _host.SetVersion(Version);
+
+            // Signed, verified, AND signed by Steve - all three, not merely "is signed".
+            bool signedByMe = sigValid
+                           && sigSubject.Contains(SignerName, StringComparison.OrdinalIgnoreCase);
+            // 0x201C / 0x201D are the curly quotes, built from codepoints so this file stays ASCII
+            // on disk - the same encoding trap that made release.ps1 PS7-only.
+            _host.SetAlias(signedByMe ? (char)0x201C + AkaName + (char)0x201D : null);
+
+            _host.UpdateVisible = false;
+            _host.ShowCard();
+
+            CheckForUpdateAsync(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+            ComputeSha256Async();
+        }
+
+        /// <summary>Opens the GitHub release for the running version.</summary>
+        internal static void OpenReleaseNotes() => OpenUrl($"{Repo}/releases/tag/v{Version}");
+
+        internal static void OpenUrl(string url)
+        {
+            try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); }
+            catch { /* no browser, or the shell refused - nothing useful to say */ }
+        }
+
+        // ---- SHA-256 -------------------------------------------------------------------------
+
+        private async void ComputeSha256Async()
+        {
+            var sha256 = await System.Threading.Tasks.Task.Run(App.GetExeSha256).ConfigureAwait(true);
+            _host.Sha256 = sha256;
+        }
+
+        // ---- Update check --------------------------------------------------------------------
+
+        /// <summary>Checks for stable releases without a background service.</summary>
+        private async void CheckForUpdateAsync(System.Version? current, bool startup = false)
+        {
+            if (current is null || _updateInProgress) return;
+            if (startup && !Services.ReleaseUpdateCheck.IsEnabled(
+                    App.GetSetting(Services.ReleaseUpdateCheck.Setting))) return;
+            try
+            {
+                using var http = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(4) };
+                string? tag = await Services.ReleaseUpdateCheck.FindNewerReleaseAsync(http, current)
+                    .ConfigureAwait(true);
+                if (tag is null || _updateInProgress) return;
+
+                _updateTag = tag;
+                _host.UpdateText = string.Format(_host.Loc("Str_UpdateAvailable"), tag);
+                _host.UpdateVisible = true;
+                if (startup && Services.ReleaseUpdateCheck.IsEnabled(
+                        App.GetSetting(Services.ReleaseUpdateCheck.Setting))
+                    && _host.Window.IsLoaded && _host.Window.IsVisible
+                    && _host.Window.OwnedWindows.Count == 0)
+                    UpdateCore(startup: true);
+            }
+            catch { /* closing, offline, or unavailable UI: leave the next check to About */ }
+        }
+
+        internal void CheckOnStartup()
+        {
+            if (_startupCheckStarted) return;
+            _startupCheckStarted = true;
+            CheckForUpdateAsync(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version,
+                startup: true);
+        }
+
+        // ---- Self-update ---------------------------------------------------------------------
+
+        /// <summary>
+        /// One-click self-update: downloads and verifies the public portable/installer. Installed
+        /// copies hand it the same payload-based install command used by a manual upgrade; portable
+        /// copies replace their original launcher after both launcher and inner app have exited.
+        /// </summary>
+        internal void Update() => UpdateCore(startup: false);
+
+        private MessageBoxResult ConfirmUpdate(string tag, bool startup)
+        {
+            var (result, checkOnStartup) = KillerDialog.ShowWithCheckbox(_host.Window,
+                string.Format(_host.Loc(startup ? "Str_StartupUpdatePrompt" : "Str_UpdatePrompt"), tag),
+                _host.Loc("Str_AlwaysCheckOnStartup"),
+                "KillerPDF", startup ? MessageBoxButton.YesNo : MessageBoxButton.OKCancel,
+                checkboxInitial: Services.ReleaseUpdateCheck.IsEnabled(
+                    App.GetSetting(Services.ReleaseUpdateCheck.Setting)));
+            App.SetSetting(Services.ReleaseUpdateCheck.Setting, checkOnStartup ? "1" : "0");
+            if (_host.Window.FindName("StartupUpdateCheck") is System.Windows.Controls.CheckBox aboutCheck)
+                aboutCheck.IsChecked = checkOnStartup;
+            return result;
+        }
+
+        private async void UpdateCore(bool startup)
+        {
+            var tag = _updateTag;
+            if (string.IsNullOrEmpty(tag) || _updateInProgress) return;
+
+            _updateInProgress = true;
+            string? newExe = null;
+            try
+            {
+                if (_host.IsDirty)
+                {
+                    if (!startup)
+                        KillerDialog.Show(_host.Window, _host.Loc("Str_Dlg_SaveBeforeUpdate"),
+                            "KillerPDF", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var confirm = ConfirmUpdate(tag, startup);
+                if (confirm != (startup ? MessageBoxResult.Yes : MessageBoxResult.OK)) return;
+
+                _host.UpdateEnabled = false;
+                _host.UpdateText = _host.Loc("Str_UpdateDownloading");
+                newExe = await DownloadVerifiedAsync(tag).ConfigureAwait(true);
+                if (newExe is null)
+                {
+                    OpenUrl($"{Repo}/releases/latest");
+                    return;
+                }
+
+                // Documents can change while the download is in flight.
+                if (!_host.Window.IsLoaded) return;
+                if (_host.IsDirty)
+                {
+                    KillerDialog.Show(_host.Window, _host.Loc("Str_Dlg_SaveBeforeUpdate"),
+                        "KillerPDF", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (LaunchSwapAndExit(newExe)) newExe = null;
+            }
+            finally
+            {
+                if (newExe is not null)
+                    try { File.Delete(newExe); } catch { }
+                _updateInProgress = false;
+                _host.UpdateEnabled = true;
+                _host.UpdateText = string.Format(_host.Loc("Str_UpdateAvailable"), tag);
+            }
+        }
+
+        /// <summary>Downloads the release exe and checks it against the published checksum.
+        /// Returns the temp path, or null if anything at all went wrong.</summary>
+        private static async System.Threading.Tasks.Task<string?> DownloadVerifiedAsync(string tag)
+        {
+            try
+            {
+                using var http = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(90) };
+                http.DefaultRequestHeaders.UserAgent.ParseAdd("KillerPDF-UpdateCheck");
+
+                string assetName = App.IsPortable() ? "KillerPDF-Portable.exe" : "KillerPDF.exe";
+                var exeUrl = $"{Repo}/releases/download/{tag}/{assetName}";
+                // Read the checksums from the release ASSET next to the exe, not from
+                // raw.githubusercontent at the tag. Both files are uploaded to the release
+                // together, so the hash can never drift from the exe the way a repo-committed
+                // file does when the tag/commit order gets muddled.
+                var sumsUrl = $"{Repo}/releases/download/{tag}/SHA256SUMS.txt";
+
+                var exeBytes = await http.GetByteArrayAsync(exeUrl).ConfigureAwait(false);
+                var sumsTxt  = await http.GetStringAsync(sumsUrl).ConfigureAwait(false);
+
+                string? expected = null;
+                foreach (var line in sumsTxt.Replace("\r", "").Split('\n'))
+                {
+                    if (line.TrimStart().StartsWith(assetName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        var parts = line.Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
+                        if (parts.Length >= 2) expected = parts[^1];
+                        break;
+                    }
+                }
+                if (string.IsNullOrEmpty(expected)) return null;
+
+                string actual = Convert.ToHexString(
+                    System.Security.Cryptography.SHA256.HashData(exeBytes));
+                if (!actual.Equals(expected, StringComparison.OrdinalIgnoreCase)) return null;
+
+                var path = Path.Combine(Path.GetTempPath(), $"KillerPDF_update_{Guid.NewGuid():N}.exe");
+                File.WriteAllBytes(path, exeBytes);
+                return path;
+            }
+            catch { return null; }
+        }
+
+        /// <summary>Writes the swap batch, starts it, and shuts the app down. Returns false if the
+        /// helper could not be started, in which case nothing has been changed.</summary>
+        private bool LaunchSwapAndExit(string newExe)
+        {
+            try
+            {
+                var curExe = Environment.ProcessPath
+                    ?? throw new InvalidOperationException("The current executable path is unavailable.");
+                var reopen = _host.FileToReopen;
+                var pid    = Environment.ProcessId;
+                var relArg = string.IsNullOrEmpty(reopen) ? "" : $" \"{reopen}\"";
+                var bat    = Path.Combine(Path.GetTempPath(), $"killerpdf_update_{Guid.NewGuid():N}.bat");
+                bool portable = App.IsPortable();
+                string? portableLauncher = Environment.GetEnvironmentVariable("KILLERPDF_LAUNCHER_PATH");
+                bool packagedPortable = portable && !string.IsNullOrWhiteSpace(portableLauncher) && File.Exists(portableLauncher);
+
+                if (!App.VerifyAuthenticode(newExe).Valid)
+                    throw new InvalidDataException("The downloaded update is not signed by a trusted publisher.");
+
+                // A machine-wide install (Program Files, from winget, choco or an RMM) is not
+                // writable by a normal user, so the swap has to run elevated. This previously ran
+                // the batch unelevated and sent the copy to >nul with no errorlevel check, so on
+                // those installs it silently failed and then relaunched the OLD exe - the app
+                // appeared to "update" to the same version, with no error.
+                string updateTarget = packagedPortable ? portableLauncher! : curExe;
+                bool needsElevation = !CanWriteTo(Path.GetDirectoryName(updateTarget)!);
+
+                // When elevated, relaunch through explorer.exe so the app comes back at the user's
+                // normal integrity level rather than inheriting the elevated token. explorer.exe
+                // cannot forward arguments, so the currently-open file is not reopened on that
+                // path - a one-off convenience loss, preferred over leaving KillerPDF running as
+                // administrator for the rest of the session.
+                var script = new StringBuilder()
+                    .AppendLine("@echo off")
+                    .AppendLine(":waitapp")
+                    .AppendLine($"tasklist /fi \"PID eq {pid}\" 2>nul | find \"{pid}\" >nul")
+                    .AppendLine("if not errorlevel 1 ( ping -n 2 127.0.0.1 >nul & goto waitapp )");
+
+                if (packagedPortable)
+                {
+                    if (int.TryParse(Environment.GetEnvironmentVariable("KILLERPDF_LAUNCHER_PID"), out int launcherPid))
+                    {
+                        script.AppendLine(":waitlauncher")
+                              .AppendLine($"tasklist /fi \"PID eq {launcherPid}\" 2>nul | find \"{launcherPid}\" >nul")
+                              .AppendLine("if not errorlevel 1 ( ping -n 2 127.0.0.1 >nul & goto waitlauncher )");
+                    }
+                    script.AppendLine($"attrib -r \"{portableLauncher}\" >nul 2>&1")
+                          .AppendLine($"copy /y \"{newExe}\" \"{portableLauncher}\" >nul 2>&1")
+                          .AppendLine("if errorlevel 1 goto failed")
+                          .AppendLine(needsElevation
+                              ? $"start \"\" explorer.exe \"{portableLauncher}\""
+                              : $"start \"\" \"{portableLauncher}\"{relArg}");
+                }
+                else
+                {
+                    bool machineInstall = !CanWriteTo(Path.GetDirectoryName(curExe)!);
+                    string installArg = machineInstall ? "/silent" : "/install-user";
+                    script.AppendLine($"start /wait \"\" \"{newExe}\" {installArg}")
+                          .AppendLine("if errorlevel 1 goto failed")
+                          .AppendLine(needsElevation
+                              ? $"start \"\" explorer.exe \"{curExe}\""
+                              : $"start \"\" \"{curExe}\"{relArg}");
+                }
+
+                script.AppendLine("goto cleanup")
+                      .AppendLine(":failed")
+                      .AppendLine($"start \"\" \"{Repo}/releases/latest\"")
+                      .AppendLine(":cleanup")
+                      .AppendLine($"del \"{newExe}\" >nul 2>&1")
+                      .AppendLine("del \"%~f0\" >nul 2>&1");
+                File.WriteAllText(bat, script.ToString());
+
+                var psi = new ProcessStartInfo("cmd.exe", $"/c \"{bat}\"")
+                {
+                    WindowStyle     = ProcessWindowStyle.Hidden,
+                    WorkingDirectory = Path.GetTempPath(),
+                    UseShellExecute = true
+                };
+                if (needsElevation) psi.Verb = "runas";   // triggers the UAC prompt
+
+                // Declining UAC throws Win32Exception 1223, so only shut down once the helper is
+                // actually running - otherwise the app would close without updating.
+                Process.Start(psi);
+                Application.Current.Shutdown();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        /// <summary>True if this process can create a file in <paramref name="dir"/>. Used to decide
+        /// whether the self-update swap needs elevating: Program Files installs are not writable by
+        /// a normal user, per-user installs under LOCALAPPDATA always are.</summary>
+        private static bool CanWriteTo(string dir)
+        {
+            try
+            {
+                var probe = Path.Combine(dir, $".kp_write_{Guid.NewGuid():N}.tmp");
+                using (new FileStream(probe, FileMode.CreateNew, FileAccess.Write, FileShare.None,
+                                      1, FileOptions.DeleteOnClose)) { }
+                return true;
+            }
+            catch { return false; }
+        }
+    }
+}

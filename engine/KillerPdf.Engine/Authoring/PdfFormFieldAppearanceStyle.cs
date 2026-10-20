@@ -1,0 +1,18 @@
+namespace KillerPdf.Engine.Authoring;
+
+/// <summary>Colors and border geometry used by an authored form-field widget.</summary>
+public sealed record PdfFormFieldAppearanceStyle
+{
+    /// <summary>Gets the optional widget background color.</summary>
+    public PdfRgbColor? BackgroundColor { get; init; } = new PdfRgbColor(1, 1, 1);
+    /// <summary>Gets the optional widget border color.</summary>
+    public PdfRgbColor? BorderColor { get; init; } = new PdfRgbColor(0, 0, 0);
+    /// <summary>Gets the text or selection-mark color.</summary>
+    public PdfRgbColor TextColor { get; init; } = new PdfRgbColor(0, 0, 0);
+    /// <summary>Gets the nonnegative border width.</summary>
+    public double BorderWidth { get; init; } = 1;
+    /// <summary>Gets the widget border style.</summary>
+    public PdfFormFieldBorderStyle BorderStyle { get; init; }
+    /// <summary>Gets the positive alternating dash and gap lengths for a dashed border.</summary>
+    public IReadOnlyList<double>? DashPattern { get; init; }
+}

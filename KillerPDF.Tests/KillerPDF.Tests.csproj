@@ -1,12 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
     <UseWPF>true</UseWPF>
+    <!-- Linked data-only model fields are populated by the application, not these focused tests. -->
+    <NoWarn>$(NoWarn);CS0649</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,18 +18,73 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageReference Include="PolySharp" Version="1.15.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="PdfPig" Version="0.1.14" />
-    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+    <PackageReference Include="SixLabors.Fonts" Version="1.0.0-beta17" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\Models\EditingTypes.cs" Link="Models\EditingTypes.cs" />
+    <Compile Include="..\Services\AppDataPaths.cs" Link="Services\AppDataPaths.cs" />
     <Compile Include="..\Services\SignatureStore.cs" Link="Services\SignatureStore.cs" />
     <Compile Include="..\Services\SearchService.cs" Link="Services\SearchService.cs" />
+    <Compile Include="..\Services\PageCanvasGeometry.cs" Link="Services\PageCanvasGeometry.cs" />
+    <Compile Include="..\Services\TextRunService.cs" Link="Services\TextRunService.cs" />
+    <Compile Include="..\Services\TextEntryPlaceholder.cs" Link="Services\TextEntryPlaceholder.cs" />
+    <Compile Include="..\Services\ProtocolRegistrar.cs" Link="Services\ProtocolRegistrar.cs" />
+    <Compile Include="..\Services\PerspectiveWarp.cs" Link="Services\PerspectiveWarp.cs" />
+    <Compile Include="..\Services\PdfFontStyle.cs" Link="Services\PdfFontStyle.cs" />
+    <Compile Include="..\Services\PdfBurn.cs" Link="Services\PdfBurn.cs" />
+    <Compile Include="..\Services\AnnotationRotate.cs" Link="Services\AnnotationRotate.cs" />
+    <Compile Include="..\Services\WheelPageFlipGate.cs" Link="Services\WheelPageFlipGate.cs" />
+    <Compile Include="..\Services\PinchZoomMath.cs" Link="Services\PinchZoomMath.cs" />
+    <Compile Include="..\Services\ViewerRenderResolution.cs" Link="Services\ViewerRenderResolution.cs" />
+    <Compile Include="..\Services\FontCoverage.cs" Link="Services\FontCoverage.cs" />
+    <Compile Include="..\Services\CmapCoverage.cs" Link="Services\CmapCoverage.cs" />
+    <Compile Include="..\Services\PdfFonts.cs" Link="Services\PdfFonts.cs" />
+    <Compile Include="..\Services\PdfEngineIntegration.cs" Link="Services\PdfEngineIntegration.cs" />
+    <Compile Include="..\Services\PdfPrintSource.cs" Link="Services\PdfPrintSource.cs" />
+    <Compile Include="..\Services\PdfWorkingDocument.cs" Link="Services\PdfWorkingDocument.cs" />
+    <Compile Include="..\Services\PdfEngineBurn.cs" Link="Services\PdfEngineBurn.cs" />
+    <Compile Include="..\Services\PdfEngineDocumentSession.cs" Link="Services\PdfEngineDocumentSession.cs" />
+    <Compile Include="..\Services\RuntimeEncodingBootstrap.cs" Link="Services\RuntimeEncodingBootstrap.cs" />
+    <Compile Include="..\Services\Signing\KillerCmsSigner.cs" Link="Services\Signing\KillerCmsSigner.cs" />
+    <Compile Include="..\Services\Signing\PdfSigner.cs" Link="Services\Signing\PdfSigner.cs" />
+    <Compile Include="..\Models\StampModels.cs" Link="Models\StampModels.cs" />
+    <Compile Include="..\Controls\FlyoutPlacement.cs" Link="Controls\FlyoutPlacement.cs" />
+    <Compile Include="..\Controls\SidebarPageBinding.cs" Link="Controls\SidebarPageBinding.cs" />
+    <Compile Include="..\Controls\WindowFx.cs" Link="Controls\WindowFx.cs" />
+    <!-- Data only, by design: OcrLanguages.cs itself reaches App and OcrNativeBootstrap, which a
+         catalog check has no business dragging in. See OcrCatalogTests. -->
+    <Compile Include="..\Services\OcrCatalog.cs" Link="Services\OcrCatalog.cs" />
+    <!-- Data only, same reasoning as OcrCatalog: the shortcut table is deliberately free of WPF
+         and of MainWindow so the invariants can be checked without standing up a window. -->
+    <Compile Include="..\Services\ShortcutTable.cs" Link="Services\ShortcutTable.cs" />
+    <Compile Include="..\Services\EditableTextShortcutPolicy.cs" Link="Services\EditableTextShortcutPolicy.cs" />
+    <Compile Include="..\Services\ShortcutTogglePolicy.cs" Link="Services\ShortcutTogglePolicy.cs" />
+    <Compile Include="..\Services\ReleaseUpdateCheck.cs" Link="Services\ReleaseUpdateCheck.cs" />
+    <Compile Include="..\Services\PayloadIntegrityVerifier.cs" Link="Services\PayloadIntegrityVerifier.cs" />
+    <Compile Include="..\Services\PrintColorConverter.cs" Link="Services\PrintColorConverter.cs" />
+    <Compile Include="..\Services\PrintOrientationPolicy.cs" Link="Services\PrintOrientationPolicy.cs" />
+    <Compile Include="..\Services\PageQualityConverter.cs" Link="Services\PageQualityConverter.cs" />
+    <Compile Include="..\Services\MeasurementCalculator.cs" Link="Services\MeasurementCalculator.cs" />
+    <Compile Include="..\Services\OutputPixelDimensions.cs" Link="Services\OutputPixelDimensions.cs" />
+    <Compile Include="..\Services\BitonalPageDetector.cs" Link="Services\BitonalPageDetector.cs" />
+    <Compile Include="..\Services\BitmapHelpers.cs" Link="Services\BitmapHelpers.cs" />
+    <Compile Include="..\Services\PdfPageDifference.cs" Link="Services\PdfPageDifference.cs" />
+    <Compile Include="..\Services\PageAnnotationInsertion.cs" Link="Services\PageAnnotationInsertion.cs" />
+    <Compile Include="..\Services\FormOcrPolicy.cs" Link="Services\FormOcrPolicy.cs" />
+    <Compile Include="..\Services\CombFieldLayout.cs" Link="Services\CombFieldLayout.cs" />
+    <Compile Include="..\Services\SaveFileNamePolicy.cs" Link="Services\SaveFileNamePolicy.cs" />
+    <Compile Include="..\Services\DeferredActionGate.cs" Link="Services\DeferredActionGate.cs" />
+    <Compile Include="..\Services\UndoHistoryBudget.cs" Link="Services\UndoHistoryBudget.cs" />
+    <Compile Include="..\Packaging\KillerLauncher\PortableProcessIdentity.cs" Link="Packaging\PortableProcessIdentity.cs" />
+    <Compile Include="..\Packaging\KillerLauncher\InstallerPrerequisitePolicy.cs" Link="Packaging\InstallerPrerequisitePolicy.cs" />
+    <Compile Include="..\Packaging\KillerLauncher\PortableLauncherPolicy.cs" Link="Packaging\PortableLauncherPolicy.cs" />
+    <Compile Include="..\Packaging\KillerLauncher\PortableDirectoryCleanup.cs" Link="Packaging\PortableDirectoryCleanup.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\engine\KillerPdf.Engine\KillerPdf.Engine.csproj" />
   </ItemGroup>
 
 </Project>

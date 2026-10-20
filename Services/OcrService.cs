@@ -60,8 +60,18 @@ namespace KillerPDF.Services
         /// OCR a rendered page straight from the render pipeline (raw BGRA, 4 bytes/pixel).
         /// Encodes to PNG via WPF first so we avoid a System.Drawing dependency.
         /// </summary>
-        public OcrResult RecognizeBgra(byte[] bgra, int width, int height)
-            => RecognizeImageBytes(EncodePng(bgra, width, height));
+        public OcrResult RecognizeBgra(byte[] bgra, int width, int height,
+            string? characterWhitelist = null)
+        {
+            if (!string.IsNullOrEmpty(characterWhitelist))
+                _engine.SetVariable("tessedit_char_whitelist", characterWhitelist);
+            try { return RecognizeImageBytes(EncodePng(bgra, width, height)); }
+            finally
+            {
+                if (!string.IsNullOrEmpty(characterWhitelist))
+                    _engine.SetVariable("tessedit_char_whitelist", string.Empty);
+            }
+        }
 
         private OcrResult Run(Pix pix)
         {

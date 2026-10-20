@@ -1,0 +1,26 @@
+.result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}
+.result{background:var(--modal) url('grain.png?v=2') repeat;background-size:256px 256px;border:1px solid var(--pane-border);border-radius:9px;padding:15px}
+.result h3{margin:0 0 10px;font-family:var(--kt-font-section);font-size:17px;font-weight:normal;color:var(--accent)}
+.result-lead{display:flex;align-items:baseline;gap:7px;margin-bottom:9px}
+.result-lead b{color:var(--accent);font:700 25px "Courier New",monospace}
+.result-lead span{color:var(--text2);font-size:12px}
+.outcome-bar{display:flex;height:7px;overflow:hidden;border-radius:5px;background:var(--pane-border);margin:0 0 13px}
+.outcome-bar .saved{background:var(--accent)}
+.outcome-bar .skipped{background:color-mix(in srgb,var(--accent) 38%,var(--modal))}
+.outcome-bar .failed{background:var(--danger,#DD504B)}
+.result dl{display:grid;grid-template-columns:1fr auto;gap:6px 12px;margin:0;font-size:13px}
+.result dt{color:var(--text2)}
+.result dt.legend-key::before{content:"";display:inline-block;width:7px;height:7px;margin:0 7px 1px 0;border-radius:2px}
+.result dt.saved-key::before{background:var(--accent)}
+.result dt.skipped-key::before{background:color-mix(in srgb,var(--accent) 38%,var(--modal))}
+.result dt.failed-key::before{background:var(--danger,#DD504B)}
+.result dd{margin:0;color:var(--text);font-family:"Courier New",monospace}
+.metric,.result,.provenance-group,.source-links a{position:relative;transition:transform .12s,box-shadow .15s,border-color .15s}
+.metric:hover,.result:hover,.provenance-group:hover,.source-links a:hover{transform:translateY(-2px);border-color:var(--dragline);box-shadow:0 16px 32px rgba(0,0,0,.38);filter:none}
+.baseline-group{scroll-margin-top:82px;margin:0 0 42px}
+.baseline-group+.baseline-group{padding-top:30px;border-top:1px solid var(--pane-border)}
+.baseline-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:8px}
+.baseline-head h2{margin:0}
+.baseline-meta{color:var(--muted);font:12px "Courier New",monospace}
+.baseline-note{color:var(--text2);font-size:15px;margin:0 0 12px}
+@media(max-width:900px){.result-grid{grid-template-columns:1fr}}

@@ -3,7 +3,7 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <!-- ================================================================
-         KillerPDF  —  Türkçe (tr-TR) metinleri
+         KillerPDF  -  Türkçe (tr-TR) metinleri
          ================================================================ -->
 
     <!-- ── Araç çubuğu ipuçları ─────────────────────────────────────── -->
@@ -24,27 +24,29 @@
     <sys:String x:Key="Str_TT_DeletePages">Seçili Sayfaları Sil</sys:String>
     <sys:String x:Key="Str_TT_MovePageUp">Sayfayı Yukarı Taşı (yeniden sırala)</sys:String>
     <sys:String x:Key="Str_TT_MovePageDown">Sayfayı Aşağı Taşı (yeniden sırala)</sys:String>
-    <sys:String x:Key="Str_TT_SelectTool">Seçim Aracı - açıklamalara tıkla, metin seçmek için sürükle, düzenlemek için çift tıkla</sys:String>
-    <sys:String x:Key="Str_TT_TextTool">Metin Aracı - metin eklemek için tıkla</sys:String>
-    <sys:String x:Key="Str_TT_HighlightTool">Vurgulama Aracı - vurgulamak için sürükle</sys:String>
+    <sys:String x:Key="Str_TT_SelectTool">Seçim Aracı - açıklamalara tıkla, metin seçmek için sürükle, düzenlemek için çift tıkla (V)</sys:String>
+    <sys:String x:Key="Str_TT_TextTool">Metin Aracı - metin eklemek için tıkla (T)</sys:String>
+    <sys:String x:Key="Str_TT_FormFieldTool">Doldurulabilir metin alanı - alan oluşturun, seçin, taşıyın, yeniden boyutlandırın veya silin; dolgu rengini değiştirmek için sağ tıklayın (F)</sys:String>
+    <sys:String x:Key="Str_TT_HighlightTool">Vurgulama Aracı - vurgulamak için sürükle (H)</sys:String>
     <sys:String x:Key="Str_TT_StrikeTool">Üstü çizili - metin boyunca sürükle</sys:String>
     <sys:String x:Key="Str_TT_UnderlineTool">Altı çizili - metin boyunca sürükle</sys:String>
-    <sys:String x:Key="Str_TT_DrawTool">Çizim Aracı - serbest çizim</sys:String>
-    <sys:String x:Key="Str_TT_SignatureTool">İmza - imza oluştur ve yerleştir</sys:String>
-    <sys:String x:Key="Str_TT_ImageTool">Görsel Aracı - sayfaya görsel eklemek için tıkla</sys:String>
-    <sys:String x:Key="Str_TT_CropTool">Kırpma Aracı - kırpma alanını belirlemek için sürükle, ardından sayfa(lar)a uygula</sys:String>
+    <sys:String x:Key="Str_TT_DrawTool">Çizim Aracı - serbest çizim (D)</sys:String>
+    <sys:String x:Key="Str_TT_ShapeTool">Şekiller - dikdörtgen, elips veya serbest çokgen</sys:String>
+    <sys:String x:Key="Str_TT_SignatureTool">İmza - imza oluştur ve yerleştir (G)</sys:String>
+    <sys:String x:Key="Str_TT_ImageTool">Görsel Aracı - sayfaya görsel eklemek için tıkla (I)</sys:String>
+    <sys:String x:Key="Str_TT_CropTool">Kırpma Aracı - kırpma alanını belirlemek için sürükle, ardından sayfa(lar)a uygula (C)</sys:String>
+    <sys:String x:Key="Str_TT_MeasureTool">Mesafeyi ölç ve sayfa boyutunu görüntüle</sys:String>
     <sys:String x:Key="Str_TT_ClearAnnotations">Tüm Açıklamaları Temizle</sys:String>
     <sys:String x:Key="Str_TT_UndoLast">Son İşlemi Geri Al (Ctrl+Z)</sys:String>
-    <sys:String x:Key="Str_TT_MultiPageGrid">Çok sayfalı ızgara görünümü</sys:String>
+    <sys:String x:Key="Str_TT_MultiPageGrid">Çok sayfalı ızgara görünümü (F8)</sys:String>
     <sys:String x:Key="Str_TT_ZoomOut">Uzaklaştır (Ctrl+-)</sys:String>
-    <sys:String x:Key="Str_TT_ZoomLevel">Yakınlaştırma düzeyi (Ctrl+kaydırma · Ctrl+=/- · Ctrl+0=sıfırla)</sys:String>
-    <sys:String x:Key="Str_TT_ZoomIn">Yakınlaştır (Ctrl+=)</sys:String>
+    <sys:String x:Key="Str_TT_ZoomLevel">Yakınlaştırma düzeyi (Ctrl+kaydırma · Ctrl++/- · Ctrl+0=sıfırla)</sys:String>
+    <sys:String x:Key="Str_TT_ZoomIn">Yakınlaştır (Ctrl++)</sys:String>
     <sys:String x:Key="Str_TT_GoToPage">Sayfaya git (gitmek için Enter)</sys:String>
-    <sys:String x:Key="Str_TT_CollapseSidebar">Kenar çubuğunu daralt</sys:String>
-    <sys:String x:Key="Str_TT_ExpandSidebar">Kenar çubuğunu genişlet</sys:String>
-    <sys:String x:Key="Str_TT_KeyboardShortcuts">Klavye kısayolları (Ctrl+?)</sys:String>
-    <sys:String x:Key="Str_TT_Settings">Ayarlar</sys:String>
-    <sys:String x:Key="Str_TT_About">KillerPDF Hakkında</sys:String>
+    <sys:String x:Key="Str_TT_CollapseSidebar">Kenar çubuğunu daralt (F9)</sys:String>
+    <sys:String x:Key="Str_TT_ExpandSidebar">Kenar çubuğunu genişlet (F9)</sys:String>
+    <sys:String x:Key="Str_TT_KeyboardShortcuts">Klavye kısayolları (F1)</sys:String>
+    <sys:String x:Key="Str_TT_About">KillerPDF Hakkında (F12)</sys:String>
 
     <!-- ── Hakkında katmanı ──────────────────────────────────────────── -->
     <sys:String x:Key="Str_About_Version">SÜRÜM</sys:String>
@@ -52,31 +54,39 @@
     <sys:String x:Key="Str_About_Thumbprint">PARMAK İZİ</sys:String>
     <sys:String x:Key="Str_About_ExeSha">EXE SHA256</sys:String>
     <sys:String x:Key="Str_About_Computing">Hesaplanıyor...</sys:String>
-    <sys:String x:Key="Str_Tagline">Windows için hızlı, ücretsiz bir PDF araç takımı. {0}'ın bir parçası.</sys:String>
+    <sys:String x:Key="Str_Tagline">Ek açıklama, birleştirme, OCR, imza ve form araçlarına sahip, Windows için hızlı ve ücretsiz bir PDF araç takımı. {0}'dan bir GPLv3 aracı.</sys:String>
 
     <!-- ── Kenar çubuğu sekmeleri ───────────────────────────────────── -->
     <sys:String x:Key="Str_TabPages">SAYFALAR</sys:String>
     <sys:String x:Key="Str_TabOutlines">ANA HATLAR</sys:String>
+    <sys:String x:Key="Str_Outline_CollapseAll">Tümünü daralt</sys:String>
+    <sys:String x:Key="Str_Outline_ExpandAll">Tümünü genişlet</sys:String>
 
     <!-- ── Ayarlar paneli ───────────────────────────────────────────── -->
-    <sys:String x:Key="Str_Settings">Ayarlar</sys:String>
-    <sys:String x:Key="Str_Theme">TEMA</sys:String>
-    <sys:String x:Key="Str_Language">DİL</sys:String>
+    <sys:String x:Key="Str_Theme">Tema</sys:String>
+    <sys:String x:Key="Str_Language">Dil</sys:String>
     <sys:String x:Key="Str_Toolbar">ARAÇ ÇUBUĞU</sys:String>
+    <sys:String x:Key="Str_Toolbar_Header">Araç çubuğu</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextNone">Metin yok</sys:String>
     <sys:String x:Key="Str_Toolbar_SmallIcons">Küçük simgeler</sys:String>
     <sys:String x:Key="Str_Toolbar_LargeIcons">Büyük simgeler</sys:String>
     <sys:String x:Key="Str_Toolbar_TextBeside">Simge yanında metin</sys:String>
     <sys:String x:Key="Str_Toolbar_TextUnder">Simge altında metin</sys:String>
     <sys:String x:Key="Str_Toolbar_TextOnly">Yalnızca metin</sys:String>
+    <sys:String x:Key="Str_Toolbar_Hide">Araç çubuğunu gizle</sys:String>
+    <sys:String x:Key="Str_St_ToolbarHidden">Araç çubuğu gizlendi - Alt+M yeniden gösterir</sys:String>
+    <sys:String x:Key="Str_St_ToolbarShown">Araç çubuğu gösteriliyor</sys:String>
     <sys:String x:Key="Str_Lang_English">İngilizce</sys:String>
     <sys:String x:Key="Str_Lang_Spanish">İspanyolca</sys:String>
     <sys:String x:Key="Str_Lang_Chinese">Çince (Geleneksel)</sys:String>
 
     <!-- ── Klavye kısayolları katmanı ───────────────────────────────── -->
     <sys:String x:Key="Str_KS_Title">Klavye Kısayolları</sys:String>
+    <sys:String x:Key="Str_KS_FormField">Doldurulabilir metin alanı</sys:String>
     <sys:String x:Key="Str_KS_File">DOSYA</sys:String>
     <sys:String x:Key="Str_KS_Open">Aç</sys:String>
     <sys:String x:Key="Str_KS_CloseFile">Dosyayı kapat</sys:String>
+    <sys:String x:Key="Str_KS_CloseOthers">Diğer sekmeleri kapat</sys:String>
     <sys:String x:Key="Str_KS_CloseAll">Tümünü kapat</sys:String>
     <sys:String x:Key="Str_KS_NewBlank">Yeni boş belge</sys:String>
     <sys:String x:Key="Str_KS_SaveAs">Farklı Kaydet</sys:String>
@@ -100,17 +110,19 @@
     <sys:String x:Key="Str_KS_Help">YARDIM</sys:String>
     <sys:String x:Key="Str_KS_ThisList">Bu kısayol listesi</sys:String>
     <sys:String x:Key="Str_KS_About">Hakkında penceresi</sys:String>
+    <sys:String x:Key="Str_KS_DocInfo">Belge bilgisi</sys:String>
     <sys:String x:Key="Str_KS_OnlineHelp">Tam kılavuz ve çevrimiçi rehber</sys:String>
     <sys:String x:Key="Str_KS_Tools">ARAÇLAR</sys:String>
     <sys:String x:Key="Str_KS_Paste">Görsel / metin yapıştır</sys:String>
+    <sys:String x:Key="Str_KS_TextStyle">Kalın / italik / altı çizili (metin kutusu)</sys:String>
     <sys:String x:Key="Str_KS_MultiSelect">Seçime ekle</sys:String>
 
     <!-- ── Durum çubuğu ──────────────────────────────────────────────── -->
     <sys:String x:Key="Str_Ready">Hazır</sys:String>
     <sys:String x:Key="Str_Portable">KURULUMSUZ</sys:String>
-    <sys:String x:Key="Str_InstallBtn">KillerPDF'i yükle...</sys:String>
+    <sys:String x:Key="Str_InstallBtn">KillerPDF'i yükle</sys:String>
 
-    <!-- ── Durum mesajları (biçim dizeleri — string.Format kullanır) ── -->
+    <!-- ── Durum mesajları (biçim dizeleri - string.Format kullanır) ── -->
     <sys:String x:Key="Str_Opened">Açıldı {0} - {1} sayfa</sys:String>
     <sys:String x:Key="Str_OpenedReadOnly">Açıldı {0} (salt okunur - sahip kısıtlamaları) - {1} sayfa</sys:String>
     <sys:String x:Key="Str_OpenedReadOnlyXRef">Açıldı {0} (salt okunur - standart dışı XRef tablosu) - {1} sayfa</sys:String>
@@ -118,7 +130,7 @@
     <sys:String x:Key="Str_OpenedRasterRepair">Açıldı {0} (rasterize edilerek onarıldı - değişiklikleri korumak için kaydedin) - {1} sayfa</sys:String>
     <sys:String x:Key="Str_PageOf">Sayfa {0} / {1}</sys:String>
     <sys:String x:Key="Str_PageOfLinks">Sayfa {0} / {1}  ({2} bağlantı)</sys:String>
-    <sys:String x:Key="Str_PageFormFields">Sayfa {0} / {1} — bu sayfa doldurulabilir form alanları içeriyor</sys:String>
+    <sys:String x:Key="Str_PageFormFields">Sayfa {0} / {1} - bu sayfa doldurulabilir form alanları içeriyor</sys:String>
     <sys:String x:Key="Str_PageRenderError">Sayfa {0} - görüntülenemedi</sys:String>
     <sys:String x:Key="Str_RenderError">Görüntüleme hatası: {0}</sys:String>
     <sys:String x:Key="Str_Rotated">{0} sayfa döndürüldü</sys:String>
@@ -130,24 +142,48 @@
     <sys:String x:Key="Str_Deleted">{0} sayfa silindi - {1} kaldı</sys:String>
     <sys:String x:Key="Str_Printed">{0} sayfa yazıcıya gönderildi</sys:String>
     <sys:String x:Key="Str_LinkRemoved">Bağlantı kaldırıldı.</sys:String>
-    <sys:String x:Key="Str_InvalidRange">Geçersiz aralık — örn. 1-3,5,7 kullanın</sys:String>
+    <sys:String x:Key="Str_InvalidRange">Geçersiz aralık - örn. 1-3,5,7 kullanın</sys:String>
     <sys:String x:Key="Str_CropNoDoc">Kırpma: açık belge yok</sys:String>
     <sys:String x:Key="Str_CropNoPage">Kırpma: sayfa seçilmedi</sys:String>
     <sys:String x:Key="Str_CropNoDims">Kırpma: sayfa boyutları alınamadı</sys:String>
     <sys:String x:Key="Str_RotateFailed">Döndürme başarısız: {0}</sys:String>
 
     <!-- ── İletişim kutusu metinleri ────────────────────────────────── -->
-    <sys:String x:Key="Str_Dlg_InstallTitle">KillerPDF'i Yükle</sys:String>
-    <sys:String x:Key="Str_Dlg_InstallMsg">KillerPDF kullanıcı profilinize yüklensin mi?
+    <sys:String x:Key="Str_Dlg_SaveRemovesSignature" xml:space="preserve">"{0}" dijital olarak imzalanmış.
 
-Bu işlem uygulamayı %LocalAppData%\KillerPDF konumuna kopyalar ve bir Başlat Menüsü kısayolu oluşturur.
-İstediğiniz zaman Program Ekle/Kaldır üzerinden kaldırabilirsiniz.</sys:String>
+Kaydetmek dosyayı değiştirir ve imzasını kaldırır. İmzalı dosyayı korumak için iptal edin ve Farklı Kaydet ile başka bir ad kullanın.</sys:String>
+    <sys:String x:Key="Str_Dlg_SaveOtherPaneDirty" xml:space="preserve">Diğer bölmede de "{0}" açık ve kendi kaydedilmemiş değişiklikleri var.
+
+Şimdi kaydetmek dosyanın üzerine yazar ve bu değişiklikler kaybolur. Korumak istiyorsanız önce diğer bölmeyi kaydedin.</sys:String>
+    <sys:String x:Key="Str_St_SplitOn">Bölünmüş görünüm açık - kapatmak için F10</sys:String>
+    <sys:String x:Key="Str_St_SplitOff">Bölünmüş görünüm kapalı</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallTitle">KillerPDF'i Yükle</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallMsg" xml:space="preserve">KillerPDF bu bilgisayara yüklensin mi?
+
+KillerPDF programlar klasörünüze kopyalanır ve bir Başlat Menüsü girdisi eklenir. EXE dosyasının bu kopyası olduğu yerde kalır ve istediğiniz zaman Program Ekle/Kaldır üzerinden kaldırabilirsiniz.</sys:String>
+    <sys:String x:Key="Str_Btn_DoInstall">Yükle</sys:String>
+    <sys:String x:Key="Str_Btn_DoUpdate">Güncelle</sys:String>
+    <sys:String x:Key="Str_Dlg_UpdateUserMsg" xml:space="preserve">Mevcut KillerPDF kurulumu güncellensin mi?
+
+Kurulu kopya, daha hızlı çok dosyalı sürümle değiştirilir. Bu taşınabilir dosyayı daha sonra saklayabilir veya silebilirsiniz.</sys:String>
+    <sys:String x:Key="Str_Dlg_UpdateMachineMsg" xml:space="preserve">KillerPDF'in tüm kullanıcılar için mevcut kurulumu güncellensin mi?
+
+Program Files içindeki kopya, daha hızlı çok dosyalı sürümle değiştirilir. Eski kullanıcı başına kopya kaldırılır, böylece KillerPDF yalnızca bir kez görünür. Bu taşınabilir dosyayı daha sonra saklayabilir veya silebilirsiniz.</sys:String>
+    <sys:String x:Key="Str_Dlg_OneInstallOnly" xml:space="preserve">KillerPDF bu bilgisayarda zaten tüm kullanıcılar için kurulu. Kullanıcı başına kurulum seçmeden önce bu kurulumu güncelleyin veya kaldırın.
+
+KillerPDF iki kurulu kopya oluşturmaz.</sys:String>
+    <sys:String x:Key="Str_Chk_Desktop">Masaüstü kısayolu ekle</sys:String>
+    <sys:String x:Key="Str_Chk_AllUsers">Bu bilgisayardaki herkes için yükle (yönetici gerekir)</sys:String>
+    <sys:String x:Key="Str_Status_InstallFailed">Yükleme tamamlanmadı - KillerPDF hâlâ taşınabilir olarak çalışıyor.</sys:String>
+    <sys:String x:Key="Str_Dlg_SetDefaultPdfMsg" xml:space="preserve">KillerPDF varsayılan PDF görüntüleyiciniz olarak ayarlansın mı?
+
+Windows Ayarları - Varsayılan Uygulamalar bölümünü açar.</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedClose">Kaydedilmemiş değişiklikleriniz var. Bu dosya kaydedilmeden kapatılsın mı?</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedExit">Kaydedilmemiş değişiklikleriniz var. KillerPDF kaydedilmeden kapatılsın mı?</sys:String>
-    <sys:String x:Key="Str_Dlg_PageOutOfRange">Bu belgede Adobe Reader'ın desteklediği aralığın (kenar başına 3 - 14.400 punto) dışında boyutlandırılmış {0} sayfa var - Adobe bu sayfaları boş gösterir.
+    <sys:String x:Key="Str_Dlg_PageOutOfRange" xml:space="preserve">Bu belgede Adobe Reader'ın desteklediği aralığın (kenar başına 3 - 14.400 punto) dışında boyutlandırılmış {0} sayfa var - Adobe bu sayfaları boş gösterir.
 
 Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları korunur.</sys:String>
-    <sys:String x:Key="Str_Dlg_FailedOpen">PDF açılamadı:
+    <sys:String x:Key="Str_Dlg_FailedOpen" xml:space="preserve">PDF açılamadı:
 {0}</sys:String>
     <sys:String x:Key="Str_Dlg_AppTitle">KillerPDF</sys:String>
     <sys:String x:Key="Str_Dlg_CloseAllDocs">{0} açık belgeniz var. Uygulamadan çıkarken KillerPDF hepsini kapatsın mı?</sys:String>
@@ -162,6 +198,14 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Theme_Blood">Kanlı</sys:String>
     <sys:String x:Key="Str_Theme_Greed">Açgözlü</sys:String>
     <sys:String x:Key="Str_Theme_Cyanotic">Siyanotik</sys:String>
+    <sys:String x:Key="Str_Theme_98SE">98SE</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasm</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">Decay</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_FilmGrain">Film greni</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
+    <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">Malaise</sys:String>
 
     <!-- ── Yakınlaştırma açılır listesi ──────────────────────────────── -->
     <sys:String x:Key="Str_Zoom_FitWidth">Genişliğe Sığdır</sys:String>
@@ -188,13 +232,17 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Lbl_MoveUp">Sayfayı Yukarı Taşı</sys:String>
     <sys:String x:Key="Str_Lbl_MoveDown">Sayfayı Aşağı Taşı</sys:String>
     <sys:String x:Key="Str_Lbl_Text">Metin</sys:String>
+    <sys:String x:Key="Str_Lbl_FormField">Formlar (F)</sys:String>
     <sys:String x:Key="Str_Lbl_Highlight">Vurgula</sys:String>
     <sys:String x:Key="Str_Lbl_Strike">Üstü çizili</sys:String>
     <sys:String x:Key="Str_Lbl_Underline">Altı çizili</sys:String>
     <sys:String x:Key="Str_Lbl_Bold">Kalın</sys:String>
     <sys:String x:Key="Str_Lbl_Italic">İtalik</sys:String>
     <sys:String x:Key="Str_Lbl_Draw">Çiz</sys:String>
+    <sys:String x:Key="Str_Lbl_Shape">Şekiller</sys:String>
+    <sys:String x:Key="Str_Bar_ShapeFill">Dolgu</sys:String>
     <sys:String x:Key="Str_Lbl_Crop">Kırp</sys:String>
+    <sys:String x:Key="Str_Lbl_Measure">Ölç</sys:String>
     <sys:String x:Key="Str_Lbl_Image">Resim Ekle</sys:String>
     <sys:String x:Key="Str_Lbl_Signature">İmza</sys:String>
     <sys:String x:Key="Str_Lbl_Undo">Geri Al</sys:String>
@@ -226,6 +274,7 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Ctx_RotateCWShort">Saat Yönünde Döndür</sys:String>
     <sys:String x:Key="Str_Ctx_RotateCCWShort">Saatin Tersine Döndür</sys:String>
     <sys:String x:Key="Str_Ctx_ExtractPages">Sayfa(ları) Çıkart</sys:String>
+    <sys:String x:Key="Str_Ctx_ExportPageImage">Sayfayı görüntü olarak dışa aktar</sys:String>
     <sys:String x:Key="Str_Ctx_DeletePages">Sayfa(ları) Sil</sys:String>
 
     <!-- ── Stamp Page Numbers dialog ──────────────────────────────────── -->
@@ -251,7 +300,7 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Stamp_Mirror">Karşılıklı sayfalarda yansıt (dış kenar)</sys:String>
     <sys:String x:Key="Str_Stamp_Applied">{0} sayfa damgalandı</sys:String>
     <sys:String x:Key="Str_Pos_Custom">Özel (önizlemede sürükle)</sys:String>
-    <sys:String x:Key="Str_TT_StampTool">Sayfaları Damgala</sys:String>
+    <sys:String x:Key="Str_TT_StampTool">Sayfaları Damgala (S)</sys:String>
     <sys:String x:Key="Str_Ctx_StampPages">Sayfaları Damgala</sys:String>
     <sys:String x:Key="Str_Stamp_Cancel">İptal</sys:String>
     <sys:String x:Key="Str_Stamp_Stamp">Bas</sys:String>
@@ -317,7 +366,7 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Drop_TooMany">Bu klasör veya arşiv {0} dosya içeriyor. KillerPDF yalnızca ilk {1} tanesini açacak. Devam edilsin mi?</sys:String>
     <sys:String x:Key="Str_Status_Merged">{0} dosya birleştirildi - henüz kaydedilmedi</sys:String>
     <sys:String x:Key="Str_Drop_Merging">Dosyalar birleştiriliyor...</sys:String>
-    <sys:String x:Key="Str_Drop_MergeCancelled">Birleştirme iptal edildi</sys:String>
+    <sys:String x:Key="Str_Drop_MergeCanceled">Birleştirme iptal edildi</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedCloseAll">Tüm belgeler kapatılsın mı? Kaydedilmemiş değişiklikler kaybolacak.</sys:String>
     <sys:String x:Key="Str_Msg_OpenFirst">Önce bir PDF açın.</sys:String>
     <sys:String x:Key="Str_Dlg_SaveBeforeZip">ZIP olarak sıkıştırmadan önce değişiklikler kaydedilsin mi?</sys:String>
@@ -340,7 +389,7 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
 
     <!-- ── Çizgi aracı, katman / grup menüsü (v1.5.x eklendi) ─────────── -->
     <sys:String x:Key="Str_Lbl_Line">Çizgi</sys:String>
-    <sys:String x:Key="Str_TT_LineTool">Çizgi - düz bir çizgi çizmek için sürükleyin</sys:String>
+    <sys:String x:Key="Str_TT_LineTool">Çizgi - düz bir çizgi çizmek için sürükleyin (L)</sys:String>
     <sys:String x:Key="Str_Ctx_Edit">Düzenle</sys:String>
     <sys:String x:Key="Str_Ctx_Raise">Yükselt</sys:String>
     <sys:String x:Key="Str_Ctx_Lower">Alçalt</sys:String>
@@ -356,11 +405,13 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Bar_Color">Renk:</sys:String>
     <sys:String x:Key="Str_Bar_Fill">Dolgu:</sys:String>
     <sys:String x:Key="Str_Bar_Size">Boyut:</sys:String>
+    <sys:String x:Key="Str_Bar_LetterSpacing">Harf aralığı:</sys:String>
     <sys:String x:Key="Str_Bar_Opacity">Opaklık:</sys:String>
     <sys:String x:Key="Str_Bar_FillOpacity">Dolgu Opaklığı:</sys:String>
     <sys:String x:Key="Str_Bar_Font">Yazı tipi:</sys:String>
     <sys:String x:Key="Str_Bar_Level">Düz</sys:String>
     <sys:String x:Key="Str_Bar_Eraser">Silgi</sys:String>
+    <sys:String x:Key="Str_Bar_AnnotationEraser">Açıklama silgisi</sys:String>
     <sys:String x:Key="Str_Bar_MoreColors">Daha fazla renk...</sys:String>
     <sys:String x:Key="Str_Sig_Signatures">İmzalar</sys:String>
     <sys:String x:Key="Str_Sig_Initials">Paraflar</sys:String>
@@ -372,12 +423,26 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Sign_Desc">{0} dosyasını bir sertifikayla mühürler ve imzalı bir kopya kaydeder.</sys:String>
     <sys:String x:Key="Str_Sign_Certificate">Sertifika</sys:String>
     <sys:String x:Key="Str_Sign_FromFile">Bir dosyadan (.pfx / .p12)</sys:String>
-    <sys:String x:Key="Str_Sign_FromStore">Windows sertifika deposundan</sys:String>
+    <sys:String x:Key="Str_Sign_FromStore">Windows sertifika deposundan / USB token</sys:String>
     <sys:String x:Key="Str_Sign_Browse">Gözat...</sys:String>
     <sys:String x:Key="Str_Sign_Password">Parola</sys:String>
     <sys:String x:Key="Str_Sign_Reason">Neden (isteğe bağlı)</sys:String>
     <sys:String x:Key="Str_Sign_Location">Konum (isteğe bağlı)</sys:String>
     <sys:String x:Key="Str_Sign_Contact">İletişim (isteğe bağlı)</sys:String>
+    <sys:String x:Key="Str_Sign_VisibleAppearance">Görünür imza göster</sys:String>
+    <sys:String x:Key="Str_Sign_AppearanceText">İmza metni</sys:String>
+    <sys:String x:Key="Str_Sign_AppearanceDefault">Dijital olarak imzalayan: {name}&#10;Tarih: {date}&#10;Neden: {reason}&#10;Konum: {location}</sys:String>
+    <sys:String x:Key="Str_Sign_Page">Sayfa</sys:String>
+    <sys:String x:Key="Str_Sign_Position">Pozisyon</sys:String>
+    <sys:String x:Key="Str_Sign_BottomLeft">Sol alt</sys:String>
+    <sys:String x:Key="Str_Sign_BottomRight">Sağ alt</sys:String>
+    <sys:String x:Key="Str_Sign_TopLeft">Sol üst</sys:String>
+    <sys:String x:Key="Str_Sign_TopRight">Sağ üst</sys:String>
+    <sys:String x:Key="Str_Sign_Width">Genişlik</sys:String>
+    <sys:String x:Key="Str_Sign_Height">Yükseklik</sys:String>
+    <sys:String x:Key="Str_Sign_FontSize">Metin boyutu</sys:String>
+    <sys:String x:Key="Str_Sign_PreviewSigner">Sertifika sahibi</sys:String>
+    <sys:String x:Key="Str_Sign_BadAppearance">İmza sayfasını, boyutlarını ve metin boyutunu kontrol edin.</sys:String>
     <sys:String x:Key="Str_Sign_SaveAs">İmzalı kopyayı farklı kaydet</sys:String>
     <sys:String x:Key="Str_Sign_Sign">İmzala</sys:String>
     <sys:String x:Key="Str_Sign_Cancel">İptal</sys:String>
@@ -387,13 +452,21 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Sidebar_Left">Sol</sys:String>
     <sys:String x:Key="Str_Sidebar_Right">Sağ</sys:String>
     <sys:String x:Key="Str_KS_ToggleSidebar">Kenar çubuğunu aç/kapat</sys:String>
+    <sys:String x:Key="Str_KS_ToolbarStyle">Araç çubuğu görünümü</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">Kenar çubuğu solda / sağda</sys:String>
+    <sys:String x:Key="Str_KS_CycleView">Sonraki görünüm modu</sys:String>
+    <sys:String x:Key="Str_TT_ViewMode">Görünüm modu</sys:String>
     <sys:String x:Key="Str_KS_NextTab">Sonraki sekme (Shift: önceki)</sys:String>
     <sys:String x:Key="Str_Lbl_Search">Ara</sys:String>
     <sys:String x:Key="Str_TT_Search">Ara (Ctrl+F)</sys:String>
     <sys:String x:Key="Str_Ctx_DeletePage">Sayfayı sil</sys:String>
     <sys:String x:Key="Str_Ctx_DuplicatePage">Sayfayı çoğalt</sys:String>
     <sys:String x:Key="Str_Ctx_AddBlankPage">Boş sayfa ekle</sys:String>
+    <sys:String x:Key="Str_Blank_CurrentPage">Geçerli sayfa</sys:String>
+    <sys:String x:Key="Str_Blank_Custom">Özel</sys:String>
+    <sys:String x:Key="Str_Blank_InvalidSize">0,1 ile 200 inç arasında bir genişlik ve yükseklik girin.</sys:String>
     <sys:String x:Key="Str_Ctx_CloseTab">Sekmeyi kapat</sys:String>
+    <sys:String x:Key="Str_Ctx_OpenContainingFolder">Dosyanın bulunduğu klasörü aç</sys:String>
     <sys:String x:Key="Str_Ctx_CloseOthers">Diğer sekmeleri kapat</sys:String>
 
     <!-- ── OCR + Dönüştürme + Kırpma (v1.x eklendi) ──────────────────── -->
@@ -401,14 +474,14 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Ocr_SearchablePdf">Aranabilir PDF Oluştur...</sys:String>
     <sys:String x:Key="Str_Ocr_ExtractText">Tüm Metni Çıkart...</sys:String>
     <sys:String x:Key="Str_Ocr_Language">Dil</sys:String>
+    <sys:String x:Key="Str_Ocr_FormAware">Form duyarlı OCR</sys:String>
     <sys:String x:Key="Str_Ocr_NoDoc">Önce bir PDF açın</sys:String>
-    <sys:String x:Key="Str_Ocr_ComingSoon">{0} - yakında</sys:String>
-    <sys:String x:Key="Str_TT_Ocr">Sayfada OCR uygula (metni kopyala)</sys:String>
+    <sys:String x:Key="Str_TT_Ocr">Sayfada OCR uygula (metni kopyala) (Ctrl+Shift+O)</sys:String>
     <sys:String x:Key="Str_Lbl_Ocr">OCR</sys:String>
     <sys:String x:Key="Str_Ctx_OcrPage">Sayfada OCR Uygula (Metni Kopyala)</sys:String>
     <sys:String x:Key="Str_Lbl_Rotate">Dönüştür</sys:String>
     <sys:String x:Key="Str_Lbl_Stamp">Damga</sys:String>
-    <sys:String x:Key="Str_TT_RotateTool">Sayfayı dönüştür - döndür / düzelt (ölçekleme yakında)</sys:String>
+    <sys:String x:Key="Str_TT_RotateTool">Sayfayı dönüştür: döndür, ölçekle, çevir, düzelt veya perspektifi düzelt (R)</sys:String>
     <sys:String x:Key="Str_Tf_Suffix">Dönüştür</sys:String>
     <sys:String x:Key="Str_Tf_Rotate">DÖNDÜR</sys:String>
     <sys:String x:Key="Str_Tf_Scale">ÖLÇEKLE</sys:String>
@@ -423,6 +496,10 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Tf_FlipV">Dikey çevir</sys:String>
     <sys:String x:Key="Str_Tf_LevelLine">Bir düz çizgi çiz</sys:String>
     <sys:String x:Key="Str_Tf_SkewHint">Düz olması gereken herhangi bir şey boyunca sürükleyin (bir kenar, bir metin satırı). Sayfa buna uyacak şekilde döner.</sys:String>
+    <sys:String x:Key="Str_Tf_Perspective">PERSPEKTİF</sys:String>
+    <sys:String x:Key="Str_Tf_CorrectPerspective">Yamuk perspektif bozulmasını düzelt</sys:String>
+    <sys:String x:Key="Str_Tf_PerspectiveHint">Dört köşeyi fotoğraflanan sayfanın dış çizgisine sürükleyin. Uygula, sayfayı dikdörtgen hâline getirir.</sys:String>
+    <sys:String x:Key="Str_Tf_ResetCorners">Köşeleri sıfırla</sys:String>
     <sys:String x:Key="Str_Tf_Output">Çıktı: {0} × {1} inç</sys:String>
     <sys:String x:Key="Str_Tf_ResetAll">Tümünü sıfırla</sys:String>
     <sys:String x:Key="Str_Tf_Reset">Sıfırla</sys:String>
@@ -431,6 +508,7 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Tf_Warn">Bir sayfayı dönüştürmek (döndürmek veya ölçeklemek) onu rasterize eder: sayfa bir görsel olarak yeniden kaydedilir, bu nedenle üzerindeki seçilebilir metin kaybolur. Daha sonra OCR uygulayarak tekrar aranabilir hale getirebilirsiniz.</sys:String>
     <sys:String x:Key="Str_Tf_DontWarn">Beni bir daha uyarma</sys:String>
     <sys:String x:Key="Str_Tf_Done">{0} sayfa dönüştürüldü</sys:String>
+    <sys:String x:Key="Str_Tf_DoneBatch">{0} sayfa dönüştürüldü</sys:String>
     <sys:String x:Key="Str_Tf_NoRender">Sayfa görüntülenemedi - birazdan tekrar deneyin.</sys:String>
     <sys:String x:Key="Str_Tf_Failed">Dönüştürme başarısız: {0}</sys:String>
     <sys:String x:Key="Str_Crop_Position">Konum</sys:String>
@@ -440,7 +518,7 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Crop_Apply">Kırp</sys:String>
     <sys:String x:Key="Str_Crop_RangeTip">Sayfa aralığı, örn. 1-3,5 (boş = geçerli sayfa)</sys:String>
     <sys:String x:Key="Str_Crop_AllTip">Her sayfayı kırp</sys:String>
-    <sys:String x:Key="Str_KS_View">Görünüm</sys:String>
+    <sys:String x:Key="Str_KS_View">GÖRÜNÜM</sys:String>
     <sys:String x:Key="Str_KS_FullScreen">Tam ekran</sys:String>
     <sys:String x:Key="Str_FullScreen_Hint">Tam ekrandan çıkmak için F11 veya Esc'e basın</sys:String>
     <!-- Quit prompt -->
@@ -452,7 +530,7 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
 
     <!-- Status-bar + dialog strings (extracted from code) -->
     <sys:String x:Key="Str_St_DataCleared">Tüm KillerPDF verileri temizlendi</sys:String>
-    <sys:String x:Key="Str_St_OcrRegionCancelled">OCR bölgesi iptal edildi</sys:String>
+    <sys:String x:Key="Str_St_OcrRegionCanceled">OCR bölgesi iptal edildi</sys:String>
     <sys:String x:Key="Str_St_Erased">Silindi</sys:String>
     <sys:String x:Key="Str_St_Ungrouped">Grup çözüldü</sys:String>
     <sys:String x:Key="Str_St_RemovedFromGroup">Gruptan çıkarıldı</sys:String>
@@ -465,22 +543,23 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_St_UndidDocChange">Belge değişikliği geri alındı</sys:String>
     <sys:String x:Key="Str_St_ClearedPageAnnotations">Bu sayfadaki ek açıklamalar temizlendi</sys:String>
     <sys:String x:Key="Str_St_NoAnnotationsToClear">Temizlenecek ek açıklama yok</sys:String>
-    <sys:String x:Key="Str_St_RepairCancelled">Onarım iptal edildi</sys:String>
-    <sys:String x:Key="Str_St_Cancelled">İptal edildi</sys:String>
+    <sys:String x:Key="Str_St_RepairCanceled">Onarım iptal edildi</sys:String>
+    <sys:String x:Key="Str_St_Canceled">İptal edildi</sys:String>
     <sys:String x:Key="Str_St_DocInfoUpdated">Belge bilgileri güncellendi - değişiklikleri korumak için dosyayı kaydedin</sys:String>
-    <sys:String x:Key="Str_St_FlattenCancelled">Düzleştirme iptal edildi (dosya yazılmadı)</sys:String>
+    <sys:String x:Key="Str_St_FlattenCanceled">Düzleştirme iptal edildi (dosya yazılmadı)</sys:String>
     <sys:String x:Key="Str_St_FlattenPrintFailed">Ek açıklamalar yazdırma için düzleştirilemedi; onlar olmadan yazdırılıyor.</sys:String>
-    <sys:String x:Key="Str_St_HqDownloadCancelled">Yüksek kaliteli indirme iptal edildi</sys:String>
-    <sys:String x:Key="Str_St_LangDownloadCancelled">Dil indirme iptal edildi</sys:String>
-    <sys:String x:Key="Str_St_OcrCancelled">OCR iptal edildi</sys:String>
+    <sys:String x:Key="Str_St_HqDownloadCanceled">Yüksek kaliteli indirme iptal edildi</sys:String>
+    <sys:String x:Key="Str_St_LangDownloadCanceled">Dil indirme iptal edildi</sys:String>
+    <sys:String x:Key="Str_St_OcrCanceled">OCR iptal edildi</sys:String>
     <sys:String x:Key="Str_St_OcrDragBox">Tanınacak alanın üzerine bir kutu sürükleyin</sys:String>
     <sys:String x:Key="Str_St_OcrRegionTooSmall">OCR bölgesi çok küçük</sys:String>
     <sys:String x:Key="Str_St_OcrNoText">OCR: seçilen bölgede metin bulunamadı</sys:String>
-    <sys:String x:Key="Str_St_SearchablePdfCancelled">Aranabilir PDF iptal edildi (dosya yazılmadı)</sys:String>
-    <sys:String x:Key="Str_St_TextExtractCancelled">Metin çıkarma iptal edildi (dosya yazılmadı)</sys:String>
+    <sys:String x:Key="Str_St_SearchablePdfCanceled">Aranabilir PDF iptal edildi (dosya yazılmadı)</sys:String>
+    <sys:String x:Key="Str_St_TextExtractCanceled">Metin çıkarma iptal edildi (dosya yazılmadı)</sys:String>
     <sys:String x:Key="Str_St_NoTextOnPage">Bu sayfada metin bulunamadı</sys:String>
     <sys:String x:Key="Str_St_NoTextSelected">Metin seçilmedi - metin seçmek için sürükleyin</sys:String>
     <sys:String x:Key="Str_St_NoTextInSelection">Seçimde metin bulunamadı</sys:String>
+    <sys:String x:Key="Str_St_NoTextUseShapes">Burada metin yok - Şekiller 4'te</sys:String>
     <sys:String x:Key="Str_St_SignaturePlaced">İmza yerleştirildi - yeniden konumlandırmak için sürükleyin, boyutlandırmak için köşe tutamacını kullanın</sys:String>
     <sys:String x:Key="Str_St_FieldCleared">Alan temizlendi</sys:String>
     <sys:String x:Key="Str_St_FieldSigned">Alan imzalandı</sys:String>
@@ -504,4 +583,453 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Dlg_NoValidPages">Bu aralıkta geçerli sayfa yok.</sys:String>
     <sys:String x:Key="Str_Dlg_SignedSavedTo">İmzalı kopya şuraya kaydedildi:</sys:String>
     <sys:String x:Key="Str_Dlg_DrawSignatureFirst">Önce bir imza çizin.</sys:String>
+
+    <!-- ── Bookmark editing (#133, added v1.6.4) ───────────────── -->
+    <sys:String x:Key="Str_TT_AddBookmark">Geçerli sayfa için yer imi ekle</sys:String>
+    <sys:String x:Key="Str_Ctx_BmAdd">Yer imi ekle</sys:String>
+    <sys:String x:Key="Str_Ctx_BmAddChild">Alt yer imi ekle</sys:String>
+    <sys:String x:Key="Str_Ctx_BmRename">Yeniden adlandır</sys:String>
+    <sys:String x:Key="Str_Ctx_BmDelete">Sil</sys:String>
+    <sys:String x:Key="Str_Bm_DefaultTitle">Sayfa {0}</sys:String>
+    <sys:String x:Key="Str_PageLabel">Sayfa {0}</sys:String>
+    <sys:String x:Key="Str_Outline_Untitled">(başlıksız)</sys:String>
+    <sys:String x:Key="Str_Bm_DeleteKids">Bu yer imi ve {0} alt yer imi silinsin mi?</sys:String>
+    <sys:String x:Key="Str_Ctx_BmMoveUp">Yukarı taşı</sys:String>
+    <sys:String x:Key="Str_Ctx_BmMoveDown">Aşağı taşı</sys:String>
+    <sys:String x:Key="Str_Ctx_BmSetDest">Geçerli sayfaya yönlendir</sys:String>
+    <sys:String x:Key="Str_Ctx_BmDeleteAll">Tüm yer imlerini sil</sys:String>
+    <sys:String x:Key="Str_Bm_DeleteMulti">{0} yer imi silinsin mi?</sys:String>
+    <sys:String x:Key="Str_Bm_DeleteAllConfirm">Bu belgedeki tüm yer imleri kaldırılsın mı?</sys:String>
+
+    <sys:String x:Key="Str_Ctx_Redo">Yinele</sys:String>
+    <sys:String x:Key="Str_St_Redone">Yinelendi</sys:String>
+    <sys:String x:Key="Str_St_NothingToRedo">Yinelenecek bir şey yok</sys:String>
+    <sys:String x:Key="Str_KS_FirstLast">İlk / son sayfa</sys:String>
+    <sys:String x:Key="Str_KS_BackForward">Geri / ileri (atlama geçmişi)</sys:String>
+    <sys:String x:Key="Str_KS_ZoomPresets">Gerçek boyut / genişliğe sığdır / sayfaya sığdır</sys:String>
+    <sys:String x:Key="Str_KS_ContextMenu">Seçimde bağlam menüsü</sys:String>
+
+    <sys:String x:Key="Str_KS_ViewList">LİSTE</sys:String>
+    <sys:String x:Key="Str_KS_ViewKeyboard">KLAVYE</sys:String>
+    <sys:String x:Key="Str_KS_HoldHint">Katmanı önizlemek için Ctrl, Shift veya Alt tuşunu basılı tutun - eylemi görmek için yanan tuşun üzerine gelin</sys:String>
+    <sys:String x:Key="Str_Zoom_ActualSize">Gerçek boyut</sys:String>
+    <sys:String x:Key="Str_KS_PrevTab">Önceki sekme</sys:String>
+
+    <sys:String x:Key="Str_KS_Ocr">OCR</sys:String>
+
+    <sys:String x:Key="Str_Kb_PrevPage">Önceki sayfa</sys:String>
+    <sys:String x:Key="Str_Kb_NextPage">Sonraki sayfa</sys:String>
+    <sys:String x:Key="Str_Kb_FirstPage">İlk sayfa</sys:String>
+    <sys:String x:Key="Str_Kb_LastPage">Son sayfa</sys:String>
+    <sys:String x:Key="Str_Kb_Back">Geri</sys:String>
+    <sys:String x:Key="Str_Kb_Forward">İleri</sys:String>
+    <sys:String x:Key="Str_Kb_NextResult">Sonraki sonuç</sys:String>
+    <sys:String x:Key="Str_Kb_PrevResult">Önceki sonuç</sys:String>
+    <sys:String x:Key="Str_Kb_Confirm">Onayla</sys:String>
+    <sys:String x:Key="Str_Kb_Cancel">İptal</sys:String>
+
+    <!-- Document Info dialog + link strings -->
+    <sys:String x:Key="Str_TT_DocInfo">Belge bilgisi (F4)</sys:String>
+    <sys:String x:Key="Str_DocInfo_Suffix">Belge bilgisi</sys:String>
+    <sys:String x:Key="Str_DocInfo_Title">Başlık</sys:String>
+    <sys:String x:Key="Str_DocInfo_Author">Yazar</sys:String>
+    <sys:String x:Key="Str_DocInfo_Subject">Konu</sys:String>
+    <sys:String x:Key="Str_DocInfo_Keywords">Anahtar kelimeler</sys:String>
+    <sys:String x:Key="Str_DocInfo_Creator">Oluşturan</sys:String>
+    <sys:String x:Key="Str_DocInfo_Producer">Üretici</sys:String>
+    <sys:String x:Key="Str_DocInfo_Save">Kaydet</sys:String>
+    <sys:String x:Key="Str_DocInfo_Cancel">İptal</sys:String>
+    <sys:String x:Key="Str_LinkRemoveFailed">Bağlantı kaldırılamadı:</sys:String>
+    <sys:String x:Key="Str_LinkBlocked">Engellenen bağlantı (desteklenmeyen tür):</sys:String>
+    <sys:String x:Key="Str_LinkOpenFailed">Bağlantı açılamadı</sys:String>
+    <sys:String x:Key="Str_LinkConfirmBody">Bu bağlantı tarayıcınızda açılsın mı?</sys:String>
+    <sys:String x:Key="Str_LinkConfirmTitle">Bağlantı açılsın mı?</sys:String>
+    <sys:String x:Key="Str_LinkDontAsk">Bir daha sorma</sys:String>
+    <sys:String x:Key="Str_Ctx_OpenLink">Bağlantıyı Aç</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyLink">Bağlantı Adresini Kopyala</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyEmail">E-posta Adresini Kopyala</sys:String>
+    <sys:String x:Key="Str_Ctx_RemoveLink">Bağlantıyı PDF'den Kaldır</sys:String>
+    <sys:String x:Key="Str_LinksSection">BAĞLANTILAR</sys:String>
+    <sys:String x:Key="Str_PrivacySection">GİZLİLİK</sys:String>
+    <sys:String x:Key="Str_NoRecentSetting">Son açılan dosyaları hatırlama</sys:String>
+    <sys:String x:Key="Str_Menu_ExportImages">Sayfaları görüntü olarak dışa aktar...</sys:String>
+    <sys:String x:Key="Str_Menu_RemovePassword">Parolayı Kaldır</sys:String>
+    <sys:String x:Key="Str_St_SavedNoPassword">Parola koruması olmadan kaydedildi - {0}</sys:String>
+    <sys:String x:Key="Str_ExportImg_Suffix">Sayfaları Görüntü Olarak Dışa Aktar</sys:String>
+    <sys:String x:Key="Str_ExportImg_Format">Biçim</sys:String>
+    <sys:String x:Key="Str_ExportImg_Dpi">Çözünürlük (DPI)</sys:String>
+    <sys:String x:Key="Str_OutputPixels">{0} x {1} px</sys:String>
+    <sys:String x:Key="Str_ExportImg_Export">Dışa aktar</sys:String>
+    <sys:String x:Key="Str_ExportImg_Done">{0} sayfa {1} konumuna aktarıldı</sys:String>
+    <sys:String x:Key="Str_Print_AllPages">Tüm sayfalar</sys:String>
+    <sys:String x:Key="Str_Print_OddOnly">Yalnızca tek sayfalar</sys:String>
+    <sys:String x:Key="Str_Print_EvenOnly">Yalnızca çift sayfalar</sys:String>
+    <sys:String x:Key="Str_DocInvertSetting">Belge renklerini ters çevir</sys:String>
+    <sys:String x:Key="Str_TT_DocInvert">Belge renklerini ters çevir (N)</sys:String>
+    <sys:String x:Key="Str_TT_SplitPane">Bölünmüş görünüm - iki belge yan yana (F10)</sys:String>
+    <sys:String x:Key="Str_TT_CloseTab">Sekmeyi kapat</sys:String>
+    <sys:String x:Key="Str_TT_TabOverflow">Açık tüm sekmeler</sys:String>
+    <sys:String x:Key="Str_InvertImagesToo">Görselleri de ters çevir</sys:String>
+    <sys:String x:Key="Str_Font_NoGlyphs" xml:space="preserve">Bu bilgisayardaki hiçbir yazı tipi bu karakterleri çizemiyor, bu nedenle kaydedilen PDF'de kutu olarak görünecekler:&#10;&#10;{0}&#10;&#10;Bunları içeren bir yazı tipi yükleyin veya bu metin için başka bir yazı tipi seçin.</sys:String>
+    <sys:String x:Key="Str_TT_AppSize">Tüm uygulamayı boyutlandırmak için kaydırın (Ctrl+Shift++/-/0)</sys:String>
+    <sys:String x:Key="Str_St_AppSize">Uygulama boyutu %{0}</sys:String>
+    <sys:String x:Key="Str_KS_AppSize">Tüm uygulamayı yakınlaştır (erişilebilirlik)</sys:String>
+    <sys:String x:Key="Str_KS_FileSize">Geçerli dosya boyutunu göster</sys:String>
+    <sys:String x:Key="Str_KS_SplitPane">Bölünmüş görünüm - iki belge yan yana</sys:String>
+    <sys:String x:Key="Str_LinkConfirmSetting">Bağlantıları açmadan önce sor</sys:String>
+
+    <!-- Themed Windows system menu (caption right-click / Alt+Space) -->
+    <sys:String x:Key="Str_Sys_Restore">Geri Yükle</sys:String>
+    <sys:String x:Key="Str_Sys_Move">Taşı</sys:String>
+    <sys:String x:Key="Str_Sys_Size">Boyutlandır</sys:String>
+    <sys:String x:Key="Str_Sys_Minimize">Simge Durumuna Küçült</sys:String>
+    <sys:String x:Key="Str_Sys_Maximize">Ekranı Kapla</sys:String>
+    <sys:String x:Key="Str_Sys_Close">Kapat</sys:String>
+    <sys:String x:Key="Str_Btn_Cancel">İptal</sys:String>
+    <sys:String x:Key="Str_Key_Ctrl">Ctrl</sys:String>
+    <sys:String x:Key="Str_Key_Alt">Alt</sys:String>
+    <sys:String x:Key="Str_Key_Shift">Shift</sys:String>
+    <sys:String x:Key="Str_Key_Delete">Delete</sys:String>
+    <sys:String x:Key="Str_Key_Enter">Enter</sys:String>
+    <sys:String x:Key="Str_Key_Esc">Esc</sys:String>
+    <sys:String x:Key="Str_Key_Menu">Menü</sys:String>
+    <sys:String x:Key="Str_Key_Home">Home</sys:String>
+    <sys:String x:Key="Str_Key_End">End</sys:String>
+    <sys:String x:Key="Str_Key_PgUp">PgUp</sys:String>
+    <sys:String x:Key="Str_Key_PgDn">PgDn</sys:String>
+    <sys:String x:Key="Str_Key_Tab">Tab</sys:String>
+    <sys:String x:Key="Str_Key_Scroll">Kaydırma</sys:String>
+    <sys:String x:Key="Str_Key_Click">Tıklama</sys:String>
+    <sys:String x:Key="Str_Key_Or">veya</sys:String>
+    <sys:String x:Key="Str_Key_WheelView">Görünüm üzerinde tekerlek</sys:String>
+    <sys:String x:Key="Str_Key_WheelLogo">Logo üzerinde tekerlek</sys:String>
+    <sys:String x:Key="Str_Key_MiddleDrag">Orta tuşla sürükleme</sys:String>
+    <sys:String x:Key="Str_Key_SpaceDrag">Boşluk + sürükleme</sys:String>
+    <sys:String x:Key="Str_Wordmark_A">Killer</sys:String>
+    <sys:String x:Key="Str_Wordmark_B">PDF</sys:String>
+    <sys:String x:Key="Str_Btn_Open">Aç</sys:String>
+    <sys:String x:Key="Str_Btn_Replace">Değiştir</sys:String>
+    <sys:String x:Key="Str_Btn_Save">Kaydet</sys:String>
+    <sys:String x:Key="Str_Col_Modified">değiştirilme</sys:String>
+    <sys:String x:Key="Str_Col_Name">ad</sys:String>
+    <sys:String x:Key="Str_Col_Size">boyut</sys:String>
+    <sys:String x:Key="Str_Ctx_Cut">Kes</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectAll">Tümünü seç</sys:String>
+    <sys:String x:Key="Str_Dlg_AllFiles">Tüm dosyalar</sys:String>
+    <sys:String x:Key="Str_Dlg_FileName">Dosya adı:</sys:String>
+    <sys:String x:Key="Str_Dlg_FileType">Dosya türü:</sys:String>
+    <sys:String x:Key="Str_Dlg_NoMatchingFiles">Burada geçerli dosya türüyle eşleşen bir şey yok.</sys:String>
+    <sys:String x:Key="Str_Dlg_Preview">Önizleme</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFile">Böyle bir dosya yok.</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFolder">Böyle bir klasör yok.</sys:String>
+    <sys:String x:Key="Str_Dlg_OverwriteMsg">{0} değiştirilsin mi?</sys:String>
+    <sys:String x:Key="Str_Menu_PinPlace">Yerlere sabitle</sys:String>
+    <sys:String x:Key="Str_Menu_UnpinPlace">Yerlerden kaldır</sys:String>
+    <sys:String x:Key="Str_QA_Desktop">Masaüstü</sys:String>
+    <sys:String x:Key="Str_QA_Documents">Belgeler</sys:String>
+    <sys:String x:Key="Str_QA_Downloads">İndirilenler</sys:String>
+    <sys:String x:Key="Str_QA_Home">Ana klasör</sys:String>
+    <sys:String x:Key="Str_QA_Pictures">Resimler</sys:String>
+    <sys:String x:Key="Str_Sum_Counts">{0} klasör, {1} dosya</sys:String>
+    <sys:String x:Key="Str_TT_RecentLocations">Son konumlar</sys:String>
+    <sys:String x:Key="Str_TT_ShowHidden">Gizli ve sistem öğelerini göster</sys:String>
+    <sys:String x:Key="Str_TT_Up">Bir klasör yukarı</sys:String>
+    <sys:String x:Key="Str_TT_ViewDetails">Ayrıntı görünümü</sys:String>
+    <sys:String x:Key="Str_TT_ViewIcons">Simge görünümü</sys:String>
+    <sys:String x:Key="Str_TT_ViewList">Liste görünümü</sys:String>
+
+    <!-- 1.7.2: print dialog paper/source/sections, book layout, Transform levels -->
+    <sys:String x:Key="Str_Print_Paper">Kağıt boyutu</sys:String>
+    <sys:String x:Key="Str_Print_PaperAuto">Belgeyle eşleştir</sys:String>
+    <sys:String x:Key="Str_Print_Source">Kağıt kaynağı</sys:String>
+    <sys:String x:Key="Str_Print_SourceAuto">Yazıcı varsayılanı</sys:String>
+    <sys:String x:Key="Str_Print_SecPrinter">YAZICI</sys:String>
+    <sys:String x:Key="Str_Print_SecLayout">DÜZEN</sys:String>
+    <sys:String x:Key="Str_Print_SecOutput">ÇIKTI</sys:String>
+    <sys:String x:Key="Str_View_BookMode">Kitap düzeni</sys:String>
+    <sys:String x:Key="Str_Tf_Levels">DÜZEYLER</sys:String>
+    <sys:String x:Key="Str_Tf_LevelsBlack">Siyah noktası</sys:String>
+    <sys:String x:Key="Str_Tf_LevelsWhite">Beyaz noktası</sys:String>
+    <sys:String x:Key="Str_Tf_LevelsGamma">Orta tonlar</sys:String>
+    <sys:String x:Key="Str_Tf_Quality">SAYFA KALİTESİ</sys:String>
+    <sys:String x:Key="Str_Tf_ColorMode">Renk modu</sys:String>
+    <sys:String x:Key="Str_Tf_Grayscale">Gri tonlama</sys:String>
+    <sys:String x:Key="Str_Tf_BlackWhite">Siyah beyaz</sys:String>
+    <sys:String x:Key="Str_Tf_Threshold">Siyah beyaz eşiği</sys:String>
+    <sys:String x:Key="Str_Tf_SetDpi">Çıkış çözünürlüğünü (DPI) ayarlama</sys:String>
+    <sys:String x:Key="Str_Tf_UseJpeg">JPEG sıkıştırma kullan</sys:String>
+    <!-- 1.7.4 hardcoded-string sweep (#227) -->
+    <sys:String x:Key="Str_Color_Name">Renk</sys:String>
+    <sys:String x:Key="Str_Color_Pick">Bir renk seçin</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Hex</sys:String>
+    <sys:String x:Key="Str_Color_Replace">Değiştir</sys:String>
+    <sys:String x:Key="Str_Color_Reset">Sıfırla</sys:String>
+    <sys:String x:Key="Str_Color_ReplaceTT">Tıklayın, ardından geçerli rengi atamak için bir renk örneğine tıklayın</sys:String>
+    <sys:String x:Key="Str_Color_ResetTT">Renk örneklerini varsayılana sıfırla</sys:String>
+    <sys:String x:Key="Str_Color_EyedropTT">Ekranın herhangi bir yerinden renk seçin</sys:String>
+    <sys:String x:Key="Str_Color_SwatchSetTT">Bu renk örneğine geçerli rengi atamak için tıklayın</sys:String>
+    <sys:String x:Key="Str_Color_SwatchUseTT">Bu rengi kullanmak için tıklayın</sys:String>
+    <sys:String x:Key="Str_Search_DragTT">Taşımak için sürükleyin</sys:String>
+    <sys:String x:Key="Str_Sign_Name">Dijital İmza</sys:String>
+    <sys:String x:Key="Str_Sign_ChooseCert">İmzalama sertifikası seçin</sys:String>
+    <sys:String x:Key="Str_Sign_ImportImage">İmza görüntüsünü içe aktar</sys:String>
+    <sys:String x:Key="Str_Filter_Pdf">PDF dosyaları</sys:String>
+    <sys:String x:Key="Str_Filter_Cert">Sertifika dosyaları</sys:String>
+    <sys:String x:Key="Str_Filter_Text">Metin dosyası</sys:String>
+    <sys:String x:Key="Str_Print_Sending">Yazıcıya gönderiliyor…</sys:String>
+    <sys:String x:Key="Str_Forms_FontSize">Yazı tipi boyutu:</sys:String>
+    <sys:String x:Key="Str_Ocr_SaveSearchable">Aranabilir PDF'yi kaydet</sys:String>
+    <sys:String x:Key="Str_Ocr_ExtractAllText">Tüm metni çıkar</sys:String>
+    <sys:String x:Key="Str_Ocr_HighQuality">Yüksek kaliteli modelleri kullan</sys:String>
+    <sys:String x:Key="Str_Dlg_OpenPdf">PDF aç</sys:String>
+    <sys:String x:Key="Str_Dlg_SelectMerge">Birleştirilecek PDF'yi seçin</sys:String>
+    <sys:String x:Key="Str_Dlg_SavePdfAs">PDF'yi farklı kaydet</sys:String>
+    <sys:String x:Key="Str_Dlg_SaveFlattened">Düzleştirilmiş PDF'yi kaydet</sys:String>
+    <sys:String x:Key="Str_Dlg_SaveExtractedAs">Çıkarılan sayfaları farklı kaydet</sys:String>
+    <sys:String x:Key="Str_Dlg_InsertImage">Resim ekle</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallShortcut">Masaüstü kısayolu oluştur</sys:String>
+    <sys:String x:Key="Str_Stamp_DefaultText">TASLAK</sys:String>
+    <sys:String x:Key="Str_Sign_NeedCertFile">Önce bir sertifika dosyası (.pfx / .p12) seçin.</sys:String>
+    <sys:String x:Key="Str_Sign_NoStoreCert">Windows deposunda kullanılabilir imzalama sertifikası yok.</sys:String>
+    <sys:String x:Key="Str_Sign_NeedOutput">İmzalı kopyanın nereye kaydedileceğini seçin.</sys:String>
+    <sys:String x:Key="Str_Sign_BadCert" xml:space="preserve">Sertifika açılamadı.&#10;&#10;Parola yanlış olabilir veya dosya geçerli bir .pfx / .p12 sertifikası değil.</sys:String>
+    <sys:String x:Key="Str_Sign_CertLoadFailed">Sertifika yüklenemedi:</sys:String>
+    <sys:String x:Key="Str_Sign_Failed">İmzalama başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_St_ShapeHint">Nokta eklemek için tıklayın - kapatmak için ilk noktaya tıklayın veya çift tıklayın, Esc iptal eder, Backspace son noktayı siler</sys:String>
+    <sys:String x:Key="Str_St_ShapeCanceled">Şekil iptal edildi</sys:String>
+    <sys:String x:Key="Str_Err_PrintFailed">Yazdırma başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_OcrFailed">OCR başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_PrepareDoc">Belge hazırlanamadı:</sys:String>
+    <sys:String x:Key="Str_Err_SearchableFailed">Aranabilir PDF başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_ExtractFailed">Metin çıkarma başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_DuplicateFailed">Çoğaltma başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_RepairFailed">Onarım başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_OpenProtected">Korumalı PDF açılamadı:</sys:String>
+    <sys:String x:Key="Str_Err_NewDocFailed">Yeni belge oluşturulamadı:</sys:String>
+    <sys:String x:Key="Str_Err_FileNotFound">Dosya bulunamadı:</sys:String>
+    <sys:String x:Key="Str_Err_MergeFailed">Birleştirme başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_SaveFailed">Kaydetme başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_FlattenFailed">Düzleştirme başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_ExportFailed">Dışa aktarma başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_SplitFailed">Bölme başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_DeleteFailed">Silme başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_InsertFailed">Ekleme başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_AddPageFailed">Sayfa ekleme başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_ImportImageFailed">Resim içe aktarılamadı:</sys:String>
+    <sys:String x:Key="Str_Err_LoadImageFailed">Resim yüklenemedi:</sys:String>
+    <sys:String x:Key="Str_Err_PasteFailed">Yapıştırılamadı:</sys:String>
+    <sys:String x:Key="Str_Err_HqDownloadFailed">Yüksek kaliteli modellerin indirilmesi başarısız oldu:</sys:String>
+    <sys:String x:Key="Str_Err_ModelDownloadFailed">Dil modeli indirilemedi:</sys:String>
+    <sys:String x:Key="Str_Err_LangDataFailed">{0} dil verileri indirilemedi:</sys:String>
+    <sys:String x:Key="Str_Dlg_DownloadTimeout">{0} indirmesi zaman aşımına uğradı. Bağlantınızı kontrol edip yeniden deneyin.</sys:String>
+    <sys:String x:Key="Str_Dlg_CancelBusy">Geçerli işlem ({0}) iptal edilsin mi?</sys:String>
+    <sys:String x:Key="Str_Dlg_DeletePage1">Bu sayfa silinsin mi?</sys:String>
+    <sys:String x:Key="Str_Dlg_DeletePagesN">{0} sayfa silinsin mi?</sys:String>
+    <sys:String x:Key="Str_Op_Repair">onarım</sys:String>
+    <sys:String x:Key="Str_Op_Operation">işlem</sys:String>
+    <sys:String x:Key="Str_Op_Flatten">düzleştirme</sys:String>
+    <sys:String x:Key="Str_Op_Export">dışa aktarma</sys:String>
+    <sys:String x:Key="Str_Op_Merge">birleştirme</sys:String>
+    <sys:String x:Key="Str_Op_LangDownload">dil indirme</sys:String>
+    <sys:String x:Key="Str_Op_Ocr">OCR işlemi</sys:String>
+    <sys:String x:Key="Str_Op_OcrRegion">OCR bölgesi</sys:String>
+    <sys:String x:Key="Str_Busy_Ocr">OCR çalışıyor...</sys:String>
+    <sys:String x:Key="Str_Busy_Region">Bölge tanınıyor...</sys:String>
+    <sys:String x:Key="Str_Busy_Searchable">Aranabilir PDF oluşturuluyor...</sys:String>
+    <sys:String x:Key="Str_Busy_Extracting">Metin çıkarılıyor...</sys:String>
+    <sys:String x:Key="Str_Busy_Repairing">PDF onarılıyor...</sys:String>
+    <sys:String x:Key="Str_Busy_HqModels">Yüksek kaliteli dil modelleri indiriliyor...</sys:String>
+    <sys:String x:Key="Str_Busy_Model">Dil modeli indiriliyor...</sys:String>
+    <sys:String x:Key="Str_Print_Preparing">Sayfa hazırlanıyor: {0} / {1}…</sys:String>
+    <sys:String x:Key="Str_St_AnnotSelected">{0} seçildi - {1}</sys:String>
+    <sys:String x:Key="Str_St_AnnotHowText">genişlik için yan köşeyi sürükleyin, düzenlemek için çift tıklayın, Delete siler</sys:String>
+    <sys:String x:Key="Str_St_AnnotHowGeneric">boyutlandırmak için herhangi bir köşeyi sürükleyin, Delete siler</sys:String>
+    <sys:String x:Key="Str_St_AnnotSelectedSimple">{0} açıklaması seçildi - silmek için Delete'e basın</sys:String>
+    <sys:String x:Key="Str_St_SelectedOne">1 açıklama seçildi</sys:String>
+    <sys:String x:Key="Str_St_SelectedMany">{0} açıklama seçildi</sys:String>
+    <sys:String x:Key="Str_St_Grouped">{0} açıklama gruplandı - artık birlikte hareket ediyorlar</sys:String>
+    <sys:String x:Key="Str_St_ClearedAll">Tüm açıklamalar temizlendi ({0})</sys:String>
+    <sys:String x:Key="Str_St_CopiedWords">{0} sözcük panoya kopyalandı</sys:String>
+    <sys:String x:Key="Str_St_HighlightedLines">{0} satır vurgulandı</sys:String>
+    <sys:String x:Key="Str_St_StruckLines">{0} satırın üstü çizildi</sys:String>
+    <sys:String x:Key="Str_St_UnderlinedLines">{0} satırın altı çizildi</sys:String>
+    <sys:String x:Key="Str_St_SelectAllCopied">Tüm metin seçildi - panoya kopyalandı</sys:String>
+    <sys:String x:Key="Str_St_SelectAllError">Tümünü seçme hatası: {0}</sys:String>
+    <sys:String x:Key="Str_St_Copied">Panoya kopyalandı</sys:String>
+    <sys:String x:Key="Str_St_ExtractError">Metin çıkarma hatası: {0}</sys:String>
+    <sys:String x:Key="Str_St_AlreadyOpen">Zaten açık: {0}</sys:String>
+    <sys:String x:Key="Str_St_TextEditError">Metin düzenleme hatası: {0}</sys:String>
+    <sys:String x:Key="Str_St_OcrNoTextPage">OCR: {0}. sayfada metin bulunamadı</sys:String>
+    <sys:String x:Key="Str_St_OcrCopiedPage">OCR: {1}. sayfadan {0} karakter kopyalandı ({2} güven)</sys:String>
+    <sys:String x:Key="Str_St_OcrCopiedPages">OCR: {1} sayfadan {0} karakter kopyalandı ({2} güven)</sys:String>
+    <sys:String x:Key="Str_St_OcrCopiedRegion">OCR: bölgeden {0} karakter kopyalandı ({1} güven)</sys:String>
+    <sys:String x:Key="Str_St_SearchableSaved">Aranabilir PDF kaydedildi: {0} sayfa, {1} tanınan sözcük</sys:String>
+    <sys:String x:Key="Str_St_TextExtracted">{0} sayfadan metin çıkarıldı -> {1}</sys:String>
+    <sys:String x:Key="Str_St_DuplicatedPage">{0}. sayfa çoğaltıldı</sys:String>
+    <sys:String x:Key="Str_St_Merged">{0} dosya birleştirildi - toplam {1} sayfa</sys:String>
+    <sys:String x:Key="Str_St_Saved">Kaydedildi - {0}</sys:String>
+    <sys:String x:Key="Str_St_SavedWithAnnots">Açıklamalarla birlikte kaydedildi: {0}</sys:String>
+    <sys:String x:Key="Str_St_SavedTo">Kaydedildi: {0}</sys:String>
+    <sys:String x:Key="Str_St_FlattenedSaved">Düzleştirilmiş PDF kaydedildi: {0}</sys:String>
+    <sys:String x:Key="Str_St_OcrLanguage">OCR dili: {0}</sys:String>
+    <sys:String x:Key="Str_St_LangInstalled">{0} yüklendi - OCR dili: {1}</sys:String>
+    <sys:String x:Key="Str_St_LangCanceled">{0} indirmesi iptal edildi</sys:String>
+    <sys:String x:Key="Str_St_HqFailed">Yüksek kaliteli modeller yüklendi; başarısız: {0}</sys:String>
+    <sys:String x:Key="Str_St_HqInstalled">Yüksek kaliteli modeller şunlar için yüklendi: {0}</sys:String>
+    <sys:String x:Key="Str_St_InsertedBlank">{0}. konuma boş sayfa eklendi</sys:String>
+    <sys:String x:Key="Str_St_AddedBlank">Boş sayfa eklendi (şimdi {0} sayfa)</sys:String>
+    <sys:String x:Key="Str_St_RestorePane">İkinci bölme geri yüklenemedi: {0}</sys:String>
+    <sys:String x:Key="Str_Annot_Signature">İmza</sys:String>
+    <sys:String x:Key="Str_Annot_Image">Resim</sys:String>
+    <sys:String x:Key="Str_Annot_TextBox">Metin kutusu</sys:String>
+    <sys:String x:Key="Str_Annot_Cover">Metin örtüsü</sys:String>
+    <sys:String x:Key="Str_Annot_Strikethrough">Üstü çizili</sys:String>
+    <sys:String x:Key="Str_Annot_Underline">Altı çizili</sys:String>
+    <sys:String x:Key="Str_Annot_Highlight">Vurgu</sys:String>
+    <sys:String x:Key="Str_Annot_Drawing">Çizim</sys:String>
+    <sys:String x:Key="Str_Annot_Item">Öğe</sys:String>
+    <sys:String x:Key="Str_Busy_SearchablePage">Aranabilir PDF oluşturuluyor... sayfa {0} / {1}  (Esc iptal eder)</sys:String>
+    <sys:String x:Key="Str_Busy_ExtractingPage">Metin çıkarılıyor... sayfa {0} / {1}  (Esc iptal eder)</sys:String>
+    <sys:String x:Key="Str_Busy_LangData">{0} dil verileri indiriliyor...</sys:String>
+    <sys:String x:Key="Str_Busy_Downloading">{0} indiriliyor...</sys:String>
+    <sys:String x:Key="Str_Busy_DownloadingHq">{0} (HQ) indiriliyor - {1} / {2} -</sys:String>
+    <sys:String x:Key="Str_Busy_Opening">PDF açılıyor...</sys:String>
+    <sys:String x:Key="Str_Busy_OpeningProtected">Korumalı PDF açılıyor...</sys:String>
+    <sys:String x:Key="Str_St_HqAlready">Seçili tüm diller zaten yüksek kalitede</sys:String>
+    <sys:String x:Key="Str_St_HqNextTime">Yüksek kaliteli modeller bir sonraki OCR çalıştırmasında kullanılacak</sys:String>
+    <sys:String x:Key="Str_Ocr_SuffixDownload">(indir)</sys:String>
+    <sys:String x:Key="Str_Ocr_SuffixDownloadHq">(HQ indir)</sys:String>
+    <sys:String x:Key="Str_Dlg_SearchableSaved" xml:space="preserve">Aranabilir PDF kaydedildi:&#10;{0}&#10;&#10;{1} sayfa işlendi, {2} sözcük tanındı.</sys:String>
+    <sys:String x:Key="Str_Dlg_Repaired" xml:space="preserve">"{0}" başarıyla onarıldı.&#10;&#10;Yer imleri, formlar ve diğer etkileşimli özellikler kaybolmuş olabilir. Onarılan dosyayı yeni bir konuma yazmak için Farklı Kaydet'i kullanın.</sys:String>
+    <sys:String x:Key="Str_Dlg_RepairedRaster" xml:space="preserve">"{0}" PDFium ile rasterleştirilerek onarıldı.&#10;&#10;Onarılan kopyada metin seçilemez. Yeni bir konuma yazmak için Farklı Kaydet'i kullanın.</sys:String>
+    <sys:String x:Key="Str_Dlg_RepairAsk" xml:space="preserve">"{0}" hasarlı bir yapıya sahip ve eklenemedi.&#10;&#10;KillerPDF onarmayı denesin mi? Onarılmış bir kopya oluşturulacak. Özgün dosya değiştirilmeyecek.&#10;&#10;Not: onarılan dosyalarda yer imleri, formlar ve diğer etkileşimli özellikler eksik olabilir.</sys:String>
+    <sys:String x:Key="Str_Dlg_LangDownloadAsk" xml:space="preserve">OCR'nin çalışabilmesi için şimdi bir dil modeli ({0}) indirilecek.&#10;&#10;OCR menüsünden istediğiniz zaman başka diller ekleyebilir veya daha yüksek kaliteli modellere geçebilirsiniz.</sys:String>
+    <sys:String x:Key="Str_Bar_More">Diğer ayarlar</sys:String>
+    <sys:String x:Key="Str_Bar_TT_Level">Çizgiyi en yakın eksende tutar (yatay veya dikey)</sys:String>
+    <sys:String x:Key="Str_Bar_TT_EraserBox">İçindeki tüm açıklamaları silmek için bir kutu sürükleyin</sys:String>
+    <sys:String x:Key="Str_Bar_TT_EraserBrush">Silmek için açıklamaların üzerinden geçin</sys:String>
+    <sys:String x:Key="Str_Bar_TT_ShapeBox">Kutu - bir dikdörtgen sürükleyin</sys:String>
+    <sys:String x:Key="Str_Bar_TT_ShapeEllipse">Elips - bir oval sürükleyin</sys:String>
+    <sys:String x:Key="Str_Bar_TT_ShapeFreeform">Serbest biçim - nokta eklemek için tıklayın; kapatmak için ilk noktaya tıklayın veya çift tıklayın, Esc iptal eder, Backspace son noktayı siler</sys:String>
+    <sys:String x:Key="Str_Bar_TT_ShapeFill">Şeklin içini doldurur</sys:String>
+    <sys:String x:Key="Str_TT_RecentFiles">Son kullanılan dosyalar</sys:String>
+    <sys:String x:Key="Str_TT_SaveOptions">Kaydetme seçenekleri</sys:String>
+    <sys:String x:Key="Str_TT_OcrOptions">OCR seçenekleri</sys:String>
+    <sys:String x:Key="Str_RecentHeading">SON KULLANILANLAR</sys:String>
+    <sys:String x:Key="Str_KS_WindowTitle">KillerPDF - Klavye kısayolları</sys:String>
+    <sys:String x:Key="Str_UpdateAvailable">Güncelleme mevcut: {0}</sys:String>
+    <sys:String x:Key="Str_UpdatePrompt" xml:space="preserve">KillerPDF {0} indirilip yüklensin mi?&#10;&#10;Uygulama kapanacak ve otomatik olarak yeniden açılacak.</sys:String>
+    <sys:String x:Key="Str_UpdateDownloading">İndiriliyor...</sys:String>
+    <sys:String x:Key="Str_ClearAllData">Tüm verileri temizle</sys:String>
+    <sys:String x:Key="Str_ClearDataConfirm" xml:space="preserve">Bu işlem kayıtlı tüm ayarları, indirilen OCR dil paketlerini ve geçici dosyaları siler.&#10;&#10;PDF dosyalarınız etkilenmez. Devam edilsin mi?</sys:String>
+    <sys:String x:Key="Str_ClearDataDone" xml:space="preserve">Ayarlar, dil paketleri ve geçici dosyalar temizlendi.&#10;&#10;Bu oturumda hâlâ kullanımda olan dosyaların temizlenmesini tamamlamak için KillerPDF'i yeniden başlatın.</sys:String>
+    <sys:String x:Key="Str_Crash_Title">KillerPDF - Beklenmeyen hata</sys:String>
+    <sys:String x:Key="Str_Crash_Log">Günlük: {0}</sys:String>
+    <sys:String x:Key="Str_Crash_Copy">Raporu kopyala</sys:String>
+    <sys:String x:Key="Str_Crash_OpenLogs">Günlükleri aç</sys:String>
+    <sys:String x:Key="Str_Crash_Report">GitHub'da bildir</sys:String>
+    <sys:String x:Key="Str_Crash_Continue">Devam et</sys:String>
+    <sys:String x:Key="Str_Crash_Quit">Çık</sys:String>
+    <sys:String x:Key="Str_Btn_OK">Tamam</sys:String>
+    <sys:String x:Key="Str_Btn_Yes">Evet</sys:String>
+    <sys:String x:Key="Str_Btn_No">Hayır</sys:String>
+    <sys:String x:Key="Str_RecentMissing">eksik</sys:String>
+    <sys:String x:Key="Str_St_PlaceSignature">İmzanızı yerleştirmek için sayfaya tıklayın</sys:String>
+    <sys:String x:Key="Str_St_PlaceInitials">Baş harflerinizi yerleştirmek için sayfaya tıklayın</sys:String>
+    <sys:String x:Key="Str_St_SelectionCleared">Seçim temizlendi</sys:String>
+    <sys:String x:Key="Str_St_AnnotationsSelected">{0} ek açıklama seçildi - kaldırmak için Delete tuşuna basın</sys:String>
+    <sys:String x:Key="Str_St_CopiedAnnotationOne">1 ek açıklama kopyalandı</sys:String>
+    <sys:String x:Key="Str_St_CopiedAnnotationMany">{0} ek açıklama kopyalandı</sys:String>
+    <sys:String x:Key="Str_St_PastedAnnotationOne">1 ek açıklama yapıştırıldı</sys:String>
+    <sys:String x:Key="Str_St_PastedAnnotationMany">{0} ek açıklama yapıştırıldı</sys:String>
+    <sys:String x:Key="Str_St_DeletedAnnotationOne">Seçili ek açıklama silindi</sys:String>
+    <sys:String x:Key="Str_St_DeletedAnnotationMany">{0} ek açıklama silindi</sys:String>
+    <sys:String x:Key="Str_Search_NoMatches">Eşleşme yok</sys:String>
+    <sys:String x:Key="Str_Search_Error">Arama hatası</sys:String>
+    <sys:String x:Key="Str_Search_Summary">{0} eşleşme, {1} sayfa</sys:String>
+    <sys:String x:Key="Str_Search_PreviousTT">Önceki eşleşme (Shift+Enter)</sys:String>
+    <sys:String x:Key="Str_Search_NextTT">Sonraki eşleşme (Enter)</sys:String>
+    <sys:String x:Key="Str_Search_CloseTT">Kapat (Esc)</sys:String>
+    <sys:String x:Key="Str_Busy_FlattenPage">Sayfa {0} / {1} düzleştiriliyor...</sys:String>
+    <sys:String x:Key="Str_Busy_ExportPage">Sayfa {0} / {1} dışa aktarılıyor...</sys:String>
+    <sys:String x:Key="Str_Busy_CancelHint">(Esc iptal eder)</sys:String>
+    <sys:String x:Key="Str_Busy_DownloadingMany">{0} indiriliyor - {1} / {2} -</sys:String>
+    <!-- PDF comparison (#160) -->
+    <sys:String x:Key="Str_TT_ComparePDFs">PDF'leri karşılaştır</sys:String>
+    <sys:String x:Key="Str_TT_ExitComparison">Karşılaştırmadan çık</sys:String>
+    <sys:String x:Key="Str_Compare_OpenOriginal">Karşılaştırmayı başlatmadan önce özgün PDF'yi açın.</sys:String>
+    <sys:String x:Key="Str_Compare_SelectTitle">Karşılaştırılacak PDF'yi seçin</sys:String>
+    <sys:String x:Key="Str_Compare_ChooseDifferent">Karşılaştırmak için farklı bir PDF seçin.</sys:String>
+    <sys:String x:Key="Str_Compare_Ended">PDF karşılaştırması sona erdi</sys:String>
+    <sys:String x:Key="Str_Compare_MissingRight">Karşılaştırma PDF'sinde karşılık gelen sayfa yok</sys:String>
+    <sys:String x:Key="Str_Compare_MissingLeft">Özgün PDF'de karşılık gelen sayfa yok</sys:String>
+    <sys:String x:Key="Str_Compare_PageOnlyOne">Sayfa {0} yalnızca {1} PDF'de bulunuyor</sys:String>
+    <sys:String x:Key="Str_Compare_Original">özgün</sys:String>
+    <sys:String x:Key="Str_Compare_Comparison">karşılaştırma</sys:String>
+    <sys:String x:Key="Str_Compare_Changed">Sayfa {0}: {1} değişti</sys:String>
+    <sys:String x:Key="Str_Compare_NoDifferences">Sayfa {0}: görsel fark yok</sys:String>
+    <sys:String x:Key="Str_Compare_DimensionsDiffer">Sayfa {0}: sayfa boyutları farklı</sys:String>
+    <sys:String x:Key="Str_Compare_Failed">Karşılaştırma başarısız: {0}</sys:String>
+    <sys:String x:Key="Str_Compare_OpenTabs">Açık bir sekmeyle karşılaştır</sys:String>
+    <sys:String x:Key="Str_Compare_NoOpenTabs">Başka açık PDF sekmesi yok</sys:String>
+    <sys:String x:Key="Str_Compare_Browse">Başka bir PDF seç...</sys:String>
+    <sys:String x:Key="Str_Compare_Bar">KARŞILAŞTIRMA</sys:String>
+    <sys:String x:Key="Str_Compare_Comparing">Karşılaştırılıyor...</sys:String>
+    <sys:String x:Key="Str_Compare_ChangedAndDimensions">Sayfa {0}: boyutlar farklı; {1} değişti</sys:String>
+    <sys:String x:Key="Str_Compare_ViewLocked">Karşılaştırma kilitli tek sayfa görünümünü kullanır</sys:String>
+    <sys:String x:Key="Str_Compare_ViewDetails">Tüm karşılaştırma raporunu görüntüle</sys:String>
+    <sys:String x:Key="Str_Compare_BuildingReport">Her sayfa kontrol ediliyor...</sys:String>
+    <sys:String x:Key="Str_Compare_DetailsTitle">Kıyaslama Detayları</sys:String>
+
+    <!-- ── Browser handoff refusals ────────────────────────────────────── -->
+    <sys:String x:Key="Str_Handoff_Failed">KillerPDF tarayıcı PDF&apos;sini açamadı.</sys:String>
+    <sys:String x:Key="Str_Handoff_UnknownCommand">Bu tarayıcı komutu KillerPDF&apos;nin bildiği bir komut değil.</sys:String>
+    <sys:String x:Key="Str_Handoff_MissingUrl">Devir teslimde PDF adresi yoktu.</sys:String>
+    <sys:String x:Key="Str_Handoff_MalformedUrl">Devir teslimindeki PDF adresi okunamadı.</sys:String>
+    <sys:String x:Key="Str_Handoff_SchemeNotAllowed">KillerPDF yalnızca https üzerinden tarayıcı aktarımlarını açar.</sys:String>
+    <sys:String x:Key="Str_Handoff_Unusable">Tarayıcı devri kullanılamadı.</sys:String>
+    <sys:String x:Key="Str_Handoff_TooLarge">PDF, 256 MB tarayıcı aktarım sınırından daha büyük.</sys:String>
+    <sys:String x:Key="Str_Handoff_NotPdf">İndirilen dosya bir PDF değil.</sys:String>
+    <sys:String x:Key="Str_Handoff_DownloadFailed">KillerPDF PDF&apos;yi indiremedi.</sys:String>
+    <sys:String x:Key="Str_Handoff_TimedOut">PDF indirme işlemi zaman aşımına uğradı.</sys:String>
+    <sys:String x:Key="Str_Handoff_FileError">KillerPDF indirilen PDF&apos;yi kaydedemedi veya okuyamadı.</sys:String>
+    <sys:String x:Key="Str_St_FormFieldDrag">Doldurulabilir metin alanı oluşturmak için sürükleyin</sys:String>
+    <sys:String x:Key="Str_St_FormFieldCanceled">Doldurulabilir metin alanı oluşturma iptal edildi</sys:String>
+    <sys:String x:Key="Str_St_FormFieldCreateFailed">Doldurulabilir metin alanı oluşturulamadı</sys:String>
+    <sys:String x:Key="Str_St_FormFieldCreated">Doldurulabilir metin alanı {0} oluşturuldu</sys:String>
+    <sys:String x:Key="Str_St_FormFieldResizing">Doldurulabilir alan {0} yeniden boyutlandırılıyor</sys:String>
+    <sys:String x:Key="Str_St_FormFieldMoving">Doldurulabilir alan {0} taşınıyor</sys:String>
+    <sys:String x:Key="Str_St_FormFieldDeleted">Doldurulabilir alan {0} silindi</sys:String>
+    <sys:String x:Key="Str_St_FormFieldFillChanged">{0} için dolgu rengi değiştirildi</sys:String>
+    <sys:String x:Key="Str_St_FormFieldResized">Doldurulabilir alan {0} yeniden boyutlandırıldı</sys:String>
+    <sys:String x:Key="Str_St_FormFieldMoved">Doldurulabilir alan {0} taşındı</sys:String>
+    <sys:String x:Key="Str_St_PageCopiedHere">Bu belgeye 1 sayfa kopyalandı.</sys:String>
+    <sys:String x:Key="Str_St_PagesCopiedHere">Bu belgeye {0} sayfa kopyalandı.</sys:String>
+    <sys:String x:Key="Str_Err_PageCopyFailed">Sayfa kopyalanamadı:&#10;{0}</sys:String>
+    <sys:String x:Key="Str_Err_FileRepairFailed">&quot;{0}&quot; onarılamadı.</sys:String>
+    <sys:String x:Key="Str_St_TextEditDetectedFont">{0}, {1} pt ile düzenleniyor. Yazı tipi ölçüleri orijinalden farklı olabilir.</sys:String>
+    <sys:String x:Key="Str_St_TextEditFontSubstituted">{0} yazı tipi kullanılamıyor. {1}, {2} pt ile düzenleniyor.</sys:String>
+    <sys:String x:Key="Str_Print_NoTwoSidedSupport">Seçilen yazıcı çift taraflı yazdırma desteği bildirmiyor.</sys:String>
+    <sys:String x:Key="Str_Form_ClickInitials">Parafınızı eklemek için tıklayın</sys:String>
+    <sys:String x:Key="Str_Form_ClickSign">İmzalamak için tıklayın</sys:String>
+    <sys:String x:Key="Str_Form_Initial">Paraf</sys:String>
+    <sys:String x:Key="Str_Compare_PreviousRegion">Önceki değişen bölge</sys:String>
+    <sys:String x:Key="Str_Compare_NextRegion">Sonraki değişen bölge</sys:String>
+    <sys:String x:Key="Str_Portable_InstallTip">Taşınabilir mod - kurulan sürümü edinin</sys:String>
+    <sys:String x:Key="Str_Print_PreviewFailed">Önizleme oluşturulamadı:&#10;{0}</sys:String>
+    <sys:String x:Key="Str_Print_PreparingToPrint">Yazdırmaya hazırlanıyor...</sys:String>
+    <sys:String x:Key="Str_Link_GoToPage">{0}. sayfaya git</sys:String>
+    <sys:String x:Key="Str_Measurement_Unavailable">Ölçüm kullanılamıyor</sys:String>
+    <sys:String x:Key="Str_Repair_Unrecoverable" xml:space="preserve">Onarım başarısız oldu - dosya kurtarılamayacak kadar hasarlı.&#10;&#10;Ek kurtarma seçenekleri sunabilecek başka bir uygulamada (Adobe Acrobat veya tarayıcı) özgün dosyayı açmayı deneyin.</sys:String>
+    <sys:String x:Key="Str_KS_Enabled">Klavye kısayollarını etkinleştir</sys:String>
+    <sys:String x:Key="Str_KS_Toggle">Klavye kısayollarını aç veya kapat</sys:String>
+    <sys:String x:Key="Str_KS_ToggleTip">Uygulamanın tüm kısayollarını açın veya kapatın. Ctrl+Shift+K her zaman çalışır.</sys:String>
+    <sys:String x:Key="Str_KS_EnabledStatus">Klavye kısayolları etkin</sys:String>
+    <sys:String x:Key="Str_KS_DisabledStatus">Klavye kısayolları devre dışı. Etkinleştirmek için Ctrl+Shift+K tuşlarına basın.</sys:String>
+    <sys:String x:Key="Str_StartupUpdateCheck">Başlangıçta güncellemeleri denetle</sys:String>
+    <sys:String x:Key="Str_StartupUpdatePrompt" xml:space="preserve">KillerPDF {0} kullanılabilir. Şimdi indirip yüklemek ister misiniz?&#10;&#10;Uygulama kapanacak ve otomatik olarak yeniden açılacak.</sys:String>
+    <sys:String x:Key="Str_AlwaysCheckOnStartup">Başlangıçta her zaman güncellemeleri denetle</sys:String>
+    <sys:String x:Key="Str_PasswordProtected">“{0}” parola korumalıdır.</sys:String>
+    <sys:String x:Key="Str_About_Aka">Diğer adıyla</sys:String>
+    <sys:String x:Key="Str_Btn_Run">Çalıştır</sys:String>
 </ResourceDictionary>

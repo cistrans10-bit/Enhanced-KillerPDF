@@ -3,7 +3,7 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <!-- ================================================================
-         KillerPDF  —  Bengali (bn) strings
+         KillerPDF  -  Bengali (bn) strings
          ================================================================ -->
 
     <!-- ── Toolbar tooltips ─────────────────────────────────────────── -->
@@ -17,34 +17,36 @@
     <sys:String x:Key="Str_TT_Save">সংরক্ষণ করুন (Ctrl+S)</sys:String>
     <sys:Double x:Key="ZoomBoxWidth">96</sys:Double>
     <sys:String x:Key="Str_TT_SaveAs">এভাবে সংরক্ষণ করুন (Ctrl+Shift+S)</sys:String>
-    <sys:String x:Key="Str_TT_SaveFlattened">ফ্ল্যাটেন করা PDF সংরক্ষণ করুন (সব পৃষ্ঠা রাস্টারাইজ করুন — সম্পূর্ণ অসম্পাদনযোগ্য)</sys:String>
+    <sys:String x:Key="Str_TT_SaveFlattened">ফ্ল্যাটেন করা PDF সংরক্ষণ করুন (সব পৃষ্ঠা রাস্টারাইজ করুন - সম্পূর্ণ অসম্পাদনযোগ্য)</sys:String>
     <sys:String x:Key="Str_TT_Print">মুদ্রণ (Ctrl+P)</sys:String>
     <sys:String x:Key="Str_TT_MergePDFs">PDF একত্রিত করুন (এই PDF-এ অতিরিক্ত PDF যোগ করুন)</sys:String>
     <sys:String x:Key="Str_TT_ExtractPages">পৃষ্ঠা বের করুন (নির্বাচিত পৃষ্ঠাগুলো নতুন PDF-এ সংরক্ষণ করুন)</sys:String>
     <sys:String x:Key="Str_TT_DeletePages">নির্বাচিত পৃষ্ঠাগুলো মুছুন</sys:String>
     <sys:String x:Key="Str_TT_MovePageUp">পৃষ্ঠা উপরে সরান (পুনর্বিন্যাস)</sys:String>
     <sys:String x:Key="Str_TT_MovePageDown">পৃষ্ঠা নিচে সরান (পুনর্বিন্যাস)</sys:String>
-    <sys:String x:Key="Str_TT_SelectTool">নির্বাচন টুল - অ্যানোটেশনে ক্লিক করুন, টেক্সট নির্বাচনে টেনে আনুন, সম্পাদনার জন্য ডাবল-ক্লিক করুন</sys:String>
-    <sys:String x:Key="Str_TT_TextTool">টেক্সট টুল - টেক্সট যোগ করতে ক্লিক করুন</sys:String>
-    <sys:String x:Key="Str_TT_HighlightTool">হাইলাইট টুল - হাইলাইট করতে টেনে আনুন</sys:String>
+    <sys:String x:Key="Str_TT_SelectTool">নির্বাচন টুল - অ্যানোটেশনে ক্লিক করুন, টেক্সট নির্বাচনে টেনে আনুন, সম্পাদনার জন্য ডাবল-ক্লিক করুন (V)</sys:String>
+    <sys:String x:Key="Str_TT_TextTool">টেক্সট টুল - টেক্সট যোগ করতে ক্লিক করুন (T)</sys:String>
+    <sys:String x:Key="Str_TT_FormFieldTool">পূরণযোগ্য টেক্সট ক্ষেত্র - ক্ষেত্র তৈরি, নির্বাচন, সরানো, আকার পরিবর্তন বা মুছুন; পূরণের রঙ বদলাতে ডান-ক্লিক করুন (F)</sys:String>
+    <sys:String x:Key="Str_TT_HighlightTool">হাইলাইট টুল - হাইলাইট করতে টেনে আনুন (H)</sys:String>
     <sys:String x:Key="Str_TT_StrikeTool">স্ট্রাইকথ্রু - লেখার উপর দিয়ে টেনে আনুন</sys:String>
     <sys:String x:Key="Str_TT_UnderlineTool">আন্ডারলাইন - লেখার উপর দিয়ে টেনে আনুন</sys:String>
-    <sys:String x:Key="Str_TT_DrawTool">আঁকার টুল - ফ্রিহ্যান্ড কালি</sys:String>
-    <sys:String x:Key="Str_TT_SignatureTool">স্বাক্ষর - স্বাক্ষর তৈরি ও স্থাপন করুন</sys:String>
-    <sys:String x:Key="Str_TT_ImageTool">ছবি টুল - পৃষ্ঠায় ছবি সন্নিবেশ করতে ক্লিক করুন</sys:String>
-    <sys:String x:Key="Str_TT_CropTool">ক্রপ টুল - ক্রপ এলাকা নির্ধারণে টেনে আনুন, তারপর পৃষ্ঠায় প্রয়োগ করুন</sys:String>
+    <sys:String x:Key="Str_TT_DrawTool">আঁকার টুল - ফ্রিহ্যান্ড কালি (D)</sys:String>
+    <sys:String x:Key="Str_TT_ShapeTool">আকার - আয়তক্ষেত্র, উপবৃত্ত বা মুক্ত বহুভুজ</sys:String>
+    <sys:String x:Key="Str_TT_SignatureTool">স্বাক্ষর - স্বাক্ষর তৈরি ও স্থাপন করুন (G)</sys:String>
+    <sys:String x:Key="Str_TT_ImageTool">ছবি টুল - পৃষ্ঠায় ছবি সন্নিবেশ করতে ক্লিক করুন (I)</sys:String>
+    <sys:String x:Key="Str_TT_CropTool">ক্রপ টুল - ক্রপ এলাকা নির্ধারণে টেনে আনুন, তারপর পৃষ্ঠায় প্রয়োগ করুন (C)</sys:String>
+    <sys:String x:Key="Str_TT_MeasureTool">দূরত্ব মাপুন এবং পৃষ্ঠার আকার দেখুন</sys:String>
     <sys:String x:Key="Str_TT_ClearAnnotations">সব অ্যানোটেশন মুছুন</sys:String>
     <sys:String x:Key="Str_TT_UndoLast">শেষ কাজ পূর্বাবস্থায় ফেরান (Ctrl+Z)</sys:String>
-    <sys:String x:Key="Str_TT_MultiPageGrid">বহু-পৃষ্ঠা গ্রিড ভিউ</sys:String>
+    <sys:String x:Key="Str_TT_MultiPageGrid">বহু-পৃষ্ঠা গ্রিড ভিউ (F8)</sys:String>
     <sys:String x:Key="Str_TT_ZoomOut">জুম আউট (Ctrl+-)</sys:String>
-    <sys:String x:Key="Str_TT_ZoomLevel">জুম স্তর (Ctrl+স্ক্রল · Ctrl+=/- · Ctrl+0=রিসেট)</sys:String>
-    <sys:String x:Key="Str_TT_ZoomIn">জুম ইন (Ctrl+=)</sys:String>
+    <sys:String x:Key="Str_TT_ZoomLevel">জুম স্তর (Ctrl+স্ক্রল · Ctrl++/- · Ctrl+0=রিসেট)</sys:String>
+    <sys:String x:Key="Str_TT_ZoomIn">জুম ইন (Ctrl++)</sys:String>
     <sys:String x:Key="Str_TT_GoToPage">পৃষ্ঠায় যান (নেভিগেট করতে Enter চাপুন)</sys:String>
-    <sys:String x:Key="Str_TT_CollapseSidebar">সাইডবার সংকুচিত করুন</sys:String>
-    <sys:String x:Key="Str_TT_ExpandSidebar">সাইডবার প্রসারিত করুন</sys:String>
-    <sys:String x:Key="Str_TT_KeyboardShortcuts">কীবোর্ড শর্টকাট (Ctrl+?)</sys:String>
-    <sys:String x:Key="Str_TT_Settings">সেটিংস</sys:String>
-    <sys:String x:Key="Str_TT_About">KillerPDF সম্পর্কে</sys:String>
+    <sys:String x:Key="Str_TT_CollapseSidebar">সাইডবার সংকুচিত করুন (F9)</sys:String>
+    <sys:String x:Key="Str_TT_ExpandSidebar">সাইডবার প্রসারিত করুন (F9)</sys:String>
+    <sys:String x:Key="Str_TT_KeyboardShortcuts">কীবোর্ড শর্টকাট (F1)</sys:String>
+    <sys:String x:Key="Str_TT_About">KillerPDF সম্পর্কে (F12)</sys:String>
 
     <!-- ── About overlay ─────────────────────────────────────────────── -->
     <sys:String x:Key="Str_About_Version">সংস্করণ</sys:String>
@@ -52,31 +54,39 @@
     <sys:String x:Key="Str_About_Thumbprint">থাম্বপ্রিন্ট</sys:String>
     <sys:String x:Key="Str_About_ExeSha">EXE SHA256</sys:String>
     <sys:String x:Key="Str_About_Computing">গণনা করা হচ্ছে...</sys:String>
-    <sys:String x:Key="Str_Tagline">উইন্ডোজের জন্য একটি দ্রুত, বিনামূল্যের PDF টুলকিট। {0}-এর একটি অংশ।</sys:String>
+    <sys:String x:Key="Str_Tagline">অ্যানোটেশন, মার্জ, OCR, স্বাক্ষর ও ফর্ম টুলসহ উইন্ডোজের জন্য একটি দ্রুত, বিনামূল্যের PDF টুলকিট। {0}-এর একটি GPLv3 টুল।</sys:String>
 
     <!-- ── Sidebar tabs ──────────────────────────────────────────────── -->
     <sys:String x:Key="Str_TabPages">পৃষ্ঠাসমূহ</sys:String>
     <sys:String x:Key="Str_TabOutlines">আউটলাইন</sys:String>
+    <sys:String x:Key="Str_Outline_CollapseAll">সব সংকুচিত করুন</sys:String>
+    <sys:String x:Key="Str_Outline_ExpandAll">সব প্রসারিত করুন</sys:String>
 
     <!-- ── Settings panel ───────────────────────────────────────────── -->
-    <sys:String x:Key="Str_Settings">সেটিংস</sys:String>
     <sys:String x:Key="Str_Theme">থিম</sys:String>
     <sys:String x:Key="Str_Language">ভাষা</sys:String>
     <sys:String x:Key="Str_Toolbar">টুলবার</sys:String>
+    <sys:String x:Key="Str_Toolbar_Header">টুলবার</sys:String>
+    <sys:String x:Key="Str_Toolbar_TextNone">লেখা নেই</sys:String>
     <sys:String x:Key="Str_Toolbar_SmallIcons">ছোট আইকন</sys:String>
     <sys:String x:Key="Str_Toolbar_LargeIcons">বড় আইকন</sys:String>
     <sys:String x:Key="Str_Toolbar_TextBeside">আইকনের পাশে লেখা</sys:String>
     <sys:String x:Key="Str_Toolbar_TextUnder">আইকনের নিচে লেখা</sys:String>
     <sys:String x:Key="Str_Toolbar_TextOnly">শুধু লেখা</sys:String>
+    <sys:String x:Key="Str_Toolbar_Hide">টুলবার লুকান</sys:String>
+    <sys:String x:Key="Str_St_ToolbarHidden">টুলবার লুকানো হয়েছে - Alt+M আবার দেখাবে</sys:String>
+    <sys:String x:Key="Str_St_ToolbarShown">টুলবার দেখানো হয়েছে</sys:String>
     <sys:String x:Key="Str_Lang_English">English</sys:String>
     <sys:String x:Key="Str_Lang_Spanish">Español</sys:String>
     <sys:String x:Key="Str_Lang_Chinese">中文 (繁體)</sys:String>
 
     <!-- ── Keyboard shortcuts overlay ───────────────────────────────── -->
     <sys:String x:Key="Str_KS_Title">কীবোর্ড শর্টকাট</sys:String>
+    <sys:String x:Key="Str_KS_FormField">পূরণযোগ্য টেক্সট ক্ষেত্র</sys:String>
     <sys:String x:Key="Str_KS_File">ফাইল</sys:String>
     <sys:String x:Key="Str_KS_Open">খুলুন</sys:String>
     <sys:String x:Key="Str_KS_CloseFile">ফাইল বন্ধ করুন</sys:String>
+    <sys:String x:Key="Str_KS_CloseOthers">অন্যান্য ট্যাব বন্ধ করুন</sys:String>
     <sys:String x:Key="Str_KS_CloseAll">সব বন্ধ করুন</sys:String>
     <sys:String x:Key="Str_KS_NewBlank">নতুন ফাঁকা নথি</sys:String>
     <sys:String x:Key="Str_KS_SaveAs">এভাবে সংরক্ষণ করুন</sys:String>
@@ -100,17 +110,19 @@
     <sys:String x:Key="Str_KS_Help">সহায়তা</sys:String>
     <sys:String x:Key="Str_KS_ThisList">এই শর্টকাট তালিকা</sys:String>
     <sys:String x:Key="Str_KS_About">সম্পর্কে ডায়ালগ</sys:String>
+    <sys:String x:Key="Str_KS_DocInfo">ডকুমেন্টের তথ্য</sys:String>
     <sys:String x:Key="Str_KS_OnlineHelp">সম্পূর্ণ গাইড ও অনলাইন নির্দেশিকা</sys:String>
     <sys:String x:Key="Str_KS_Tools">টুল</sys:String>
     <sys:String x:Key="Str_KS_Paste">ছবি / টেক্সট পেস্ট করুন</sys:String>
+    <sys:String x:Key="Str_KS_TextStyle">গাঢ় / তির্যক / নিম্নরেখা (টেক্সট বক্স)</sys:String>
     <sys:String x:Key="Str_KS_MultiSelect">নির্বাচনে যোগ করুন</sys:String>
 
     <!-- ── Status bar ────────────────────────────────────────────────── -->
     <sys:String x:Key="Str_Ready">প্রস্তুত</sys:String>
     <sys:String x:Key="Str_Portable">পোর্টেবল</sys:String>
-    <sys:String x:Key="Str_InstallBtn">KillerPDF ইনস্টল করুন...</sys:String>
+    <sys:String x:Key="Str_InstallBtn">KillerPDF ইনস্টল করুন</sys:String>
 
-    <!-- ── Status messages (format strings — use string.Format) ─────── -->
+    <!-- ── Status messages (format strings - use string.Format) ─────── -->
     <sys:String x:Key="Str_Opened">{0} খোলা হয়েছে - {1} পৃষ্ঠা</sys:String>
     <sys:String x:Key="Str_OpenedReadOnly">{0} খোলা হয়েছে (শুধুমাত্র পঠনযোগ্য - মালিকের বিধিনিষেধ) - {1} পৃষ্ঠা</sys:String>
     <sys:String x:Key="Str_OpenedReadOnlyXRef">{0} খোলা হয়েছে (শুধুমাত্র পঠনযোগ্য - অ-মানক XRef টেবিল) - {1} পৃষ্ঠা</sys:String>
@@ -118,7 +130,7 @@
     <sys:String x:Key="Str_OpenedRasterRepair">{0} খোলা হয়েছে (রাস্টারাইজড মেরামত - পরিবর্তন রাখতে সংরক্ষণ করুন) - {1} পৃষ্ঠা</sys:String>
     <sys:String x:Key="Str_PageOf">{1}-এর মধ্যে {0} পৃষ্ঠা</sys:String>
     <sys:String x:Key="Str_PageOfLinks">{1}-এর মধ্যে {0} পৃষ্ঠা  ({2}টি লিংক)</sys:String>
-    <sys:String x:Key="Str_PageFormFields">{1}-এর মধ্যে {0} পৃষ্ঠা — এই পৃষ্ঠায় পূরণযোগ্য ফর্ম ফিল্ড রয়েছে</sys:String>
+    <sys:String x:Key="Str_PageFormFields">{1}-এর মধ্যে {0} পৃষ্ঠা - এই পৃষ্ঠায় পূরণযোগ্য ফর্ম ফিল্ড রয়েছে</sys:String>
     <sys:String x:Key="Str_PageRenderError">{0} পৃষ্ঠা - রেন্ডার করা যায়নি</sys:String>
     <sys:String x:Key="Str_RenderError">রেন্ডার ত্রুটি: {0}</sys:String>
     <sys:String x:Key="Str_Rotated">{0}টি পৃষ্ঠা ঘোরানো হয়েছে</sys:String>
@@ -130,24 +142,48 @@
     <sys:String x:Key="Str_Deleted">{0}টি পৃষ্ঠা মুছে ফেলা হয়েছে - {1}টি অবশিষ্ট</sys:String>
     <sys:String x:Key="Str_Printed">{0}টি পৃষ্ঠা প্রিন্টারে পাঠানো হয়েছে</sys:String>
     <sys:String x:Key="Str_LinkRemoved">লিংক সরানো হয়েছে।</sys:String>
-    <sys:String x:Key="Str_InvalidRange">অবৈধ পরিসীমা — যেমন ব্যবহার করুন: 1-3,5,7</sys:String>
+    <sys:String x:Key="Str_InvalidRange">অবৈধ পরিসীমা - যেমন ব্যবহার করুন: 1-3,5,7</sys:String>
     <sys:String x:Key="Str_CropNoDoc">ক্রপ: কোনো নথি খোলা নেই</sys:String>
     <sys:String x:Key="Str_CropNoPage">ক্রপ: কোনো পৃষ্ঠা নির্বাচিত নেই</sys:String>
     <sys:String x:Key="Str_CropNoDims">ক্রপ: পৃষ্ঠার মাত্রা পাওয়া যাচ্ছে না</sys:String>
     <sys:String x:Key="Str_RotateFailed">ঘোরানো ব্যর্থ হয়েছে: {0}</sys:String>
 
     <!-- ── Dialog strings ───────────────────────────────────────────── -->
-    <sys:String x:Key="Str_Dlg_InstallTitle">KillerPDF ইনস্টল করুন</sys:String>
-    <sys:String x:Key="Str_Dlg_InstallMsg">আপনার ব্যবহারকারী প্রোফাইলে KillerPDF ইনস্টল করবেন?
+    <sys:String x:Key="Str_Dlg_SaveRemovesSignature" xml:space="preserve">"{0}" ডিজিটালভাবে স্বাক্ষরিত।
 
-এটি অ্যাপটি %LocalAppData%\KillerPDF-এ কপি করবে এবং স্টার্ট মেনু শর্টকাট তৈরি করবে।
-যেকোনো সময় Add/Remove Programs-এর মাধ্যমে আনইনস্টল করা যাবে।</sys:String>
+সংরক্ষণ করলে ফাইলটি প্রতিস্থাপিত হবে এবং এর স্বাক্ষর মুছে যাবে। স্বাক্ষরিত ফাইলটি রাখতে চাইলে বাতিল করুন এবং অন্য নামে "এভাবে সংরক্ষণ করুন" ব্যবহার করুন।</sys:String>
+    <sys:String x:Key="Str_Dlg_SaveOtherPaneDirty" xml:space="preserve">অন্য প্যানেও "{0}" খোলা আছে এবং সেখানে নিজস্ব অসংরক্ষিত পরিবর্তন রয়েছে।
+
+এখন সংরক্ষণ করলে ফাইলটি ওভাররাইট হবে এবং সেই পরিবর্তনগুলি হারিয়ে যাবে। রাখতে চাইলে আগে অন্য প্যানটি সংরক্ষণ করুন।</sys:String>
+    <sys:String x:Key="Str_St_SplitOn">স্প্লিট প্যান চালু - বন্ধ করতে F10</sys:String>
+    <sys:String x:Key="Str_St_SplitOff">স্প্লিট প্যান বন্ধ</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallTitle">KillerPDF ইনস্টল করুন</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallMsg" xml:space="preserve">এই কম্পিউটারে KillerPDF ইনস্টল করবেন?
+
+KillerPDF আপনার প্রোগ্রাম ফোল্ডারে কপি করা হবে এবং একটি স্টার্ট মেনু এন্ট্রি যোগ করা হবে। EXE-র এই কপিটি যেখানে আছে সেখানেই থাকবে, এবং যেকোনো সময় Add/Remove Programs-এর মাধ্যমে আনইনস্টল করা যাবে।</sys:String>
+    <sys:String x:Key="Str_Btn_DoInstall">ইনস্টল করুন</sys:String>
+    <sys:String x:Key="Str_Btn_DoUpdate">আপডেট</sys:String>
+    <sys:String x:Key="Str_Dlg_UpdateUserMsg" xml:space="preserve">বিদ্যমান KillerPDF ইনস্টলেশন আপডেট করবেন?
+
+এটি ইনস্টল করা কপিটিকে দ্রুততর মাল্টি-ফাইল সংস্করণ দিয়ে প্রতিস্থাপন করে। এরপর এই পোর্টেবল ফাইলটি রাখতে বা মুছতে পারেন।</sys:String>
+    <sys:String x:Key="Str_Dlg_UpdateMachineMsg" xml:space="preserve">সব ব্যবহারকারীর জন্য বিদ্যমান KillerPDF ইনস্টলেশন আপডেট করবেন?
+
+এটি Program Files-এর কপিটিকে দ্রুততর মাল্টি-ফাইল সংস্করণ দিয়ে প্রতিস্থাপন করে। পুরোনো প্রতি-ব্যবহারকারী কপি সরিয়ে ফেলা হয়, যাতে KillerPDF শুধু একবারই দেখা যায়। এরপর এই পোর্টেবল ফাইলটি রাখতে বা মুছতে পারেন।</sys:String>
+    <sys:String x:Key="Str_Dlg_OneInstallOnly" xml:space="preserve">KillerPDF ইতিমধ্যে এই কম্পিউটারের সবার জন্য ইনস্টল করা আছে। প্রতি-ব্যবহারকারী ইনস্টল বেছে নেওয়ার আগে সেই ইনস্টলেশন আপডেট করুন, অথবা আনইনস্টল করুন।
+
+KillerPDF দুটি ইনস্টল করা কপি তৈরি করবে না।</sys:String>
+    <sys:String x:Key="Str_Chk_Desktop">ডেস্কটপ শর্টকাট যোগ করুন</sys:String>
+    <sys:String x:Key="Str_Chk_AllUsers">এই কম্পিউটারের সব ব্যবহারকারীর জন্য ইনস্টল করুন (অ্যাডমিন লাগবে)</sys:String>
+    <sys:String x:Key="Str_Status_InstallFailed">ইনস্টল সম্পূর্ণ হয়নি - KillerPDF এখনও পোর্টেবল হিসেবে চলছে।</sys:String>
+    <sys:String x:Key="Str_Dlg_SetDefaultPdfMsg" xml:space="preserve">KillerPDF-কে আপনার ডিফল্ট PDF ভিউয়ার হিসেবে সেট করতে চান?
+
+Windows সেটিংস - ডিফল্ট অ্যাপ খুলবে।</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedClose">আপনার অসংরক্ষিত পরিবর্তন রয়েছে। সংরক্ষণ না করে এই ফাইলটি বন্ধ করবেন?</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedExit">আপনার অসংরক্ষিত পরিবর্তন রয়েছে। সংরক্ষণ না করে KillerPDF বন্ধ করবেন?</sys:String>
-    <sys:String x:Key="Str_Dlg_PageOutOfRange">এই ডকুমেন্টে {0}টি পৃষ্ঠার আকার Adobe Reader-এর সমর্থিত সীমার (প্রতি পাশে 3 থেকে 14,400 পয়েন্ট) বাইরে - Adobe এই পৃষ্ঠাগুলিকে ফাঁকা দেখায়।
+    <sys:String x:Key="Str_Dlg_PageOutOfRange" xml:space="preserve">এই ডকুমেন্টে {0}টি পৃষ্ঠার আকার Adobe Reader-এর সমর্থিত সীমার (প্রতি পাশে 3 থেকে 14,400 পয়েন্ট) বাইরে - Adobe এই পৃষ্ঠাগুলিকে ফাঁকা দেখায়।
 
 এগুলিকে সমর্থিত আকারে স্কেল করবেন? পৃষ্ঠার চেহারা ও অনুপাত একই থাকবে।</sys:String>
-    <sys:String x:Key="Str_Dlg_FailedOpen">PDF খুলতে ব্যর্থ হয়েছে:
+    <sys:String x:Key="Str_Dlg_FailedOpen" xml:space="preserve">PDF খুলতে ব্যর্থ হয়েছে:
 {0}</sys:String>
     <sys:String x:Key="Str_Dlg_AppTitle">KillerPDF</sys:String>
     <sys:String x:Key="Str_Dlg_CloseAllDocs">আপনার {0}টি নথি খোলা আছে। অ্যাপ বন্ধ করার সময় KillerPDF কি সেগুলি সব বন্ধ করে দেবে?</sys:String>
@@ -162,6 +198,14 @@
     <sys:String x:Key="Str_Theme_Blood">রক্ত</sys:String>
     <sys:String x:Key="Str_Theme_Greed">লোভ</sys:String>
     <sys:String x:Key="Str_Theme_Cyanotic">সায়ানোটিক</sys:String>
+    <sys:String x:Key="Str_Theme_98SE">98SE</sys:String>
+    <sys:String x:Key="Str_Theme_Ectoplasm">Ectoplasm</sys:String>
+    <sys:String x:Key="Str_Theme_Decay">Decay</sys:String>
+    <sys:String x:Key="Str_Theme_Mourning">Mourning</sys:String>
+    <sys:String x:Key="Str_Theme_FilmGrain">ফিল্ম গ্রেইন</sys:String>
+    <sys:String x:Key="Str_Theme_Sepulchre">Sepulchre</sys:String>
+    <sys:String x:Key="Str_Theme_Delirium">Delirium</sys:String>
+    <sys:String x:Key="Str_Theme_Malaise">Malaise</sys:String>
 
     <!-- ── Zoom dropdown ──────────────────────────────────────────────── -->
     <sys:String x:Key="Str_Zoom_FitWidth">প্রস্থ মেলান</sys:String>
@@ -188,13 +232,17 @@
     <sys:String x:Key="Str_Lbl_MoveUp">পৃষ্ঠা উপরে সরান</sys:String>
     <sys:String x:Key="Str_Lbl_MoveDown">পৃষ্ঠা নিচে সরান</sys:String>
     <sys:String x:Key="Str_Lbl_Text">টেক্সট</sys:String>
+    <sys:String x:Key="Str_Lbl_FormField">ফর্ম (F)</sys:String>
     <sys:String x:Key="Str_Lbl_Highlight">হাইলাইট</sys:String>
     <sys:String x:Key="Str_Lbl_Strike">স্ট্রাইকথ্রু</sys:String>
     <sys:String x:Key="Str_Lbl_Underline">আন্ডারলাইন</sys:String>
     <sys:String x:Key="Str_Lbl_Bold">বোল্ড</sys:String>
     <sys:String x:Key="Str_Lbl_Italic">ইটালিক</sys:String>
     <sys:String x:Key="Str_Lbl_Draw">আঁকুন</sys:String>
+    <sys:String x:Key="Str_Lbl_Shape">আকার</sys:String>
+    <sys:String x:Key="Str_Bar_ShapeFill">ভরাট</sys:String>
     <sys:String x:Key="Str_Lbl_Crop">ক্রপ</sys:String>
+    <sys:String x:Key="Str_Lbl_Measure">পরিমাপ</sys:String>
     <sys:String x:Key="Str_Lbl_Image">ছবি যোগ করুন</sys:String>
     <sys:String x:Key="Str_Lbl_Signature">স্বাক্ষর</sys:String>
     <sys:String x:Key="Str_Lbl_Undo">পূর্বাবস্থায় ফেরান</sys:String>
@@ -226,6 +274,7 @@
     <sys:String x:Key="Str_Ctx_RotateCWShort">ঘড়ির কাঁটার দিকে ঘোরান</sys:String>
     <sys:String x:Key="Str_Ctx_RotateCCWShort">ঘড়ির কাঁটার বিপরীতে ঘোরান</sys:String>
     <sys:String x:Key="Str_Ctx_ExtractPages">পৃষ্ঠা বের করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_ExportPageImage">পৃষ্ঠাটি ছবি হিসেবে রপ্তানি করুন</sys:String>
     <sys:String x:Key="Str_Ctx_DeletePages">পৃষ্ঠা মুছুন</sys:String>
 
     <!-- ── Stamp Page Numbers dialog ──────────────────────────────────── -->
@@ -251,7 +300,7 @@
     <sys:String x:Key="Str_Stamp_Mirror">মুখোমুখি পৃষ্ঠায় মিরর করুন (বাইরের প্রান্ত)</sys:String>
     <sys:String x:Key="Str_Stamp_Applied">{0}টি পৃষ্ঠা স্ট্যাম্প করা হয়েছে</sys:String>
     <sys:String x:Key="Str_Pos_Custom">কাস্টম (প্রিভিউতে টেনে আনুন)</sys:String>
-    <sys:String x:Key="Str_TT_StampTool">পৃষ্ঠা স্ট্যাম্প করুন</sys:String>
+    <sys:String x:Key="Str_TT_StampTool">পৃষ্ঠা স্ট্যাম্প করুন (S)</sys:String>
     <sys:String x:Key="Str_Ctx_StampPages">পৃষ্ঠা স্ট্যাম্প করুন</sys:String>
     <sys:String x:Key="Str_Stamp_Cancel">বাতিল</sys:String>
     <sys:String x:Key="Str_Stamp_Stamp">বসান</sys:String>
@@ -317,7 +366,7 @@
     <sys:String x:Key="Str_Drop_TooMany">এই ফোল্ডার বা আর্কাইভে {0}টি ফাইল আছে। KillerPDF শুধু প্রথম {1}টি খুলবে। চালিয়ে যাবেন?</sys:String>
     <sys:String x:Key="Str_Status_Merged">{0}টি ফাইল একত্র করা হয়েছে - এখনও সংরক্ষণ করা হয়নি</sys:String>
     <sys:String x:Key="Str_Drop_Merging">ফাইল একত্র করা হচ্ছে...</sys:String>
-    <sys:String x:Key="Str_Drop_MergeCancelled">একত্রীকরণ বাতিল করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_Drop_MergeCanceled">একত্রীকরণ বাতিল করা হয়েছে</sys:String>
     <sys:String x:Key="Str_Dlg_UnsavedCloseAll">সব নথি বন্ধ করবেন? অসংরক্ষিত পরিবর্তন হারিয়ে যাবে।</sys:String>
     <sys:String x:Key="Str_Msg_OpenFirst">প্রথমে একটি PDF খুলুন।</sys:String>
     <sys:String x:Key="Str_Dlg_SaveBeforeZip">ZIP-এ সংকুচিত করার আগে পরিবর্তনগুলি সংরক্ষণ করবেন?</sys:String>
@@ -340,7 +389,7 @@
 
     <!-- ── রেখা টুল, লেয়ার / গ্রুপ মেনু (v1.5.x এ যোগ করা হয়েছে) ──────────── -->
     <sys:String x:Key="Str_Lbl_Line">রেখা</sys:String>
-    <sys:String x:Key="Str_TT_LineTool">রেখা - সরল রেখা আঁকতে টানুন</sys:String>
+    <sys:String x:Key="Str_TT_LineTool">রেখা - সরল রেখা আঁকতে টানুন (L)</sys:String>
     <sys:String x:Key="Str_Ctx_Edit">সম্পাদনা করুন</sys:String>
     <sys:String x:Key="Str_Ctx_Raise">উপরে তুলুন</sys:String>
     <sys:String x:Key="Str_Ctx_Lower">নিচে নামান</sys:String>
@@ -356,11 +405,13 @@
     <sys:String x:Key="Str_Bar_Color">রং:</sys:String>
     <sys:String x:Key="Str_Bar_Fill">ফিল:</sys:String>
     <sys:String x:Key="Str_Bar_Size">আকার:</sys:String>
+    <sys:String x:Key="Str_Bar_LetterSpacing">অক্ষর ব্যবধান:</sys:String>
     <sys:String x:Key="Str_Bar_Opacity">অস্বচ্ছতা:</sys:String>
     <sys:String x:Key="Str_Bar_FillOpacity">ফিল অস্বচ্ছতা:</sys:String>
     <sys:String x:Key="Str_Bar_Font">ফন্ট:</sys:String>
     <sys:String x:Key="Str_Bar_Level">সমতল</sys:String>
     <sys:String x:Key="Str_Bar_Eraser">ইরেজার</sys:String>
+    <sys:String x:Key="Str_Bar_AnnotationEraser">টীকা মুছুন</sys:String>
     <sys:String x:Key="Str_Bar_MoreColors">আরও রং...</sys:String>
     <sys:String x:Key="Str_Sig_Signatures">স্বাক্ষর</sys:String>
     <sys:String x:Key="Str_Sig_Initials">আদ্যক্ষর</sys:String>
@@ -372,12 +423,26 @@
     <sys:String x:Key="Str_Sign_Desc">একটি সার্টিফিকেট দিয়ে {0} সিল করে এবং একটি স্বাক্ষরিত কপি সংরক্ষণ করে।</sys:String>
     <sys:String x:Key="Str_Sign_Certificate">সার্টিফিকেট</sys:String>
     <sys:String x:Key="Str_Sign_FromFile">একটি ফাইল থেকে (.pfx / .p12)</sys:String>
-    <sys:String x:Key="Str_Sign_FromStore">Windows সার্টিফিকেট স্টোর থেকে</sys:String>
+    <sys:String x:Key="Str_Sign_FromStore">Windows সার্টিফিকেট স্টোর থেকে / USB token</sys:String>
     <sys:String x:Key="Str_Sign_Browse">ব্রাউজ...</sys:String>
     <sys:String x:Key="Str_Sign_Password">পাসওয়ার্ড</sys:String>
     <sys:String x:Key="Str_Sign_Reason">কারণ (ঐচ্ছিক)</sys:String>
     <sys:String x:Key="Str_Sign_Location">অবস্থান (ঐচ্ছিক)</sys:String>
     <sys:String x:Key="Str_Sign_Contact">যোগাযোগ (ঐচ্ছিক)</sys:String>
+    <sys:String x:Key="Str_Sign_VisibleAppearance">দৃশ্যমান স্বাক্ষর দেখান</sys:String>
+    <sys:String x:Key="Str_Sign_AppearanceText">স্বাক্ষরের টেক্সট</sys:String>
+    <sys:String x:Key="Str_Sign_AppearanceDefault">ডিজিটালি স্বাক্ষর করেছেন {name}&#10;তারিখ: {date}&#10;কারণ: {reason}&#10;অবস্থান: {location}</sys:String>
+    <sys:String x:Key="Str_Sign_Page">পৃষ্ঠা</sys:String>
+    <sys:String x:Key="Str_Sign_Position">অবস্থান</sys:String>
+    <sys:String x:Key="Str_Sign_BottomLeft">নিচে বামে</sys:String>
+    <sys:String x:Key="Str_Sign_BottomRight">নিচে ডানে</sys:String>
+    <sys:String x:Key="Str_Sign_TopLeft">উপরে বামে</sys:String>
+    <sys:String x:Key="Str_Sign_TopRight">উপরে ডানে</sys:String>
+    <sys:String x:Key="Str_Sign_Width">প্রস্থ</sys:String>
+    <sys:String x:Key="Str_Sign_Height">উচ্চতা</sys:String>
+    <sys:String x:Key="Str_Sign_FontSize">পাঠ্যের আকার</sys:String>
+    <sys:String x:Key="Str_Sign_PreviewSigner">সার্টিফিকেটধারী</sys:String>
+    <sys:String x:Key="Str_Sign_BadAppearance">স্বাক্ষরের পৃষ্ঠা, মাপ এবং টেক্সটের আকার পরীক্ষা করুন।</sys:String>
     <sys:String x:Key="Str_Sign_SaveAs">স্বাক্ষরিত কপি যেভাবে সংরক্ষণ করুন</sys:String>
     <sys:String x:Key="Str_Sign_Sign">স্বাক্ষর করুন</sys:String>
     <sys:String x:Key="Str_Sign_Cancel">বাতিল করুন</sys:String>
@@ -387,13 +452,21 @@
     <sys:String x:Key="Str_Sidebar_Left">বাঁ দিকে</sys:String>
     <sys:String x:Key="Str_Sidebar_Right">ডান দিকে</sys:String>
     <sys:String x:Key="Str_KS_ToggleSidebar">সাইডবার টগল করুন</sys:String>
+    <sys:String x:Key="Str_KS_ToolbarStyle">টুলবারের চেহারা</sys:String>
+    <sys:String x:Key="Str_KS_SidebarSide">সাইডবার বাঁয়ে / ডানে</sys:String>
+    <sys:String x:Key="Str_KS_CycleView">পরবর্তী ভিউ মোড</sys:String>
+    <sys:String x:Key="Str_TT_ViewMode">ভিউ মোড</sys:String>
     <sys:String x:Key="Str_KS_NextTab">পরবর্তী ট্যাব (Shift: পূর্ববর্তী)</sys:String>
     <sys:String x:Key="Str_Lbl_Search">অনুসন্ধান</sys:String>
     <sys:String x:Key="Str_TT_Search">অনুসন্ধান (Ctrl+F)</sys:String>
     <sys:String x:Key="Str_Ctx_DeletePage">পৃষ্ঠা মুছুন</sys:String>
     <sys:String x:Key="Str_Ctx_DuplicatePage">পৃষ্ঠা সদৃশ করুন</sys:String>
     <sys:String x:Key="Str_Ctx_AddBlankPage">ফাঁকা পৃষ্ঠা যোগ করুন</sys:String>
+    <sys:String x:Key="Str_Blank_CurrentPage">বর্তমান পৃষ্ঠা</sys:String>
+    <sys:String x:Key="Str_Blank_Custom">কাস্টম</sys:String>
+    <sys:String x:Key="Str_Blank_InvalidSize">0.1 থেকে 200 ইঞ্চির মধ্যে প্রস্থ ও উচ্চতা লিখুন।</sys:String>
     <sys:String x:Key="Str_Ctx_CloseTab">ট্যাব বন্ধ করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_OpenContainingFolder">ফাইলের ফোল্ডার খুলুন</sys:String>
     <sys:String x:Key="Str_Ctx_CloseOthers">অন্যান্য ট্যাব বন্ধ করুন</sys:String>
 
     <!-- ── OCR + Transform + Crop (v1.5.x এ যোগ করা হয়েছে) ──────────────── -->
@@ -401,14 +474,14 @@
     <sys:String x:Key="Str_Ocr_SearchablePdf">অনুসন্ধানযোগ্য PDF তৈরি করুন...</sys:String>
     <sys:String x:Key="Str_Ocr_ExtractText">সমস্ত টেক্সট বের করুন...</sys:String>
     <sys:String x:Key="Str_Ocr_Language">ভাষা</sys:String>
+    <sys:String x:Key="Str_Ocr_FormAware">ফর্ম-সচেতন OCR</sys:String>
     <sys:String x:Key="Str_Ocr_NoDoc">প্রথমে একটি PDF খুলুন</sys:String>
-    <sys:String x:Key="Str_Ocr_ComingSoon">{0} - শীঘ্রই আসছে</sys:String>
-    <sys:String x:Key="Str_TT_Ocr">পৃষ্ঠায় OCR করুন (টেক্সট কপি করুন)</sys:String>
+    <sys:String x:Key="Str_TT_Ocr">পৃষ্ঠায় OCR করুন (টেক্সট কপি করুন) (Ctrl+Shift+O)</sys:String>
     <sys:String x:Key="Str_Lbl_Ocr">OCR</sys:String>
     <sys:String x:Key="Str_Ctx_OcrPage">পৃষ্ঠায় OCR করুন (টেক্সট কপি করুন)</sys:String>
     <sys:String x:Key="Str_Lbl_Rotate">রূপান্তর</sys:String>
     <sys:String x:Key="Str_Lbl_Stamp">স্ট্যাম্প</sys:String>
-    <sys:String x:Key="Str_TT_RotateTool">পৃষ্ঠা রূপান্তর - ঘোরান / সোজা করুন (স্কেল শীঘ্রই আসছে)</sys:String>
+    <sys:String x:Key="Str_TT_RotateTool">পৃষ্ঠা রূপান্তর: ঘোরান, স্কেল করুন, উল্টান, সোজা করুন বা পরিপ্রেক্ষিত ঠিক করুন (R)</sys:String>
     <sys:String x:Key="Str_Tf_Suffix">রূপান্তর</sys:String>
     <sys:String x:Key="Str_Tf_Rotate">ঘোরান</sys:String>
     <sys:String x:Key="Str_Tf_Scale">স্কেল</sys:String>
@@ -423,6 +496,10 @@
     <sys:String x:Key="Str_Tf_FlipV">উল্লম্বভাবে উল্টান</sys:String>
     <sys:String x:Key="Str_Tf_LevelLine">একটি সমতল রেখা আঁকুন</sys:String>
     <sys:String x:Key="Str_Tf_SkewHint">যা সমতল হওয়া উচিত তার বরাবর টানুন (একটি প্রান্ত, একটি লেখার লাইন)। পৃষ্ঠাটি সেই অনুযায়ী ঘুরবে।</sys:String>
+    <sys:String x:Key="Str_Tf_Perspective">পার্সপেক্টিভ</sys:String>
+    <sys:String x:Key="Str_Tf_CorrectPerspective">ট্র্যাপিজয়েড বিকৃতি ঠিক করুন</sys:String>
+    <sys:String x:Key="Str_Tf_PerspectiveHint">চারটি কোণ ছবিতে তোলা পৃষ্ঠার সীমানায় টানুন। প্রয়োগ করলে এটি সোজা আয়তক্ষেত্র হবে।</sys:String>
+    <sys:String x:Key="Str_Tf_ResetCorners">কোণ রিসেট করুন</sys:String>
     <sys:String x:Key="Str_Tf_Output">আউটপুট: {0} × {1} ইঞ্চি</sys:String>
     <sys:String x:Key="Str_Tf_ResetAll">সব রিসেট করুন</sys:String>
     <sys:String x:Key="Str_Tf_Reset">রিসেট</sys:String>
@@ -431,6 +508,7 @@
     <sys:String x:Key="Str_Tf_Warn">একটি পৃষ্ঠা রূপান্তর করলে (ঘোরানো বা স্কেল) তা রাস্টারাইজ হয়: পৃষ্ঠাটি ছবি হিসেবে পুনরায় সংরক্ষিত হয়, তাই এতে থাকা যেকোনো নির্বাচনযোগ্য টেক্সট হারিয়ে যায়। পরে আপনি OCR চালিয়ে এটিকে আবার অনুসন্ধানযোগ্য করতে পারেন।</sys:String>
     <sys:String x:Key="Str_Tf_DontWarn">আমাকে আর সতর্ক করবেন না</sys:String>
     <sys:String x:Key="Str_Tf_Done">{0} পৃষ্ঠা রূপান্তর করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_Tf_DoneBatch">{0}টি পৃষ্ঠা রূপান্তর করা হয়েছে</sys:String>
     <sys:String x:Key="Str_Tf_NoRender">পৃষ্ঠাটি রেন্ডার করা যায়নি - কিছুক্ষণ পরে আবার চেষ্টা করুন।</sys:String>
     <sys:String x:Key="Str_Tf_Failed">রূপান্তর ব্যর্থ হয়েছে: {0}</sys:String>
     <sys:String x:Key="Str_Crop_Position">অবস্থান</sys:String>
@@ -452,7 +530,7 @@
 
     <!-- Status-bar + dialog strings (extracted from code) -->
     <sys:String x:Key="Str_St_DataCleared">সমস্ত KillerPDF ডেটা মুছে ফেলা হয়েছে</sys:String>
-    <sys:String x:Key="Str_St_OcrRegionCancelled">OCR অঞ্চল বাতিল করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_OcrRegionCanceled">OCR অঞ্চল বাতিল করা হয়েছে</sys:String>
     <sys:String x:Key="Str_St_Erased">মুছে ফেলা হয়েছে</sys:String>
     <sys:String x:Key="Str_St_Ungrouped">গ্রুপ বাতিল করা হয়েছে</sys:String>
     <sys:String x:Key="Str_St_RemovedFromGroup">গ্রুপ থেকে সরানো হয়েছে</sys:String>
@@ -465,22 +543,23 @@
     <sys:String x:Key="Str_St_UndidDocChange">নথির পরিবর্তন আন্ডু করা হয়েছে</sys:String>
     <sys:String x:Key="Str_St_ClearedPageAnnotations">এই পৃষ্ঠার টীকা মুছে ফেলা হয়েছে</sys:String>
     <sys:String x:Key="Str_St_NoAnnotationsToClear">মুছে ফেলার মতো কোনো টীকা নেই</sys:String>
-    <sys:String x:Key="Str_St_RepairCancelled">মেরামত বাতিল করা হয়েছে</sys:String>
-    <sys:String x:Key="Str_St_Cancelled">বাতিল করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_RepairCanceled">মেরামত বাতিল করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_Canceled">বাতিল করা হয়েছে</sys:String>
     <sys:String x:Key="Str_St_DocInfoUpdated">নথির তথ্য আপডেট করা হয়েছে - পরিবর্তন রাখতে ফাইলটি সংরক্ষণ করুন</sys:String>
-    <sys:String x:Key="Str_St_FlattenCancelled">ফ্ল্যাটেন বাতিল করা হয়েছে (কোনো ফাইল লেখা হয়নি)</sys:String>
+    <sys:String x:Key="Str_St_FlattenCanceled">ফ্ল্যাটেন বাতিল করা হয়েছে (কোনো ফাইল লেখা হয়নি)</sys:String>
     <sys:String x:Key="Str_St_FlattenPrintFailed">মুদ্রণের জন্য টীকা ফ্ল্যাটেন করা যায়নি; সেগুলি ছাড়াই মুদ্রণ করা হচ্ছে।</sys:String>
-    <sys:String x:Key="Str_St_HqDownloadCancelled">উচ্চ মানের ডাউনলোড বাতিল করা হয়েছে</sys:String>
-    <sys:String x:Key="Str_St_LangDownloadCancelled">ভাষা ডাউনলোড বাতিল করা হয়েছে</sys:String>
-    <sys:String x:Key="Str_St_OcrCancelled">OCR বাতিল করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_HqDownloadCanceled">উচ্চ মানের ডাউনলোড বাতিল করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_LangDownloadCanceled">ভাষা ডাউনলোড বাতিল করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_OcrCanceled">OCR বাতিল করা হয়েছে</sys:String>
     <sys:String x:Key="Str_St_OcrDragBox">শনাক্ত করতে এলাকার উপর একটি বক্স টেনে আনুন</sys:String>
     <sys:String x:Key="Str_St_OcrRegionTooSmall">OCR অঞ্চল খুব ছোট</sys:String>
     <sys:String x:Key="Str_St_OcrNoText">OCR: নির্বাচিত অঞ্চলে কোনো টেক্সট পাওয়া যায়নি</sys:String>
-    <sys:String x:Key="Str_St_SearchablePdfCancelled">অনুসন্ধানযোগ্য PDF বাতিল করা হয়েছে (কোনো ফাইল লেখা হয়নি)</sys:String>
-    <sys:String x:Key="Str_St_TextExtractCancelled">টেক্সট নিষ্কাশন বাতিল করা হয়েছে (কোনো ফাইল লেখা হয়নি)</sys:String>
+    <sys:String x:Key="Str_St_SearchablePdfCanceled">অনুসন্ধানযোগ্য PDF বাতিল করা হয়েছে (কোনো ফাইল লেখা হয়নি)</sys:String>
+    <sys:String x:Key="Str_St_TextExtractCanceled">টেক্সট নিষ্কাশন বাতিল করা হয়েছে (কোনো ফাইল লেখা হয়নি)</sys:String>
     <sys:String x:Key="Str_St_NoTextOnPage">এই পৃষ্ঠায় কোনো টেক্সট পাওয়া যায়নি</sys:String>
     <sys:String x:Key="Str_St_NoTextSelected">কোনো টেক্সট নির্বাচন করা হয়নি - টেক্সট নির্বাচন করতে টেনে আনুন</sys:String>
     <sys:String x:Key="Str_St_NoTextInSelection">নির্বাচনে কোনো টেক্সট পাওয়া যায়নি</sys:String>
+    <sys:String x:Key="Str_St_NoTextUseShapes">এখানে কোনো টেক্সট নেই - আকার ৪-এ আছে</sys:String>
     <sys:String x:Key="Str_St_SignaturePlaced">স্বাক্ষর স্থাপন করা হয়েছে - পুনরায় স্থাপন করতে টেনে আনুন, আকার পরিবর্তন করতে কোণার হ্যান্ডেল ব্যবহার করুন</sys:String>
     <sys:String x:Key="Str_St_FieldCleared">ফিল্ড মুছে ফেলা হয়েছে</sys:String>
     <sys:String x:Key="Str_St_FieldSigned">ফিল্ড স্বাক্ষরিত হয়েছে</sys:String>
@@ -504,4 +583,453 @@
     <sys:String x:Key="Str_Dlg_NoValidPages">সেই পরিসরে কোনো বৈধ পৃষ্ঠা নেই।</sys:String>
     <sys:String x:Key="Str_Dlg_SignedSavedTo">স্বাক্ষরিত কপি এখানে সংরক্ষণ করা হয়েছে:</sys:String>
     <sys:String x:Key="Str_Dlg_DrawSignatureFirst">প্রথমে একটি স্বাক্ষর আঁকুন।</sys:String>
+
+    <!-- ── Bookmark editing (#133, added v1.6.4) ───────────────── -->
+    <sys:String x:Key="Str_TT_AddBookmark">বর্তমান পৃষ্ঠার জন্য একটি বুকমার্ক যোগ করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_BmAdd">বুকমার্ক যোগ করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_BmAddChild">চাইল্ড বুকমার্ক যোগ করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_BmRename">নাম পরিবর্তন করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_BmDelete">মুছে ফেলুন</sys:String>
+    <sys:String x:Key="Str_Bm_DefaultTitle">পৃষ্ঠা {0}</sys:String>
+    <sys:String x:Key="Str_PageLabel">পৃষ্ঠা {0}</sys:String>
+    <sys:String x:Key="Str_Outline_Untitled">(শিরোনামহীন)</sys:String>
+    <sys:String x:Key="Str_Bm_DeleteKids">এই বুকমার্ক এবং এর {0}টি চাইল্ড বুকমার্ক মুছে ফেলা হবে?</sys:String>
+    <sys:String x:Key="Str_Ctx_BmMoveUp">উপরে সরান</sys:String>
+    <sys:String x:Key="Str_Ctx_BmMoveDown">নিচে সরান</sys:String>
+    <sys:String x:Key="Str_Ctx_BmSetDest">বর্তমান পৃষ্ঠায় নির্দেশ করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_BmDeleteAll">সব বুকমার্ক মুছে ফেলুন</sys:String>
+    <sys:String x:Key="Str_Bm_DeleteMulti">{0}টি বুকমার্ক মুছে ফেলবেন?</sys:String>
+    <sys:String x:Key="Str_Bm_DeleteAllConfirm">এই ডকুমেন্ট থেকে সব বুকমার্ক মুছে ফেলা হবে?</sys:String>
+
+    <sys:String x:Key="Str_Ctx_Redo">পুনরায় করুন</sys:String>
+    <sys:String x:Key="Str_St_Redone">পুনরায় করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_NothingToRedo">পুনরায় করার কিছু নেই</sys:String>
+    <sys:String x:Key="Str_KS_FirstLast">প্রথম / শেষ পৃষ্ঠা</sys:String>
+    <sys:String x:Key="Str_KS_BackForward">পেছনে / সামনে (জাম্প ইতিহাস)</sys:String>
+    <sys:String x:Key="Str_KS_ZoomPresets">প্রকৃত আকার / প্রস্থে মানানসই / পৃষ্ঠায় মানানসই</sys:String>
+    <sys:String x:Key="Str_KS_ContextMenu">নির্বাচনে কনটেক্সট মেনু</sys:String>
+
+    <sys:String x:Key="Str_KS_ViewList">তালিকা</sys:String>
+    <sys:String x:Key="Str_KS_ViewKeyboard">কীবোর্ড</sys:String>
+    <sys:String x:Key="Str_KS_HoldHint">সেই স্তরটি দেখতে Ctrl, Shift বা Alt চেপে ধরুন - আলোকিত কী-এর ওপর হভার করে এর কাজ দেখুন</sys:String>
+    <sys:String x:Key="Str_Zoom_ActualSize">প্রকৃত আকার</sys:String>
+    <sys:String x:Key="Str_KS_PrevTab">পূর্ববর্তী ট্যাব</sys:String>
+
+    <sys:String x:Key="Str_KS_Ocr">OCR</sys:String>
+
+    <sys:String x:Key="Str_Kb_PrevPage">পূর্ববর্তী পৃষ্ঠা</sys:String>
+    <sys:String x:Key="Str_Kb_NextPage">পরবর্তী পৃষ্ঠা</sys:String>
+    <sys:String x:Key="Str_Kb_FirstPage">প্রথম পৃষ্ঠা</sys:String>
+    <sys:String x:Key="Str_Kb_LastPage">শেষ পৃষ্ঠা</sys:String>
+    <sys:String x:Key="Str_Kb_Back">পিছনে</sys:String>
+    <sys:String x:Key="Str_Kb_Forward">সামনে</sys:String>
+    <sys:String x:Key="Str_Kb_NextResult">পরবর্তী ফলাফল</sys:String>
+    <sys:String x:Key="Str_Kb_PrevResult">পূর্ববর্তী ফলাফল</sys:String>
+    <sys:String x:Key="Str_Kb_Confirm">নিশ্চিত করুন</sys:String>
+    <sys:String x:Key="Str_Kb_Cancel">বাতিল</sys:String>
+
+    <!-- Document Info dialog + link strings -->
+    <sys:String x:Key="Str_TT_DocInfo">নথির তথ্য (F4)</sys:String>
+    <sys:String x:Key="Str_DocInfo_Suffix">নথির তথ্য</sys:String>
+    <sys:String x:Key="Str_DocInfo_Title">শিরোনাম</sys:String>
+    <sys:String x:Key="Str_DocInfo_Author">লেখক</sys:String>
+    <sys:String x:Key="Str_DocInfo_Subject">বিষয়</sys:String>
+    <sys:String x:Key="Str_DocInfo_Keywords">কীওয়ার্ড</sys:String>
+    <sys:String x:Key="Str_DocInfo_Creator">নির্মাতা</sys:String>
+    <sys:String x:Key="Str_DocInfo_Producer">প্রযোজক</sys:String>
+    <sys:String x:Key="Str_DocInfo_Save">সংরক্ষণ</sys:String>
+    <sys:String x:Key="Str_DocInfo_Cancel">বাতিল</sys:String>
+    <sys:String x:Key="Str_LinkRemoveFailed">লিঙ্ক সরানো যায়নি:</sys:String>
+    <sys:String x:Key="Str_LinkBlocked">অবরুদ্ধ লিঙ্ক (অসমর্থিত ধরন):</sys:String>
+    <sys:String x:Key="Str_LinkOpenFailed">লিঙ্ক খোলা যায়নি</sys:String>
+    <sys:String x:Key="Str_LinkConfirmBody">এই লিঙ্কটি ব্রাউজারে খুলবেন?</sys:String>
+    <sys:String x:Key="Str_LinkConfirmTitle">লিঙ্ক খুলবেন?</sys:String>
+    <sys:String x:Key="Str_LinkDontAsk">আর জিজ্ঞাসা করবেন না</sys:String>
+    <sys:String x:Key="Str_Ctx_OpenLink">লিঙ্ক খুলুন</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyLink">লিঙ্কের ঠিকানা কপি করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_CopyEmail">ইমেল ঠিকানা কপি করুন</sys:String>
+    <sys:String x:Key="Str_Ctx_RemoveLink">PDF থেকে লিঙ্ক সরান</sys:String>
+    <sys:String x:Key="Str_LinksSection">লিঙ্ক</sys:String>
+    <sys:String x:Key="Str_PrivacySection">গোপনীয়তা</sys:String>
+    <sys:String x:Key="Str_NoRecentSetting">সম্প্রতি খোলা ফাইলগুলি মনে রাখবেন না</sys:String>
+    <sys:String x:Key="Str_Menu_ExportImages">পৃষ্ঠাগুলি ছবি হিসেবে এক্সপোর্ট করুন...</sys:String>
+    <sys:String x:Key="Str_Menu_RemovePassword">পাসওয়ার্ড সরান</sys:String>
+    <sys:String x:Key="Str_St_SavedNoPassword">পাসওয়ার্ড সুরক্ষা ছাড়াই সংরক্ষিত হয়েছে - {0}</sys:String>
+    <sys:String x:Key="Str_ExportImg_Suffix">পৃষ্ঠাগুলি ছবি হিসেবে এক্সপোর্ট</sys:String>
+    <sys:String x:Key="Str_ExportImg_Format">ফরম্যাট</sys:String>
+    <sys:String x:Key="Str_ExportImg_Dpi">রেজোলিউশন (DPI)</sys:String>
+    <sys:String x:Key="Str_OutputPixels">{0} x {1} px</sys:String>
+    <sys:String x:Key="Str_ExportImg_Export">এক্সপোর্ট</sys:String>
+    <sys:String x:Key="Str_ExportImg_Done">{0}টি পৃষ্ঠা {1}-এ এক্সপোর্ট হয়েছে</sys:String>
+    <sys:String x:Key="Str_Print_AllPages">সব পৃষ্ঠা</sys:String>
+    <sys:String x:Key="Str_Print_OddOnly">শুধু বিজোড় পৃষ্ঠা</sys:String>
+    <sys:String x:Key="Str_Print_EvenOnly">শুধু জোড় পৃষ্ঠা</sys:String>
+    <sys:String x:Key="Str_DocInvertSetting">ডকুমেন্টের রং উল্টে দিন</sys:String>
+    <sys:String x:Key="Str_TT_DocInvert">ডকুমেন্টের রং উল্টে দিন (N)</sys:String>
+    <sys:String x:Key="Str_TT_SplitPane">বিভক্ত ভিউ - পাশাপাশি দুটি নথি (F10)</sys:String>
+    <sys:String x:Key="Str_TT_CloseTab">ট্যাব বন্ধ করুন</sys:String>
+    <sys:String x:Key="Str_TT_TabOverflow">সব খোলা ট্যাব</sys:String>
+    <sys:String x:Key="Str_InvertImagesToo">ছবিও উল্টে দিন</sys:String>
+    <sys:String x:Key="Str_Font_NoGlyphs" xml:space="preserve">এই পিসির কোনো ফন্ট এই অক্ষরগুলি আঁকতে পারে না, তাই সংরক্ষিত PDF-এ সেগুলি বাক্স হিসেবে দেখাবে:&#10;&#10;{0}&#10;&#10;এগুলি সমর্থন করে এমন ফন্ট ইনস্টল করুন, অথবা এই লেখার জন্য অন্য ফন্ট বেছে নিন।</sys:String>
+    <sys:String x:Key="Str_TT_AppSize">পুরো অ্যাপের আকার বদলাতে স্ক্রোল করুন (Ctrl+Shift++/-/0)</sys:String>
+    <sys:String x:Key="Str_St_AppSize">অ্যাপের আকার {0}%</sys:String>
+    <sys:String x:Key="Str_KS_AppSize">পুরো অ্যাপ জুম করুন (অ্যাক্সেসযোগ্যতা)</sys:String>
+    <sys:String x:Key="Str_KS_FileSize">বর্তমান ফাইলের আকার দেখান</sys:String>
+    <sys:String x:Key="Str_KS_SplitPane">বিভক্ত ভিউ - পাশাপাশি দুটি নথি</sys:String>
+    <sys:String x:Key="Str_LinkConfirmSetting">লিঙ্ক খোলার আগে নিশ্চিত করুন</sys:String>
+
+    <!-- Themed Windows system menu (caption right-click / Alt+Space) -->
+    <sys:String x:Key="Str_Sys_Restore">পুনরুদ্ধার</sys:String>
+    <sys:String x:Key="Str_Sys_Move">সরান</sys:String>
+    <sys:String x:Key="Str_Sys_Size">আকার</sys:String>
+    <sys:String x:Key="Str_Sys_Minimize">ছোট করুন</sys:String>
+    <sys:String x:Key="Str_Sys_Maximize">বড় করুন</sys:String>
+    <sys:String x:Key="Str_Sys_Close">বন্ধ করুন</sys:String>
+    <sys:String x:Key="Str_Btn_Cancel">বাতিল</sys:String>
+    <sys:String x:Key="Str_Key_Ctrl">Ctrl</sys:String>
+    <sys:String x:Key="Str_Key_Alt">Alt</sys:String>
+    <sys:String x:Key="Str_Key_Shift">Shift</sys:String>
+    <sys:String x:Key="Str_Key_Delete">Delete</sys:String>
+    <sys:String x:Key="Str_Key_Enter">Enter</sys:String>
+    <sys:String x:Key="Str_Key_Esc">Esc</sys:String>
+    <sys:String x:Key="Str_Key_Menu">মেনু</sys:String>
+    <sys:String x:Key="Str_Key_Home">Home</sys:String>
+    <sys:String x:Key="Str_Key_End">End</sys:String>
+    <sys:String x:Key="Str_Key_PgUp">PgUp</sys:String>
+    <sys:String x:Key="Str_Key_PgDn">PgDn</sys:String>
+    <sys:String x:Key="Str_Key_Tab">Tab</sys:String>
+    <sys:String x:Key="Str_Key_Scroll">স্ক্রল</sys:String>
+    <sys:String x:Key="Str_Key_Click">ক্লিক</sys:String>
+    <sys:String x:Key="Str_Key_Or">বা</sys:String>
+    <sys:String x:Key="Str_Key_WheelView">ভিউয়ের উপর হুইল</sys:String>
+    <sys:String x:Key="Str_Key_WheelLogo">লোগোর উপর হুইল</sys:String>
+    <sys:String x:Key="Str_Key_MiddleDrag">মাঝের বোতামে টানুন</sys:String>
+    <sys:String x:Key="Str_Key_SpaceDrag">স্পেস + টানুন</sys:String>
+    <sys:String x:Key="Str_Wordmark_A">Killer</sys:String>
+    <sys:String x:Key="Str_Wordmark_B">PDF</sys:String>
+    <sys:String x:Key="Str_Btn_Open">খুলুন</sys:String>
+    <sys:String x:Key="Str_Btn_Replace">পরিবর্তন</sys:String>
+    <sys:String x:Key="Str_Btn_Save">সংরক্ষণ</sys:String>
+    <sys:String x:Key="Str_Col_Modified">পরিবর্তিত</sys:String>
+    <sys:String x:Key="Str_Col_Name">নাম</sys:String>
+    <sys:String x:Key="Str_Col_Size">আকার</sys:String>
+    <sys:String x:Key="Str_Ctx_Cut">কাট</sys:String>
+    <sys:String x:Key="Str_Ctx_SelectAll">সব নির্বাচন করুন</sys:String>
+    <sys:String x:Key="Str_Dlg_AllFiles">সব ফাইল</sys:String>
+    <sys:String x:Key="Str_Dlg_FileName">ফাইলের নাম:</sys:String>
+    <sys:String x:Key="Str_Dlg_FileType">ফাইলের ধরন:</sys:String>
+    <sys:String x:Key="Str_Dlg_NoMatchingFiles">বর্তমান ফাইলের ধরনের সঙ্গে মিলে এমন কিছু নেই।</sys:String>
+    <sys:String x:Key="Str_Dlg_Preview">পূর্বরূপ</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFile">ওই ফাইলটি নেই।</sys:String>
+    <sys:String x:Key="Str_Dlg_NoSuchFolder">ওই ফোল্ডারটি নেই।</sys:String>
+    <sys:String x:Key="Str_Dlg_OverwriteMsg">{0} পরিবর্তন করবেন?</sys:String>
+    <sys:String x:Key="Str_Menu_PinPlace">স্থানে পিন করুন</sys:String>
+    <sys:String x:Key="Str_Menu_UnpinPlace">স্থান থেকে সরান</sys:String>
+    <sys:String x:Key="Str_QA_Desktop">ডেস্কটপ</sys:String>
+    <sys:String x:Key="Str_QA_Documents">ডকুমেন্ট</sys:String>
+    <sys:String x:Key="Str_QA_Downloads">ডাউনলোড</sys:String>
+    <sys:String x:Key="Str_QA_Home">হোম</sys:String>
+    <sys:String x:Key="Str_QA_Pictures">ছবি</sys:String>
+    <sys:String x:Key="Str_Sum_Counts">{0} টি ফোল্ডার, {1} টি ফাইল</sys:String>
+    <sys:String x:Key="Str_TT_RecentLocations">সাম্প্রতিক অবস্থান</sys:String>
+    <sys:String x:Key="Str_TT_ShowHidden">লুকানো ও সিস্টেম আইটেম দেখান</sys:String>
+    <sys:String x:Key="Str_TT_Up">এক ফোল্ডার উপরে</sys:String>
+    <sys:String x:Key="Str_TT_ViewDetails">বিস্তারিত দেখা</sys:String>
+    <sys:String x:Key="Str_TT_ViewIcons">আইকন দেখা</sys:String>
+    <sys:String x:Key="Str_TT_ViewList">তালিকা দেখা</sys:String>
+
+    <!-- 1.7.2: print dialog paper/source/sections, book layout, Transform levels -->
+    <sys:String x:Key="Str_Print_Paper">কাগজের আকার</sys:String>
+    <sys:String x:Key="Str_Print_PaperAuto">নথির সাথে মিল</sys:String>
+    <sys:String x:Key="Str_Print_Source">কাগজের উৎস</sys:String>
+    <sys:String x:Key="Str_Print_SourceAuto">প্রিন্টারের ডিফল্ট</sys:String>
+    <sys:String x:Key="Str_Print_SecPrinter">প্রিন্টার</sys:String>
+    <sys:String x:Key="Str_Print_SecLayout">লেআউট</sys:String>
+    <sys:String x:Key="Str_Print_SecOutput">আউটপুট</sys:String>
+    <sys:String x:Key="Str_View_BookMode">বই লেআউট</sys:String>
+    <sys:String x:Key="Str_Tf_Levels">লেভেল</sys:String>
+    <sys:String x:Key="Str_Tf_LevelsBlack">কালো বিন্দু</sys:String>
+    <sys:String x:Key="Str_Tf_LevelsWhite">সাদা বিন্দু</sys:String>
+    <sys:String x:Key="Str_Tf_LevelsGamma">মধ্যম টোন</sys:String>
+    <sys:String x:Key="Str_Tf_Quality">পৃষ্ঠার গুণমান</sys:String>
+    <sys:String x:Key="Str_Tf_ColorMode">কালার মোড</sys:String>
+    <sys:String x:Key="Str_Tf_Grayscale">গ্রেস্কেল</sys:String>
+    <sys:String x:Key="Str_Tf_BlackWhite">কালো এবং সাদা</sys:String>
+    <sys:String x:Key="Str_Tf_Threshold">ব্ল্যাক-এন্ড-হোয়াইট থ্রেশহোল্ড</sys:String>
+    <sys:String x:Key="Str_Tf_SetDpi">আউটপুট রেজোলিউশন (DPI) সেট করুন</sys:String>
+    <sys:String x:Key="Str_Tf_UseJpeg">JPEG কম্প্রেশন ব্যবহার করুন</sys:String>
+    <!-- 1.7.4 hardcoded-string sweep (#227) -->
+    <sys:String x:Key="Str_Color_Name">রং</sys:String>
+    <sys:String x:Key="Str_Color_Pick">একটি রং বাছুন</sys:String>
+    <sys:String x:Key="Str_Color_Hex">Hex</sys:String>
+    <sys:String x:Key="Str_Color_Replace">প্রতিস্থাপন</sys:String>
+    <sys:String x:Key="Str_Color_Reset">রিসেট</sys:String>
+    <sys:String x:Key="Str_Color_ReplaceTT">ক্লিক করুন, তারপর বর্তমান রং নির্ধারণ করতে একটি সোয়াচে ক্লিক করুন</sys:String>
+    <sys:String x:Key="Str_Color_ResetTT">সোয়াচগুলি ডিফল্টে রিসেট করুন</sys:String>
+    <sys:String x:Key="Str_Color_EyedropTT">স্ক্রিনের যেকোনো জায়গা থেকে রং বাছুন</sys:String>
+    <sys:String x:Key="Str_Color_SwatchSetTT">এই সোয়াচে বর্তমান রং সেট করতে ক্লিক করুন</sys:String>
+    <sys:String x:Key="Str_Color_SwatchUseTT">এই রংটি ব্যবহার করতে ক্লিক করুন</sys:String>
+    <sys:String x:Key="Str_Search_DragTT">সরাতে টেনে আনুন</sys:String>
+    <sys:String x:Key="Str_Sign_Name">ডিজিটাল স্বাক্ষর</sys:String>
+    <sys:String x:Key="Str_Sign_ChooseCert">স্বাক্ষরের সার্টিফিকেট বাছুন</sys:String>
+    <sys:String x:Key="Str_Sign_ImportImage">স্বাক্ষরের ছবি আমদানি করুন</sys:String>
+    <sys:String x:Key="Str_Filter_Pdf">PDF ফাইল</sys:String>
+    <sys:String x:Key="Str_Filter_Cert">সার্টিফিকেট ফাইল</sys:String>
+    <sys:String x:Key="Str_Filter_Text">টেক্সট ফাইল</sys:String>
+    <sys:String x:Key="Str_Print_Sending">প্রিন্টারে পাঠানো হচ্ছে…</sys:String>
+    <sys:String x:Key="Str_Forms_FontSize">ফন্টের আকার:</sys:String>
+    <sys:String x:Key="Str_Ocr_SaveSearchable">অনুসন্ধানযোগ্য PDF সংরক্ষণ করুন</sys:String>
+    <sys:String x:Key="Str_Ocr_ExtractAllText">সব টেক্সট বের করুন</sys:String>
+    <sys:String x:Key="Str_Ocr_HighQuality">উচ্চমানের মডেল ব্যবহার করুন</sys:String>
+    <sys:String x:Key="Str_Dlg_OpenPdf">PDF খুলুন</sys:String>
+    <sys:String x:Key="Str_Dlg_SelectMerge">একত্রিত করার PDF বাছুন</sys:String>
+    <sys:String x:Key="Str_Dlg_SavePdfAs">PDF এভাবে সংরক্ষণ করুন</sys:String>
+    <sys:String x:Key="Str_Dlg_SaveFlattened">ফ্ল্যাট করা PDF সংরক্ষণ করুন</sys:String>
+    <sys:String x:Key="Str_Dlg_SaveExtractedAs">বের করা পাতাগুলি এভাবে সংরক্ষণ করুন</sys:String>
+    <sys:String x:Key="Str_Dlg_InsertImage">ছবি ঢোকান</sys:String>
+    <sys:String x:Key="Str_Dlg_InstallShortcut">ডেস্কটপ শর্টকাট তৈরি করুন</sys:String>
+    <sys:String x:Key="Str_Stamp_DefaultText">খসড়া</sys:String>
+    <sys:String x:Key="Str_Sign_NeedCertFile">প্রথমে একটি সার্টিফিকেট ফাইল (.pfx / .p12) বাছুন।</sys:String>
+    <sys:String x:Key="Str_Sign_NoStoreCert">Windows স্টোরে কোনো স্বাক্ষরের সার্টিফিকেট নেই।</sys:String>
+    <sys:String x:Key="Str_Sign_NeedOutput">স্বাক্ষরিত কপিটি কোথায় সংরক্ষণ হবে তা বাছুন।</sys:String>
+    <sys:String x:Key="Str_Sign_BadCert" xml:space="preserve">সার্টিফিকেট খোলা যায়নি।&#10;&#10;পাসওয়ার্ড ভুল হতে পারে, অথবা ফাইলটি বৈধ .pfx / .p12 সার্টিফিকেট নয়।</sys:String>
+    <sys:String x:Key="Str_Sign_CertLoadFailed">সার্টিফিকেট লোড করা যায়নি:</sys:String>
+    <sys:String x:Key="Str_Sign_Failed">স্বাক্ষর ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_St_ShapeHint">পয়েন্ট যোগ করতে ক্লিক করুন - বন্ধ করতে প্রথম পয়েন্টে ক্লিক বা ডাবল ক্লিক করুন, Esc বাতিল করে, Backspace শেষ পয়েন্ট মুছে দেয়</sys:String>
+    <sys:String x:Key="Str_St_ShapeCanceled">আকৃতি বাতিল হয়েছে</sys:String>
+    <sys:String x:Key="Str_Err_PrintFailed">প্রিন্ট ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_OcrFailed">OCR ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_PrepareDoc">নথি প্রস্তুত করা যায়নি:</sys:String>
+    <sys:String x:Key="Str_Err_SearchableFailed">অনুসন্ধানযোগ্য PDF ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_ExtractFailed">টেক্সট বের করা ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_DuplicateFailed">অনুলিপি ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_RepairFailed">মেরামত ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_OpenProtected">সুরক্ষিত PDF খোলা যায়নি:</sys:String>
+    <sys:String x:Key="Str_Err_NewDocFailed">নতুন নথি তৈরি করা যায়নি:</sys:String>
+    <sys:String x:Key="Str_Err_FileNotFound">ফাইল পাওয়া যায়নি:</sys:String>
+    <sys:String x:Key="Str_Err_MergeFailed">একত্রীকরণ ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_SaveFailed">সংরক্ষণ ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_FlattenFailed">ফ্ল্যাট করা ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_ExportFailed">এক্সপোর্ট ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_SplitFailed">বিভাজন ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_DeleteFailed">মুছে ফেলা ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_InsertFailed">ঢোকানো ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_AddPageFailed">পাতা যোগ করা ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_ImportImageFailed">ছবি আমদানি ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_LoadImageFailed">ছবি লোড করা যায়নি:</sys:String>
+    <sys:String x:Key="Str_Err_PasteFailed">পেস্ট করা যায়নি:</sys:String>
+    <sys:String x:Key="Str_Err_HqDownloadFailed">উচ্চমানের মডেল ডাউনলোড ব্যর্থ হয়েছে:</sys:String>
+    <sys:String x:Key="Str_Err_ModelDownloadFailed">ভাষার মডেল ডাউনলোড করা যায়নি:</sys:String>
+    <sys:String x:Key="Str_Err_LangDataFailed">{0} ভাষার ডেটা ডাউনলোড করা যায়নি:</sys:String>
+    <sys:String x:Key="Str_Dlg_DownloadTimeout">{0} ডাউনলোডের সময় শেষ হয়ে গেছে। সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।</sys:String>
+    <sys:String x:Key="Str_Dlg_CancelBusy">চলমান {0} বাতিল করবেন?</sys:String>
+    <sys:String x:Key="Str_Dlg_DeletePage1">এই পাতাটি মুছবেন?</sys:String>
+    <sys:String x:Key="Str_Dlg_DeletePagesN">{0}টি পাতা মুছবেন?</sys:String>
+    <sys:String x:Key="Str_Op_Repair">মেরামত</sys:String>
+    <sys:String x:Key="Str_Op_Operation">কাজ</sys:String>
+    <sys:String x:Key="Str_Op_Flatten">ফ্ল্যাট করা</sys:String>
+    <sys:String x:Key="Str_Op_Export">এক্সপোর্ট</sys:String>
+    <sys:String x:Key="Str_Op_Merge">একত্রীকরণ</sys:String>
+    <sys:String x:Key="Str_Op_LangDownload">ভাষা ডাউনলোড</sys:String>
+    <sys:String x:Key="Str_Op_Ocr">OCR কাজ</sys:String>
+    <sys:String x:Key="Str_Op_OcrRegion">OCR অঞ্চল</sys:String>
+    <sys:String x:Key="Str_Busy_Ocr">OCR চলছে...</sys:String>
+    <sys:String x:Key="Str_Busy_Region">অঞ্চল শনাক্ত করা হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Busy_Searchable">অনুসন্ধানযোগ্য PDF তৈরি হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Busy_Extracting">টেক্সট বের করা হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Busy_Repairing">PDF মেরামত হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Busy_HqModels">উচ্চমানের ভাষার মডেল ডাউনলোড হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Busy_Model">ভাষার মডেল ডাউনলোড হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Print_Preparing">পাতা প্রস্তুত হচ্ছে: {0} / {1}…</sys:String>
+    <sys:String x:Key="Str_St_AnnotSelected">{0} নির্বাচিত - {1}</sys:String>
+    <sys:String x:Key="Str_St_AnnotHowText">প্রস্থ ঠিক করতে পাশের কোণ টানুন, সম্পাদনা করতে ডাবল ক্লিক করুন, মুছতে Delete</sys:String>
+    <sys:String x:Key="Str_St_AnnotHowGeneric">আকার বদলাতে যেকোনো কোণ টানুন, মুছতে Delete</sys:String>
+    <sys:String x:Key="Str_St_AnnotSelectedSimple">{0} টীকা নির্বাচিত - মুছতে Delete চাপুন</sys:String>
+    <sys:String x:Key="Str_St_SelectedOne">১টি টীকা নির্বাচিত</sys:String>
+    <sys:String x:Key="Str_St_SelectedMany">{0}টি টীকা নির্বাচিত</sys:String>
+    <sys:String x:Key="Str_St_Grouped">{0}টি টীকা গ্রুপ করা হয়েছে - এখন একসাথে সরে</sys:String>
+    <sys:String x:Key="Str_St_ClearedAll">সব টীকা মুছে ফেলা হয়েছে ({0})</sys:String>
+    <sys:String x:Key="Str_St_CopiedWords">{0}টি শব্দ ক্লিপবোর্ডে কপি হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_HighlightedLines">{0}টি লাইন হাইলাইট হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_StruckLines">{0}টি লাইনে স্ট্রাইকথ্রু হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_UnderlinedLines">{0}টি লাইনে আন্ডারলাইন হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_SelectAllCopied">সব টেক্সট নির্বাচিত - ক্লিপবোর্ডে কপি হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_SelectAllError">সব নির্বাচনে ত্রুটি: {0}</sys:String>
+    <sys:String x:Key="Str_St_Copied">ক্লিপবোর্ডে কপি হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_ExtractError">টেক্সট বের করায় ত্রুটি: {0}</sys:String>
+    <sys:String x:Key="Str_St_AlreadyOpen">ইতিমধ্যে খোলা: {0}</sys:String>
+    <sys:String x:Key="Str_St_TextEditError">টেক্সট সম্পাদনায় ত্রুটি: {0}</sys:String>
+    <sys:String x:Key="Str_St_OcrNoTextPage">OCR: পাতা {0}-এ কোনো টেক্সট পাওয়া যায়নি</sys:String>
+    <sys:String x:Key="Str_St_OcrCopiedPage">OCR: পাতা {1} থেকে {0}টি অক্ষর কপি হয়েছে ({2} আস্থা)</sys:String>
+    <sys:String x:Key="Str_St_OcrCopiedPages">OCR: {1}টি পৃষ্ঠা থেকে {0}টি অক্ষর কপি হয়েছে ({2} আস্থা)</sys:String>
+    <sys:String x:Key="Str_St_OcrCopiedRegion">OCR: অঞ্চল থেকে {0}টি অক্ষর কপি হয়েছে ({1} আস্থা)</sys:String>
+    <sys:String x:Key="Str_St_SearchableSaved">অনুসন্ধানযোগ্য PDF সংরক্ষিত: {0} পাতা, {1}টি শব্দ শনাক্ত</sys:String>
+    <sys:String x:Key="Str_St_TextExtracted">{0} পাতা থেকে টেক্সট বের হয়েছে -> {1}</sys:String>
+    <sys:String x:Key="Str_St_DuplicatedPage">পাতা {0} অনুলিপি হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_Merged">{0}টি ফাইল একত্রিত - মোট {1} পাতা</sys:String>
+    <sys:String x:Key="Str_St_Saved">সংরক্ষিত - {0}</sys:String>
+    <sys:String x:Key="Str_St_SavedWithAnnots">টীকাসহ সংরক্ষিত: {0}</sys:String>
+    <sys:String x:Key="Str_St_SavedTo">সংরক্ষিত: {0}</sys:String>
+    <sys:String x:Key="Str_St_FlattenedSaved">ফ্ল্যাট করা PDF সংরক্ষিত: {0}</sys:String>
+    <sys:String x:Key="Str_St_OcrLanguage">OCR ভাষা: {0}</sys:String>
+    <sys:String x:Key="Str_St_LangInstalled">{0} ইনস্টল হয়েছে - OCR ভাষা: {1}</sys:String>
+    <sys:String x:Key="Str_St_LangCanceled">{0} ডাউনলোড বাতিল হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_HqFailed">উচ্চমানের মডেল ইনস্টল হয়েছে; ব্যর্থ: {0}</sys:String>
+    <sys:String x:Key="Str_St_HqInstalled">উচ্চমানের মডেল ইনস্টল হয়েছে: {0}</sys:String>
+    <sys:String x:Key="Str_St_InsertedBlank">অবস্থান {0}-এ খালি পাতা ঢোকানো হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_AddedBlank">খালি পাতা যোগ হয়েছে (এখন {0} পাতা)</sys:String>
+    <sys:String x:Key="Str_St_RestorePane">দ্বিতীয় প্যানেল পুনরুদ্ধার করা যায়নি: {0}</sys:String>
+    <sys:String x:Key="Str_Annot_Signature">স্বাক্ষর</sys:String>
+    <sys:String x:Key="Str_Annot_Image">ছবি</sys:String>
+    <sys:String x:Key="Str_Annot_TextBox">টেক্সট বাক্স</sys:String>
+    <sys:String x:Key="Str_Annot_Cover">টেক্সট ঢাকনা</sys:String>
+    <sys:String x:Key="Str_Annot_Strikethrough">স্ট্রাইকথ্রু</sys:String>
+    <sys:String x:Key="Str_Annot_Underline">আন্ডারলাইন</sys:String>
+    <sys:String x:Key="Str_Annot_Highlight">হাইলাইট</sys:String>
+    <sys:String x:Key="Str_Annot_Drawing">অঙ্কন</sys:String>
+    <sys:String x:Key="Str_Annot_Item">আইটেম</sys:String>
+    <sys:String x:Key="Str_Busy_SearchablePage">অনুসন্ধানযোগ্য PDF তৈরি হচ্ছে... পাতা {0} / {1}  (Esc বাতিল করে)</sys:String>
+    <sys:String x:Key="Str_Busy_ExtractingPage">টেক্সট বের করা হচ্ছে... পাতা {0} / {1}  (Esc বাতিল করে)</sys:String>
+    <sys:String x:Key="Str_Busy_LangData">{0} ভাষার ডেটা ডাউনলোড হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Busy_Downloading">{0} ডাউনলোড হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Busy_DownloadingHq">{0} (HQ) ডাউনলোড হচ্ছে - {1} / {2} -</sys:String>
+    <sys:String x:Key="Str_Busy_Opening">PDF খোলা হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Busy_OpeningProtected">সুরক্ষিত PDF খোলা হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_St_HqAlready">নির্বাচিত সব ভাষা ইতিমধ্যে উচ্চমানের</sys:String>
+    <sys:String x:Key="Str_St_HqNextTime">পরের বার OCR চালালে উচ্চমানের মডেল ব্যবহার হবে</sys:String>
+    <sys:String x:Key="Str_Ocr_SuffixDownload">(ডাউনলোড)</sys:String>
+    <sys:String x:Key="Str_Ocr_SuffixDownloadHq">(HQ ডাউনলোড)</sys:String>
+    <sys:String x:Key="Str_Dlg_SearchableSaved" xml:space="preserve">অনুসন্ধানযোগ্য PDF সংরক্ষিত:&#10;{0}&#10;&#10;{1} পাতা প্রক্রিয়া হয়েছে, {2}টি শব্দ শনাক্ত।</sys:String>
+    <sys:String x:Key="Str_Dlg_Repaired" xml:space="preserve">"{0}" সফলভাবে মেরামত হয়েছে।&#10;&#10;বুকমার্ক, ফর্ম ও অন্যান্য ইন্টারঅ্যাক্টিভ বৈশিষ্ট্য হারিয়ে যেতে পারে। মেরামত করা ফাইলটি নতুন জায়গায় লিখতে Save As ব্যবহার করুন।</sys:String>
+    <sys:String x:Key="Str_Dlg_RepairedRaster" xml:space="preserve">"{0}" PDFium দিয়ে রাস্টারাইজ করে মেরামত হয়েছে।&#10;&#10;মেরামত করা কপিতে টেক্সট নির্বাচন করা যায় না। নতুন জায়গায় লিখতে Save As ব্যবহার করুন।</sys:String>
+    <sys:String x:Key="Str_Dlg_RepairAsk" xml:space="preserve">"{0}"-এর কাঠামো ক্ষতিগ্রস্ত, তাই যোগ করা যায়নি।&#10;&#10;KillerPDF কি মেরামতের চেষ্টা করবে? একটি মেরামত করা কপি তৈরি হবে। মূল ফাইল বদলাবে না।&#10;&#10;দ্রষ্টব্য: মেরামত করা ফাইলে বুকমার্ক, ফর্ম ও অন্যান্য ইন্টারঅ্যাক্টিভ বৈশিষ্ট্য নাও থাকতে পারে।</sys:String>
+    <sys:String x:Key="Str_Dlg_LangDownloadAsk" xml:space="preserve">OCR চালানোর জন্য এখন একটি ভাষার মডেল ({0}) ডাউনলোড হবে।&#10;&#10;OCR মেনু থেকে যেকোনো সময় আরও ভাষা যোগ করতে বা উচ্চমানের মডেলে যেতে পারবেন।</sys:String>
+    <sys:String x:Key="Str_Bar_More">আরও সেটিংস</sys:String>
+    <sys:String x:Key="Str_Bar_TT_Level">লাইনটিকে নিকটতম অক্ষে রাখে (অনুভূমিক বা উল্লম্ব)</sys:String>
+    <sys:String x:Key="Str_Bar_TT_EraserBox">ভিতরের সব টীকা মুছতে একটি বাক্স টানুন</sys:String>
+    <sys:String x:Key="Str_Bar_TT_EraserBrush">টীকার উপর ব্রাশ চালিয়ে সেগুলি মুছুন</sys:String>
+    <sys:String x:Key="Str_Bar_TT_ShapeBox">বাক্স - একটি আয়তক্ষেত্র টানুন</sys:String>
+    <sys:String x:Key="Str_Bar_TT_ShapeEllipse">উপবৃত্ত - একটি ডিম্বাকৃতি টানুন</sys:String>
+    <sys:String x:Key="Str_Bar_TT_ShapeFreeform">ফ্রিফর্ম - পয়েন্ট যোগ করতে ক্লিক করুন; বন্ধ করতে প্রথম পয়েন্টে ক্লিক বা ডাবল ক্লিক করুন, Esc বাতিল করে, Backspace শেষ পয়েন্ট মুছে দেয়</sys:String>
+    <sys:String x:Key="Str_Bar_TT_ShapeFill">আকৃতির ভিতরটা পূরণ করে</sys:String>
+    <sys:String x:Key="Str_TT_RecentFiles">সাম্প্রতিক ফাইল</sys:String>
+    <sys:String x:Key="Str_TT_SaveOptions">সংরক্ষণের বিকল্প</sys:String>
+    <sys:String x:Key="Str_TT_OcrOptions">OCR বিকল্প</sys:String>
+    <sys:String x:Key="Str_RecentHeading">সাম্প্রতিক</sys:String>
+    <sys:String x:Key="Str_KS_WindowTitle">KillerPDF - কীবোর্ড শর্টকাট</sys:String>
+    <sys:String x:Key="Str_UpdateAvailable">আপডেট উপলব্ধ: {0}</sys:String>
+    <sys:String x:Key="Str_UpdatePrompt" xml:space="preserve">KillerPDF {0} ডাউনলোড করে ইনস্টল করবেন?&#10;&#10;অ্যাপটি বন্ধ হয়ে স্বয়ংক্রিয়ভাবে আবার খুলবে।</sys:String>
+    <sys:String x:Key="Str_UpdateDownloading">ডাউনলোড হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_ClearAllData">সব ডেটা মুছুন</sys:String>
+    <sys:String x:Key="Str_ClearDataConfirm" xml:space="preserve">এটি সংরক্ষিত সব সেটিংস, ডাউনলোড করা OCR ভাষা প্যাক এবং অস্থায়ী ফাইল মুছে ফেলবে।&#10;&#10;আপনার PDF ফাইলগুলি প্রভাবিত হবে না। চালিয়ে যাবেন?</sys:String>
+    <sys:String x:Key="Str_ClearDataDone" xml:space="preserve">সেটিংস, ভাষা প্যাক এবং অস্থায়ী ফাইল মুছে ফেলা হয়েছে।&#10;&#10;এই সেশনে এখনও ব্যবহৃত ফাইলগুলি মোছা সম্পূর্ণ করতে KillerPDF পুনরায় চালু করুন।</sys:String>
+    <sys:String x:Key="Str_Crash_Title">KillerPDF - অপ্রত্যাশিত ত্রুটি</sys:String>
+    <sys:String x:Key="Str_Crash_Log">লগ: {0}</sys:String>
+    <sys:String x:Key="Str_Crash_Copy">রিপোর্ট কপি করুন</sys:String>
+    <sys:String x:Key="Str_Crash_OpenLogs">লগ খুলুন</sys:String>
+    <sys:String x:Key="Str_Crash_Report">GitHub-এ রিপোর্ট করুন</sys:String>
+    <sys:String x:Key="Str_Crash_Continue">চালিয়ে যান</sys:String>
+    <sys:String x:Key="Str_Crash_Quit">প্রস্থান</sys:String>
+    <sys:String x:Key="Str_Btn_OK">ঠিক আছে</sys:String>
+    <sys:String x:Key="Str_Btn_Yes">হ্যাঁ</sys:String>
+    <sys:String x:Key="Str_Btn_No">না</sys:String>
+    <sys:String x:Key="Str_RecentMissing">ফাইল নেই</sys:String>
+    <sys:String x:Key="Str_St_PlaceSignature">আপনার স্বাক্ষর বসাতে পৃষ্ঠায় ক্লিক করুন</sys:String>
+    <sys:String x:Key="Str_St_PlaceInitials">আপনার আদ্যক্ষর বসাতে পৃষ্ঠায় ক্লিক করুন</sys:String>
+    <sys:String x:Key="Str_St_SelectionCleared">নির্বাচন সাফ করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_AnnotationsSelected">{0}টি টীকা নির্বাচিত - সরাতে Delete চাপুন</sys:String>
+    <sys:String x:Key="Str_St_CopiedAnnotationOne">১টি টীকা কপি করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_CopiedAnnotationMany">{0}টি টীকা কপি করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_PastedAnnotationOne">১টি টীকা পেস্ট করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_PastedAnnotationMany">{0}টি টীকা পেস্ট করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_DeletedAnnotationOne">নির্বাচিত টীকা মুছে ফেলা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_DeletedAnnotationMany">{0}টি টীকা মুছে ফেলা হয়েছে</sys:String>
+    <sys:String x:Key="Str_Search_NoMatches">কোনো মিল নেই</sys:String>
+    <sys:String x:Key="Str_Search_Error">অনুসন্ধান ত্রুটি</sys:String>
+    <sys:String x:Key="Str_Search_Summary">{1}টি পাতায় {0}টি মিল</sys:String>
+    <sys:String x:Key="Str_Search_PreviousTT">পূর্ববর্তী মিল (Shift+Enter)</sys:String>
+    <sys:String x:Key="Str_Search_NextTT">পরবর্তী মিল (Enter)</sys:String>
+    <sys:String x:Key="Str_Search_CloseTT">বন্ধ করুন (Esc)</sys:String>
+    <sys:String x:Key="Str_Busy_FlattenPage">পাতা {0} / {1} ফ্ল্যাট করা হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Busy_ExportPage">পাতা {0} / {1} রপ্তানি হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Busy_CancelHint">(Esc বাতিল করে)</sys:String>
+    <sys:String x:Key="Str_Busy_DownloadingMany">{0} ডাউনলোড হচ্ছে - {1} / {2} -</sys:String>
+    <!-- PDF comparison (#160) -->
+    <sys:String x:Key="Str_TT_ComparePDFs">PDF তুলনা করুন</sys:String>
+    <sys:String x:Key="Str_TT_ExitComparison">তুলনা বন্ধ করুন</sys:String>
+    <sys:String x:Key="Str_Compare_OpenOriginal">তুলনা শুরু করার আগে মূল PDF খুলুন।</sys:String>
+    <sys:String x:Key="Str_Compare_SelectTitle">তুলনার জন্য PDF নির্বাচন করুন</sys:String>
+    <sys:String x:Key="Str_Compare_ChooseDifferent">তুলনার জন্য অন্য একটি PDF বেছে নিন।</sys:String>
+    <sys:String x:Key="Str_Compare_Ended">PDF তুলনা শেষ হয়েছে</sys:String>
+    <sys:String x:Key="Str_Compare_MissingRight">তুলনামূলক PDF-এ সংশ্লিষ্ট পৃষ্ঠা নেই</sys:String>
+    <sys:String x:Key="Str_Compare_MissingLeft">মূল PDF-এ সংশ্লিষ্ট পৃষ্ঠা নেই</sys:String>
+    <sys:String x:Key="Str_Compare_PageOnlyOne">পৃষ্ঠা {0} শুধু {1} PDF-এ আছে</sys:String>
+    <sys:String x:Key="Str_Compare_Original">মূল</sys:String>
+    <sys:String x:Key="Str_Compare_Comparison">তুলনামূলক</sys:String>
+    <sys:String x:Key="Str_Compare_Changed">পৃষ্ঠা {0}: {1} পরিবর্তিত</sys:String>
+    <sys:String x:Key="Str_Compare_NoDifferences">পৃষ্ঠা {0}: কোনো দৃশ্যমান পার্থক্য নেই</sys:String>
+    <sys:String x:Key="Str_Compare_DimensionsDiffer">পৃষ্ঠা {0}: পৃষ্ঠার মাপ ভিন্ন</sys:String>
+    <sys:String x:Key="Str_Compare_Failed">তুলনা ব্যর্থ: {0}</sys:String>
+    <sys:String x:Key="Str_Compare_OpenTabs">খোলা ট্যাবের সঙ্গে তুলনা করুন</sys:String>
+    <sys:String x:Key="Str_Compare_NoOpenTabs">অন্য কোনো PDF ট্যাব খোলা নেই</sys:String>
+    <sys:String x:Key="Str_Compare_Browse">অন্য PDF বেছে নিন...</sys:String>
+    <sys:String x:Key="Str_Compare_Bar">তুলনা</sys:String>
+    <sys:String x:Key="Str_Compare_Comparing">তুলনা করা হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Compare_ChangedAndDimensions">পৃষ্ঠা {0}: মাপ ভিন্ন; {1} পরিবর্তিত</sys:String>
+    <sys:String x:Key="Str_Compare_ViewLocked">তুলনা লক করা একক-পৃষ্ঠা দৃশ্য ব্যবহার করে</sys:String>
+    <sys:String x:Key="Str_Compare_ViewDetails">সম্পূর্ণ তুলনা প্রতিবেদন দেখুন</sys:String>
+    <sys:String x:Key="Str_Compare_BuildingReport">প্রতিটি পৃষ্ঠা পরীক্ষা করা হচ্ছে...</sys:String>
+    <sys:String x:Key="Str_Compare_DetailsTitle">পিডিএফের তুলনামূলক বিবরণ</sys:String>
+
+    <!-- ── Browser handoff refusals ────────────────────────────────────── -->
+    <sys:String x:Key="Str_Handoff_Failed">KillerPDF ব্রাউজার পিডিএফ খুলতে পারেনি ।</sys:String>
+    <sys:String x:Key="Str_Handoff_UnknownCommand">সেই ব্রাউজার কমান্ডটি একজন কিলারপিডিএফ জানে না ।</sys:String>
+    <sys:String x:Key="Str_Handoff_MissingUrl">হ্যান্ডঅফটিতে কোনও পিডিএফ ঠিকানা অন্তর্ভুক্ত করা হয়নি ।</sys:String>
+    <sys:String x:Key="Str_Handoff_MalformedUrl">হ্যান্ডঅফের পিডিএফ ঠিকানাটি পড়া যায়নি ।</sys:String>
+    <sys:String x:Key="Str_Handoff_SchemeNotAllowed">KillerPDF শুধুমাত্র HTTPS এর মাধ্যমে ব্রাউজার হ্যান্ডঅফগুলি খোলে ।</sys:String>
+    <sys:String x:Key="Str_Handoff_Unusable">ব্রাউজার হ্যান্ডঅফ ব্যবহার করা যায়নি ।</sys:String>
+    <sys:String x:Key="Str_Handoff_TooLarge">পিডিএফ 256 এমবি ব্রাউজার হ্যান্ডঅফ সীমার চেয়ে বড় ।</sys:String>
+    <sys:String x:Key="Str_Handoff_NotPdf">ডাউনলোড করা ফাইলটি পিডিএফ নয় ।</sys:String>
+    <sys:String x:Key="Str_Handoff_DownloadFailed">KillerPDF পিডিএফ ডাউনলোড করতে পারেনি ।</sys:String>
+    <sys:String x:Key="Str_Handoff_TimedOut">পিডিএফ ডাউনলোডের সময় শেষ হয়েছে ।</sys:String>
+    <sys:String x:Key="Str_Handoff_FileError">KillerPDF ডাউনলোড করা পিডিএফ সংরক্ষণ বা পড়তে পারেনি ।</sys:String>
+    <sys:String x:Key="Str_St_FormFieldDrag">পূরণযোগ্য পাঠ্য ক্ষেত্র তৈরি করতে টানুন</sys:String>
+    <sys:String x:Key="Str_St_FormFieldCanceled">পূরণযোগ্য পাঠ্য ক্ষেত্র তৈরি বাতিল হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_FormFieldCreateFailed">পূরণযোগ্য পাঠ্য ক্ষেত্র তৈরি করা যায়নি</sys:String>
+    <sys:String x:Key="Str_St_FormFieldCreated">পূরণযোগ্য পাঠ্য ক্ষেত্র {0} তৈরি হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_FormFieldResizing">পূরণযোগ্য ক্ষেত্র {0}-এর আকার পরিবর্তন করা হচ্ছে</sys:String>
+    <sys:String x:Key="Str_St_FormFieldMoving">পূরণযোগ্য ক্ষেত্র {0} সরানো হচ্ছে</sys:String>
+    <sys:String x:Key="Str_St_FormFieldDeleted">পূরণযোগ্য ক্ষেত্র {0} মুছে ফেলা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_FormFieldFillChanged">{0}-এর পূরণের রং পরিবর্তন করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_FormFieldResized">পূরণযোগ্য ক্ষেত্র {0}-এর আকার পরিবর্তন করা হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_FormFieldMoved">পূরণযোগ্য ক্ষেত্র {0} সরানো হয়েছে</sys:String>
+    <sys:String x:Key="Str_St_PageCopiedHere">এই নথিতে ১টি পৃষ্ঠা কপি করা হয়েছে।</sys:String>
+    <sys:String x:Key="Str_St_PagesCopiedHere">এই নথিতে {0}টি পৃষ্ঠা কপি করা হয়েছে।</sys:String>
+    <sys:String x:Key="Str_Err_PageCopyFailed">পৃষ্ঠা কপি ব্যর্থ হয়েছে:&#10;{0}</sys:String>
+    <sys:String x:Key="Str_Err_FileRepairFailed">“{0}” মেরামত করা যায়নি।</sys:String>
+    <sys:String x:Key="Str_St_TextEditDetectedFont">{0}, {1} pt দিয়ে সম্পাদনা করা হচ্ছে। ফন্টের মাপ মূলের থেকে আলাদা হতে পারে।</sys:String>
+    <sys:String x:Key="Str_St_TextEditFontSubstituted">{0} ফন্টটি উপলব্ধ নয়। {1}, {2} pt দিয়ে সম্পাদনা করা হচ্ছে।</sys:String>
+    <sys:String x:Key="Str_Print_NoTwoSidedSupport">নির্বাচিত প্রিন্টারটি দুই পাশে মুদ্রণের সমর্থন জানায় না।</sys:String>
+    <sys:String x:Key="Str_Form_ClickInitials">আপনার আদ্যক্ষর যোগ করতে ক্লিক করুন</sys:String>
+    <sys:String x:Key="Str_Form_ClickSign">স্বাক্ষর করতে ক্লিক করুন</sys:String>
+    <sys:String x:Key="Str_Form_Initial">আদ্যক্ষর</sys:String>
+    <sys:String x:Key="Str_Compare_PreviousRegion">আগের পরিবর্তিত অঞ্চল</sys:String>
+    <sys:String x:Key="Str_Compare_NextRegion">পরবর্তী পরিবর্তিত অঞ্চল</sys:String>
+    <sys:String x:Key="Str_Portable_InstallTip">পোর্টেবল মোড - ইনস্টল করা সংস্করণ নিন</sys:String>
+    <sys:String x:Key="Str_Print_PreviewFailed">পূর্বরূপ রেন্ডার করা যায়নি:&#10;{0}</sys:String>
+    <sys:String x:Key="Str_Print_PreparingToPrint">মুদ্রণের প্রস্তুতি চলছে...</sys:String>
+    <sys:String x:Key="Str_Link_GoToPage">পৃষ্ঠা {0}-এ যান</sys:String>
+    <sys:String x:Key="Str_Measurement_Unavailable">পরিমাপ পাওয়া যাচ্ছে না</sys:String>
+    <sys:String x:Key="Str_Repair_Unrecoverable" xml:space="preserve">মেরামত ব্যর্থ হয়েছে - ফাইলটি পুনরুদ্ধার করার জন্য অত্যন্ত ক্ষতিগ্রস্ত।&#10;&#10;মূল ফাইলটি অন্য কোনো অ্যাপ্লিকেশনে (Adobe Acrobat বা ব্রাউজার) খোলার চেষ্টা করুন, যেখানে অতিরিক্ত পুনরুদ্ধারের বিকল্প থাকতে পারে।</sys:String>
+    <sys:String x:Key="Str_KS_Enabled">কীবোর্ড শর্টকাট চালু করুন</sys:String>
+    <sys:String x:Key="Str_KS_Toggle">কীবোর্ড শর্টকাট চালু বা বন্ধ করুন</sys:String>
+    <sys:String x:Key="Str_KS_ToggleTip">অ্যাপের সব শর্টকাট চালু বা বন্ধ করুন। Ctrl+Shift+K সবসময় কাজ করে।</sys:String>
+    <sys:String x:Key="Str_KS_EnabledStatus">কীবোর্ড শর্টকাট চালু আছে</sys:String>
+    <sys:String x:Key="Str_KS_DisabledStatus">কীবোর্ড শর্টকাট বন্ধ আছে। চালু করতে Ctrl+Shift+K চাপুন।</sys:String>
+    <sys:String x:Key="Str_StartupUpdateCheck">অ্যাপ চালু হলে আপডেট পরীক্ষা করুন</sys:String>
+    <sys:String x:Key="Str_StartupUpdatePrompt" xml:space="preserve">KillerPDF {0} উপলব্ধ। এখনই এটি ডাউনলোড করে ইনস্টল করবেন?&#10;&#10;অ্যাপটি বন্ধ হয়ে স্বয়ংক্রিয়ভাবে আবার খুলবে।</sys:String>
+    <sys:String x:Key="Str_AlwaysCheckOnStartup">অ্যাপ চালু হলে সর্বদা আপডেট পরীক্ষা করুন</sys:String>
+    <sys:String x:Key="Str_PasswordProtected">“{0}” পাসওয়ার্ড দিয়ে সুরক্ষিত।</sys:String>
+    <sys:String x:Key="Str_About_Aka">অন্য নাম</sys:String>
+    <sys:String x:Key="Str_Btn_Run">চালু করুন</sys:String>
 </ResourceDictionary>

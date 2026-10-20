@@ -4,15 +4,18 @@ namespace KillerPDF.Services
 {
     internal sealed class SignatureStore
     {
+        private static readonly JsonSerializerOptions JsonOptions = new()
+        {
+            WriteIndented = true
+        };
+
         private readonly string _dir;
         private readonly string _file;
 
-        private static readonly string DefaultDir  = System.IO.Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "KillerPDF");
+        private static string DefaultDir => AppDataPaths.UserRoot;
 
         public SignatureStore()
-            : this(DefaultDir, System.IO.Path.Combine(DefaultDir, "signatures.json")) { }
+            : this(DefaultDir, AppDataPaths.SignaturesFile) { }
 
         internal SignatureStore(string dir, string file)
         {
@@ -42,7 +45,7 @@ namespace KillerPDF.Services
             try
             {
                 System.IO.Directory.CreateDirectory(_dir);
-                var json = JsonSerializer.Serialize(_items, new JsonSerializerOptions { WriteIndented = true });
+                var json = JsonSerializer.Serialize(_items, JsonOptions);
                 System.IO.File.WriteAllText(_file, json);
             }
             catch { /* best effort */ }

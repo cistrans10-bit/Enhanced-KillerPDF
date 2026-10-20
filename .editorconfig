@@ -1,0 +1,23 @@
+root = true
+
+[*.cs]
+# IDE0130 (namespace must match folder structure) is deliberately OFF. The KillerUI refactor
+# keeps ONE flat KillerPDF.Features namespace across the Features/<Name>/ folders - every
+# partial of a class must share a single namespace, and Killendar (the family's reference
+# implementation) uses the same flat shape. Folder-matching namespaces would fight both.
+dotnet_diagnostic.IDE0130.severity = none
+
+# Viewer migration bridge members intentionally retain their underscore-prefixed aliases so
+# shared partial-class code can address per-tab state without duplicating the implementation.
+# Keep normal naming analysis enabled everywhere else.
+[MainWindow.xaml.cs]
+dotnet_diagnostic.IDE1006.severity = none
+
+[Controls/Viewer/PdfViewer.Bridge*.cs]
+dotnet_diagnostic.IDE1006.severity = none
+
+[Features/Viewer/MainWindow{ViewerBridge,TabStubs}.cs]
+dotnet_diagnostic.IDE1006.severity = none
+
+[Shell/{AnnotationBars,FileOperations,ContextMenu,Ocr,PageOperations,Shapes}.cs]
+dotnet_diagnostic.IDE1006.severity = none

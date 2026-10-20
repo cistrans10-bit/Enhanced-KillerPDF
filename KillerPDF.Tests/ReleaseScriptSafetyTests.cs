@@ -1,0 +1,54 @@
+using System.IO;
+using Xunit;
+
+namespace KillerPDF.Tests;
+
+public sealed class ReleaseScriptSafetyTests
+{
+    [Fact]
+    public void ReleaseScriptRejectsUnverifiedOrStaleArtifacts()
+    {
+        string root = FindRepositoryRoot();
+        string script = File.ReadAllText(Path.Combine(root, "release.ps1"));
+        string packageScript = File.ReadAllText(Path.Combine(root, "build", "build-portable.ps1"));
+
+        Assert.Contains("$SkipSign -and -not $DryRun", script, StringComparison.Ordinal);
+        Assert.Contains("foreach ($auditProject in @($proj, $engineProject))", script,
+            StringComparison.Ordinal);
+        Assert.Contains("dotnet list $auditProject package --vulnerable --include-transitive", script,
+            StringComparison.Ordinal);
+        Assert.Contains("throw \"Package vulnerability audit failed to run for $auditProject.\"", script,
+            StringComparison.Ordinal);
+        Assert.Contains("throw \"Vulnerable packages were found in $auditProject. Update them before releasing.\"", script,
+            StringComparison.Ordinal);
+        Assert.Contains("Assert-ReleaseArtifactVersion", script, StringComparison.Ordinal);
+        Assert.Contains("Get-AuthenticodeSignature", script, StringComparison.Ordinal);
+        Assert.Contains("KILLERPDF_TEST_INSTALL_ROOT", script, StringComparison.Ordinal);
+        Assert.Contains("'build\\Test-GuiStartup.ps1') -ExePath $installedExe", script,
+            StringComparison.Ordinal);
+        Assert.Contains("Assert-FirstPartyPayloadSignatures $installRoot", script, StringComparison.Ordinal);
+        Assert.Contains("Assert-EmbeddedFirstPartySignatures $artifact", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("ArgumentList '--version'", script, StringComparison.Ordinal);
+        Assert.Contains("KillerPDF-$Version-src.zip", script, StringComparison.Ordinal);
+        Assert.Contains("SHA256SUMS.txt does not match", script, StringComparison.Ordinal);
+        Assert.Contains("DryRun: skipping WinGet fork synchronization", script,
+            StringComparison.Ordinal);
+        Assert.Contains("Join-Path ([IO.Path]::GetTempPath()) ('KillerPDF-install-smoke-'", packageScript,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("Join-Path $artifactRoot ('install-smoke-'", packageScript,
+            StringComparison.Ordinal);
+        Assert.DoesNotMatch("[^\\x00-\\x7F]", script);
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory is not null)
+        {
+            if (File.Exists(Path.Combine(directory.FullName, "KillerPDF.csproj")))
+                return directory.FullName;
+            directory = directory.Parent;
+        }
+        throw new DirectoryNotFoundException("Could not locate the KillerPDF repository root.");
+    }
+}

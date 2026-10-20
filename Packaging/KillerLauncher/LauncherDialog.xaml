@@ -1,0 +1,84 @@
+<Window x:Class="KillerLauncher.LauncherDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:icons="clr-namespace:KillerLauncher"
+        xmlns:local="clr-namespace:KillerLauncher"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="KillerPDF" Width="560" MinHeight="300" SizeToContent="Height"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="True"
+        AllowsTransparency="True" Background="Transparent" FontFamily="./Fonts/#Killer Sans UI, Segoe UI" Foreground="#e0e0e0"
+        TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True" SnapsToDevicePixels="True">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="0" ResizeBorderThickness="0" CornerRadius="7"
+                            GlassFrameThickness="0" UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+    <Window.Resources>
+        <!-- Family wordmark faces: Punktype for "Killer" and Lacquer for "PDF", sized so the
+             capitals keep the family wordmark proportions, no gap. -->
+        <FontFamily x:Key="Wordmark">./Fonts/#Punktype</FontFamily>
+        <FontFamily x:Key="WordmarkAccent">./Fonts/#Lacquer</FontFamily>
+        <FontFamily x:Key="BrandSans">./Fonts/#Killer Sans</FontFamily>
+        <FontFamily x:Key="UiFont">./Fonts/#Killer Sans UI, Segoe UI</FontFamily>
+        <SolidColorBrush x:Key="Green" Color="#1ea54c"/>
+        <LinearGradientBrush x:Key="AccentFill" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#1ea54c" Offset="0"/><GradientStop Color="#198b40" Offset="1"/></LinearGradientBrush>
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Height" Value="28"/><Setter Property="MinWidth" Value="68"/><Setter Property="Padding" Value="12,2"/>
+            <Setter Property="Background" Value="Transparent"/><Setter Property="BorderBrush" Value="#1ea54c"/>
+            <Setter Property="Foreground" Value="#1ea54c"/><Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/><Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+                <Grid><Border x:Name="FaceRing" IsHitTestVisible="False" CornerRadius="{Binding CornerRadius, ElementName=Face}" BorderThickness="{Binding BorderThickness, ElementName=Face}" BorderBrush="{Binding Background, ElementName=Face}" Margin="{Binding Margin, ElementName=Face}" Visibility="{Binding Visibility, ElementName=Face}" Opacity="{Binding Opacity, ElementName=Face}"/><Border x:Name="Face" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" Padding="{TemplateBinding Padding}">
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border></Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="Face" Property="Background" Value="{StaticResource AccentFill}"/>
+                        <Setter TargetName="Face" Property="BorderBrush" Value="{StaticResource AccentFill}"/>
+                        <Setter Property="Foreground" Value="#0a0a0a"/>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter TargetName="Face" Property="Background" Value="#0d2a18"/>
+                        <Setter Property="Foreground" Value="#1ea54c"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate></Setter.Value></Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Margin="8" Background="#1c1c1c" BorderBrush="#3f3f3f" BorderThickness="1" CornerRadius="7"
+            MouseLeftButtonDown="Frame_MouseLeftButtonDown">
+        <Border.Effect><DropShadowEffect Color="Black" BlurRadius="18" ShadowDepth="4" Direction="270" Opacity="0.72" RenderingBias="Quality"/></Border.Effect>
+        <Grid ClipToBounds="True">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="152"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <Border x:Name="GrainLayer" Grid.ColumnSpan="2" CornerRadius="7" IsHitTestVisible="False" Opacity="0.24"/>
+            <Grid Grid.Column="0" Margin="22,16,14,16">
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                <icons:AppIcon Source="Resources/kp-icon.ico" Width="96" Height="96" Margin="6,0,0,0" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor">
+                    <icons:AppIcon.Effect><DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="1" Opacity="0.9"/></icons:AppIcon.Effect>
+                </icons:AppIcon>
+                <StackPanel Grid.Row="1" Margin="0,8,0,0">
+                    <Grid HorizontalAlignment="Left"><TextBlock Foreground="#D8000000" Opacity="0.45" Margin="1,2,-1,-2" IsHitTestVisible="False"><TextBlock.Effect><BlurEffect Radius="3"/></TextBlock.Effect><Run Text="Killer" FontFamily="{StaticResource Wordmark}" FontSize="19.56"/><Run Text="PDF" FontFamily="{StaticResource WordmarkAccent}" FontSize="29.37"/></TextBlock><TextBlock><Run Text="Killer" FontFamily="{StaticResource Wordmark}" FontSize="19.56"/><Run Text="PDF" FontFamily="{StaticResource WordmarkAccent}" FontSize="29.37" Foreground="{StaticResource Green}"/></TextBlock></Grid>
+                    <TextBlock x:Name="VersionLabel" FontFamily="{StaticResource UiFont}" FontSize="10.5" Foreground="#a0a0a0" Margin="1,2,0,0"/>
+                </StackPanel>
+                <TextBlock Grid.Row="3" Margin="0,12,0,0" FontFamily="{StaticResource BrandSans}" FontSize="14" TextOptions.TextFormattingMode="Ideal" Foreground="#a0a0a0" Text="&#x00A9; 2026 Steve the Killer"/>
+            </Grid>
+            <Grid Grid.Column="1" Margin="8">
+                <Border Background="#171717" CornerRadius="6"><Border.Effect><DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="3" Direction="270" Opacity="0.72" RenderingBias="Quality"/></Border.Effect></Border>
+                <Border Background="#3a3a3a" BorderBrush="#2e2e2e" BorderThickness="1" CornerRadius="6">
+                    <Grid>
+                        <Border x:Name="PaneGrain" CornerRadius="6" IsHitTestVisible="False" Opacity="0.24"/>
+                        <Button Width="26" Height="26" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="Ok_Click" Panel.ZIndex="3"><Button.Template><ControlTemplate TargetType="Button"><Border Background="Transparent"><Path x:Name="CloseGlyph" Data="M 5,5 L 13,13 M 13,5 L 5,13" Stroke="#b8b8b8" StrokeThickness="1.2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="18" Height="18"/></Border><ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="CloseGlyph" Property="Stroke" Value="#e04444"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Button.Template></Button>
+                        <Grid Margin="24,22,24,16">
+                            <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <TextBlock x:Name="MessageText" Margin="0,0,25,16" FontSize="13" LineHeight="19" TextWrapping="Wrap"/>
+                            <Button x:Name="OkButton" Grid.Row="1" Content="{local:Loc OK}" Style="{StaticResource PrimaryButton}" IsDefault="True" IsCancel="True"
+                                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Ok_Click"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

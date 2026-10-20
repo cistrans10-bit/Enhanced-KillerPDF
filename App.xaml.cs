@@ -27,11 +27,14 @@ namespace KillerPDF
         // ============================================================
 
         private static readonly string AppName   = "KillerPDF";
-        private static readonly string ExeName   = "KillerPDF.exe";
+        // The public portable file is KillerPDF-Portable.exe. Once installed, shortcuts launch the
+        // loose-file application directly so installed startup never pays launcher/extraction cost.
+        private static readonly string ExeName   = "KillerPDF.App.exe";
         private static readonly string InstallDir = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "Programs", AppName);
         private static readonly string InstallExe = Path.Combine(InstallDir, ExeName);
+        private static readonly string LegacyUserInstallExe = Path.Combine(InstallDir, "KillerPDF.exe");
         private static readonly string FileIconPath = Path.Combine(InstallDir, "pdf-file.ico");
 
         private static readonly string StartMenuDir = Path.Combine(
@@ -40,12 +43,27 @@ namespace KillerPDF
         private static readonly string DesktopLnk   = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"{AppName}.lnk");
 
+        // ── Machine-wide install (all users), matching Killendar / KillerShell ─────────────
+        // ProgramFiles rather than LocalApplicationData\Programs, so it needs elevation - which
+        // is why it goes through the /silent path under a UAC prompt instead of being done inline.
+        private static readonly string MachineInstallDir = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), AppName);
+        private static readonly string MachineInstallExe = Path.Combine(MachineInstallDir, ExeName);
+        private static readonly string LegacyMachineInstallExe = Path.Combine(MachineInstallDir, "KillerPDF.exe");
+        private static readonly string MachineFileIconPath = Path.Combine(MachineInstallDir, "pdf-file.ico");
+        private static readonly string MachineStartMenuDir = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), AppName);
+        private static readonly string MachineStartMenuLnk = Path.Combine(MachineStartMenuDir, $"{AppName}.lnk");
+
         // ============================================================
         // Shell interop
         // ============================================================
 
-        [DllImport("shell32.dll")]
-        private static extern void SHChangeNotify(uint wEventId, uint uFlags, IntPtr dwItem1, IntPtr dwItem2);
+        [LibraryImport("shell32.dll")]
+        private static partial void SHChangeNotify(uint wEventId, uint uFlags, IntPtr dwItem1, IntPtr dwItem2);
+        [LibraryImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool AllowSetForegroundWindow(int dwProcessId);
         private const uint SHCNE_ASSOCCHANGED = 0x08000000;
         private const uint SHCNF_IDLIST       = 0x0000;
 
@@ -55,20 +73,113 @@ namespace KillerPDF
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            KillerFamily.Accessibility.AccessibleControls.Initialize();
+            if (IsStartupSmoke)
+            {
+                RunStartupSmoke(e);
+                return;
+            }
+            StartupTrace.Mark("App.OnStartup entered");
             DispatcherUnhandledException                    += OnDispatcherException;
             AppDomain.CurrentDomain.UnhandledException      += OnDomainException;
             TaskScheduler.UnobservedTaskException           += OnUnobservedTaskException;
 
             base.OnStartup(e);
+            StartupTrace.Mark("Application base startup complete");
 
-            if (!CheckPdfiumIntegrity()) { Shutdown(2); return; }
+            // The app-level grain tile normally comes from the main window. Install, uninstall
+            // and install-repair dialogs can open before one exists, so publish it now.
+            EnsureCrashPreviewGrain();
 
-            // Handle uninstall flag (called by Add/Remove Programs)
-            if (e.Args.Length > 0 &&
-                string.Equals(e.Args[0], "/uninstall", StringComparison.OrdinalIgnoreCase))
+            // Private launcher hand-off. The verified launcher has already staged the complete
+            // payload; this fast headless pass only registers shortcuts, associations, protocol,
+            // and uninstall metadata from the final installed path.
+            if (e.Args.Any(a => string.Equals(a, "/register-user", StringComparison.OrdinalIgnoreCase)) ||
+                e.Args.Any(a => string.Equals(a, "/register-machine", StringComparison.OrdinalIgnoreCase)))
             {
-                Uninstall();
+                bool machine = e.Args.Any(a => string.Equals(a, "/register-machine", StringComparison.OrdinalIgnoreCase));
+                bool desktop = e.Args.Any(a => string.Equals(a, "/desktop", StringComparison.OrdinalIgnoreCase));
+                try
+                {
+                    RegisterInstalledCopy(machine, desktop);
+                    Shutdown(0);
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine("Install registration failed: " + ex.Message);
+                    Shutdown(KillerFamily.Deployment.InstallerExitCodes.FromException(ex));
+                }
+                return;
+            }
+
+            if (e.Args.Any(a => string.Equals(a, "/remove-user-install", StringComparison.OrdinalIgnoreCase)))
+            {
+                RemovePerUserInstall();
+                Shutdown(0);
+                return;
+            }
+
+            // Elevated half of the dual-install repair (OfferInstallConflictRepair): removes the
+            // machine-wide copy.
+            if (e.Args.Any(a => string.Equals(a, "/remove-machine-conflict", StringComparison.OrdinalIgnoreCase)))
+            {
+                RemoveMachineInstallConflict();
+                Shutdown(0);
+                return;
+            }
+
+            // Machine-wide install, no UI. Used by winget / choco / RMM deployments and by the
+            // all-users checkbox, which re-runs this exe elevated with /silent. Checked before
+            // everything else: it must never show a window or touch the single-instance mutex.
+            if (e.Args.Length > 0 &&
+                string.Equals(e.Args[0], "/silent", StringComparison.OrdinalIgnoreCase))
+            {
+                Shutdown(DoSilentInstall());
+                return;
+            }
+
+            // Handle uninstall flags (called by Add/Remove Programs and package managers)
+            if (e.Args.Length > 0 &&
+                (string.Equals(e.Args[0], "/uninstall", StringComparison.OrdinalIgnoreCase) ||
+                 string.Equals(e.Args[0], "/uninstall-silent", StringComparison.OrdinalIgnoreCase)))
+            {
+                TaskbarIdentity.UseUninstall();
+                Uninstall(string.Equals(e.Args[0], "/uninstall-silent", StringComparison.OrdinalIgnoreCase));
                 Shutdown();
+                return;
+            }
+
+            // Headless CLI commands (see Features/Cli/CliRunner.cs; --batch-resave in
+            // BatchRunner.cs). Checked before the single-instance mutex so CLI runs work
+            // while a GUI instance is open, never forward to it, and never show a window.
+            if (KillerPDF.Features.CliRunner.TryRunCli(e.Args, out int cliExit))
+            {
+                Shutdown(cliExit);
+                return;
+            }
+
+            // Developer-only visual check for the crash dialog. It runs before single-instance
+            // forwarding so the preview can open beside a normal KillerPDF session.
+            if (e.Args.Any(a => string.Equals(
+                    a, "--crash-dialog-preview", StringComparison.OrdinalIgnoreCase)))
+            {
+                ShutdownMode = ShutdownMode.OnExplicitShutdown;
+                ThemeManager.Initialize();
+                LocaleManager.Initialize();
+                EnsureCrashPreviewGrain();
+                string previewLog = Path.Combine(Path.GetTempPath(), "KillerPDF-crash-preview.log");
+                var previewException = new NotSupportedException(
+                    "Adding form widgets requires one top-level Document structure element.");
+                try
+                {
+                    File.WriteAllText(previewLog, BuildFullCrashReport(previewException));
+                    ShowCrashDialog(previewException, previewLog, isFatal: false);
+                }
+                finally
+                {
+                    try { File.Delete(previewLog); } catch { }
+                }
+                Shutdown(0);
                 return;
             }
 
@@ -80,18 +191,47 @@ namespace KillerPDF
             catch { isPrimary = true; }
             if (!isPrimary)
             {
-                var fwd = e.Args.FirstOrDefault(a => !a.StartsWith("/", StringComparison.Ordinal));
+                var fwd = e.Args.FirstOrDefault(a => !a.StartsWith('/'));
+                GrantPrimaryForegroundPermission();
                 ForwardToPrimary(fwd);
                 Shutdown(0);
                 return;
             }
             StartPipeServer();
+            StartupTrace.Mark("Single-instance initialization complete");
+
+            // Refresh the browser-extension handoff only after this process is known to be the
+            // primary instance. A portable launch that merely forwards and exits must not take
+            // the protocol handler from the installed copy (#267).
+            Services.ProtocolRegistrar.RemoveStaleRegistration(Registry.CurrentUser);
+            string registrationPath = GetPortableLauncherPath()
+                ?? Process.GetCurrentProcess().MainModule?.FileName
+                ?? Environment.ProcessPath
+                ?? throw new InvalidOperationException("The current executable path is unavailable.");
+            if (Services.ProtocolRegistrar.ShouldRefreshPerUser(
+                    Registry.CurrentUser, Registry.LocalMachine, registrationPath))
+                Services.ProtocolRegistrar.Register(Registry.CurrentUser, registrationPath);
+            StartupTrace.Mark("Protocol registration refresh complete");
 
             ShutdownMode = ShutdownMode.OnLastWindowClose;
             CleanupStaleTemps();
+            StartupTrace.Mark("Stale temporary-file cleanup complete");
             ThemeManager.Initialize();
+            FilmGrain.Initialize();   // Services/FilmGrain.cs - after the theme, before any window
+            StartupTrace.Mark("Theme initialized");
+            // #211: translator test mode - load an external translation file as the language
+            // override and re-apply it on every save (see LocaleManager). Documented in
+            // TRANSLATING.md; must be set before LocaleManager.Initialize applies the locale.
+            for (int i = 0; i < e.Args.Length - 1; i++)
+                if (string.Equals(e.Args[i], "--lang-file", StringComparison.OrdinalIgnoreCase))
+                { try { LocaleManager.ExternalFile = Path.GetFullPath(e.Args[i + 1]); } catch { /* bad path: normal locale */ } }
             LocaleManager.Initialize();
-            new MainWindow().Show();
+            StartupTrace.Mark("Locale initialized");
+            OfferInstallConflictRepair();
+            var mainWindow = new MainWindow();
+            StartupTrace.Mark("MainWindow constructed");
+            mainWindow.Show();
+            StartupTrace.Mark("MainWindow.Show returned");
         }
 
         // ============================================================
@@ -100,6 +240,7 @@ namespace KillerPDF
 
         private const string MutexName = @"Local\KillerPDF.SingleInstance";
         private const string PipeName  = "KillerPDF.OpenPipe";
+        private const string UninstallCloseCommand = "::KILLERPDF_CLOSE_FOR_UNINSTALL::";
         private Mutex? _instanceMutex;
 
         private void StartPipeServer()
@@ -134,12 +275,24 @@ namespace KillerPDF
             }
         }
 
-        private void DeliverExternalOpen(string? path)
+        private static void DeliverExternalOpen(string? path)
         {
             if (Current?.MainWindow is MainWindow mw)
             {
+                if (string.Equals(path, UninstallCloseCommand, StringComparison.Ordinal))
+                {
+                    // Add or Remove Programs owns the foreground when it starts uninstall. Bring
+                    // KillerPDF forward before closing so its quit or unsaved-work prompt cannot
+                    // open invisibly behind Settings.
+                    mw.RestoreAndActivate();
+                    mw.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle,
+                        new Action(mw.Close));
+                    return;
+                }
                 mw.RestoreAndActivate();
                 if (!string.IsNullOrEmpty(path)) mw.OpenFromExternal(path);
+                mw.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle,
+                    new Action(mw.RestoreAndActivate));
             }
         }
 
@@ -156,6 +309,9 @@ namespace KillerPDF
 
         // Secondary instance: send our file path to the primary instance over the pipe.
         private static void ForwardToPrimary(string? path)
+            => SendToPrimary(path);
+
+        private static bool SendToPrimary(string? path)
         {
             try
             {
@@ -163,8 +319,55 @@ namespace KillerPDF
                 client.Connect(3000);
                 using var w = new StreamWriter(client, new UTF8Encoding(false)) { AutoFlush = true };
                 w.WriteLine(path ?? "");
+                return true;
             }
-            catch { /* primary not accepting yet; nothing more we can do */ }
+            catch { return false; }
+        }
+
+        private static bool CloseRunningInstanceForUninstall()
+        {
+            Mutex? running;
+            try { running = Mutex.OpenExisting(MutexName); }
+            catch (WaitHandleCannotBeOpenedException) { return true; }
+
+            using (running)
+            {
+                // Transfer the foreground privilege received from Windows Settings to the running
+                // app before asking it to activate itself and show any close confirmation.
+                GrantPrimaryForegroundPermission();
+                if (!SendToPrimary(UninstallCloseCommand)) return false;
+                try
+                {
+                    if (!running.WaitOne(TimeSpan.FromSeconds(60))) return false;
+                    running.ReleaseMutex();
+                    return true;
+                }
+                catch (AbandonedMutexException) { return true; }
+            }
+        }
+
+        // Explorer launches the secondary process with foreground permission. Pass that permission
+        // to the already-running KillerPDF process before asking it to activate its window.
+        private static void GrantPrimaryForegroundPermission()
+        {
+            try
+            {
+                using Process current = Process.GetCurrentProcess();
+                foreach (Process candidate in Process.GetProcessesByName(current.ProcessName)
+                             .Where(p => p.Id != current.Id)
+                             .OrderBy(p =>
+                             {
+                                 try { return p.StartTime; }
+                                 catch { return DateTime.MaxValue; }
+                             }))
+                {
+                    using (candidate)
+                    {
+                        if (AllowSetForegroundWindow(candidate.Id)) return;
+                    }
+                }
+            }
+            catch { }
         }
 
         // ============================================================
@@ -174,16 +377,16 @@ namespace KillerPDF
         // NOTE: AccessViolationException is not catchable on .NET 4.8 without
         // [HandleProcessCorruptedStateExceptions], which we deliberately omit.
 
+        private int _recoverableCrashDialogPending;
+
         private void OnDispatcherException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
+            // Let WPF unwind the failing input/layout callback before creating another window.
+            // Opening a modal dialog inside this event re-enters the dispatcher while its visual
+            // tree may still be inconsistent, which can turn one recoverable error into a loop.
+            e.Handled = true;
             var logPath = CrashReporter.Capture(e.Exception, "Dispatcher");
-            bool cont   = ShowCrashDialog(e.Exception, logPath, isFatal: false);
-            e.Handled   = true; // always handle; we manage the exit ourselves
-            if (!cont)
-            {
-                CleanupSessionTemps();
-                Shutdown(1);
-            }
+            QueueRecoverableCrashDialog(e.Exception, logPath);
         }
 
         private void OnDomainException(object sender, UnhandledExceptionEventArgs e)
@@ -207,171 +410,277 @@ namespace KillerPDF
 
         private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
-            e.SetObserved(); // prevent process teardown
-            var logPath = CrashReporter.Capture(e.Exception, "TaskScheduler");
+            // An unobserved task is reported later by the finalizer, after the task and its caller
+            // are already gone. It is not an active UI crash and there is no operation left for a
+            // Retry/Continue dialog to recover. 1.7.5 surfaced the wrapper AggregateException as a
+            // crash with no useful stack, which is both alarming and diagnostically empty. Keep the
+            // complete flattened failure in the log, mark it observed, and leave the running app
+            // alone. Live dispatcher and AppDomain failures still use the normal crash dialog.
+            e.SetObserved();
+            CrashReporter.Capture(e.Exception.Flatten(), "TaskScheduler (observed background fault)");
+        }
 
+        private void QueueRecoverableCrashDialog(Exception exception, string logPath)
+        {
+            if (System.Threading.Interlocked.Exchange(ref _recoverableCrashDialogPending, 1) != 0)
+                return;
             try
             {
                 if (Dispatcher != null && !Dispatcher.HasShutdownStarted)
-                    Dispatcher.BeginInvoke(new Action(
-                        () => ShowCrashDialog(e.Exception, logPath, isFatal: false)));
+                {
+                    Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() =>
+                    {
+                        try
+                        {
+                            if (!ShowCrashDialog(exception, logPath, isFatal: false))
+                            {
+                                CleanupSessionTemps();
+                                Shutdown(1);
+                            }
+                        }
+                        finally
+                        {
+                            System.Threading.Interlocked.Exchange(ref _recoverableCrashDialogPending, 0);
+                        }
+                    }));
+                    return;
+                }
             }
-            catch { /* best-effort */ }
+            catch { /* the error was still captured even if the dispatcher is unavailable */ }
+
+            System.Threading.Interlocked.Exchange(ref _recoverableCrashDialogPending, 0);
         }
 
         /// <summary>
         /// Dark-themed crash report dialog. Returns true if the user chose Continue.
         /// Must be called on the UI thread.
         /// </summary>
+        private static string CrashText(string key, string fallback) =>
+            System.Windows.Application.Current?.TryFindResource(key) as string ?? fallback;
+
+        private static void EnsureCrashPreviewGrain()
+        {
+            const int size = 256;
+            var bitmap = new System.Windows.Media.Imaging.WriteableBitmap(
+                size, size, 96, 96, PixelFormats.Bgra32, null);
+            var pixels = new byte[size * size * 4];
+            var random = new Random(1337);
+            for (int i = 0; i < pixels.Length; i += 4)
+            {
+                if (random.Next(3) != 0) continue;
+                byte value = random.Next(2) == 0
+                    ? (byte)random.Next(190, 255)
+                    : (byte)random.Next(0, 50);
+                pixels[i] = value;
+                pixels[i + 1] = value;
+                pixels[i + 2] = value;
+                pixels[i + 3] = (byte)random.Next(35, 95);
+            }
+            bitmap.WritePixels(new Int32Rect(0, 0, size, size), pixels, size * 4, 0);
+            var source = System.Windows.Media.Imaging.BitmapFrame.Create(bitmap);
+            source.Freeze();
+            var tile = new ImageBrush(source)
+            {
+                TileMode = TileMode.Tile,
+                ViewportUnits = BrushMappingMode.Absolute,
+                Viewport = new Rect(0, 0, size, size),
+                Stretch = Stretch.None
+            };
+            tile.Freeze();
+            Current.Resources["GrainTileBrush"] = tile;
+        }
+
         private static bool ShowCrashDialog(Exception ex, string logPath, bool isFatal)
         {
             bool shouldContinue = false;
+            var win = CreateCrashDialog(ex, logPath, isFatal, result => shouldContinue = result);
+            win.ShowDialog();
+            return shouldContinue;
+        }
 
-            // ── Palette ─────────────────────────────────────────────
-            var bg       = new SolidColorBrush(Color.FromRgb(0x1a, 0x1a, 0x1a));
-            var dimBg    = new SolidColorBrush(Color.FromRgb(0x25, 0x25, 0x25));
-            var codeBg   = new SolidColorBrush(Color.FromRgb(0x12, 0x12, 0x12));
-            var red      = new SolidColorBrush(Color.FromRgb(0xef, 0x44, 0x44));
-            var green    = new SolidColorBrush(Color.FromRgb(0x1e, 0xa5, 0x4c));
-            var greenHov = new SolidColorBrush(Color.FromRgb(0x27, 0xc8, 0x60));
-            var dimText  = new SolidColorBrush(Color.FromRgb(0x77, 0x77, 0x77));
-            var midText  = new SolidColorBrush(Color.FromRgb(0xaa, 0xaa, 0xaa));
-            var redHov   = new SolidColorBrush(Color.FromRgb(0xc4, 0x2b, 0x1c));
-            var grayBtn  = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
-            var grayHov  = new SolidColorBrush(Color.FromRgb(0x44, 0x44, 0x44));
-            var quitNorm = new SolidColorBrush(Color.FromRgb(0x5a, 0x10, 0x10));
-            var quitHov  = new SolidColorBrush(Color.FromRgb(0xc4, 0x2b, 0x1c));
-
+        private static Window CreateCrashDialog(Exception ex, string logPath, bool isFatal, Action<bool> complete)
+        {
+            Window? owner = Current?.MainWindow is { IsVisible: true } main ? main : null;
+            Brush pane = UiKit.Brush("PaneBrush", new SolidColorBrush(Color.FromRgb(0x2a, 0x2a, 0x2a)));
+            Brush code = UiKit.Brush("MenuBackgroundBrush", new SolidColorBrush(Color.FromRgb(0x12, 0x12, 0x12)));
+            Brush border = UiKit.Brush("CardBorderBrush", new SolidColorBrush(Color.FromRgb(0x3a, 0x3a, 0x3a)));
+            Brush text = UiKit.Brush("TextBrush", Brushes.White);
+            Brush muted = UiKit.Brush("MutedTextBrush", new SolidColorBrush(Color.FromRgb(0xaa, 0xaa, 0xaa)));
+            Brush dim = UiKit.Brush("DimTextBrush", new SolidColorBrush(Color.FromRgb(0x77, 0x77, 0x77)));
+            Brush danger = UiKit.Brush("DangerRed", new SolidColorBrush(Color.FromRgb(0xef, 0x44, 0x44)));
+            Brush primary = UiKit.Brush("PrimaryBrush", new SolidColorBrush(Color.FromRgb(0x1e, 0xa5, 0x4c)));
+            Brush primaryHover = UiKit.Brush("PrimaryHoverBrush", primary);
+            Brush onPrimary = UiKit.Brush("OnPrimaryBrush", new SolidColorBrush(Color.FromRgb(0x0a, 0x0a, 0x0a)));
+            Brush button = UiKit.Brush("SurfaceBrush", new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33)));
+            Brush buttonHover = UiKit.Brush("SurfaceHoverBrush", new SolidColorBrush(Color.FromRgb(0x44, 0x44, 0x44)));
+            Brush grain = UiKit.Brush("GrainTileBrush", Brushes.Transparent);
+            double grainOpacity = Current?.TryFindResource("GrainOpacity") is double opacity
+                ? opacity : 0.05;
+            var paneShadow = Current?.TryFindResource("PaneShadowEffect")
+                as System.Windows.Media.Effects.Effect;
+            var quitNormal = new SolidColorBrush(Color.FromRgb(0x5a, 0x10, 0x10));
+            var quitHover = new SolidColorBrush(Color.FromRgb(0xc4, 0x2b, 0x1c));
+            string title = CrashText("Str_Crash_Title", "KillerPDF - Unexpected Error");
             var win = new Window
             {
-                Title                 = "KillerPDF - Unexpected Error",
-                Width                 = 680,
-                Height                = 520,
-                MinWidth              = 480,
-                MinHeight             = 360,
-                WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                ResizeMode            = ResizeMode.CanResize,
-                WindowStyle           = WindowStyle.None,
-                Background            = bg,
-                ShowInTaskbar         = true
+                Title = title,
+                Width = 760,
+                Height = 540,
+                MinWidth = 620,
+                MinHeight = 430,
+                ShowInTaskbar = owner is null
             };
+            DialogChrome.Configure(win, owner, resizable: true, fade: false);
+            win.Resources.MergedDictionaries.Add(new ResourceDictionary
+            {
+                Source = new Uri("pack://application:,,,/Controls/PickerStyles.xaml")
+            });
+            // Use the family scroll host, including its transparent scrollbar intersection.
+            win.Resources[typeof(ScrollViewer)] = win.FindResource("BareScrollViewer");
 
-            // ── Layout ──────────────────────────────────────────────
-            var root = new Grid();
-            root.RowDefinitions.Add(new RowDefinition { Height = new GridLength(36) });
+            var root = new Grid { Background = Brushes.Transparent };
             root.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             root.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             root.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
-            // ── Title bar ───────────────────────────────────────────
-            var titleBar = new DockPanel { Background = dimBg };
-            Grid.SetRow(titleBar, 0);
-            titleBar.MouseLeftButtonDown += (_, ea) =>
+            var summary = new Controls.PickerBorder
             {
-                if (ea.ButtonState == MouseButtonState.Pressed) win.DragMove();
+                Background = pane,
+                BorderBrush = border,
+                BorderThickness = new Thickness(1),
+                CornerRadius = UiKit.RadCard
             };
-
-            var xBtn = MakeTitleBarCloseButton(dimText, redHov);
-            xBtn.Click += (_, _) => { shouldContinue = false; win.Close(); };
-            DockPanel.SetDock(xBtn, Dock.Right);
-            titleBar.Children.Add(xBtn);
-            titleBar.Children.Add(new TextBlock
+            var summaryGrid = new Grid { Margin = new Thickness(18, 16, 18, 15) };
+            summaryGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(42) });
+            summaryGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            summaryGrid.Children.Add(new Border
             {
-                Text              = "KillerPDF - Unexpected Error",
-                Foreground        = dimText,
-                FontSize          = 12,
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin            = new Thickness(12, 0, 0, 0)
+                Width = 32,
+                Height = 32,
+                CornerRadius = new CornerRadius(16),
+                BorderBrush = danger,
+                BorderThickness = new Thickness(1.5),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+                Child = new TextBlock
+                {
+                    Text = "!",
+                    Foreground = danger,
+                    FontFamily = UiKit.MonoFont,
+                    FontSize = 20,
+                    FontWeight = FontWeights.Bold,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                }
             });
-            root.Children.Add(titleBar);
-
-            // ── Error header ─────────────────────────────────────────
-            var headerPanel = new StackPanel
+            var summaryText = new StackPanel();
+            summaryText.Children.Add(new TextBlock
             {
-                Background = dimBg,
-                Margin     = new Thickness(0, 1, 0, 0)
-            };
-            Grid.SetRow(headerPanel, 1);
-
-            var headerInner = new StackPanel { Margin = new Thickness(20, 14, 20, 14) };
-
-            var typeRow = new StackPanel { Orientation = Orientation.Horizontal };
-            typeRow.Children.Add(new TextBlock
-            {
-                Text              = "⚠  ",
-                Foreground        = red,
-                FontSize          = 18,
-                VerticalAlignment = VerticalAlignment.Center
+                Text = ex.GetType().Name,
+                Foreground = danger,
+                FontFamily = UiKit.MonoFont,
+                FontSize = 13,
+                FontWeight = FontWeights.SemiBold
             });
-            typeRow.Children.Add(new TextBlock
+            summaryText.Children.Add(new TextBlock
             {
-                Text              = ex.GetType().Name,
-                Foreground        = red,
-                FontSize          = 16,
-                FontWeight        = FontWeights.SemiBold,
-                VerticalAlignment = VerticalAlignment.Center
-            });
-            headerInner.Children.Add(typeRow);
-
-            headerInner.Children.Add(new TextBlock
-            {
-                Text         = ex.Message,
-                Foreground   = Brushes.White,
-                FontSize     = 13,
+                Text = ex.Message,
+                Foreground = text,
+                FontSize = 14,
+                LineHeight = 20,
                 TextWrapping = TextWrapping.Wrap,
-                Margin       = new Thickness(0, 6, 0, 0)
+                Margin = new Thickness(0, 7, 0, 0)
             });
-            headerInner.Children.Add(new TextBlock
+            summaryText.Children.Add(new TextBlock
             {
-                Text       = $"Log: {logPath}",
-                Foreground = dimText,
-                FontSize   = 11,
-                Margin     = new Thickness(0, 6, 0, 0)
+                Text = string.Format(CrashText("Str_Crash_Log", "Log: {0}"), logPath),
+                Foreground = dim,
+                FontFamily = UiKit.MonoFont,
+                FontSize = 10.5,
+                TextTrimming = TextTrimming.CharacterEllipsis,
+                Margin = new Thickness(0, 10, 0, 0)
             });
-
-            headerPanel.Children.Add(headerInner);
-            root.Children.Add(headerPanel);
-
-            // ── Stack trace ──────────────────────────────────────────
-            var traceBox = new TextBox
+            Grid.SetColumn(summaryText, 1);
+            summaryGrid.Children.Add(summaryText);
+            var summaryLayers = new Grid();
+            summaryLayers.Children.Add(new Border
             {
-                Text                          = FormatExceptionChain(ex),
-                Background                    = codeBg,
-                Foreground                    = midText,
-                FontFamily                    = new FontFamily("Consolas,Courier New"),
-                FontSize                      = 11,
-                IsReadOnly                    = true,
-                VerticalScrollBarVisibility   = ScrollBarVisibility.Auto,
-                HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
-                TextWrapping                  = TextWrapping.NoWrap,
-                BorderThickness               = new Thickness(0),
-                Padding                       = new Thickness(12, 8, 12, 8),
-                Margin                        = new Thickness(0, 1, 0, 0)
-            };
-            Grid.SetRow(traceBox, 2);
-            root.Children.Add(traceBox);
-
-            // ── Button bar ───────────────────────────────────────────
-            var btnBorder = new Border
+                Background = grain,
+                Opacity = grainOpacity,
+                CornerRadius = UiKit.RadCard,
+                IsHitTestVisible = false
+            });
+            summaryLayers.Children.Add(summaryGrid);
+            summary.Child = summaryLayers;
+            var summaryHost = new Grid { Margin = new Thickness(18, 8, 18, 12) };
+            summaryHost.Children.Add(new Border
             {
-                Background = dimBg,
-                Padding    = new Thickness(16, 10, 16, 10)
+                Background = pane,
+                CornerRadius = UiKit.RadCard,
+                IsHitTestVisible = false,
+                Effect = paneShadow?.CloneCurrentValue()
+            });
+            summaryHost.Children.Add(summary);
+            Grid.SetRow(summaryHost, 0);
+            root.Children.Add(summaryHost);
+
+            var traceBox = UiKit.Field();
+            traceBox.Text = FormatExceptionChain(ex);
+            traceBox.Background = Brushes.Transparent;
+            traceBox.Foreground = muted;
+            traceBox.FontFamily = UiKit.MonoFont;
+            traceBox.FontSize = 10.5;
+            traceBox.IsReadOnly = true;
+            traceBox.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            traceBox.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+            traceBox.TextWrapping = TextWrapping.NoWrap;
+            traceBox.BorderThickness = new Thickness(0);
+            traceBox.Padding = new Thickness(12, 10, 12, 10);
+            var traceLayers = new Grid();
+            traceLayers.Children.Add(new Border
+            {
+                Background = grain,
+                Opacity = grainOpacity,
+                CornerRadius = UiKit.RadCard,
+                IsHitTestVisible = false
+            });
+            traceLayers.Children.Add(traceBox);
+            var traceCard = new Controls.PickerBorder
+            {
+                Background = code,
+                BorderBrush = border,
+                BorderThickness = new Thickness(1),
+                CornerRadius = UiKit.RadCard,
+                Child = traceLayers
             };
-            Grid.SetRow(btnBorder, 3);
+            var traceHost = new Grid { Margin = new Thickness(18, 0, 18, 14) };
+            traceHost.Children.Add(new Border
+            {
+                Background = code,
+                CornerRadius = UiKit.RadCard,
+                IsHitTestVisible = false,
+                Effect = paneShadow?.CloneCurrentValue()
+            });
+            traceHost.Children.Add(traceCard);
+            Grid.SetRow(traceHost, 1);
+            root.Children.Add(traceHost);
 
-            var btnPanel = new DockPanel();
-
-            // Left: utility buttons
+            var footer = new Border
+            {
+                Background = Brushes.Transparent,
+                BorderBrush = border,
+                BorderThickness = new Thickness(0, 1, 0, 0),
+                Padding = new Thickness(18, 11, 18, 11)
+            };
+            var btnPanel = new DockPanel { LastChildFill = false };
             var leftBtns = new StackPanel { Orientation = Orientation.Horizontal };
-
-            var copyBtn = MakeCrashButton("Copy Report", grayBtn, grayHov, Brushes.White, 100);
+            var copyBtn = MakeCrashButton(CrashText("Str_Crash_Copy", "Copy Report"), button, buttonHover, text, 100);
             copyBtn.Click += (_, _) =>
             {
                 try { Clipboard.SetText(BuildFullCrashReport(ex)); } catch { }
             };
             leftBtns.Children.Add(copyBtn);
-
-            var logsBtn = MakeCrashButton("Open Logs", grayBtn, grayHov, Brushes.White, 88);
+            var logsBtn = MakeCrashButton(CrashText("Str_Crash_OpenLogs", "Open Logs"), button, buttonHover, text, 88);
             logsBtn.Margin = new Thickness(8, 0, 0, 0);
             logsBtn.Click += (_, _) =>
             {
@@ -383,15 +692,13 @@ namespace KillerPDF
                 catch { }
             };
             leftBtns.Children.Add(logsBtn);
-
-            var githubBtn = MakeCrashButton("Report on GitHub", grayBtn, grayHov,
+            var githubBtn = MakeCrashButton(CrashText("Str_Crash_Report", "Report on GitHub"), button, buttonHover,
                 new SolidColorBrush(Color.FromRgb(0x60, 0xc0, 0xff)), 128);
             githubBtn.Margin = new Thickness(8, 0, 0, 0);
             githubBtn.Click += (_, _) =>
             {
                 try
                 {
-                    var ver    = Assembly.GetExecutingAssembly().GetName().Version;
                     var msgLen = Math.Min(80, ex.Message.Length);
                     var title  = Uri.EscapeDataString(
                         $"Crash: {ex.GetType().Name}: {ex.Message[..msgLen]}");
@@ -399,7 +706,7 @@ namespace KillerPDF
                         ? ex.StackTrace[..800] + "\n... (truncated)"
                         : ex.StackTrace ?? "(no stack trace)";
                     var body = Uri.EscapeDataString(
-                        $"**Version:** {ver?.ToString(3)}\n" +
+                        $"**Version:** {AppVersion.Display}\n" +
                         $"**OS:** {Environment.OSVersion}\n" +
                         $"**Exception:** `{ex.GetType().FullName}`\n" +
                         $"**Message:** {ex.Message}\n\n" +
@@ -412,40 +719,34 @@ namespace KillerPDF
                 catch { }
             };
             leftBtns.Children.Add(githubBtn);
-
             DockPanel.SetDock(leftBtns, Dock.Left);
             btnPanel.Children.Add(leftBtns);
-
-            // Right: Continue / Quit
             var rightBtns = new StackPanel
             {
-                Orientation         = Orientation.Horizontal,
+                Orientation = Orientation.Horizontal,
                 HorizontalAlignment = HorizontalAlignment.Right
             };
-
-            var contBtn = MakeCrashButton("Continue", green, greenHov,
-                new SolidColorBrush(Color.FromRgb(0x0a, 0x0a, 0x0a)), 88);
-            contBtn.IsEnabled  = !isFatal;
+            var contBtn = MakeCrashButton(CrashText("Str_Crash_Continue", "Continue"), primary, primaryHover,
+                onPrimary, 88);
+            contBtn.IsEnabled = !isFatal;
             contBtn.FontWeight = isFatal ? FontWeights.Normal : FontWeights.SemiBold;
-            contBtn.Margin     = new Thickness(0, 0, 8, 0);
-            contBtn.Click += (_, _) => { shouldContinue = true; win.Close(); };
-
-            var quitBtnCtrl = MakeCrashButton("Quit", quitNorm, quitHov, Brushes.White, 72);
+            contBtn.Margin = new Thickness(0, 0, 8, 0);
+            contBtn.Click += (_, _) => { complete(true); win.Close(); };
+            var quitBtnCtrl = MakeCrashButton(CrashText("Str_Crash_Quit", "Quit"), quitNormal, quitHover, Brushes.White, 72);
             quitBtnCtrl.FontWeight = isFatal ? FontWeights.SemiBold : FontWeights.Normal;
-            quitBtnCtrl.Click += (_, _) => { shouldContinue = false; win.Close(); };
-
+            quitBtnCtrl.Click += (_, _) => { complete(false); win.Close(); };
             rightBtns.Children.Add(contBtn);
             rightBtns.Children.Add(quitBtnCtrl);
-
             DockPanel.SetDock(rightBtns, Dock.Right);
             btnPanel.Children.Add(rightBtns);
+            footer.Child = btnPanel;
+            Grid.SetRow(footer, 2);
+            root.Children.Add(footer);
 
-            btnBorder.Child = btnPanel;
-            root.Children.Add(btnBorder);
-
-            win.Content = root;
-            win.ShowDialog();
-            return shouldContinue;
+            win.Content = DialogChrome.Frame(win, owner, title,
+                () => { complete(false); win.Close(); }, root,
+                new Thickness(20, 20, 20, 24));
+            return win;
         }
 
         private static Button MakeTitleBarCloseButton(SolidColorBrush fg, SolidColorBrush hoverBg)
@@ -488,7 +789,7 @@ namespace KillerPDF
         }
 
         private static Button MakeCrashButton(string label,
-            SolidColorBrush normal, SolidColorBrush hover, SolidColorBrush fg,
+            Brush normal, Brush hover, Brush fg,
             double width = 88)
         {
             var btn = UiKit.Make(label, normal, hover, fg, fg);
@@ -516,8 +817,7 @@ namespace KillerPDF
         private static string BuildFullCrashReport(Exception ex)
         {
             var sb  = new StringBuilder();
-            var ver = Assembly.GetExecutingAssembly().GetName().Version;
-            sb.AppendLine($"KillerPDF v{ver?.ToString(3)}");
+            sb.AppendLine($"KillerPDF v{AppVersion.Display}");
             sb.AppendLine($"Time : {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
             sb.AppendLine($"OS   : {Environment.OSVersion}");
             sb.AppendLine();
@@ -534,31 +834,158 @@ namespace KillerPDF
         /// </summary>
         internal static bool IsPortable()
         {
-            string currentExe = Process.GetCurrentProcess().MainModule!.FileName;
-            return !string.Equals(currentExe, InstallExe, StringComparison.OrdinalIgnoreCase);
+            try
+            {
+                string currentExe = Environment.ProcessPath
+                    ?? throw new InvalidOperationException("The current executable path is unavailable.");
+                return !IsRegisteredCopy(Registry.CurrentUser, currentExe)
+                    && !IsRegisteredCopy(Registry.LocalMachine, currentExe);
+            }
+            catch { return false; }
+        }
+
+        /// <summary>True when KillerPDF is already installed machine-wide.</summary>
+        internal static bool MachineInstallExists() => ExistingRegisteredExecutable(Registry.LocalMachine) != null
+            || File.Exists(MachineInstallExe) || File.Exists(LegacyMachineInstallExe);
+
+        /// <summary>True when KillerPDF is already installed for the current user.</summary>
+        internal static bool UserInstallExists() => ExistingRegisteredExecutable(Registry.CurrentUser) != null
+            || File.Exists(InstallExe) || File.Exists(LegacyUserInstallExe);
+
+        private static string? ExistingRegisteredExecutable(RegistryKey root)
+        {
+            try
+            {
+                using var key = root.OpenSubKey(@"Software\KillerPDF");
+                string? path = key?.GetValue("InstallPath") as string;
+                return !string.IsNullOrWhiteSpace(path) && File.Exists(path) ? Path.GetFullPath(path) : null;
+            }
+            catch { return null; }
+        }
+
+        private static bool IsRegisteredCopy(RegistryKey root, string? executable)
+        {
+            string? registered = ExistingRegisteredExecutable(root);
+            return registered != null && !string.IsNullOrWhiteSpace(executable)
+                && string.Equals(registered, Path.GetFullPath(executable), StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>Repairs a machine that carries BOTH a per-user and a machine-wide install -
+        /// the state where each Add/Remove Programs entry describes the other copy's version and
+        /// launching gets whichever exe the shell resolves first. Detected at startup; offers to
+        /// remove whichever copy is NOT running. Removing the machine copy needs elevation, so
+        /// that path re-runs this exe with /remove-machine-conflict under UAC.</summary>
+        private static void OfferInstallConflictRepair()
+        {
+            if (!UserInstallExists() || !MachineInstallExists()) return;
+            string current = Process.GetCurrentProcess().MainModule?.FileName ?? "";
+            bool runningMachine = IsRegisteredCopy(Registry.LocalMachine, current)
+                               || string.Equals(current, MachineInstallExe, StringComparison.OrdinalIgnoreCase)
+                               || string.Equals(current, LegacyMachineInstallExe, StringComparison.OrdinalIgnoreCase);
+            bool runningUser = IsRegisteredCopy(Registry.CurrentUser, current)
+                            || string.Equals(current, InstallExe, StringComparison.OrdinalIgnoreCase)
+                            || string.Equals(current, LegacyUserInstallExe, StringComparison.OrdinalIgnoreCase);
+            if (!runningMachine && !runningUser) return;
+
+            string message = runningMachine
+                ? "KillerPDF found two installed copies on this computer.\n\nYou are currently running the all-users installation. An older per-user copy is also present, usually because it was in use during an earlier update.\n\nRemove the unused per-user copy now? Your settings and PDF files will not be removed."
+                : "KillerPDF found two installed copies on this computer.\n\nYou are currently running the per-user installation. An all-users copy is also present.\n\nRemove the unused all-users copy now? Windows will ask for administrator permission. Your settings and PDF files will not be removed.";
+            if (KillerDialog.Show(Current.MainWindow, message,
+                $"{AppName} duplicate installation", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
+
+            if (runningMachine)
+            {
+                RemovePerUserInstall();
+            }
+            else
+            {
+                try
+                {
+                    using var p = Process.Start(new ProcessStartInfo(current, "/remove-machine-conflict")
+                    { UseShellExecute = true, Verb = "runas" });
+                    p?.WaitForExit();
+                }
+                catch { /* declining UAC leaves both copies in place */ }
+            }
+        }
+
+        private static void RemoveMachineInstallConflict()
+        {
+            string? registeredExe = ExistingRegisteredExecutable(Registry.LocalMachine);
+            try { File.Delete(MachineStartMenuLnk); } catch { }
+            try { Directory.Delete(MachineStartMenuDir, recursive: false); } catch { }
+            UnregisterFileHandler(Registry.LocalMachine);
+            Services.ProtocolRegistrar.Unregister(Registry.LocalMachine);
+            try { Registry.LocalMachine.DeleteSubKeyTree(@"Software\KillerPDF"); } catch { }
+            try { Registry.LocalMachine.DeleteSubKeyTree(
+                @"Software\Microsoft\Windows\CurrentVersion\Uninstall\KillerPDF"); } catch { }
+            string directory = Path.GetDirectoryName(registeredExe ?? MachineInstallExe) ?? MachineInstallDir;
+            try { if (Directory.Exists(directory)) Directory.Delete(directory, true); } catch { }
+            SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, IntPtr.Zero, IntPtr.Zero);
         }
 
         /// <summary>
-        /// Installs KillerPDF, offers to set as default PDF handler, then relaunches
-        /// from the installed location. Returns false if installation failed or was
-        /// already installed from this path.
+        /// Installs KillerPDF, offers to set it as the default PDF handler, then relaunches from
+        /// the installed location. Returns false if the install did not happen, so the caller can
+        /// put the portable badge back rather than leaving the user with a half-finished state.
+        ///
+        /// An all-users install re-runs this exe elevated with /silent - the same machine-wide path
+        /// winget and choco use - so UAC only appears when the user actually asked for it.
         /// </summary>
-        internal static void InstallAndRelaunch(string? fileToOpen, bool wantDesktop)
+        internal static bool InstallAndRelaunch(string? fileToOpen, bool wantDesktop, bool allUsers)
         {
-            DoInstall(wantDesktop);
+            string targetExe;
+            string? launcher = GetPortableLauncherPath();
+
+            if (!allUsers && MachineInstallExists())
+            {
+                KillerDialog.Show(Current.MainWindow,
+                    Current.TryFindResource("Str_Dlg_OneInstallOnly") as string ??
+                        "KillerPDF is already installed for everyone on this computer. Update that installation, or uninstall it before choosing a per-user install. KillerPDF will not create two installed copies.",
+                    Current.TryFindResource("Str_Dlg_InstallTitle") as string ?? "Install KillerPDF",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return false;
+            }
+
+            if (allUsers)
+            {
+                if (!RunElevatedSilentInstall(launcher)) return false;
+
+                // Only ever one install: drop the per-user copy so there is a single Start Menu
+                // entry and a single uninstall entry. This also removes per-user file and protocol
+                // handlers that could shadow the machine registration. Settings remain intact.
+                RemovePerUserInstall();
+                targetExe = MachineInstallExe;
+            }
+            else
+            {
+                if (launcher != null)
+                {
+                    if (!RunLauncherUserInstall(launcher, wantDesktop)) return false;
+                }
+                else
+                {
+                    // Compatibility for old woven builds and direct developer runs.
+                    DoInstall(wantDesktop);
+                }
+                if (!File.Exists(InstallExe)) return false;   // trust gate / copy failure already reported
+                targetExe = InstallExe;
+            }
 
             if (!IsDefaultPdfHandler())
             {
+                // Loc() is a MainWindow member; App resolves strings off the merged dictionaries
+                // directly, the same way Uninstall() does.
                 var res = KillerDialog.Show(null,
-                    "Would you like to set KillerPDF as your default PDF viewer?\n\n" +
-                    "Opens Windows Settings → Default Apps.",
-                    "KillerPDF", MessageBoxButton.YesNo);
+                    Current.TryFindResource("Str_Dlg_SetDefaultPdfMsg") as string
+                        ?? "Would you like to set KillerPDF as your default PDF viewer?",
+                    AppName, MessageBoxButton.YesNo);
                 if (res == MessageBoxResult.Yes)
                     Process.Start(new ProcessStartInfo("ms-settings:defaultapps")
                         { UseShellExecute = true });
             }
 
-            var psi = new ProcessStartInfo(InstallExe);
+            var psi = new ProcessStartInfo(targetExe);
             if (fileToOpen != null)
                 psi.Arguments = $"\"{fileToOpen}\"";
             // Free the single-instance mutex first so the launched copy becomes primary (and shows a
@@ -566,6 +993,126 @@ namespace KillerPDF
             (Current as App)?.ReleaseInstanceMutex();
             Process.Start(psi);
             Application.Current.Shutdown();
+            return true;
+        }
+
+        /// <summary>Re-run this exe elevated with /silent and wait for it to finish.</summary>
+        private static string? GetPortableLauncherPath()
+        {
+            try
+            {
+                string? path = Environment.GetEnvironmentVariable("KILLERPDF_LAUNCHER_PATH");
+                return !string.IsNullOrWhiteSpace(path) && File.Exists(path) ? Path.GetFullPath(path) : null;
+            }
+            catch { return null; }
+        }
+
+        private static bool RunLauncherUserInstall(string launcher, bool wantDesktop)
+        {
+            try
+            {
+                string arguments = wantDesktop ? "/install-user /desktop" : "/install-user";
+                using var process = Process.Start(new ProcessStartInfo(launcher, arguments)
+                {
+                    UseShellExecute = false,
+                });
+                process?.WaitForExit();
+                return process is not null && process.ExitCode == 0 && File.Exists(InstallExe);
+            }
+            catch { return false; }
+        }
+
+        private static bool RunElevatedSilentInstall(string? launcher = null)
+        {
+            try
+            {
+                string installer = launcher ?? Environment.ProcessPath
+                    ?? throw new InvalidOperationException("The current executable path is unavailable.");
+                var psi = new ProcessStartInfo(installer, "/silent")
+                {
+                    UseShellExecute = true,
+                    Verb = "runas",          // triggers the UAC prompt
+                };
+                using var p = Process.Start(psi);
+                p?.WaitForExit();
+                return p is not null && p.ExitCode == 0 && File.Exists(MachineInstallExe);
+            }
+            catch
+            {
+                // Declining the UAC prompt throws Win32Exception 1223 (ERROR_CANCELLED).
+                return false;
+            }
+        }
+
+        /// <summary>Remove a per-user install: files, shortcuts and its HKCU install markers.
+        /// The settings are deliberately left alone so theme, accent, locale, recent files and
+        /// window placement survive the move to a machine-wide install.</summary>
+        private static void RemovePerUserInstall()
+        {
+            string? registeredExe = ExistingRegisteredExecutable(Registry.CurrentUser);
+            try { if (File.Exists(StartMenuLnk)) File.Delete(StartMenuLnk); } catch { }
+            try { if (Directory.Exists(StartMenuDir)) Directory.Delete(StartMenuDir, true); } catch { }
+            try { if (File.Exists(DesktopLnk)) File.Delete(DesktopLnk); } catch { }
+            string directory = Path.GetDirectoryName(registeredExe ?? InstallExe) ?? InstallDir;
+            try { if (Directory.Exists(directory)) Directory.Delete(directory, true); } catch { }
+            try
+            {
+                using var key = Registry.CurrentUser.OpenSubKey(@"Software\KillerPDF", writable: true);
+                key?.DeleteValue("Installed", throwOnMissingValue: false);
+                key?.DeleteValue("InstallPath", throwOnMissingValue: false);
+            }
+            catch { }
+            UnregisterFileHandler(Registry.CurrentUser);
+            Services.ProtocolRegistrar.Unregister(Registry.CurrentUser);
+            try { Registry.CurrentUser.DeleteSubKeyTree(
+                @"Software\Microsoft\Windows\CurrentVersion\Uninstall\KillerPDF",
+                throwOnMissingSubKey: false); }
+            catch { }
+        }
+
+        // ============================================================
+        // Silent (machine-wide) install - winget / choco / RMM / the all-users checkbox
+        // ============================================================
+
+        /// <summary>
+        /// Machine-wide install. Runs elevated with no UI by definition, so the exit code is the
+        /// only signal a deployment tool - or RunElevatedSilentInstall - gets back.
+        ///
+        /// File associations are registered in HKLM so every account sees KillerPDF in Open With
+        /// and Default apps. Windows still leaves the actual default choice to each user.
+        /// </summary>
+        private static int DoSilentInstall()
+        {
+            try
+            {
+                using var installLease = KillerFamily.Deployment.InstallerExitCodes.Acquire(AppName);
+                string src = Environment.ProcessPath
+                    ?? throw new InvalidOperationException("The current executable path is unavailable.");
+
+                // Same trust gate as the interactive path - an unsigned or wrong-publisher exe must
+                // not be able to write itself into Program Files, least of all while elevated.
+                var (valid, _, _) = VerifyAuthenticode(src);
+                if (!valid)
+                {
+                    Console.Error.WriteLine("Silent install refused: EXE has no valid Authenticode signature.");
+                    return KillerFamily.Deployment.InstallerExitCodes.SecurityRejected;
+                }
+
+                Directory.CreateDirectory(MachineInstallDir);
+                if (File.Exists(MachineInstallExe))
+                {
+                    try { File.SetAttributes(MachineInstallExe, FileAttributes.Normal); } catch { }
+                }
+                File.Copy(src, MachineInstallExe, overwrite: true);
+                try { File.SetAttributes(MachineInstallExe, FileAttributes.Normal); } catch { }
+                RegisterInstalledCopy(machine: true, desktop: false);
+                return KillerFamily.Deployment.InstallerExitCodes.Success;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine("Silent install failed: " + ex.Message);
+                return KillerFamily.Deployment.InstallerExitCodes.FromException(ex);
+            }
         }
 
         // ============================================================
@@ -580,9 +1127,10 @@ namespace KillerPDF
         /// User-private temp directory for session working files (encrypted PDFs, etc.).
         /// %LOCALAPPDATA% is user-private and not indexed by Windows Search.
         /// </summary>
-        internal static readonly string TempDir = Path.Combine(
+        private static readonly string UserTempDir = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "KillerPDF", "Temp");
+        internal static string TempDir => IsStartupSmoke ? Path.Combine(SmokeDataRoot, "Temp") : UserTempDir;
 
         private static readonly List<string> _sessionTemps = [];
 
@@ -637,6 +1185,9 @@ namespace KillerPDF
 
         internal static string? GetSetting(string name)
         {
+            if (IsStartupSmoke) return SmokeSettings.GetValueOrDefault(name);
+            if (Services.AppDataPaths.PortableRoot is not null)
+                return Services.AppDataPaths.GetPortableSetting(name);
             try
             {
                 using var key = Registry.CurrentUser.OpenSubKey(@"Software\KillerPDF\Settings");
@@ -647,6 +1198,12 @@ namespace KillerPDF
 
         internal static void SetSetting(string name, string value)
         {
+            if (IsStartupSmoke) { SmokeSettings[name] = value; return; }
+            if (Services.AppDataPaths.PortableRoot is not null)
+            {
+                try { Services.AppDataPaths.SetPortableSetting(name, value); } catch { }
+                return;
+            }
             try
             {
                 using var key = Registry.CurrentUser.CreateSubKey(@"Software\KillerPDF\Settings");
@@ -657,6 +1214,12 @@ namespace KillerPDF
 
         internal static void RemoveSetting(string name)
         {
+            if (IsStartupSmoke) { SmokeSettings.Remove(name); return; }
+            if (Services.AppDataPaths.PortableRoot is not null)
+            {
+                try { Services.AppDataPaths.RemovePortableSetting(name); } catch { }
+                return;
+            }
             try
             {
                 using var key = Registry.CurrentUser.OpenSubKey(@"Software\KillerPDF\Settings", writable: true);
@@ -672,12 +1235,13 @@ namespace KillerPDF
         /// </summary>
         internal static void ClearAllData()
         {
-            try { Registry.CurrentUser.DeleteSubKeyTree(@"Software\KillerPDF\Settings", throwOnMissingSubKey: false); } catch { }
+            if (Services.AppDataPaths.PortableRoot is not null)
+                TryDeleteDir(Services.AppDataPaths.UserRoot);
+            else
+                try { Registry.CurrentUser.DeleteSubKeyTree(@"Software\KillerPDF\Settings", throwOnMissingSubKey: false); } catch { }
 
-            string localKp = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "KillerPDF");
-            TryDeleteDir(Path.Combine(localKp, "tessdata"));   // downloaded language packs + bundled English
-            TryDeleteDir(Path.Combine(localKp, "ocr"));        // native Tesseract cache
+            TryDeleteDir(Services.AppDataPaths.TessDataDirectory);
+            TryDeleteDir(Path.Combine(Services.AppDataPaths.LocalRoot, "ocr"));
             TryDeleteDir(TempDir);                              // temp working files
 
             // Legacy temp PDFs that may linger in %TEMP%.
@@ -709,6 +1273,8 @@ namespace KillerPDF
 
         // ── Recent files (most-recent first, capped) ─────────────────────
         private const int RecentFilesMax = 10;
+        // "1" = don't track recently opened files at all (#146, privacy on shared machines).
+        internal const string NoRecentFilesSetting = "NoRecentFiles";
 
         internal static System.Collections.Generic.List<string> GetRecentFiles()
         {
@@ -722,6 +1288,7 @@ namespace KillerPDF
 
         internal static void AddRecentFile(string path)
         {
+            if (GetSetting(NoRecentFilesSetting) == "1") return;   // tracking disabled (#146)
             if (string.IsNullOrWhiteSpace(path)) return;
             var list = GetRecentFiles();
             list.RemoveAll(p => string.Equals(p, path, StringComparison.OrdinalIgnoreCase));
@@ -763,11 +1330,11 @@ namespace KillerPDF
 
         /// <summary>
         /// Shows the Install / Run dialog.
-        /// Returns (cancelled, install, wantDesktopShortcut).
+        /// Returns (canceled, install, wantDesktopShortcut).
         /// </summary>
-        private static (bool cancelled, bool install, bool desktop) ShowLauncher(bool alreadyInstalled)
+        private static (bool canceled, bool install, bool desktop) ShowLauncher(bool alreadyInstalled)
         {
-            bool cancelled = true;
+            bool canceled = true;
             bool install   = false;
             bool desktop   = true;
 
@@ -867,10 +1434,9 @@ namespace KillerPDF
                 Foreground = accent
             });
 
-            var version = Assembly.GetExecutingAssembly().GetName().Version;
             content.Children.Add(new TextBlock
             {
-                Text       = $"Version {version?.ToString(3)}",
+                Text       = $"{Current.TryFindResource("Str_About_Version")} {AppVersion.Display}",
                 Foreground = dimText,
                 FontSize   = 12,
                 Margin     = new Thickness(0, 2, 0, 18)
@@ -878,9 +1444,9 @@ namespace KillerPDF
 
             content.Children.Add(new TextBlock
             {
-                Text         = alreadyInstalled
-                    ? "A newer version is available. Install it or run without updating."
-                    : "Install KillerPDF on this computer, or run it without installing.",
+                Text         = Current.TryFindResource(alreadyInstalled
+                    ? "Str_Dlg_UpdateUserMsg"
+                    : "Str_Dlg_InstallMsg") as string ?? string.Empty,
                 Foreground   = Brushes.White,
                 TextWrapping = TextWrapping.Wrap,
                 Margin       = new Thickness(0, 0, 0, 16)
@@ -890,7 +1456,7 @@ namespace KillerPDF
             {
                 IsChecked = true,
                 Margin    = new Thickness(0, 0, 0, 22),
-                Content   = new TextBlock { Text = "Create desktop shortcut", Foreground = Brushes.White }
+                Content   = new TextBlock { Text = Current.TryFindResource("Str_Chk_Desktop") as string ?? string.Empty, Foreground = Brushes.White }
             };
             content.Children.Add(desktopChk);
 
@@ -900,14 +1466,14 @@ namespace KillerPDF
                 HorizontalAlignment = HorizontalAlignment.Right
             };
 
-            var runBtn = UiKit.Make("Run",
+            var runBtn = UiKit.Make(Current.TryFindResource("Str_Btn_Run") as string ?? string.Empty,
                 new SolidColorBrush(Color.FromRgb(0x30, 0x30, 0x30)),
                 new SolidColorBrush(Color.FromRgb(0x16, 0x63, 0x34)),
                 Brushes.White, Brushes.White);
             runBtn.Width  = 88;
             runBtn.Margin = new Thickness(0, 0, 8, 0);
 
-            var installBtn = UiKit.Make(alreadyInstalled ? "Update" : "Install",
+            var installBtn = UiKit.Make(Current.TryFindResource(alreadyInstalled ? "Str_Btn_DoUpdate" : "Str_Btn_DoInstall") as string ?? string.Empty,
                 accent,
                 new SolidColorBrush(Color.FromRgb(0x4a, 0xf0, 0x90)),
                 new SolidColorBrush(Color.FromRgb(0x0a, 0x0a, 0x0a)),
@@ -917,12 +1483,12 @@ namespace KillerPDF
 
             runBtn.Click += (_, _) =>
             {
-                cancelled = false; install = false;
+                canceled = false; install = false;
                 win.Close();
             };
             installBtn.Click += (_, _) =>
             {
-                cancelled = false; install = true;
+                canceled = false; install = true;
                 desktop = desktopChk.IsChecked == true;
                 win.Close();
             };
@@ -935,7 +1501,7 @@ namespace KillerPDF
             win.Content = root;
             win.ShowDialog();
 
-            return (cancelled, install, desktop);
+            return (canceled, install, desktop);
         }
 
         // ============================================================
@@ -966,7 +1532,7 @@ namespace KillerPDF
             public uint   dwStateAction;       // 0 = WTD_STATEACTION_IGNORE
             public IntPtr hWVTStateData;
             public IntPtr pwszURLReference;
-            public uint   dwProvFlags;         // 0 = allow network fetch of intermediates
+            public uint   dwProvFlags;         // 0x1000 = WTD_CACHE_ONLY_URL_RETRIEVAL
             public uint   dwUIContext;
             public IntPtr pSignatureSettings;
         }
@@ -974,9 +1540,8 @@ namespace KillerPDF
         private static readonly Guid WTD_VERIFY_GENERIC =
             new("00AAC56B-CD44-11d0-8CC2-00C04FC295EE");
 
-        [DllImport("wintrust.dll", ExactSpelling = true, SetLastError = false,
-                   CharSet = CharSet.Unicode)]
-        private static extern uint WinVerifyTrust(
+        [LibraryImport("wintrust.dll")]
+        private static partial uint WinVerifyTrust(
             IntPtr hwnd, ref Guid pgActionID, IntPtr pWVTData);
 
         // ── Public helpers ───────────────────────────────────────────────────
@@ -995,8 +1560,10 @@ namespace KillerPDF
             // Try to read cert info regardless of signature validity
             try
             {
-                var raw  = X509Certificate.CreateFromSignedFile(filePath);
-                var cert = new X509Certificate2(raw);
+#pragma warning disable SYSLIB0057 // Required to extract the signer certificate from a PE Authenticode signature.
+                var raw = X509Certificate.CreateFromSignedFile(filePath);
+#pragma warning restore SYSLIB0057
+                using var cert = X509CertificateLoader.LoadCertificate(raw.GetRawCertData());
                 subject    = cert.GetNameInfo(X509NameType.SimpleName, forIssuer: false);
                 thumbprint = cert.Thumbprint ?? string.Empty;
             }
@@ -1020,7 +1587,7 @@ namespace KillerPDF
                     dwUIChoice    = 2,  // WTD_UI_NONE
                     dwUnionChoice = 1,  // WTD_CHOICE_FILE
                     pUnion        = fileInfoPtr,
-                    dwProvFlags   = 0   // allow network fetch of intermediate certs
+                    dwProvFlags   = 0x1000   // WTD_CACHE_ONLY_URL_RETRIEVAL, never hit the network
                 }, dataPtr, false);
 
                 var actionId = WTD_VERIFY_GENERIC;
@@ -1042,7 +1609,8 @@ namespace KillerPDF
         {
             try
             {
-                return VerifyAuthenticode(Process.GetCurrentProcess().MainModule!.FileName);
+                return VerifyAuthenticode(Environment.ProcessPath
+                    ?? throw new InvalidOperationException("The current executable path is unavailable."));
             }
             catch
             {
@@ -1055,10 +1623,10 @@ namespace KillerPDF
         {
             try
             {
-                var path = Process.GetCurrentProcess().MainModule!.FileName;
-                using var sha = SHA256.Create();
+                var path = Environment.ProcessPath
+                    ?? throw new InvalidOperationException("The current executable path is unavailable.");
                 using var fs  = File.OpenRead(path);
-                return BitConverter.ToString(sha.ComputeHash(fs)).Replace("-", "");
+                return Convert.ToHexString(SHA256.HashData(fs));
             }
             catch { return "(unavailable)"; }
         }
@@ -1068,8 +1636,7 @@ namespace KillerPDF
         internal static void ShowAboutDialog(Window owner)
         {
             // Gather info on a background thread so the UI isn't blocked by hashing
-            var version    = System.Reflection.Assembly.GetExecutingAssembly()
-                                   .GetName().Version?.ToString(3) ?? "?";
+            var version    = AppVersion.Display;
             var (sigValid, sigSubject, sigThumbprint) = GetExeSignerInfo();
             var sha256 = GetExeSha256();
 
@@ -1092,7 +1659,8 @@ namespace KillerPDF
 
             var titleText = new TextBlock
             {
-                Text = $"About KillerPDF",
+                Text = (Current.TryFindResource("Str_TT_About") as string ?? AppName)
+                    .Replace(" (F12)", string.Empty, StringComparison.Ordinal),
                 Foreground = fg, VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(12, 0, 0, 0), FontSize = 13, FontWeight = FontWeights.SemiBold
             };
@@ -1107,7 +1675,7 @@ namespace KillerPDF
             Grid.SetColumn(closeBtn, 1);
             titleBar.Children.Add(closeBtn);
 
-            // Helper: labelled row (onClick makes the value a clickable hyperlink)
+            // Helper: labeled row (onClick makes the value a clickable hyperlink)
             static StackPanel MakeRow(string label, string value,
                 SolidColorBrush labelBrush, SolidColorBrush valueBrush,
                 FontFamily? valueFont = null, bool wrap = false, Action? onClick = null)
@@ -1153,29 +1721,28 @@ namespace KillerPDF
                 try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); } catch { }
             }
 
-            var sigInfo = sigValid
-                ? $"{sigSubject}"
-                : "(not signed or chain failed)";
+            var none = Current.TryFindResource("Str_Margin_None") as string ?? "None";
+            var sigInfo = sigValid ? $"{sigSubject}" : none;
 
-            var thumbInfo = string.IsNullOrEmpty(sigThumbprint) ? "(none)" : sigThumbprint;
+            var thumbInfo = string.IsNullOrEmpty(sigThumbprint) ? none : sigThumbprint;
 
             var card = new Border
             {
                 Background = bgCard,
-                CornerRadius = new CornerRadius(14),
+                CornerRadius = new CornerRadius(6),
                 Padding = new Thickness(16),
                 Margin = new Thickness(0, 0, 0, 0)
             };
             var cardContent = new StackPanel();
-            cardContent.Children.Add(MakeRow("VERSION", $"v{version}", fgDim, accent,
+            cardContent.Children.Add(MakeRow(Current.TryFindResource("Str_About_Version") as string ?? string.Empty, $"v{version}", fgDim, accent,
                 onClick: () => OpenUrl($"https://github.com/SteveTheKiller/KillerPDF/releases/tag/v{version}")));
-            cardContent.Children.Add(MakeRow("PUBLISHER", sigInfo,         fgDim, fg));
-            cardContent.Children.Add(MakeRow("THUMBPRINT", thumbInfo,      fgDim, fg, mono, wrap: true));
-            cardContent.Children.Add(MakeRow("EXE SHA256", sha256,         fgDim, fg, mono, wrap: true));
+            cardContent.Children.Add(MakeRow(Current.TryFindResource("Str_About_Publisher") as string ?? string.Empty, sigInfo, fgDim, fg));
+            cardContent.Children.Add(MakeRow(Current.TryFindResource("Str_About_Thumbprint") as string ?? string.Empty, thumbInfo, fgDim, fg, mono, wrap: true));
+            cardContent.Children.Add(MakeRow(Current.TryFindResource("Str_About_ExeSha") as string ?? string.Empty, sha256, fgDim, fg, mono, wrap: true));
             card.Child = cardContent;
 
             // Close button
-            var okBtn = UiKit.Make("Close",
+            var okBtn = UiKit.Make(Current.TryFindResource("Str_Lbl_Close") as string ?? string.Empty,
                 new SolidColorBrush(Color.FromRgb(0x1e, 0xa5, 0x4c)),
                 new SolidColorBrush(Color.FromRgb(0x17, 0x7a, 0x38)),
                 new SolidColorBrush(Colors.White),
@@ -1198,7 +1765,9 @@ namespace KillerPDF
 
             // Tagline with Killer Tools link
             var tagline = new TextBlock { FontSize = 11, Margin = new Thickness(0, 0, 0, 16) };
-            tagline.Inlines.Add(new Run("A fast, free PDF toolkit for Windows. Part of ") { Foreground = fgDim });
+            var taglineText = Current.TryFindResource("Str_Tagline") as string ?? string.Empty;
+            int brandPosition = taglineText.IndexOf("{0}", StringComparison.Ordinal);
+            tagline.Inlines.Add(new Run(brandPosition >= 0 ? taglineText[..brandPosition] : taglineText) { Foreground = fgDim });
             var ktHl = new Hyperlink(new Run("Killer Tools"))
             {
                 Foreground = accent,
@@ -1206,7 +1775,7 @@ namespace KillerPDF
             };
             ktHl.Click += (_, _) => OpenUrl("https://killertools.net");
             tagline.Inlines.Add(ktHl);
-            tagline.Inlines.Add(new Run(".") { Foreground = fgDim });
+            tagline.Inlines.Add(new Run(brandPosition >= 0 ? taglineText[(brandPosition + 3)..] : string.Empty) { Foreground = fgDim });
 
             var body = new StackPanel { Margin = new Thickness(16, 16, 16, 20) };
             body.Children.Add(logo);
@@ -1241,61 +1810,25 @@ namespace KillerPDF
             dlg.ShowDialog();
         }
 
-        // ── pdfium.dll integrity check ───────────────────────────────────────
-
-        /// <summary>
-        /// Finds the Costura-embedded pdfium resource, decompresses it in-memory,
-        /// and compares its SHA256 to BuildInfo.PdfiumSha256.
-        /// Returns false (and shows a message box) only on a confirmed mismatch.
-        /// Fails-open if the check cannot complete (dev builds, missing resource, I/O error).
-        /// </summary>
-        private static bool CheckPdfiumIntegrity()
-        {
-            if (string.Equals(BuildInfo.PdfiumSha256, BuildInfo.PdfiumSha256Disabled, StringComparison.Ordinal))
-                return true; // disabled for this build (dev / SkipSign)
-
-            var asm = Assembly.GetExecutingAssembly();
-            var resourceName = Array.Find(asm.GetManifestResourceNames(),
-                n => n.IndexOf("pdfium", StringComparison.OrdinalIgnoreCase) >= 0
-                     && n.EndsWith(".compressed", StringComparison.OrdinalIgnoreCase));
-
-            if (resourceName == null)
-                return true; // not bundled via Costura (dev build running from bin/)
-
-            try
-            {
-                string actual;
-                using (var rs      = asm.GetManifestResourceStream(resourceName)!)
-                using (var deflate = new DeflateStream(rs, CompressionMode.Decompress))
-                using (var sha     = SHA256.Create())
-                    actual = BitConverter.ToString(sha.ComputeHash(deflate)).Replace("-", "");
-
-                if (!string.Equals(actual, BuildInfo.PdfiumSha256,
-                        StringComparison.OrdinalIgnoreCase))
-                {
-                    MessageBox.Show(
-                        "Security check failed: pdfium.dll integrity verification failed.\n\n" +
-                        $"Expected: {BuildInfo.PdfiumSha256}\n" +
-                        $"Actual  : {actual}\n\n" +
-                        "The bundled PDF engine may have been tampered with. KillerPDF will exit.",
-                        $"{AppName} - Security", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return false;
-                }
-                return true;
-            }
-            catch
-            {
-                return true; // fail-open: only block on confirmed mismatch
-            }
-        }
-
         // ============================================================
         // Installation
         // ============================================================
 
         private static void DoInstall(bool wantDesktop)
         {
-            string src = Process.GetCurrentProcess().MainModule!.FileName;
+            string src = Environment.ProcessPath
+                ?? throw new InvalidOperationException("The current executable path is unavailable.");
+
+            // ── Trust gate: refuse to install an unsigned or wrong-publisher EXE ──
+            var (valid, _, _) = VerifyAuthenticode(src);
+            if (!valid)
+            {
+                KillerDialog.Show(Current.MainWindow,
+                    "Installation refused: the running EXE does not carry a valid Authenticode " +
+                    "signature.\n\nOnly signed builds of KillerPDF can be installed.",
+                    AppName, MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             // ── Downgrade guard ────────────────────────────────────────────────────
             if (File.Exists(InstallExe))
@@ -1304,7 +1837,7 @@ namespace KillerPDF
                 var instVer = FileVersionInfo.GetVersionInfo(InstallExe).FileVersion ?? "";
                 if (string.Compare(runVer, instVer, StringComparison.OrdinalIgnoreCase) < 0)
                 {
-                    var res = MessageBox.Show(
+                    var res = KillerDialog.Show(Current.MainWindow,
                         $"You are about to install an older version ({runVer}) " +
                         $"over the currently installed version ({instVer}).\n\n" +
                         "Downgrade anyway?",
@@ -1331,7 +1864,7 @@ namespace KillerPDF
                 }
                 catch (Exception copyEx) when (copyEx is UnauthorizedAccessException or IOException)
                 {
-                    MessageBox.Show(
+                    KillerDialog.Show(Current.MainWindow,
                         "Couldn't write the installed copy at:\n" + InstallExe +
                         "\n\nClose any open KillerPDF window (and check Task Manager for KillerPDF.exe), " +
                         "then run the installer again.",
@@ -1339,108 +1872,118 @@ namespace KillerPDF
                     return;
                 }
                 try { File.SetAttributes(InstallExe, FileAttributes.Normal); } catch { }
-
-                // Shortcuts
-                Directory.CreateDirectory(StartMenuDir);
-                CreateShortcut(StartMenuLnk, InstallExe);
-                if (wantDesktop)
-                    CreateShortcut(DesktopLnk, InstallExe);
-
-                // Installed marker
-                using (var key = Registry.CurrentUser.CreateSubKey(@"Software\KillerPDF"))
-                {
-                    key.SetValue("Installed",    1);
-                    key.SetValue("InstallPath",  InstallExe);
-                    key.SetValue("Version",
-                        Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "");
-                }
-
-                // Add/Remove Programs entry
-                using (var key = Registry.CurrentUser.CreateSubKey(
-                    @"Software\Microsoft\Windows\CurrentVersion\Uninstall\KillerPDF"))
-                {
-                    key.SetValue("DisplayName",          AppName);
-                    key.SetValue("DisplayVersion",
-                        Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "");
-                    key.SetValue("Publisher",            "Steve / thekiller.net");
-                    key.SetValue("InstallLocation",      InstallDir);
-                    key.SetValue("DisplayIcon",          $"{InstallExe},0");
-                    key.SetValue("UninstallString",      $"\"{InstallExe}\" /uninstall");
-                    key.SetValue("QuietUninstallString", $"\"{InstallExe}\" /uninstall");
-                    key.SetValue("NoModify",             1);
-                    key.SetValue("NoRepair",             1);
-                }
-
-                // Drop the PDF file-type icon next to the exe so DefaultIcon can point at it
-                ExtractFileIcon();
-
-                // Register as PDF file handler (per-user - no admin needed)
-                RegisterFileHandler();
+                RegisterInstalledCopy(machine: false, desktop: wantDesktop);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Installation failed:\n{ex.Message}", AppName,
+                KillerDialog.Show(Current.MainWindow, $"Installation failed:\n{ex.Message}", AppName,
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private static void ExtractFileIcon()
+        // iconPath: which install location to drop it in. Parameterized for the machine-wide
+        // install, which writes into Program Files rather than the per-user folder.
+        private static void ExtractFileIcon(string iconPath)
         {
             try
             {
                 var asm = Assembly.GetExecutingAssembly();
                 var rn  = Array.Find(asm.GetManifestResourceNames(),
-                    n => n.IndexOf("pdf-file", StringComparison.OrdinalIgnoreCase) >= 0
+                    n => n.Contains("pdf-file", StringComparison.OrdinalIgnoreCase)
                          && n.EndsWith(".ico", StringComparison.OrdinalIgnoreCase));
                 if (rn == null) return; // dev build running from bin/ without the embedded icon
 
-                using (var rs = asm.GetManifestResourceStream(rn)!)
-                using (var fs = File.Create(FileIconPath))
-                    rs.CopyTo(fs);
+                using var rs = asm.GetManifestResourceStream(rn)!;
+                using var fs = File.Create(iconPath);
+                rs.CopyTo(fs);
             }
             catch { }
         }
 
-        private static void RegisterFileHandler()
+        /// <summary>
+        /// Register KillerPDF under either HKCU for a per-user install or HKLM for a machine-wide
+        /// install. This advertises the handler without changing any user's chosen PDF default.
+        /// </summary>
+        private static void RegisterFileHandler(RegistryKey root, string exePath, string iconPath)
         {
             // Prefer the dedicated PDF file icon; fall back to the app icon if extraction didn't run
-            string iconRef = File.Exists(FileIconPath)
-                ? $"\"{FileIconPath}\",0"
-                : $"{InstallExe},0";
+            string iconRef = File.Exists(iconPath)
+                ? $"\"{iconPath}\",0"
+                : $"{exePath},0";
 
             // ProgID definition
-            using (var k = Registry.CurrentUser.CreateSubKey(@"Software\Classes\KillerPDF.pdf"))
+            using (var k = root.CreateSubKey(@"Software\Classes\KillerPDF.pdf"))
                 k.SetValue("", "PDF Document");
 
-            using (var k = Registry.CurrentUser.CreateSubKey(
+            using (var k = root.CreateSubKey(
                 @"Software\Classes\KillerPDF.pdf\DefaultIcon"))
                 k.SetValue("", iconRef);
 
-            using (var k = Registry.CurrentUser.CreateSubKey(
+            using (var k = root.CreateSubKey(
                 @"Software\Classes\KillerPDF.pdf\shell\open\command"))
-                k.SetValue("", $"\"{InstallExe}\" \"%1\"");
+                k.SetValue("", $"\"{exePath}\" \"%1\"");
+
+            // Existing Open with choices can retain the launcher name after an upgrade.
+            // Both application identities must launch the installed payload, not setup.
+            foreach (string application in new[] { "KillerPDF.App.exe", "KillerPDF.exe" })
+            {
+                string applicationKey = @"Software\Classes\Applications\" + application;
+                using (var k = root.CreateSubKey(applicationKey))
+                    k.SetValue("FriendlyAppName", AppName);
+                using (var k = root.CreateSubKey(applicationKey + @"\shell\open\command"))
+                    k.SetValue("", $"\"{exePath}\" \"%1\"");
+                using (var k = root.CreateSubKey(applicationKey + @"\SupportedTypes"))
+                    k.SetValue(".pdf", "");
+            }
 
             // Associate .pdf extension - adds KillerPDF to the "Open with" list
-            using (var k = Registry.CurrentUser.CreateSubKey(
+            using (var k = root.CreateSubKey(
                 @"Software\Classes\.pdf\OpenWithProgids"))
-                k.SetValue("KillerPDF.pdf", new byte[0], RegistryValueKind.None);
+                k.SetValue("KillerPDF.pdf", Array.Empty<byte>(), RegistryValueKind.None);
 
             // RegisteredApplications capability (used by Default Programs UI)
-            using (var k = Registry.CurrentUser.CreateSubKey(
+            using (var k = root.CreateSubKey(
                 @"Software\KillerPDF\Capabilities"))
             {
                 k.SetValue("ApplicationName",        AppName);
                 k.SetValue("ApplicationDescription", "Lightweight PDF viewer and editor");
             }
-            using (var k = Registry.CurrentUser.CreateSubKey(
+            using (var k = root.CreateSubKey(
                 @"Software\KillerPDF\Capabilities\FileAssociations"))
                 k.SetValue(".pdf", "KillerPDF.pdf");
 
-            using (var k = Registry.CurrentUser.CreateSubKey(@"Software\RegisteredApplications"))
+            // #183: without this the killerpdf:// handler never appears in Windows Settings >
+            // Default apps > Choose defaults by link type. Maps the scheme to its ProgID
+            // (Software\Classes\killerpdf, written by ProtocolRegistrar).
+            using (var k = root.CreateSubKey(
+                @"Software\KillerPDF\Capabilities\UrlAssociations"))
+                k.SetValue(Services.ProtocolRegistrar.Scheme, Services.ProtocolRegistrar.Scheme);
+
+            using (var k = root.CreateSubKey(@"Software\RegisteredApplications"))
                 k.SetValue(AppName, @"Software\KillerPDF\Capabilities");
 
             // Tell the shell file associations have changed
             SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        private static void UnregisterFileHandler(RegistryKey root)
+        {
+            try { root.DeleteSubKeyTree(@"Software\Classes\KillerPDF.pdf", false); } catch { }
+            try { root.DeleteSubKeyTree(@"Software\Classes\Applications\KillerPDF.App.exe", false); } catch { }
+            try { root.DeleteSubKeyTree(@"Software\Classes\Applications\KillerPDF.exe", false); } catch { }
+            try { root.DeleteSubKeyTree(@"Software\KillerPDF\Capabilities", false); } catch { }
+            try
+            {
+                using var k = root.OpenSubKey(@"Software\Classes\.pdf\OpenWithProgids", writable: true);
+                k?.DeleteValue("KillerPDF.pdf", throwOnMissingValue: false);
+            }
+            catch { }
+            try
+            {
+                using var k = root.OpenSubKey(@"Software\RegisteredApplications", writable: true);
+                k?.DeleteValue(AppName, throwOnMissingValue: false);
+            }
+            catch { }
         }
 
         private static void CreateShortcut(string lnkPath, string targetPath)
@@ -1462,14 +2005,128 @@ namespace KillerPDF
         // Uninstall
         // ============================================================
 
-        private static void Uninstall()
+        private static bool RelaunchMachineUninstallElevatedIfNeeded(bool machine, bool silent)
         {
-            var res = MessageBox.Show(
-                "Uninstall KillerPDF from this computer?",
-                $"{AppName} Uninstall",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-            if (res != MessageBoxResult.Yes) return;
+            if (!machine) return false;
+            try
+            {
+                using var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
+                var principal = new System.Security.Principal.WindowsPrincipal(identity);
+                if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
+                    return false;
+
+                Process.Start(new ProcessStartInfo(
+                    Environment.ProcessPath
+                        ?? throw new InvalidOperationException("The current executable path is unavailable."),
+                    silent ? "/uninstall-silent" : "/uninstall")
+                {
+                    UseShellExecute = true,
+                    Verb = "runas",
+                });
+            }
+            catch (System.ComponentModel.Win32Exception ex) when (ex.NativeErrorCode == 1223)
+            {
+                // UAC was declined. Leave the installation untouched.
+            }
+            catch (Exception ex)
+            {
+                if (!silent)
+                    KillerDialog.Show(null, $"Uninstall could not request administrator access:\n{ex.Message}",
+                        AppName, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            return true;
+        }
+
+        private static void RegisterInstalledCopy(bool machine, bool desktop)
+        {
+            string exePath = Path.GetFullPath(Process.GetCurrentProcess().MainModule?.FileName
+                ?? throw new InvalidOperationException("The installed application path is unavailable."));
+            string installDirectory = Path.GetDirectoryName(exePath)
+                ?? throw new InvalidOperationException("The installed application folder is unavailable.");
+            string iconPath = Path.Combine(installDirectory, "pdf-file.ico");
+            string startMenuDirectory = machine ? MachineStartMenuDir : StartMenuDir;
+            string startMenuShortcut = machine ? MachineStartMenuLnk : StartMenuLnk;
+            RegistryKey registryRoot = machine ? Registry.LocalMachine : Registry.CurrentUser;
+
+            if (!File.Exists(exePath))
+                throw new FileNotFoundException("The installed application is missing.", exePath);
+
+            Directory.CreateDirectory(startMenuDirectory);
+            CreateShortcut(startMenuShortcut, exePath);
+            if (!machine && desktop) CreateShortcut(DesktopLnk, exePath);
+
+            if (!File.Exists(iconPath)) ExtractFileIcon(iconPath);
+            RegisterFileHandler(registryRoot, exePath, iconPath);
+            Services.ProtocolRegistrar.Register(registryRoot, exePath);
+
+            using (var key = registryRoot.CreateSubKey(@"Software\KillerPDF"))
+            {
+                key.SetValue("Installed", 1);
+                key.SetValue("InstallPath", exePath);
+                key.SetValue("Version", AppVersion.Display);
+            }
+
+            using (var key = registryRoot.CreateSubKey(
+                @"Software\Microsoft\Windows\CurrentVersion\Uninstall\KillerPDF"))
+            {
+                key.SetValue("DisplayName", AppName);
+                key.SetValue("DisplayVersion", AppVersion.Display);
+                key.SetValue("Publisher", "Steve the Killer");
+                key.SetValue("EstimatedSize", GetInstalledSizeKilobytes(installDirectory), RegistryValueKind.DWord);
+                key.SetValue("InstallLocation", installDirectory);
+                key.SetValue("DisplayIcon", $"{exePath},0");
+                key.SetValue("UninstallString", $"\"{exePath}\" /uninstall");
+                key.SetValue("QuietUninstallString", $"\"{exePath}\" /uninstall-silent");
+                key.SetValue("NoModify", 1);
+                key.SetValue("NoRepair", 1);
+            }
+
+            SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        private static int GetInstalledSizeKilobytes(string installDirectory)
+        {
+            long bytes = 0;
+            var options = new EnumerationOptions
+            {
+                RecurseSubdirectories = true,
+                IgnoreInaccessible = true,
+                AttributesToSkip = FileAttributes.ReparsePoint
+            };
+            foreach (var file in new DirectoryInfo(installDirectory).EnumerateFiles("*", options))
+                bytes += file.Length;
+            return (int)Math.Min(int.MaxValue, (bytes + 1023) / 1024);
+        }
+
+        private static void Uninstall(bool silent)
+        {
+            Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            if (!silent) ThemeManager.InitializeInstallerTheme();
+            string currentExe = Path.GetFullPath(Process.GetCurrentProcess().MainModule?.FileName ?? string.Empty);
+            bool machine = IsRegisteredCopy(Registry.LocalMachine, currentExe);
+            if (RelaunchMachineUninstallElevatedIfNeeded(machine, silent)) return;
+
+            if (!silent)
+            {
+                var res = KillerDialog.Show(
+                    null,
+                    "Uninstall KillerPDF from this computer?",
+                    AppName,
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question,
+                    confirmLabel: Application.Current.TryFindResource("Str_Btn_Uninstall") as string ?? "Uninstall",
+                    cancelLabel: Application.Current.TryFindResource("Str_Btn_Cancel") as string ?? "Cancel");
+                if (res != MessageBoxResult.Yes) return;
+            }
+
+            if (!CloseRunningInstanceForUninstall())
+            {
+                if (!silent)
+                    KillerDialog.Show(null,
+                        "KillerPDF is still running.\nClose it, then try uninstalling again.",
+                        AppName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             // Shortcuts
             try { File.Delete(StartMenuLnk); } catch { }
@@ -1478,34 +2135,31 @@ namespace KillerPDF
 
             // Registry cleanup
             try { Registry.CurrentUser.DeleteSubKeyTree(@"Software\KillerPDF"); } catch { }
+            Services.ProtocolRegistrar.Unregister();
             try { Registry.CurrentUser.DeleteSubKeyTree(
                 @"Software\Microsoft\Windows\CurrentVersion\Uninstall\KillerPDF"); } catch { }
-            try { Registry.CurrentUser.DeleteSubKeyTree(@"Software\Classes\KillerPDF.pdf"); } catch { }
+            UnregisterFileHandler(Registry.CurrentUser);
 
-            try
+            // Machine-wide half. Only reachable when Add/Remove Programs launched the Program Files
+            // copy, which Windows runs elevated from the HKLM uninstall entry - so these writes
+            // succeed there and simply fail harmlessly on a per-user uninstall.
+            if (machine)
             {
-                using var k = Registry.CurrentUser.OpenSubKey(
-                    @"Software\Classes\.pdf\OpenWithProgids", writable: true);
-                k?.DeleteValue("KillerPDF.pdf", throwOnMissingValue: false);
+                try { File.Delete(MachineStartMenuLnk); } catch { }
+                try { Directory.Delete(MachineStartMenuDir, recursive: false); } catch { }
+                UnregisterFileHandler(Registry.LocalMachine);
+                Services.ProtocolRegistrar.Unregister(Registry.LocalMachine);   // #183
+                try { Registry.LocalMachine.DeleteSubKeyTree(@"Software\KillerPDF"); } catch { }
+                try { Registry.LocalMachine.DeleteSubKeyTree(
+                    @"Software\Microsoft\Windows\CurrentVersion\Uninstall\KillerPDF"); } catch { }
             }
-            catch { }
-
-            try
-            {
-                using var k = Registry.CurrentUser.OpenSubKey(
-                    @"Software\RegisteredApplications", writable: true);
-                k?.DeleteValue(AppName, throwOnMissingValue: false);
-            }
-            catch { }
-
-            SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, IntPtr.Zero, IntPtr.Zero);
 
             // Self-delete: deferred via cmd batch so the EXE can exit first
             string bat = Path.Combine(Path.GetTempPath(), "killerpdf_uninstall.bat");
             File.WriteAllText(bat,
                 "@echo off\r\n" +
                 "ping -n 3 127.0.0.1 >nul\r\n" +
-                $"rmdir /s /q \"{InstallDir}\"\r\n" +
+                $"rmdir /s /q \"{Path.GetDirectoryName(currentExe)}\"\r\n" +
                 "del \"%~f0\"\r\n");
             Process.Start(new ProcessStartInfo("cmd.exe", $"/c \"{bat}\"")
             {
@@ -1513,8 +2167,12 @@ namespace KillerPDF
                 UseShellExecute = true
             });
 
-            MessageBox.Show(Application.Current.TryFindResource("Str_Dlg_Uninstalled") as string ?? "KillerPDF has been uninstalled.", AppName,
-                MessageBoxButton.OK, MessageBoxImage.Information);
+            if (!silent)
+            {
+                KillerDialog.Show(null,
+                    Application.Current.TryFindResource("Str_Dlg_Uninstalled") as string ?? "KillerPDF has been uninstalled.", AppName,
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }

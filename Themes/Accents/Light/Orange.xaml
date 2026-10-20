@@ -5,18 +5,27 @@
     <!-- Light family - ORANGE accent overlay. Accent is a deep amber (readable on white, and the
          selected-page background with white text); the dim key is a pale tint for the highlight
          background. Fixed greens (InstallBtnBg, AccentLogo) come from Light.xaml. -->
-    <SolidColorBrush x:Key="Accent"          Color="#C7710F" po:Freeze="True"/>
-    <SolidColorBrush x:Key="HeaderAccent"    Color="#C7710F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryBrush"        Color="#C7710F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#C7710F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#C7710F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#C7710F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="HeaderLineBrush"     Color="#C7710F" po:Freeze="True"/>
     <SolidColorBrush x:Key="SelectionAccent" Color="#C7710F" po:Freeze="True"/>
-    <SolidColorBrush x:Key="AccentDim"       Color="#F8E5CE" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SelectionBg"     Color="#C7710F" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgScrollThumb"   Color="#88C7710F" po:Freeze="True"/>
-    <SolidColorBrush x:Key="ScrollThumbHover" Color="#C7710F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RowSelectedBrush"    Color="#C7710F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OutlinePressedBrush" Color="#F8E5CE" po:Freeze="True"/>
+    <LinearGradientBrush x:Key="SelectionBg"     po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#A96517" Offset="0"/><GradientStop Color="#AD5C00" Offset="1"/></LinearGradientBrush>
+    <SolidColorBrush x:Key="ScrollThumbBrush"      Color="#88C7710F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ScrollThumbHoverBrush" Color="#C7710F" po:Freeze="True"/>
     <SolidColorBrush x:Key="RadioAccent"     Color="#C7710F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RadioAccentText" Color="#C7710F" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"                      Color="#F8E5CE" po:Freeze="True"/>
     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"                  Color="#C7710F" po:Freeze="True"/>
     <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"     Color="#F8E5CE" po:Freeze="True"/>
     <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#C7710F" po:Freeze="True"/>
 
+    <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#1A1A1A"/>
+    <SolidColorBrush x:Key="OutlineHoverTextBrush" Color="#17171B"/>
+    <SolidColorBrush x:Key="FooterAccentBrush" Color="#8D500B"/>
+    <SolidColorBrush x:Key="AccentLogo"        Color="#C7710F" po:Freeze="True"/>
 </ResourceDictionary>

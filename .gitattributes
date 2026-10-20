@@ -52,3 +52,10 @@
 *.pdb       binary
 *.snk       binary
 *.pfx       binary
+*.pdf       binary
+
+# Vendored third-party sources: keep byte-identical to upstream, no EOL normalization.
+# Six of the PdfSharpCore files are UTF-16LE, and the explicit "*.cs text eol=crlf" above
+# overrides git's binary detection - checkout then injects CR into UTF-16 and misaligns
+# every code unit after the first newline, so a fresh clone won't compile.
+third_party/** -text

@@ -13,9 +13,6 @@ using System.Windows.Shapes;
 using Docnet.Core;
 using Docnet.Core.Models;
 using Microsoft.Win32;
-using PdfSharpCore.Drawing;
-using PdfSharpCore.Pdf;
-using PdfSharpCore.Pdf.IO;
 using KillerPDF.Services;
 using PdfPigDoc = UglyToad.PdfPig.PdfDocument;
 
@@ -23,171 +20,191 @@ namespace KillerPDF
 {
     public partial class MainWindow : Window
     {
-        private PdfDocument? _doc;
-        private string? _currentFile;
-        private string? _originalFile;  // user's real file path; survives temp swaps from crop/rotate, used by Save
+        private PdfWorkingDocument? _doc { get => ActiveViewer?.DocumentRef; set { ActiveViewer?.DocumentRef = value; } }
+        private string? _currentFile { get => ActiveViewer?.CurrentFileRef; set { ActiveViewer?.CurrentFileRef = value; } }
+        private string? _originalFile { get => ActiveViewer?.OriginalFileRef; set { ActiveViewer?.OriginalFileRef = value; } }
         private Point _dragStartPoint;
 
         // Zoom
-        private double _zoomLevel = 1.0;
-        private double _lastRenderZoom = 1.0;
-        private int _renderedPrimaryPage = -1;   // primary (spread-left) page currently rasterised
-        private const double ZoomMin = 0.05;
-        private const double ZoomMax = 5.0;
-        private const double ZoomStep = 0.15;
-        private enum FitMode { None, Width, Page }
-        private FitMode _fitMode = FitMode.None;
-        private System.Windows.Threading.DispatcherTimer? _rerenderTimer;
-        private System.Threading.CancellationTokenSource? _secondaryRenderCts;
-        private enum ViewMode { Single, Continuous, TwoPage, Grid }
-        private ViewMode _viewMode = ViewMode.Continuous;
-        private readonly StackPanel _continuousPanel = null!;
-        private System.Threading.CancellationTokenSource? _continuousRenderCts;
-        private System.Threading.CancellationTokenSource? _continuousSharpenCts;   // #85 visible-page re-sharpen
-        private readonly HashSet<int> _continuousSharpPages = [];   // slots currently holding a hi-res bitmap
-        private int _continuousSharpW;                              // budget those slots were sharpened at
-        private readonly List<double> _continuousTops = [];
-        private int _gridScrollToPage = -1;   // page to scroll to once its grid tile streams in (-1 = none)
-        private int _continuousScrollTarget = -1;  // re-scroll here once its true height is known
-        private double _continuousPageW;
+        private double _zoomLevel { get => _view.ZoomLevel; set => _view.ZoomLevel = value; }
+        private double _lastRenderZoom { get => _view.LastRenderZoom; set => _view.LastRenderZoom = value; }
+        private int _renderedPrimaryPage { get => _view.RenderedPrimaryPage; set => _view.RenderedPrimaryPage = value; }
+        // internal: the viewer control aliases these as its own consts (PdfViewer.Bridge.cs).
+        // They stay declared here because MainWindow.xaml.cs and KeyboardShortcuts.cs read them
+        // too, and a const costs nothing to alias but would drift if duplicated.
+        internal const double ZoomMin = 0.05;
+        internal const double ZoomMax = 5.0;
+        internal const double ZoomStep = 0.15;
+        private FitMode _fitMode { get => _view.Fit; set => _view.Fit = value; }
+        private System.Windows.Threading.DispatcherTimer? _rerenderTimer { get => _view.RerenderTimer; set => _view.RerenderTimer = value; }
+        private System.Threading.CancellationTokenSource? _secondaryRenderCts { get => _view.SecondaryRenderCts; set => _view.SecondaryRenderCts = value; }
+        // ── Split pane ─────────────────────────────────────────────────────────────────────
+        // The per-view state lives in one object (Models/ViewerState.cs) so a second pane can have
+        // its own, and the VIEWER owns it, not the window. The window reads it back through here,
+        // so the forwarding properties below (and the ~500 call sites behind them) stay as they
+        // are. See BACKLOG.md "Split pane (F10)".
+        // ActiveViewer, NOT Viewer: with two panes this has to be the FOCUSED pane's state, or every
+        // forwarding property behind it (view mode, zoom, page maps - ~500 call sites) would keep
+        // reporting pane A no matter which pane the user is working in.
+        private ViewerState _view => ActiveViewer.State;
+
+        private ViewMode _viewMode { get => _view.Mode; set => _view.Mode = value; }
+        private StackPanel _continuousPanel { get => _view.ContinuousPanel; set => _view.ContinuousPanel = value; }
+        private System.Threading.CancellationTokenSource? _continuousRenderCts { get => _view.ContinuousRenderCts; set => _view.ContinuousRenderCts = value; }
+        private System.Threading.CancellationTokenSource? _continuousSharpenCts { get => _view.ContinuousSharpenCts; set => _view.ContinuousSharpenCts = value; }
+        private HashSet<int> _continuousSharpPages => _view.ContinuousSharpPages;
+        private int _continuousSharpW { get => _view.ContinuousSharpW; set => _view.ContinuousSharpW = value; }
+        private List<double> _continuousTops => _view.ContinuousTops;
+        private int _gridScrollToPage { get => _view.GridScrollToPage; set => _view.GridScrollToPage = value; }
+        private int _continuousScrollTarget { get => _view.ContinuousScrollTarget; set => _view.ContinuousScrollTarget = value; }
+        private double _continuousPageW { get => _view.ContinuousPageW; set => _view.ContinuousPageW = value; }
 
         // Editing
-        private EditTool _currentTool = EditTool.Select;
+        private EditTool _currentTool
+        {
+            get => ActiveViewer?.CurrentToolRef ?? EditTool.Select;
+            set { ActiveViewer?.CurrentToolRef = value; }
+        }
         // Per-document state. Not readonly: tab switching swaps these by reference so each
         // open document keeps its own annotations, undo history, form values, and search hits.
-        private Dictionary<int, List<PageAnnotation>> _annotations = [];
-        private Dictionary<int, (int w, int h)> _renderDims = [];
+        private Dictionary<int, List<PageAnnotation>> _annotations { get => ActiveViewer.AnnotationsRef; set => ActiveViewer.AnnotationsRef = value; }
+        private Dictionary<int, (int w, int h)> _renderDims { get => ActiveViewer.RenderDimsRef; set => ActiveViewer.RenderDimsRef = value; }
         // Stores the PDF /Rotate value for each page.  The temp file used by Docnet has
         // rotation stripped to zero so FPDF_GetPageWidth/Height returns MediaBox dims and
         // the content isn't clipped; RotateBitmap is applied at render time instead.
-        private Dictionary<int, int> _pageRotations = [];
+        private Dictionary<int, int> _pageRotations { get => ActiveViewer.PageRotationsRef; set => ActiveViewer.PageRotationsRef = value; }
 
-        // Form filling - text/check keyed by widget object number; radio keyed by field name
-        private Dictionary<int, string>    _formTextValues  = [];
-        private Dictionary<int, bool>      _formCheckValues = [];
-        private Dictionary<string, string> _formRadioValues = [];
-        private Dictionary<int, double>    _formFontSizes   = [];   // per-field user font-size override (points)
+        // Form filling, keyed by each field's qualified name.
+        private Dictionary<string, string> _formTextValues { get => ActiveViewer.FormTextValuesRef; set => ActiveViewer.FormTextValuesRef = value; }
+        private Dictionary<string, string> _formChoiceValues { get => ActiveViewer.FormChoiceValuesRef; set => ActiveViewer.FormChoiceValuesRef = value; }
+        private Dictionary<string, bool> _formCheckValues { get => ActiveViewer.FormCheckValuesRef; set => ActiveViewer.FormCheckValuesRef = value; }
+        private Dictionary<string, string> _formRadioValues { get => ActiveViewer.FormRadioValuesRef; set => ActiveViewer.FormRadioValuesRef = value; }
+        private Dictionary<string, double> _formFontSizes { get => ActiveViewer.FormFontSizesRef; set => ActiveViewer.FormFontSizesRef = value; }
         // Floating font-size stepper shown while a form text field is focused.
-        private Border?  _formSizeBar;
-        private TextBox? _activeFormTb;
-        private int      _activeFormObj;
-        private double   _activeFormScale = 1;
+        private Border? _formSizeBar { get => ActiveViewer.FormSizeBarRef; set => ActiveViewer.FormSizeBarRef = value; }
+        private TextBox? _activeFormTb { get => ActiveViewer.ActiveFormTbRef; set => ActiveViewer.ActiveFormTbRef = value; }
+        private string _activeFormName { get => ActiveViewer.ActiveFormNameRef; set => ActiveViewer.ActiveFormNameRef = value; }
+        private double _activeFormScale { get => ActiveViewer.ActiveFormScaleRef; set => ActiveViewer.ActiveFormScaleRef = value; }
         private const string FormOverlayTag = "FormFieldOverlay";
 
         // Undo stack - each entry is either an annotation removal or a full document snapshot.
         // AnnotationGroup removes a specific set of annotations in one step (a text edit = cover + text).
-        private enum UndoKind { Annotation, Document, StampBatch, ClearAnnotations, AnnotationGroup, PageSnapshot }
-        private readonly record struct UndoEntry(UndoKind Kind, int PageIdx = -1, byte[]? DocBytes = null, bool WasDirty = false, int[]? Pages = null, PageAnnotation? Annot = null, Dictionary<int, List<PageAnnotation>>? AnnotSnapshot = null, List<PageAnnotation>? AnnotGroup = null);
-        private Stack<UndoEntry> _undoStack = new();
-        private bool _isDrawing;
-        private Point _drawStart;
-        private UIElement? _activePreview;
-        private InkAnnotation? _activeInk;
-        private TextBox? _activeTextBox;
-        private PageAnnotation? _selectedAnnotation;
-        private Border? _selectionBorder;
+        // UndoKind / UndoEntry live in Models/UndoTypes.cs, not here - the undo stack is pushed from
+        // Annotations.cs and TextEditing.cs, which live in the viewer control.
+        private Stack<UndoEntry> _undoStack { get => ActiveViewer.UndoStackRef; set => ActiveViewer.UndoStackRef = value; }
+        // Redo: inverses captured by Undo_Click land here; any NEW edit clears it (PushUndo).
+        // Swapped per tab alongside _undoStack (Tabs.cs) so redo can never replay another document.
+        private Stack<UndoEntry> _redoStack { get => ActiveViewer.RedoStackRef; set => ActiveViewer.RedoStackRef = value; }
+        // Jump history for Alt+Left / Alt+Right and the mouse back/forward buttons. Page-granular,
+        // recorded at the long-jump sites (bookmark, internal link, jump box, Home/End); cleared on
+        // document open and tab switch.
+        private Stack<int> _navBack => ActiveViewer.NavBackRef;
+        private Stack<int> _navForward => ActiveViewer.NavForwardRef;
+        private bool _isDrawing { get => ActiveViewer.IsDrawingRef; set => ActiveViewer.IsDrawingRef = value; }
+        private Point _drawStart { get => ActiveViewer.DrawStartRef; set => ActiveViewer.DrawStartRef = value; }
+        private UIElement? _activePreview { get => ActiveViewer.ActivePreviewRef; set => ActiveViewer.ActivePreviewRef = value; }
+        private InkAnnotation? _activeInk { get => ActiveViewer.ActiveInkRef; set => ActiveViewer.ActiveInkRef = value; }
+        private TextBox? _activeTextBox { get => ActiveViewer.ActiveTextBoxRef; set => ActiveViewer.ActiveTextBoxRef = value; }
+        private PageAnnotation? _selectedAnnotation { get => ActiveViewer.SelectedAnnotationRef; set => ActiveViewer.SelectedAnnotationRef = value; }
+        private Border? _selectionBorder { get => ActiveViewer.SelectionBorderRef; set => ActiveViewer.SelectionBorderRef = value; }
         // Shift+click multi-selection (Select tool): extra annotations selected alongside the
         // primary _selectedAnnotation. Each gets its own outline. Delete removes the whole set.
-        private readonly List<PageAnnotation> _selectedSet = [];
-        private readonly List<Border> _selectionOutlines = [];
+        private List<PageAnnotation> _selectedSet => ActiveViewer.SelectedSetRef;
+        private List<Border> _selectionOutlines => ActiveViewer.SelectionOutlinesRef;
 
         // Draw/Highlight settings
-        private Color _drawColor = Colors.Red;
-        private double _drawWidth = 3;
-        private byte _drawOpacity = 255;
-        private bool _lineLevel = true;   // Line tool: keep the line perfectly horizontal (default on)
-        private bool _highlightErase;     // Highlight tool: drag a box to delete annotations inside it
-        private bool _drawErase;          // Draw tool: brush over annotations to delete them
-        private Color _highlightColor = Color.FromArgb(80, 255, 255, 0);
+        private Color _drawColor { get => ActiveViewer.DrawColorRef; set => ActiveViewer.DrawColorRef = value; }
+        private double _drawWidth { get => ActiveViewer.DrawWidthRef; set => ActiveViewer.DrawWidthRef = value; }
+        private byte _drawOpacity { get => ActiveViewer.DrawOpacityRef; set => ActiveViewer.DrawOpacityRef = value; }
+        private bool _lineLevel { get => ActiveViewer.LineLevelRef; set => ActiveViewer.LineLevelRef = value; }
+        private bool _highlightErase { get => ActiveViewer.HighlightEraseRef; set => ActiveViewer.HighlightEraseRef = value; }
+        private bool _drawErase { get => ActiveViewer.DrawEraseRef; set => ActiveViewer.DrawEraseRef = value; }
+        private Color _highlightColor { get => ActiveViewer.HighlightColorRef; set => ActiveViewer.HighlightColorRef = value; }
         // Strikethrough / underline lines: opaque red by default.
-        private Color _lineAnnotColor = Color.FromArgb(255, 220, 38, 38);
+        private Color _lineAnnotColor { get => ActiveViewer.LineAnnotColorRef; set => ActiveViewer.LineAnnotColorRef = value; }
         private Border? _drawSettingsBar;
 
         // Text (typewriter) tool settings
-        private double _textFontSize = 24;
+        private double _textFontSize { get => ActiveViewer.TextFontSizeRef; set => ActiveViewer.TextFontSizeRef = value; }
+        private double _textLetterSpacing { get => ActiveViewer.TextLetterSpacingRef; set => ActiveViewer.TextLetterSpacingRef = value; }
         // Current text-tool typeface and style (mirrors the text bar; carried onto each new/edited box).
-        private string _textFontName = "Segoe UI";
-        private bool _textBold;
-        private bool _textItalic;
-        private bool _textStrike;
-        private bool _textUnderline;
+        private string _textFontName { get => ActiveViewer.TextFontNameRef; set => ActiveViewer.TextFontNameRef = value; }
+        private bool _textBold { get => ActiveViewer.TextBoldRef; set => ActiveViewer.TextBoldRef = value; }
+        private bool _textItalic { get => ActiveViewer.TextItalicRef; set => ActiveViewer.TextItalicRef = value; }
+        private bool _textStrike { get => ActiveViewer.TextStrikeRef; set => ActiveViewer.TextStrikeRef = value; }
+        private bool _textUnderline { get => ActiveViewer.TextUnderlineRef; set => ActiveViewer.TextUnderlineRef = value; }
         // Installed font-family names, sorted, computed once (the text bar rebuilds often).
         private static List<string>? _systemFontNamesCache;
         internal static List<string> SystemFontNames => _systemFontNamesCache ??=
             [.. System.Windows.Media.Fonts.SystemFontFamilies
                 .Select(f => f.Source).Where(s => !string.IsNullOrWhiteSpace(s))
                 .Distinct().OrderBy(s => s, StringComparer.OrdinalIgnoreCase)];
-        // WPF renders a given point size visually ~25% larger than the source PDF text, so scale the
-        // detected size down when seeding an existing-text edit. The user can still fine-tune after.
-        private const double EditTextSizeCorrection = 0.8;
         private bool _suppressSizeSync;   // guards the slider<->size-box two-way binding from feedback loops
-        private TextAnnotation? _reeditOriginal;  // placed-text annotation currently being re-edited
+        private TextAnnotation? _reeditOriginal { get => ActiveViewer.ReeditOriginalRef; set => ActiveViewer.ReeditOriginalRef = value; }
         // The opaque cover dropped when starting an existing-text edit, awaiting its paired text commit.
         // Held so the text commit can group both into one undo, and so cancel/empty removes the cover.
-        private CoverAnnotation? _pendingCover;
+        private CoverAnnotation? _pendingCover { get => ActiveViewer.PendingCoverRef; set => ActiveViewer.PendingCoverRef = value; }
         // Dirty state captured before the cover was dropped, so undoing the grouped edit restores it.
-        private bool _pendingEditWasDirty;
-        private Color _textColor = Colors.Black;
-        private byte _textOpacity = 255;          // alpha applied to placed text, like the draw tool
-        private Color _textFillColor = Color.FromArgb(0, 255, 255, 255);  // text box background fill; A==0 = no fill
+        private bool _pendingEditWasDirty { get => ActiveViewer.PendingEditWasDirtyRef; set => ActiveViewer.PendingEditWasDirtyRef = value; }
+        private Color _textColor { get => ActiveViewer.TextColorRef; set => ActiveViewer.TextColorRef = value; }
+        private byte _textOpacity { get => ActiveViewer.TextOpacityRef; set => ActiveViewer.TextOpacityRef = value; }
+        private Color _textFillColor { get => ActiveViewer.TextFillColorRef; set => ActiveViewer.TextFillColorRef = value; }
         private const double TextBoxDefaultWidth = 220;  // canvas-unit width of a freshly placed text box
-        private Border? _textSettingsBar;
+        private Border? _textSettingsBar { get => ActiveViewer.TextSettingsBarRef; set => ActiveViewer.TextSettingsBarRef = value; }
 
         // Signature / image resize
-        private bool _isResizingSig;
-        private Point _resizeSigStart;
-        private double _resizeSigStartScale;
-        private PlacedAnnotation? _resizeSigAnnot;
-        private TextAnnotation? _resizeTextAnnot;               // text box being width-resized (height auto-fits)
-        private HighlightAnnotation? _resizeHlAnnot;            // highlight/line being corner-resized (Bounds)
-        private InkAnnotation? _resizeInkAnnot;                 // ink stroke being corner-resized (points scaled)
-        private List<Point>? _resizeInkOrigPoints;             // snapshot of ink points at resize start
-        private Rect _resizeInkOrigBounds;                      // ink bounding box at resize start
-        private readonly List<Rectangle> _resizeHandles = [];   // 4 corner handles for placed annotations
-        private string _resizeCorner = "SE";                    // which corner is being dragged
-        private Point _resizeAnchor;                            // opposite corner, held fixed during resize
+        private bool _isResizingSig { get => ActiveViewer.IsResizingSigRef; set => ActiveViewer.IsResizingSigRef = value; }
+        private Point _resizeSigStart { get => ActiveViewer.ResizeSigStartRef; set => ActiveViewer.ResizeSigStartRef = value; }
+        private double _resizeSigStartScale { get => ActiveViewer.ResizeSigStartScaleRef; set => ActiveViewer.ResizeSigStartScaleRef = value; }
+        private PlacedAnnotation? _resizeSigAnnot { get => ActiveViewer.ResizeSigAnnotRef; set => ActiveViewer.ResizeSigAnnotRef = value; }
+        private TextAnnotation? _resizeTextAnnot { get => ActiveViewer.ResizeTextAnnotRef; set => ActiveViewer.ResizeTextAnnotRef = value; }
+        private HighlightAnnotation? _resizeHlAnnot { get => ActiveViewer.ResizeHlAnnotRef; set => ActiveViewer.ResizeHlAnnotRef = value; }
+        private InkAnnotation? _resizeInkAnnot { get => ActiveViewer.ResizeInkAnnotRef; set => ActiveViewer.ResizeInkAnnotRef = value; }
+        private List<Point>? _resizeInkOrigPoints { get => ActiveViewer.ResizeInkOrigPointsRef; set => ActiveViewer.ResizeInkOrigPointsRef = value; }
+        private Rect _resizeInkOrigBounds { get => ActiveViewer.ResizeInkOrigBoundsRef; set => ActiveViewer.ResizeInkOrigBoundsRef = value; }
+        private List<Rectangle> _resizeHandles => ActiveViewer.ResizeHandlesRef;
+        private string _resizeCorner { get => ActiveViewer.ResizeCornerRef; set => ActiveViewer.ResizeCornerRef = value; }
+        private Point _resizeAnchor { get => ActiveViewer.ResizeAnchorRef; set => ActiveViewer.ResizeAnchorRef = value; }
 
         // Mid-edit resize handles: 4 corners shown around the live editing TextBox so the user can
         // resize the box (and continue typing) without committing and re-selecting first.
-        private readonly List<Rectangle> _textEditHandles = [];
-        private bool _draggingTextEditHandle;
-        private string _tehCorner = "SE";
-        private Point _tehAnchor;
-        private TextBox? _tehBox;
+        private List<Rectangle> _textEditHandles => ActiveViewer.TextEditHandlesRef;
+        private bool _draggingTextEditHandle { get => ActiveViewer.DraggingTextEditHandleRef; set => ActiveViewer.DraggingTextEditHandleRef = value; }
+        private string _tehCorner { get => ActiveViewer.TehCornerRef; set => ActiveViewer.TehCornerRef = value; }
+        private Point _tehAnchor { get => ActiveViewer.TehAnchorRef; set => ActiveViewer.TehAnchorRef = value; }
+        private TextBox? _tehBox { get => ActiveViewer.TehBoxRef; set => ActiveViewer.TehBoxRef = value; }
 
         // Placed annotation drag-to-move
-        private bool _isDraggingAnnot;
-        private Point _dragAnnotStart;
+        private bool _isDraggingAnnot { get => ActiveViewer.IsDraggingAnnotRef; set => ActiveViewer.IsDraggingAnnotRef = value; }
+        private Point _dragAnnotStart { get => ActiveViewer.DragAnnotStartRef; set => ActiveViewer.DragAnnotStartRef = value; }
 
         // Middle-mouse / spacebar pan
-        private bool _isPanning;
         private bool _spaceHeld;
-        private Point _panStart;
-        private double _panScrollH;
-        private double _panScrollV;
-        private Point _dragAnnotOrigPos;
-        private PageAnnotation? _dragAnnot;   // placed image/signature OR typewriter text
+        private Point _dragAnnotOrigPos { get => ActiveViewer.DragAnnotOrigPosRef; set => ActiveViewer.DragAnnotOrigPosRef = value; }
+        private PageAnnotation? _dragAnnot { get => ActiveViewer.DragAnnotRef; set => ActiveViewer.DragAnnotRef = value; }
 
         // Crop tool
-        private Rect _cropCanvasRect;
-        private Rectangle? _cropPreviewRect;
-        private Rectangle? _cropPreviewRectBorder;  // unused after refactor; kept to avoid null-ref in cleanup
-        private readonly List<System.Windows.Shapes.Path> _cropBrackets = []; // L-bracket corner visuals
-        private Border? _cropConfirmBar;
+        private Rect _cropCanvasRect { get => ActiveViewer.CropCanvasRectRef; set => ActiveViewer.CropCanvasRectRef = value; }
+        private Rectangle? _cropPreviewRect { get => ActiveViewer.CropPreviewRectRef; set => ActiveViewer.CropPreviewRectRef = value; }
+        private Rectangle? _cropPreviewRectBorder { get => ActiveViewer.CropPreviewRectBorderRef; set => ActiveViewer.CropPreviewRectBorderRef = value; }
+        private List<System.Windows.Shapes.Path> _cropBrackets => ActiveViewer.CropBracketsRef;
+        private Border? _cropConfirmBar { get => ActiveViewer.CropConfirmBarRef; set => ActiveViewer.CropConfirmBarRef = value; }
         private readonly Button _toolCropBtn = null!;
         private readonly Button _toolRotateBtn = null!;
-        private readonly List<Rectangle> _cropHandles = [];
-        private string? _activeCropHandleTag; // "NW" | "NE" | "SE" | "SW"
-        private Point _cropHandleDragStart;
-        private Rect _cropRectAtHandleDrag;
-        private int _cropPageIndex = -1;   // page the crop rect was drawn on (grid/two-page aware)
-        private TextBox? _cropXBox, _cropYBox, _cropWBox, _cropHBox;   // GIMP-style: top-left X/Y + width/height
-        private TextBox? _cropRangeBox;
-        private string   _cropUnit = "pt";   // crop coordinate display unit: "pt" | "in" | "%"
-        private bool     _updatingCropInputs;
+        private readonly Button _toolMeasureBtn = null!;
+        private List<Rectangle> _cropHandles => ActiveViewer.CropHandlesRef;
+        private string? _activeCropHandleTag { get => ActiveViewer.ActiveCropHandleTagRef; set => ActiveViewer.ActiveCropHandleTagRef = value; }
+        private Point _cropHandleDragStart { get => ActiveViewer.CropHandleDragStartRef; set => ActiveViewer.CropHandleDragStartRef = value; }
+        private Rect _cropRectAtHandleDrag { get => ActiveViewer.CropRectAtHandleDragRef; set => ActiveViewer.CropRectAtHandleDragRef = value; }
+        private TextBox? _cropXBox { get => ActiveViewer.CropXBoxRef; set => ActiveViewer.CropXBoxRef = value; }
+        private TextBox? _cropYBox { get => ActiveViewer.CropYBoxRef; set => ActiveViewer.CropYBoxRef = value; }
+        private TextBox? _cropWBox { get => ActiveViewer.CropWBoxRef; set => ActiveViewer.CropWBoxRef = value; }
+        private TextBox? _cropHBox { get => ActiveViewer.CropHBoxRef; set => ActiveViewer.CropHBoxRef = value; }
+        private TextBox? _cropRangeBox { get => ActiveViewer.CropRangeBoxRef; set => ActiveViewer.CropRangeBoxRef = value; }
+        private string _cropUnit { get => ActiveViewer.CropUnitRef; set => ActiveViewer.CropUnitRef = value; }
+        private bool _updatingCropInputs { get => ActiveViewer.UpdatingCropInputsRef; set => ActiveViewer.UpdatingCropInputsRef = value; }
 
         // PDF link overlays (rendered on top of the annotation canvas)
-        private readonly List<Canvas> _linkOverlays = [];
 
         // Sidebar + multi-page view
         private bool _sidebarCollapsed;
@@ -199,26 +216,12 @@ namespace KillerPDF
         private readonly Button _sidebarToggleBtn = null!;
         private readonly Border _sidebarBorder = null!;
         private ColumnDefinition _sidebarCol = null!;   // sized column (left or right per _sidebarRight)
-        private readonly WrapPanel _pageContentPanel = null!;
+        private WrapPanel _pageContentPanel { get => _view.PageContentPanel; set => _view.PageContentPanel = value; }
 
         // Text selection
-        private bool _isSelecting;
-        private Point _selectStart;
-        private Rectangle? _selectRect;
-        private Rectangle? _pairedCoverOutline;   // dashed hint over a cover while its paired text is selected
-        private Rectangle? _reeditCoverOutline;   // dashed hint over a cover while its paired text is being re-edited
-        private string? _selectedText;
-
-        // Flowing (macOS Preview-style) text selection: word/line geometry for the page a drag started
-        // on, cached once at mouse-down (in that page's own canvas coordinates) so live per-line
-        // highlighting during the drag needs no further PDF parsing. See Selection.cs.
-        private List<Rectangle> _textHighlightRects = [];
-        private Canvas? _textHighlightCanvas;
-        private List<(Rect Bounds, string Text)>? _selWords;
-        private List<List<int>>? _selLines;          // word indices per line, left to right
-        private List<Rect>? _selLineBounds;           // union bounds per line, same order as _selLines
-        private List<(int WordIdx, int LineIdx)>? _selFlat;   // reading order: every word, line by line
-        private int _selWordsPageIdx = -1;
+        private Rectangle? _pairedCoverOutline { get => ActiveViewer.PairedCoverOutlineRef; set => ActiveViewer.PairedCoverOutlineRef = value; }
+        private Rectangle? _reeditCoverOutline { get => ActiveViewer.ReeditCoverOutlineRef; set => ActiveViewer.ReeditCoverOutlineRef = value; }
+        private string? _selectedText { get => ActiveViewer.SelectedTextRef; set => ActiveViewer.SelectedTextRef = value; }
 
         // Search
         private Border? _searchBar;
@@ -228,7 +231,7 @@ namespace KillerPDF
 
         // Signatures
         private readonly SignatureStore _signatureStore = new();
-        private SavedSignature? _pendingSignature;
+        private SavedSignature? _pendingSignature { get => ActiveViewer.PendingSignatureRef; set => ActiveViewer.PendingSignatureRef = value; }
         private Border? _signaturePopup;
         // Guided AcroForm signing: "pick once, reuse" - the chosen signature/initials are remembered
         // and dropped into every matching field. _pendingSignField, when set, routes the next pick from
@@ -241,53 +244,75 @@ namespace KillerPDF
 
         // Manual element refs. Tile-0's Image + overlay are built in code (BuildPrimaryTile) now that the
         // primary page is no longer a hardcoded XAML singleton - both are reassignable.
-        private Canvas _annotationCanvas = null!;
-        private Image PageImage = null!;
+        private Canvas _annotationCanvas { get => _view.AnnotationCanvas; set => _view.AnnotationCanvas = value; }
+        private Image PageImage { get => _view.PageImage; set => _view.PageImage = value; }
         // Active annotation surface. Single view: always _annotationCanvas. Continuous view:
         // set on mouse-down to the clicked page's overlay. Shared handlers target this.
-        private Canvas _activeCanvas = null!;
+        private Canvas _activeCanvas { get => _view.ActiveCanvas; set => _view.ActiveCanvas = value; }
         // The page surface a pointer gesture started on, captured on mouse-down. Kept separate
         // from _activeCanvas because RenderAllAnnotations reuses _activeCanvas as its render
         // target; in Grid view tiles stream in asynchronously and each one re-points _activeCanvas
         // mid-gesture, which previously committed annotations to the wrong page and broke
         // select/delete. Mouse-move/up resolve the gesture page and surface from these instead.
-        private Canvas? _gestureCanvas;
-        private int _gesturePage = -1;
+        private Canvas? _gestureCanvas { get => _view.GestureCanvas; set => _view.GestureCanvas = value; }
+        private int _gesturePage { get => _view.GesturePage; set => _view.GesturePage = value; }
         // Per-page overlay canvases for Continuous view, keyed by page index.
-        private readonly Dictionary<int, Canvas> _continuousCanvases = [];
+        private Dictionary<int, Canvas> _continuousCanvases => _view.ContinuousCanvases;
         // Unified page -> overlay map covering EVERY rendered page, the primary included (unlike
         // _continuousCanvases, which holds only secondary tiles and is driven by the tile-recycling
         // machinery). This is the single source of truth the canvas accessors read from, so the
         // primary stops being a special case in routing/search/links.
-        private readonly Dictionary<int, Canvas> _pages = [];
-        private readonly Grid _pageContentGrid = null!;
+        private Dictionary<int, Canvas> _pages => _view.Pages;
+        private Grid _pageContentGrid { get => _view.PageContentGrid; set => _view.PageContentGrid = value; }
+        // The page this view is showing. See ViewerState.CurrentPage for why this exists at all
+        // (reading the sidebar's SelectedIndex as the current page cannot survive a second pane).
+        // The setter drives the sidebar, which is what actually triggers navigation today via
+        // PageList_SelectionChanged; the handler mirrors the value
+        // straight back, so the two never disagree.
+        private int _currentPage
+        {
+            get => _view.CurrentPage;
+            set { _view.CurrentPage = value; if (PageList.SelectedIndex != value) PageList.SelectedIndex = value; }
+        }
         private readonly Button _toolSelectBtn = null!;
+        private readonly Button _toolFormFieldBtn = null!;
         private readonly Button _toolTextBtn = null!;
         private readonly Button _toolHighlightBtn = null!;
         private readonly Button _toolUnderlineBtn = null!;
         private readonly Button _toolDrawBtn = null!;
+        private readonly Button _toolShapeBtn = null!;
         private readonly Button _toolSignatureBtn = null!;
         private readonly Button _toolImageBtn = null!;
         private readonly Button _saveAsBtnRef = null!;
         private readonly Button _closeFileBtnRef = null!;
         private readonly ComboBox _zoomBox = null!;
-        private readonly StackPanel _portableBadge = null!;
+        private readonly Grid _portableBadge = null!;
         private readonly TextBox _pageJumpBox = null!;
         private readonly TextBlock _pageTotalLabel = null!;
+        /// <summary>The sidebar list and the total above it, so the two cannot be set apart.</summary>
+        private readonly Controls.SidebarPageBinding _sidebarPages = null!;
 
         // Dirty / unsaved-change tracking
-        private bool _isDirty = false;
+        private bool _isDirty { get => ActiveViewer.IsDirtyRef; set => ActiveViewer.IsDirtyRef = value; }
 
-        // Whole-document search results (PDF-space rects per page)
-        private Dictionary<int, List<(double left, double bottom, double right, double top)>> _allSearchRects = [];
-        private List<int> _searchResultPages = [];
-        private int _searchPageCursor = -1;
+        // Whole-document search results now live on SearchController (Features/Search); Tabs.cs
+        // parks and restores them per tab through its AllSearchRects/ResultPages/PageCursor.
 
-        public MainWindow()
+        private readonly Controls.PdfViewer.DocumentSession? _startupTearOutSession;
+
+        public MainWindow() : this(null)
         {
+        }
+
+        internal MainWindow(Controls.PdfViewer.DocumentSession? startupTearOutSession)
+        {
+            _startupTearOutSession = startupTearOutSession;
             InitializeComponent();
-            var v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            if (v != null) VersionLabel.Text = $"v{v.Major}.{v.Minor}.{v.Build}";
+            var titleFrames = BitmapDecoder.Create(
+                new Uri("pack://application:,,,/Resources/kp-icon.ico"),
+                BitmapCreateOptions.None, BitmapCacheOption.OnLoad).Frames;
+            TitleIcon.Source = titleFrames[0];
+            VersionLabel.Text = $"v{AppVersion.Display}";
             // Accept dropped files/folders/archives anywhere on the window (not just the empty drop zone),
             // so dropping onto an open document works too. The empty-state DropZone marks its own drop
             // handled, so a drop there isn't processed twice.
@@ -299,22 +324,37 @@ namespace KillerPDF
             // canvas still holding mouse capture. End any in-progress gesture on deactivate so control is
             // restored the moment the user comes back.
             Deactivated += (_, _) => { if (_isDraggingAnnot || _isResizingSig) FinishStuckGesture(); };
-            _pageContentGrid = (Grid)FindName("PageContentGrid")!;
+            // These three live inside the PdfViewer control, and a UserControl is its own
+            // namescope - FindName would return NULL SILENTLY rather than throw, so the failure
+            // would surface much later as an unrelated NullReference. Take them off the control
+            // directly; they land in ViewerState through the forwarding properties.
+            // Both panes get an Owner and pane A becomes the active one (Shell/SplitPane.cs).
+            // Replaces the single `Viewer.Owner = this` - ViewerB exists from startup, collapsed,
+            // so its bridge would NullReference the moment anything touched it otherwise.
+            InitSplitPanes();
+            WirePageListEdgeFades();   // sidebar page-list edge fades (SidebarLayout.cs)
+            HookExternalLangReload();  // #211: --lang-file live reload rebuilds code-built captions
+            _pageContentGrid  = ActiveViewer.PageGrid;
+            _pageContentPanel = ActiveViewer.PageHost;
+            _continuousPanel  = ActiveViewer.ContinuousHost;
             _toolSelectBtn = (Button)FindName("ToolSelectBtn")!;
+            _toolFormFieldBtn = (Button)FindName("ToolFormFieldBtn")!;
             _toolTextBtn = (Button)FindName("ToolTextBtn")!;
             _toolHighlightBtn = (Button)FindName("ToolHighlightBtn")!;
             _toolUnderlineBtn = (Button)FindName("ToolUnderlineBtn")!;
             _toolDrawBtn = (Button)FindName("ToolDrawBtn")!;
+            _toolShapeBtn = (Button)FindName("ToolShapeBtn")!;
             _toolSignatureBtn = (Button)FindName("ToolSignatureBtn")!;
             _toolImageBtn = (Button)FindName("ToolImageBtn")!;
             _toolCropBtn = (Button)FindName("ToolCropBtn")!;
             _toolRotateBtn = (Button)FindName("ToolRotateBtn")!;
+            _toolMeasureBtn = (Button)FindName("ToolMeasureBtn")!;
             _sidebarToggleBtn = (Button)FindName("SidebarToggleBtn")!;
             _sidebarBorder = (Border)FindName("SidebarBorder")!;
             _sidebarCol = (ColumnDefinition)FindName("SidebarCol")!;
-            _pageContentPanel = (WrapPanel)FindName("PageContentPanel")!;
-            BuildPrimaryTile();              // code-built tile-0 (replaces the former XAML PageImage + AnnotationCanvas)
-            _activeCanvas = _annotationCanvas;
+            // BuildPrimaryTile + _activeCanvas were here. Both panes now do it for themselves in
+            // InitSplitPanes above (PdfViewer.InitTiles) - calling it here as well would build pane
+            // A a SECOND tile.
             _saveAsBtnRef = (Button)FindName("SaveAsBtn")!;
             _closeFileBtnRef = (Button)FindName("CloseFileBtn")!;
             _zoomBox = (ComboBox)FindName("ZoomBox")!;
@@ -325,19 +365,17 @@ namespace KillerPDF
                 if (_zoomBox.Template?.FindName("PART_EditableTextBox", _zoomBox) is TextBox etb)
                     etb.SelectionBrush = System.Windows.Media.Brushes.Transparent;
             };
-            _portableBadge = (StackPanel)FindName("PortableBadge")!;
+            _portableBadge = (Grid)FindName("PortableBadge")!;
+            _portableBadge.SizeChanged += (_, _) => ScheduleFadeRefresh();
             _pageJumpBox = (TextBox)FindName("PageJumpBox")!;
             _pageTotalLabel = (TextBlock)FindName("PageTotalLabel")!;
-            _continuousPanel = (StackPanel)FindName("ContinuousPanel")!;
-            PagePreviewPanel.ScrollChanged += PagePreviewPanel_ScrollChanged;
-            PreviewMouseDown += SettingsDismiss_PreviewMouseDown;   // non-modal Settings: close on outside click
-            // Keep the (bottom-anchored) Settings panel sized to the document area while the window
-            // resizes, so it tracks smoothly instead of snapping on the next open.
-            MainContentGrid.SizeChanged += (_, _) =>
-            {
-                if (SettingsOverlay.Visibility == Visibility.Visible) PositionSettingsPanel();
-                ScheduleFadeRefresh();
-            };
+            _sidebarPages = new Controls.SidebarPageBinding(PageList, _pageTotalLabel);
+            // Both panes: each tracks the page under its own viewport. Pane B was never wired, so
+            // its page counter, jump box and sidebar selection never moved as it scrolled.
+            Viewer.WireScrollChanged();      // handler moved into the control with the render pipeline
+            ViewerB.WireScrollChanged();
+            PreviewMouseDown += NavHistory_PreviewMouseDown;        // mouse back/forward buttons retrace jumps
+            MainContentGrid.SizeChanged += (_, _) => ScheduleFadeRefresh();
             // The sidebar column resizes via the splitter / collapse; track its width so the tab-strip
             // shadow gradient stays clipped to the document column.
             if (FindName("SidebarOuterGrid") is FrameworkElement sidebarOuter)
@@ -345,6 +383,8 @@ namespace KillerPDF
             // The footer shadow tracks the document pane's actual position; re-anchor when it (or the
             // tab strip, which shifts the document) changes size.
             DocPaneBorder.SizeChanged += (_, _) => ScheduleFadeRefresh();
+            Viewer.SizeChanged += (_, _) => ScheduleFadeRefresh();
+            ViewerB.SizeChanged += (_, _) => ScheduleFadeRefresh();
             TabStripBorder.SizeChanged += (_, _) => { ScheduleFadeRefresh(); ScheduleTabReflow(); };
             // After a sidebar-splitter drag, snap fully closed if dragged too narrow, else save the width.
             SidebarSplitter.PreviewMouseLeftButtonUp += (_, _) => OnSidebarResized();
@@ -357,8 +397,18 @@ namespace KillerPDF
             SidebarSplitter.LostMouseCapture += (_, _) => OnSidebarResized();
             if (Enum.TryParse<ViewMode>(App.GetSetting("ViewMode"), out var savedVm))
                 _viewMode = savedVm;
-            if (Enum.TryParse<ToolbarStyle>(App.GetSetting("ToolbarStyle"), out var savedTb))
-                _toolbarStyle = savedTb;
+            InitToolbarStyle();   // two-axis toolbar appearance (+ migration from the old five-way key)
+            InitAppScale();   // AppScale.cs: restore the app-wide size (scroll the logo to change it)
+            // #135: document dark mode. Per PANE now; the saved setting seeds the primary pane
+            // (a split's second pane starts normal - inverting it is a per-pane choice).
+            Viewer.DocInvert = App.GetSetting("DocInvert") == "1";
+            BitmapHelpers.DocInvertImages = App.GetSetting("DocInvertImages") == "1";   // moon right-click opt-in
+            DocInvertBtn.Tag = Viewer.DocInvert ? "on" : null;              // rail moon lit while active
+            // #146: the privacy toggle lives in the About window; init once - only its own
+            // handler changes it afterwards (change-guarded, so this init is a no-op there).
+            NoRecentCheck.IsChecked = App.GetSetting(App.NoRecentFilesSetting) == "1";
+            // Same deal for the link-confirm toggle beside it (default off).
+            LinkConfirmCheck.IsChecked = App.GetSetting(ConfirmLinksSetting) == "1";
             if (string.Equals(App.GetSetting("SidebarSide"), "Right", StringComparison.OrdinalIgnoreCase))
                 _sidebarRight = true;
             RestoreToolSettings();   // Draw + Text tool styles carry across sessions
@@ -372,14 +422,33 @@ namespace KillerPDF
             ApplyToolNumberTooltips();   // append the 1-9 toolbar positions to the tool tooltips
             BuildShortcutsOverlay();     // generate the shortcuts card from the single-source table (ShortcutsOverlay.cs)
             SourceInitialized += MainWindow_SourceInitialized;
-            Closed += (_, _) => { _continuousRenderCts?.Cancel(); _doc?.Close(); CloseLinkPdfiumDoc(); App.CleanupSessionTemps(); };
+            Closed += (_, _) =>
+            {
+                _continuousRenderCts?.Cancel();
+                _doc?.Close();
+                CloseEngineDocumentSession();
+                if (Application.Current.Windows.Count <= 1) App.CleanupSessionTemps();
+            };
 
             // Open a file passed via command-line / file association (e.g. double-clicking a .pdf)
             // Also show the portable badge when running outside the install location.
             bool contentRevealed = false;
+            bool startupSidebarSynced = false;
             ContentRendered += (_, _) =>
             {
+                Services.StartupTrace.Mark("MainWindow first ContentRendered");
                 Services.ThemeManager.RefreshIcons();
+                // Startup can restore pane B, process a relaunch/open-file handoff, and change
+                // ActiveViewer several times before the first frame. Each transition is valid on
+                // its own, but the shared sidebar ItemsSource can still be the preceding pane's
+                // cache (or null) when layout finally wins the race. A click appeared to "bring
+                // thumbnails back" because FocusPane performs this same synchronization. Do it
+                // once here for the pane whose focus halo actually reaches the screen.
+                if (!startupSidebarSynced)
+                {
+                    startupSidebarSynced = true;
+                    RestorePageListForActivePane();
+                }
                 // Final pass once the layout has real widths. The tab-strip / footer shadow gradients
                 // were intermittently blank at startup (their feather mask + margin were computed
                 // before the sidebar column had measured), and only a manual sidebar tweak forced a
@@ -393,9 +462,12 @@ namespace KillerPDF
                     contentRevealed = true;
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Loaded, (Action)(() =>
                     {
+                        RootClipGrid.Opacity = 1;
                         var reveal = new System.Windows.Media.Animation.DoubleAnimation(0, 1,
-                            new Duration(TimeSpan.FromMilliseconds(140)));
+                            new Duration(TimeSpan.FromMilliseconds(140)))
+                        { FillBehavior = FillBehavior.Stop };
                         RootClipGrid.BeginAnimation(OpacityProperty, reveal);
+                        Services.StartupTrace.Mark("MainWindow ready");
                     }));
                 }
             };
@@ -405,12 +477,37 @@ namespace KillerPDF
             {
                 RestoreWindowSettings();
                 ApplySidebarSide();   // place the sidebar on the saved side (default left)
-                if (_toolbarStyle != ToolbarStyle.SmallIcons) ApplyToolbarAppearance();
+                BuildToolbarMenu();   // right-click appearance picker on the toolbar
+                // Unconditional: the XAML default is small icons / no text, but the family default
+                // is Large/Under, so a first run needs the apply pass too.
+                ApplyToolbarAppearance();
+
+                // The release startup check initializes the real empty window without restoring
+                // documents, accepting handoffs, or starting update UI/network work.
+                if (App.IsStartupSmoke)
+                {
+                    SyncSidebarToDocState(hasDoc: false, startup: true);
+                    return;
+                }
+
+                FlushPendingExternalOpen();   // a forward that landed before the panes were wired
 
                 var args = Environment.GetCommandLineArgs();
-                if (args.Length > 1 && System.IO.File.Exists(args[1]))
+                // #267 follow-up: route every killerpdf: launch to OpenFromExternal, valid or not.
+                // Gating on a usable target here swallowed a refused handoff before anything could
+                // report it, and restored the last session instead, so a cold launch looked like a
+                // handoff that had simply done nothing.
+                if (_startupTearOutSession is { } tornOut)
                 {
-                    OpenInNewTab(args[1]);
+                    SetRestoredSessions([tornOut], tornOut);
+                    ApplySessionState(tornOut);
+                    RebuildTabStrip();
+                    RenderActiveSession();
+                }
+                else if (args.Length > 1 && (System.IO.File.Exists(args[1]) ||
+                    Services.ProtocolRegistrar.IsHandoffLaunch(args[1])))
+                {
+                    OpenFromExternal(args[1]);
                 }
                 else
                 {
@@ -423,17 +520,18 @@ namespace KillerPDF
                     // Lazy restore: create a placeholder tab for each saved file but load only the
                     // focused one. The rest materialize (load + render) the first time they're clicked,
                     // so startup cost no longer scales with how many tabs were open last session.
-                    _sessions.Clear();
-                    bool openedAny = false;
+                    // Built as a local list and handed to the pane, rather than mutating _sessions
+                    // in place: the session list belongs to a PdfViewer, so the restore has to say
+                    // WHICH pane. `OpenTabs` / `ActiveTab` are pane A; pane B is restored from
+                    // `OpenTabsB` / `ActiveTabB` by RestorePaneB below, once the split is reopened.
+                    var restored = new List<Controls.PdfViewer.DocumentSession>();
                     foreach (var f in paths)
                         if (!string.IsNullOrEmpty(f) && System.IO.File.Exists(f))
-                        {
-                            _sessions.Add(new DocumentSession { OriginalFile = f, CurrentFile = f, DeferredPath = f });
-                            openedAny = true;
-                        }
-                    if (!openedAny)
+                            restored.Add(Controls.PdfViewer.MakeDeferredSession(f));
+
+                    if (restored.Count == 0)
                     {
-                        _active = null;
+                        SetRestoredSessions(restored, null);
                         PopulateRecentFilesList();   // empty state: show the recent list
                         EnsureInitialSession();
                         RebuildTabStrip();
@@ -442,18 +540,25 @@ namespace KillerPDF
                     {
                         var wantActive = App.GetSetting("ActiveTab");
                         var activeTarget = (!string.IsNullOrEmpty(wantActive)
-                                ? _sessions.FirstOrDefault(ss => string.Equals(ss.OriginalFile, wantActive, StringComparison.OrdinalIgnoreCase))
+                                ? restored.FirstOrDefault(ss => string.Equals(ss.OriginalFile, wantActive, StringComparison.OrdinalIgnoreCase))
                                 : null)
-                            ?? _sessions[0];
-                        _active = activeTarget;
+                            ?? restored[0];
+                        SetRestoredSessions(restored, activeTarget);
                         ApplySessionState(activeTarget);
                         MaterializeDeferred(activeTarget);   // load + render only the focused tab
                         RebuildTabStrip();
                     }
+                    RestorePaneB();
                 }
 
                 if (App.IsPortable())
                     _portableBadge.Visibility = Visibility.Visible;
+
+                // Start with the sidebar collapsed when no PDF is open (nothing to show); a document
+                // opened above will have expanded it via FinishOpenFile.
+                SyncSidebarToDocState(hasDoc: _doc != null, startup: true);
+                Dispatcher.BeginInvoke(new Action(() => About.CheckOnStartup()),
+                    System.Windows.Threading.DispatcherPriority.Background);
             };
         }
 
@@ -465,6 +570,7 @@ namespace KillerPDF
         {
             var hwnd = new WindowInteropHelper(this).Handle;
             HwndSource.FromHwnd(hwnd)?.AddHook(WndProc);
+            InitializeTaskbarIcons(hwnd);
             ThemeManager.ApplyDwm(hwnd);
             // Snapping moves the window without changing WindowState, so re-evaluate the rounded vs
             // squared chrome on every move (and once now that the handle exists).
@@ -501,19 +607,47 @@ namespace KillerPDF
                         App.RemoveSetting("LastFile");
                     // Remember every open tab so the whole session restores next launch. Manually-closed
                     // tabs are already gone from _sessions, so they won't come back (Issue #75 still holds).
-                    var openFiles = _sessions
+                    // Saved PER PANE. `OpenTabs` / `ActiveTab` keep their old meaning - pane A - so
+                    // settings written before the split existed still restore; pane B gets its own
+                    // `OpenTabsB` / `ActiveTabB`, and the split itself gets `SplitOpen` and the
+                    // divider position. Without this a split window reopened with everything
+                    // stacked in pane A.
+                    static List<string> FilesOf(Controls.PdfViewer pane) => [.. pane.SessionsRef
                         .Select(ss => ss.OriginalFile)
                         .Where(f => !string.IsNullOrEmpty(f) && System.IO.File.Exists(f))
                         .Distinct()
-                        .ToList();
-                    if (openFiles.Count > 0)
-                        App.SetSetting("OpenTabs", string.Join("|", openFiles!));
+                        .Select(f => f!)];
+
+                    static void SavePane(string tabsKey, string activeKey,
+                                         List<string> files, Controls.PdfViewer pane)
+                    {
+                        if (files.Count > 0) App.SetSetting(tabsKey, string.Join("|", files));
+                        else                 App.RemoveSetting(tabsKey);
+                        if (pane.ActiveSessionRef?.OriginalFile is { Length: > 0 } af
+                            && System.IO.File.Exists(af)) App.SetSetting(activeKey, af);
+                        else                              App.RemoveSetting(activeKey);
+                    }
+
+                    SavePane("OpenTabs",  "ActiveTab",  FilesOf(Viewer),  Viewer);
+                    SavePane("OpenTabsB", "ActiveTabB", FilesOf(ViewerB), ViewerB);
+
+                    if (IsSplit)
+                    {
+                        App.SetSetting("SplitOpen", "1");
+                        // The pixel width of pane A - the fixed column; pane B is star-sized and
+                        // takes the remainder, so one number describes the divider whatever the
+                        // window is resized to. (Used to save pane B's width instead, which is the
+                        // derived/remainder side and not what the restore path needs to seed pane A
+                        // with before the window has laid out - #161, split pane not remembering
+                        // its size across a restart.)
+                        double aw = Viewer.ActualWidth;
+                        if (aw > 0) App.SetSetting("SplitPaneAWidth",
+                            aw.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    }
                     else
-                        App.RemoveSetting("OpenTabs");
-                    if (_active?.OriginalFile is { Length: > 0 } af && System.IO.File.Exists(af))
-                        App.SetSetting("ActiveTab", af);
-                    else
-                        App.RemoveSetting("ActiveTab");
+                    {
+                        App.RemoveSetting("SplitOpen");
+                    }
                 }
                 else
                 {
@@ -521,12 +655,16 @@ namespace KillerPDF
                     App.RemoveSetting("LastFile");
                     App.RemoveSetting("OpenTabs");
                     App.RemoveSetting("ActiveTab");
+                    App.RemoveSetting("OpenTabsB");
+                    App.RemoveSetting("ActiveTabB");
+                    App.RemoveSetting("SplitOpen");
                 }
                 PersistToolSettings();
                 // The active tab may not have been captured yet at exit; persist its view state directly.
                 if (_active != null)
                     SaveDocState(_originalFile, _fitMode, _zoomLevel, _viewMode,
-                        PageList.SelectedIndex >= 0 ? PageList.SelectedIndex : 0);
+                        _active.PageIndex,
+                        _active.ScrollH, _active.ScrollV);
             }
             catch { /* best-effort */ }
         }
@@ -658,38 +796,54 @@ namespace KillerPDF
         // ============================================================
 
         /// <summary>Look up a localized string. Falls back to the key name if missing.</summary>
-        private string Loc(string key)
+        private static string Loc(string key)
             => Application.Current.TryFindResource(key) as string ?? key;
+
+        // A "held" status message briefly wins over routine updates: scrolling the logo to
+        // resize the app must show "App size N%", but the chrome resize immediately re-runs
+        // the fit pipeline, whose "Page x of y - Fit Page" status stomped it the same frame.
+        // While the hold is active, plain SetStatus calls are ignored; the hold refreshes on
+        // every wheel notch and expires on its own, after which normal statuses flow again.
+        private DateTime _statusHoldUntil = DateTime.MinValue;
 
         private void SetStatus(string text)
         {
+            if (DateTime.UtcNow < _statusHoldUntil) return;   // a held message is showing
             StatusText.Text = text;
             CrashReporter.PushStatusMessage(text);
         }
 
-        /// <summary>
-        /// Dereferences a PdfItem if it is an indirect reference (PdfReference is internal;
-        /// we detect it by looking for a public "Value" property returning PdfObject).
-        /// </summary>
-        private static PdfItem DerefItem(PdfItem item)
+        private void SetStatusHeld(string text, int holdMs = 1200)
         {
-            var valueProp = item.GetType().GetProperty("Value",
-                System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-            if (valueProp?.GetValue(item) is PdfObject resolved)
-                return resolved;
-            return item;
+            _statusHoldUntil = DateTime.UtcNow.AddMilliseconds(holdMs);
+            StatusText.Text = text;
+            CrashReporter.PushStatusMessage(text);
         }
 
-        /// <summary>
-        /// Returns the PDF object number of a PdfItem that is an indirect reference, or -1.
-        /// Handles the internal PdfReference type via reflection.
-        /// </summary>
-        private static int GetObjectNumber(PdfItem? item)
+        // Clicking the status line flashes the open document's file size for a beat, then puts
+        // back whatever was showing (requested on Reddit). Held so page-change chatter can't
+        // overwrite it mid-read; the restore stands down if a newer held message took over.
+        private void StatusText_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+            => ShowCurrentFileSize();
+
+        private void ShowCurrentFileSize()
         {
-            if (item is null) return -1;
-            var prop = item.GetType().GetProperty("ObjectNumber",
-                System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-            return prop?.GetValue(item) is int n ? n : -1;
+            string? path = _originalFile ?? _currentFile;
+            if (path is null || !System.IO.File.Exists(path)) return;
+            string prior = StatusText.Text;
+            long bytes = new System.IO.FileInfo(path).Length;
+            string size = bytes >= 1L << 20 ? $"{bytes / (double)(1 << 20):0.##} MB"
+                        : bytes >= 1L << 10 ? $"{bytes / (double)(1 << 10):0.#} KB"
+                        : $"{bytes} B";
+            SetStatusHeld($"{System.IO.Path.GetFileName(path)} - {size}", 2500);
+            var restore = new System.Windows.Threading.DispatcherTimer
+                { Interval = TimeSpan.FromMilliseconds(2550) };
+            restore.Tick += (_, _) =>
+            {
+                restore.Stop();
+                if (DateTime.UtcNow >= _statusHoldUntil) SetStatus(prior);
+            };
+            restore.Start();
         }
 
         // ============================================================

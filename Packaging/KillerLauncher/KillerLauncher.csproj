@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <AssemblyName Condition="'$(LauncherAssemblyName)' != ''">$(LauncherAssemblyName)</AssemblyName>
+    <ApplicationIcon Condition="'$(LauncherIcon)' != ''">$(LauncherIcon)</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version Condition="'$(LauncherVersion)' != ''">$(LauncherVersion)</Version>
+    <AssemblyVersion Condition="'$(LauncherFileVersion)' != ''">$(LauncherFileVersion)</AssemblyVersion>
+    <FileVersion Condition="'$(LauncherFileVersion)' != ''">$(LauncherFileVersion)</FileVersion>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <!-- The launcher only uses .NET Framework inbox assemblies, so it needs no binding redirects.
+         Disabling their generated config also keeps SDK 10 publish from looking for a config named
+         after the overridden release assembly instead of the project assembly. -->
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>false</GenerateBindingRedirectsOutputType>
+    <DefineConstants Condition="'$(AllowUnsignedInstall)' == 'true'">$(DefineConstants);ALLOW_UNSIGNED_INSTALL</DefineConstants>
+    <DefineConstants Condition="'$(InstallerPackage)' == 'true'">$(DefineConstants);INSTALLER_PACKAGE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Xml" />
+    <EmbeddedResource Include="Strings.xml" LogicalName="KillerLauncher.Strings.xml" />
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('$(PayloadZip)')">
+    <EmbeddedResource Include="$(PayloadZip)" LogicalName="KillerLauncher.payload.zip" />
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('$(LauncherIcon)')">
+    <EmbeddedResource Include="$(LauncherIcon)" LogicalName="KillerLauncher.kp-icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="..\..\Fonts\Punktype.ttf" Link="Fonts\Punktype.ttf" />
+    <Resource Include="..\..\Fonts\Lacquer-Regular.ttf" Link="Fonts\Lacquer-Regular.ttf" />
+    <Resource Include="..\..\Fonts\KillerSans-Regular.ttf" Link="Fonts\KillerSans-Regular.ttf" />
+    <Resource Include="..\..\Fonts\KillerSansUI-Regular.ttf" Link="Fonts\KillerSansUI-Regular.ttf" />
+    <Resource Include="..\..\Resources\kp-icon.ico" Link="Resources\kp-icon.ico" />
+    <Resource Include="..\..\Resources\kp-icon.png" Link="Resources\kp-icon.png" />
+    <Resource Include="..\..\Resources\app-icon-master.png" Link="Resources\app-icon-master.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

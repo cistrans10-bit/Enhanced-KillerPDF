@@ -3,57 +3,117 @@
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <!-- KillerTools light theme (macOS-style palette) -->
-    <SolidColorBrush x:Key="BgDark"         Color="#f5f5f7" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgPanel"        Color="#ffffff" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgHover"        Color="#ececee" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgSidebar"      Color="#f6f6f8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgRecentPanel"  Color="#ffffff" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgFlyout"       Color="#fafafa" po:Freeze="True"/>
+    <!-- KillerTools light theme -->
+    <SolidColorBrush x:Key="SurfaceBrush"    Color="#f0f0f0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PaneBrush"       Color="#e8e8e8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RowHoverBrush"   Color="#b2b2b2" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuHoverBrush"  Color="#b2b2b2" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BackgroundBrush" Color="#dcdcdc" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgRecentPanel"  Color="#d4d4d4" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgFlyout"       Color="#cacaca" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AnnotationBarBrush" Color="#cacaca" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TextFieldBrush" Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ComboFieldBrush" Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ComboFieldHoverBrush" Color="#f7f7f7" po:Freeze="True"/>
     <LinearGradientBrush x:Key="TabStripFadeBrush" StartPoint="0,0" EndPoint="0,1" po:Freeze="True">
         <GradientStop Offset="0.0" Color="#00000000"/>
         <GradientStop Offset="0.55" Color="#12000000"/>
         <GradientStop Offset="1.0" Color="#3c000000"/>
     </LinearGradientBrush>
-    <SolidColorBrush x:Key="BgModal"        Color="#ffffff" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BorderDim"      Color="#d9d9de" po:Freeze="True"/>
-    <SolidColorBrush x:Key="Accent"         Color="#248a3d" po:Freeze="True"/>
-    <SolidColorBrush x:Key="HeaderAccent"   Color="#248a3d" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SelectionAccent" Color="#248a3d" po:Freeze="True"/>
-    <SolidColorBrush x:Key="AccentLogo"     Color="#248a3d" po:Freeze="True"/>
-    <SolidColorBrush x:Key="InstallBtnBg"   Color="#248a3d" po:Freeze="True"/>
-    <SolidColorBrush x:Key="AccentBorder"   Color="#d0d0d6" po:Freeze="True"/>
-    <SolidColorBrush x:Key="DropBorder"     Color="#d0d0d6" po:Freeze="True"/>
-    <SolidColorBrush x:Key="PaneBorder"     Color="#d0d0d6" po:Freeze="True"/>
-    <SolidColorBrush x:Key="AccentDim"      Color="#dcf5e3" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SelectionBg" Color="#248a3d" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuBackgroundBrush" Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="CardBorderBrush" Color="#c0c0c0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryBrush"    Color="#1b5e20" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#1b5e20" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#1b5e20" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OnPrimaryBrush"  Color="#ffffff" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OutlineBtnBrush" Color="#1b5e20" po:Freeze="True"/>
+    <SolidColorBrush x:Key="HeaderLineBrush" Color="#1b5e20" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionAccent" Color="#1b5e20" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AccentLogo"     Color="#1b5e20" po:Freeze="True"/>
+    <SolidColorBrush x:Key="InstallBtnBg"   Color="#1b5e20" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuBorderBrush" Color="#a8a8a8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DropBorder"     Color="#a8a8a8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PaneBorderBrush" Color="#b0b0b0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AppBorderBrush"  Color="#b0b0b0" po:Freeze="True"/>
+    <!-- SelectionBg's color. This was #c8f5d8, the pale mint that belongs on a focused button
+         (OutlinePressedBrush, next line) - as a selected-row fill it read as a highlighter stripe.
+         Light's selection is DARK on light. -->
+    <SolidColorBrush x:Key="RowSelectedBrush"    Color="#1b5e20" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OutlinePressedBrush" Color="#c8f5d8" po:Freeze="True"/>
+    <LinearGradientBrush x:Key="SelectionBg" po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#37753C" Offset="0"/><GradientStop Color="#0F4E14" Offset="1"/></LinearGradientBrush>
     <SolidColorBrush x:Key="SelectionFg" Color="#ffffff" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SettingsOpenRowBg" Color="#ececee" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TextPrimary"    Color="#1d1d1f" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TextSecondary"  Color="#6e6e73" po:Freeze="True"/>
-    <SolidColorBrush x:Key="FilenameBrush"  Color="#6e6e73" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TextDim"        Color="#86868b" po:Freeze="True"/>
-    <SolidColorBrush x:Key="TextFooter"     Color="#98989d" po:Freeze="True"/>
-    <SolidColorBrush x:Key="DangerRed"      Color="#ff3b30" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgDragHandle"   Color="#aeaeb2" po:Freeze="True"/>
-    <SolidColorBrush x:Key="DragLine"       Color="#c7c7cc" po:Freeze="True"/>
-    <SolidColorBrush x:Key="BgScrollThumb"  Color="#88248a3d" po:Freeze="True"/>
-    <SolidColorBrush x:Key="ScrollThumbHover" Color="#248a3d" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SliderTrack"    Color="#d1d1d6" po:Freeze="True"/>
-    <SolidColorBrush x:Key="RadioAccent"    Color="#248a3d" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SettingsOpenRowBg" Color="#b2b2b2" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TextBrush"      Color="#1a1a1a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MutedTextBrush" Color="#555555" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuTextBrush"  Color="#555555" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ChromeTextBrush" Color="#3a3a3a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="FilenameBrush"  Color="#555555" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DimTextBrush"   Color="#666666" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TextFooter"     Color="#5F5F5F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DangerRed"      Color="#dc2626" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgDragHandle"   Color="#707070" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DragLine"       Color="#a0a0a0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ScrollThumbBrush"      Color="#8818843d" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ScrollThumbHoverBrush" Color="#1b5e20" po:Freeze="True"/>
+    <!-- Added for the kit components 2026-07-31. -->
+    <SolidColorBrush x:Key="TableHeaderBrush" Color="#f0f0f0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RowAltBrush"      Color="#14000000" po:Freeze="True"/>
+    <SolidColorBrush x:Key="InputBorderBrush" Color="#c0c0c0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="InputHoverBrush"  Color="#8a8a8a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TreeLineBrush"    Color="#c2c2c2" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SliderTrack"    Color="#b0b0b0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RadioAccent"    Color="#1b5e20" po:Freeze="True"/>
     <SolidColorBrush x:Key="BgOverlay"      Color="#99000000" po:Freeze="True"/>
-    <sys:Double x:Key="GrainOpacity">0.10</sys:Double>
+    <sys:Double x:Key="GrainOpacity">0.4</sys:Double>
     <!-- Black icon shadow: invisible under the dark inactive glyphs, but shows under the SELECTED tool's
-         white glyph on its accent background - so in practice only the active tool icon gets a shadow.
-         Kept subtle for the flatter macOS look. -->
-    <sys:Double x:Key="IconShadowOpacity">0.15</sys:Double>
+         white glyph on its accent background - so in practice only the active tool icon gets a shadow. -->
+    <sys:Double x:Key="IconShadowOpacity">0.35</sys:Double>
     <!-- No shadow on the settings sub-headers in light mode (it muddied them); they read cleaner flat. -->
     <sys:Double x:Key="HeaderShadowOpacity">0</sys:Double>
 
-    <SolidColorBrush x:Key="BgCanvas"                                                       Color="#e5e5ea" po:Freeze="True"/>
-    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"                      Color="#dcf5e3" po:Freeze="True"/>
-    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"                  Color="#248a3d" po:Freeze="True"/>
-    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"     Color="#dcf5e3" po:Freeze="True"/>
-    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#248a3d" po:Freeze="True"/>
+    <SolidColorBrush x:Key="BgCanvas"                                                       Color="#b8b8b8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"                      Color="#c8f5d8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"                  Color="#1b5e20" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"     Color="#c8f5d8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#1b5e20" po:Freeze="True"/>
 
+    <!-- Shortcut keyboard view: category colors (darker to read on light keycaps) -->
+    <SolidColorBrush x:Key="KsCatFile"      Color="#009e99" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatTools"     Color="#a67c00" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatEdit"      Color="#d1105a" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatNav"       Color="#6a11cc" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatView"      Color="#a316b5" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatSearch"    Color="#0077b3" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatHelp"      Color="#128c07" po:Freeze="True"/>
+    <SolidColorBrush x:Key="KsCatOcr"       Color="#cc6a00" po:Freeze="True"/>
+
+    <!-- Dialled back on light surfaces - the effect rasterizes ClearType and a heavier stroke
+         makes the label read blurry. -->
+    <DropShadowEffect x:Key="TextStroke" Color="Black" BlurRadius="2" ShadowDepth="0.6" Direction="270" Opacity="0.45"/>
+
+    <!-- Corner radii. Every theme must define these (98SE is the square one); a theme missing
+         them resolves to 0 and goes square everywhere. -->
+    <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="SmallCornerRadius">3</CornerRadius>
+    <CornerRadius x:Key="FlyoutCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="AccentSwatchCornerRadius">9</CornerRadius>
+
+    <SolidColorBrush x:Key="OutlineRestBrush" Color="#777777" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionButtonBorderBrush" Color="#777777" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#1A1A1A"/>
+    <SolidColorBrush x:Key="DialogTitleBarBrush" Color="#FFDCDCDC" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#FFB2B2B2" po:Freeze="True"/>
+    <CornerRadius x:Key="WindowCornerRadius">7</CornerRadius>
+    <CornerRadius x:Key="PanelCornerRadius">6</CornerRadius>
+    <SolidColorBrush x:Key="FooterBackgroundBrush" Color="#FFDCDCDC" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MenuSeparatorBrush" Color="#FFC0C0C0" po:Freeze="True"/>
+    <SolidColorBrush x:Key="TitleBarBrush" Color="#FFDCDCDC" po:Freeze="True"/>
+    <sys:Double x:Key="TitleBarHeight" xmlns:sys="clr-namespace:System;assembly=mscorlib">32</sys:Double>
+    <!-- Modern wordmark sizes preserve the existing title typography. -->
+    <sys:Double x:Key="TitleWordmarkSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">15</sys:Double>
+    <sys:Double x:Key="TitleWordmarkBoldSize" xmlns:sys="clr-namespace:System;assembly=mscorlib">22.52</sys:Double>
+    <sys:Double x:Key="WordmarkShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.45</sys:Double>
+    <sys:Double x:Key="PaneShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.6</sys:Double>
+    <sys:Double x:Key="BarShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.38</sys:Double>
+    <sys:Double x:Key="FlyoutShadowOpacity" xmlns:sys="clr-namespace:System;assembly=mscorlib">0.55</sys:Double>
 </ResourceDictionary>

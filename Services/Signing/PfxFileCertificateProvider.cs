@@ -12,9 +12,8 @@ namespace KillerPDF.Services.Signing
         public string DisplayName => Path.GetFileName(path);
 
         public X509Certificate2 GetCertificate()
-            // Exportable so a Bouncy Castle signer can later pull the private key to build the CMS.
-            // (EphemeralKeySet is intentionally not used - it does not exist on .NET Framework.)
-            => new(path, password,
-                   X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet);
+            // Exportable so the signer can access the private key while building the CMS payload.
+            => X509CertificateLoader.LoadPkcs12FromFile(path, password,
+                X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet);
     }
 }

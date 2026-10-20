@@ -1,62 +1,66 @@
 using System;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
-using PdfSharp.Pdf.IO;
-using PdfSharp.Pdf.Signatures;
+using KillerPdf.Engine.Documents;
+using KillerPdf.Engine.Signing;
 
 namespace KillerPDF.Services.Signing
 {
-    /// <summary>
-    /// Cryptographic (PAdES / PKCS#7) PDF signing, isolated from the rest of the app. Everything else
-    /// in KillerPDF uses PdfSharpCore; this module uses PDFsharp 6.2 (the <c>PdfSharp.*</c> namespace),
-    /// and the two coexist without clashing. There are deliberately no WPF or Windows-only types here,
-    /// so the whole module ports to Avalonia / Linux / Mac unchanged.
-    ///
-    /// v1 milestone: an invisible-but-valid signature (Adobe still lists it in the Signatures panel),
-    /// SHA-256, no timestamp. The .NET Framework build of PDFsharp cannot timestamp; once the plumbing
-    /// is validated we swap the default signer for a Bouncy Castle IDigitalSigner to get portable
-    /// crypto plus timestamps/LTV. A visible signature appearance comes after that.
-    /// </summary>
+    /// <summary>Creates detached-CMS approval signatures through The KillerPDF.Engine.</summary>
     internal sealed class PdfSigner
     {
-        public sealed record SignInfo(string Reason, string Location, string Contact);
+        public sealed record SignInfo(string Reason, string Location, string Contact,
+            VisibleSignatureInfo? VisibleAppearance = null);
 
-        /// <summary>
-        /// Signs <paramref name="inputPath"/> with <paramref name="cert"/> and writes the signed copy
-        /// to <paramref name="outputPath"/>. Throws on failure.
-        /// </summary>
+        public sealed record VisibleSignatureInfo(
+            int PageIndex, double Left, double Bottom, double Width, double Height,
+            double FontSize, string Text);
+
+        // Keep signing behind the injected service instance used by the application and tests.
+#pragma warning disable CA1822
         public void Sign(string inputPath, string outputPath, X509Certificate2 cert, SignInfo info)
+#pragma warning restore CA1822
         {
-            if (cert is null) throw new ArgumentNullException(nameof(cert));
+            ArgumentException.ThrowIfNullOrWhiteSpace(inputPath);
+            ArgumentException.ThrowIfNullOrWhiteSpace(outputPath);
+            ArgumentNullException.ThrowIfNull(cert);
+            ArgumentNullException.ThrowIfNull(info);
+
             if (!cert.HasPrivateKey)
                 throw new InvalidOperationException(
                     "The selected certificate has no private key, so it cannot sign.");
 
-            // Open the finalized PDF. (NOTE: confirm the exact open-mode enum on first build - PDFsharp
-            // 6.2 may want PdfReadAccuracy / a different overload here.)
-            using PdfDocument document = PdfReader.Open(inputPath, PdfDocumentOpenMode.Modify);
-
-            var options = new DigitalSignatureOptions
+            PdfDocument document = PdfDocument.Open(File.ReadAllBytes(inputPath));
+            var cmsSigner = new KillerCmsSigner(cert);
+            var options = new PdfSignatureOptions
             {
-                ContactInfo = info.Contact,
-                Location    = info.Location,
-                Reason      = info.Reason,
-                // Invisible for v1: a zero rectangle and no AppearanceHandler. If PDFsharp requires a
-                // non-null AppearanceHandler, that is the first thing to add (a minimal drawn field).
-                Rectangle   = new XRect(0, 0, 0, 0),
+                SignerName = cmsSigner.CertificateName,
+                Reason = NullIfWhiteSpace(info.Reason),
+                Location = NullIfWhiteSpace(info.Location),
+                ContactInformation = NullIfWhiteSpace(info.Contact),
+                SignerCertificate = cert.RawDataMemory,
+                PageIndex = info.VisibleAppearance?.PageIndex ?? 0,
+                VisibleAppearance = info.VisibleAppearance is { } appearance
+                    ? new PdfSignatureAppearance
+                    {
+                        Left = appearance.Left,
+                        Bottom = appearance.Bottom,
+                        Width = appearance.Width,
+                        Height = appearance.Height,
+                        FontSize = appearance.FontSize,
+                        Text = appearance.Text
+                    }
+                    : null,
             };
 
-            // Our own SignedCms-based signer: drives the cert's modern (CNG) key provider, so it
-            // works with cloud / token keys (Certum SimplySign) as well as software .pfx keys, where
-            // PdfSharpDefaultSigner throws "An internal error occurred". Same IDigitalSigner slot, so a
-            // Bouncy Castle variant can later swap in here for portability + timestamps.
-            var signer = new KillerCmsSigner(cert);
-
-            // Associates the signer + options with the document; the signature is produced on Save.
-            _ = DigitalSignatureHandler.ForDocument(document, signer, options);
-
-            document.Save(outputPath);
+            byte[] signed = PdfDetachedSignatureWriter.Sign(
+                document,
+                cmsSigner.CreateDetachedCms,
+                options);
+            File.WriteAllBytes(outputPath, signed);
         }
+
+        private static string? NullIfWhiteSpace(string? value) =>
+            string.IsNullOrWhiteSpace(value) ? null : value;
     }
 }
