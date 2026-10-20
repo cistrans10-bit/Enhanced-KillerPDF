@@ -226,6 +226,7 @@ namespace KillerPDF.Controls
         internal Color LineAnnotColorRef { get => _lineAnnotColor; set => _lineAnnotColor = value; }
         internal InkAnnotation? ActiveInkRef { get => _activeInk; set => _activeInk = value; }
         internal TextBox? ActiveTextBoxRef { get => _activeTextBox; set => _activeTextBox = value; }
+        internal double ActiveTextBaseFontRef { get => _activeTextBaseFont; set => _activeTextBaseFont = value; }
         internal double TextFontSizeRef { get => _textFontSize; set => _textFontSize = value; }
         internal double TextLetterSpacingRef { get => _textLetterSpacing; set => _textLetterSpacing = value; }
         internal string TextFontNameRef { get => _textFontName; set => _textFontName = value; }

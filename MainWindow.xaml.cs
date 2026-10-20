@@ -105,6 +105,7 @@ namespace KillerPDF
         private UIElement? _activePreview { get => ActiveViewer.ActivePreviewRef; set => ActiveViewer.ActivePreviewRef = value; }
         private InkAnnotation? _activeInk { get => ActiveViewer.ActiveInkRef; set => ActiveViewer.ActiveInkRef = value; }
         private TextBox? _activeTextBox { get => ActiveViewer.ActiveTextBoxRef; set => ActiveViewer.ActiveTextBoxRef = value; }
+        private double _activeTextBaseFont { get => ActiveViewer.ActiveTextBaseFontRef; set => ActiveViewer.ActiveTextBaseFontRef = value; }
         private PageAnnotation? _selectedAnnotation { get => ActiveViewer.SelectedAnnotationRef; set => ActiveViewer.SelectedAnnotationRef = value; }
         private Border? _selectionBorder { get => ActiveViewer.SelectionBorderRef; set => ActiveViewer.SelectionBorderRef = value; }
         // Shift+click multi-selection (Select tool): extra annotations selected alongside the

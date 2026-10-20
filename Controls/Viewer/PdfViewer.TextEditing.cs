@@ -495,7 +495,9 @@ namespace KillerPDF.Controls
             return pos.X >= x && pos.X <= x + w && pos.Y >= y && pos.Y <= y + h;
         }
 
-        private void PlaceTextBox(Point pos, int pageIdx)
+        /// <param name="size">The box drawn by dragging; null for a click, which gets the default
+        /// width and grows with its text.</param>
+        private void PlaceTextBox(Point pos, int pageIdx, Size? size = null)
         {
             // _textFontSize is a point size; convert to the page's canvas (render-dim) units so
             // it renders and exports as real points. DrawAnnotationsOnDocument multiplies by
@@ -531,6 +533,17 @@ namespace KillerPDF.Controls
             TextEditorLayerFor(_activeCanvas).Children.Add(tb);
             _activeTextBox = tb;
             StyleEditBox(tb);   // current typeface + B/I/S
+            _activeTextBaseFont = fontCanvas;
+            if (size is { } drawn)
+            {
+                // A drawn box keeps the dragged rectangle exactly. The chosen size is what the text
+                // aims for; it only comes down if a line of it would not fit the box (TextFit.cs).
+                Canvas.SetTop(tb, pos.Y);
+                tb.Width = drawn.Width;
+                tb.Height = drawn.Height;
+                tb.FontSize = FitLiveBox(tb, drawn.Width, drawn.Height, fontCanvas);
+            }
+            tb.TextChanged += ActiveTextBox_TextChanged;
             tb.PreviewKeyDown += TextBox_PreviewKeyDown;
             tb.LostFocus += TextBox_LostFocus;
             // Input priority runs after the placement click has completed, so that click cannot

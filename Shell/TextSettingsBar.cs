@@ -102,8 +102,23 @@ namespace KillerPDF
                 double sy = EnsureEngineDocumentSession().Pages[pg].Height / rd.h;
                 if (sy > 0) fontCanvas = _textFontSize / sy;
             }
-            _activeTextBox.FontSize = fontCanvas;
+            // A fixed-size box (drawn, or resized by a corner) has an auto-fitted font. Only an
+            // actual size pick overrides it; a color, typeface or B/I/U change keeps the fitted size
+            // and just re-fits so the restyled text still fits the box (PdfViewer.TextFit.cs).
+            bool fixedBox = !double.IsNaN(_activeTextBox.Height) && _activeTextBox.Height > 0;
+            bool sizePicked = Math.Abs(_textFontSize - _lastBarFontSize) > 0.001;
+            _lastBarFontSize = _textFontSize;
+            if (!fixedBox || sizePicked)
+            {
+                _activeTextBox.FontSize = fontCanvas;
+                _activeTextBaseFont = fontCanvas;   // a size picked in the bar is what auto-fit aims for
+            }
+            ActiveViewer.RefitActiveTextBox();
         }
+
+        /// <summary>The bar's size when it last styled the live box, so a later restyle can tell a
+        /// size pick from a color or typeface change.</summary>
+        private double _lastBarFontSize = double.NaN;
 
         // Applies the current text style to whatever is active: the live edit box if one is open,
         // otherwise the selected text box (so its color / fill / size can be changed after placing it).

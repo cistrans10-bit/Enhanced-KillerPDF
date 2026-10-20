@@ -1186,7 +1186,8 @@ namespace KillerPDF.Controls
                         break;
                     }
                     CommitActiveTextBox();
-                    PlaceTextBox(pos, pageIdx);
+                    // Click places the default box; drag draws one (PdfViewer.TextFit.cs).
+                    BeginTextBoxDrag(pos, pageIdx);
                     e.Handled = true;
                     break;
 
@@ -1461,6 +1462,9 @@ namespace KillerPDF.Controls
             pos.X = Math.Max(0, Math.Min(gc.ActualWidth, pos.X));
             pos.Y = Math.Max(0, Math.Min(gc.ActualHeight, pos.Y));
 
+            // Drawing a new text box with the Text tool.
+            if (UpdateTextBoxDrag(pos, e)) return;
+
             // Live text-edit box resize (mid-edit corner handles): free-form, opposite corner held fixed.
             if (_draggingTextEditHandle && _tehBox is not null)
             {
@@ -1472,6 +1476,7 @@ namespace KillerPDF.Controls
                 Canvas.SetTop(_tehBox, ny);
                 _tehBox.Width  = newW;
                 _tehBox.Height = newH;
+                FitLiveBoxToResize(_tehBox, newW, newH);   // the font follows the box (Shift: box only)
                 LayoutTextEditHandles();
                 return;
             }
@@ -1491,6 +1496,9 @@ namespace KillerPDF.Controls
                 rta.Width = newW;
                 rta.Height = newH;
                 rta.Position = new Point(nx, ny);
+                // The text scales with the box: the largest size that still fits it. Shift resizes
+                // the box alone and keeps the font size.
+                if (!KeepFontWhileResizing) rta.FontSize = FitAnnotation(rta, newW, newH);
                 if (_selectionBorder is not null)
                 {
                     _selectionBorder.Width  = newW + 8;
@@ -1781,6 +1789,13 @@ namespace KillerPDF.Controls
             int pageIdx = _gesturePage >= 0
                 ? _gesturePage
                 : (_activeCanvas?.Tag is int tagPage ? tagPage : _currentPage);
+
+            // Finish drawing a new text box: a click places the default box, a drag the drawn one.
+            if (FinishTextBoxDrag())
+            {
+                e.Handled = true;
+                return;
+            }
 
             // Finish a live text-edit box resize and hand focus back so typing continues.
             if (_draggingTextEditHandle)
