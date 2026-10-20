@@ -51,6 +51,13 @@ namespace KillerPDF
                 return;
             }
 
+            // Ctrl+K: "Find tools and commands" in the mode bar (PdfCraft's command field).
+            if (e.Key == Key.K && Keyboard.Modifiers == ModifierKeys.Control && FocusCraftSearch())
+            {
+                e.Handled = true;
+                return;
+            }
+
             // Bold / italic / underline while a text annotation is being edited. This has to come
             // BEFORE the early return below, which hands every other key to the edit box: that
             // return is exactly why Ctrl+B never reached the text tool and collapsed the sidebar

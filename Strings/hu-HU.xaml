@@ -1039,4 +1039,43 @@ Megnyílik a Windows Beállítások - Alapértelmezett alkalmazások.</sys:Strin
     <sys:String x:Key="Str_PasswordProtected">A(z) „{0}” jelszóval védett.</sys:String>
     <sys:String x:Key="Str_About_Aka">Más néven</sys:String>
     <sys:String x:Key="Str_Btn_Run">Futtatás</sys:String>
+
+    <!-- ── PdfCraft shell: mode bar, All tools panel, menu ───────────── -->
+    <sys:String x:Key="Str_Craft_Menu">Menü</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_AllTools">Minden eszköz</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Read">Olvasás</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Edit">Szerkesztés</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Convert">Átalakítás</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_ESign">E-aláírás</sys:String>
+    <sys:String x:Key="Str_Craft_FindTools">Eszközök és parancsok keresése</sys:String>
+    <sys:String x:Key="Str_Craft_SearchHint">Ctrl K</sys:String>
+    <sys:String x:Key="Str_Craft_ViewMore">Továbbiak</sys:String>
+    <sys:String x:Key="Str_Craft_ViewLess">Kevesebb</sys:String>
+    <sys:String x:Key="Str_Craft_ClosePanel">Panel bezárása</sys:String>
+    <sys:String x:Key="Str_Craft_ToggleTheme">Váltás világos és sötét között</sys:String>
+    <sys:String x:Key="Str_Craft_NoTools">Egyik eszköz sem felel meg a keresésnek.</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_DocInfo">Dokumentum tulajdonságai</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_ToolsPanel">Eszközpanel</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Toolbar">Eszköztár</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Shortcuts">Billentyűparancsok</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_About">A KillerPDF névjegye</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Export">PDF exportálása</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_FillSign">Kitöltés és aláírás</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Edit">PDF szerkesztése</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Create">PDF létrehozása</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Combine">Fájlok egyesítése</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Organize">Oldalak rendezése</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Comment">Megjegyzések hozzáadása</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Ocr">Beolvasás és OCR</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Extract">Oldalak kibontása</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compress">Tömörítés ZIP-be</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Form">Űrlap előkészítése</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Stamp">Bélyegző hozzáadása</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Certificate">Tanúsítvány használata</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Print">PDF nyomtatása</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Measure">Objektumok mérése</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compare">Fájlok összehasonlítása</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Crop">Oldalak körülvágása</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Image">Kép hozzáadása</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Flatten">PDF egyesítése egy rétegbe</sys:String>
 </ResourceDictionary>

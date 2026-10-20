@@ -1037,4 +1037,43 @@ Změnit jejich velikost na podporovanou? Stránky si zachovají vzhled i proporc
     <sys:String x:Key="Str_PasswordProtected">Soubor „{0}“ je chráněn heslem.</sys:String>
     <sys:String x:Key="Str_About_Aka">Také známý jako</sys:String>
     <sys:String x:Key="Str_Btn_Run">Spustit</sys:String>
+
+    <!-- ── PdfCraft shell: mode bar, All tools panel, menu ───────────── -->
+    <sys:String x:Key="Str_Craft_Menu">Nabídka</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_AllTools">Všechny nástroje</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Read">Číst</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Edit">Upravit</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Convert">Převést</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_ESign">E-podpis</sys:String>
+    <sys:String x:Key="Str_Craft_FindTools">Hledat nástroje a příkazy</sys:String>
+    <sys:String x:Key="Str_Craft_SearchHint">Ctrl K</sys:String>
+    <sys:String x:Key="Str_Craft_ViewMore">Zobrazit více</sys:String>
+    <sys:String x:Key="Str_Craft_ViewLess">Zobrazit méně</sys:String>
+    <sys:String x:Key="Str_Craft_ClosePanel">Zavřít panel</sys:String>
+    <sys:String x:Key="Str_Craft_ToggleTheme">Přepnout světlý a tmavý vzhled</sys:String>
+    <sys:String x:Key="Str_Craft_NoTools">Hledání neodpovídá žádný nástroj.</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_DocInfo">Vlastnosti dokumentu</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_ToolsPanel">Panel nástrojů</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Toolbar">Panel tlačítek</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Shortcuts">Klávesové zkratky</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_About">O aplikaci KillerPDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Export">Exportovat PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_FillSign">Vyplnit a podepsat</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Edit">Upravit PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Create">Vytvořit PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Combine">Sloučit soubory</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Organize">Uspořádat stránky</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Comment">Přidat komentáře</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Ocr">Skenovat a OCR</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Extract">Extrahovat stránky</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compress">Komprimovat do ZIP</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Form">Připravit formulář</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Stamp">Přidat razítko</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Certificate">Použít certifikát</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Print">Tisknout PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Measure">Měřit objekty</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compare">Porovnat soubory</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Crop">Oříznout stránky</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Image">Přidat obrázek</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Flatten">Sloučit vrstvy PDF</sys:String>
 </ResourceDictionary>

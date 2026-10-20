@@ -32,10 +32,10 @@ namespace KillerPDF.Services
 
         // ── State ─────────────────────────────────────────────────────────
 
-        private static Theme _current = Theme.Dark;
+        private static Theme _current = Theme.Light;
         // Dark, Light, and Black each remember their own accent independently.
-        private static DarkAccent _darkAccent  = DarkAccent.Green;
-        private static DarkAccent _lightAccent = DarkAccent.Green;
+        private static DarkAccent _darkAccent  = DarkAccent.Blue;
+        private static DarkAccent _lightAccent = DarkAccent.Blue;
         private static DarkAccent _blackAccent = DarkAccent.Green;
         // Match the shared KillerTools 98SE palette: classic Win98 navy is the default.
         private static DarkAccent _se98Accent = DarkAccent.Blue;
@@ -67,9 +67,10 @@ namespace KillerPDF.Services
             var saved = App.GetSetting("Theme");
             // Back-compat: the Black theme's enum value was renamed from "HighContrast".
             if (saved == "HighContrast") saved = nameof(Theme.Black);
-            _current = Enum.TryParse<Theme>(saved, out var t) ? t : Theme.Dark;
-            _darkAccent  = Enum.TryParse<DarkAccent>(App.GetSetting("DarkAccent"),  out var da) ? da : DarkAccent.Green;
-            _lightAccent = Enum.TryParse<DarkAccent>(App.GetSetting("LightAccent"), out var la) ? la : DarkAccent.Green;
+            // PdfCraft look: a fresh install opens on the light workbench with the blue accent.
+            _current = Enum.TryParse<Theme>(saved, out var t) ? t : Theme.Light;
+            _darkAccent  = Enum.TryParse<DarkAccent>(App.GetSetting("DarkAccent"),  out var da) ? da : DarkAccent.Blue;
+            _lightAccent = Enum.TryParse<DarkAccent>(App.GetSetting("LightAccent"), out var la) ? la : DarkAccent.Blue;
             _blackAccent = Enum.TryParse<DarkAccent>(App.GetSetting("BlackAccent"), out var ba) ? ba : DarkAccent.Green;
             _se98Accent = Enum.TryParse<DarkAccent>(App.GetSetting("98SEAccent"), out var wa) ? wa : DarkAccent.Blue;
             ApplyInternal(_current, applyDwm: false);
@@ -183,6 +184,13 @@ namespace KillerPDF.Services
             bool themeOwnsOutlineHoverText = newDict.Contains("OutlineHoverTextBrush");
             bool themeOwnsComboHighlightText = newDict.Contains("ComboHighlightTextBrush");
             bool themeOwnsFooterAccent = newDict.Contains("FooterAccentBrush");
+            // Captured before any theme writes the App.xaml slot, so it is the Killer Sans face.
+            _defaultBrandSans ??= Application.Current.Resources["BrandSansFont"];
+            if (IsCraftFamily(theme)) ApplyCraftTypography(newDict);
+            // Every completed palette carries BrandSansFont, or the in-place merge would keep
+            // the PdfCraft face after switching from Light/Dark to a Killer theme.
+            if (!newDict.Contains("BrandSansFont") && _defaultBrandSans is not null)
+                newDict["BrandSansFont"] = _defaultBrandSans;
             CompleteAppPalette(newDict);
             var merged  = Application.Current.Resources.MergedDictionaries;
 
@@ -282,6 +290,11 @@ namespace KillerPDF.Services
             appResources["RadCard"] = liveResources["PanelCornerRadius"];
             appResources["RadControl"] = liveResources["ControlCornerRadius"];
             appResources["UiFont"] = liveResources["UiFont"];
+            // BrandSansFont is an App.xaml local resource too (toolbar captions, footer, filename),
+            // so it needs the same push into the higher-precedence slot. The original Killer Sans
+            // face is captured once and restored for every theme that does not supply its own.
+            if (liveResources.Contains("BrandSansFont"))
+                appResources["BrandSansFont"] = liveResources["BrandSansFont"];
 
             // One SystemIdle pass to nudge any elements whose effective value didn't auto-update
             // (e.g. ControlTemplate trigger bindings with TargetName that missed the per-key signal).
@@ -374,6 +387,23 @@ namespace KillerPDF.Services
 
         private static bool UsesLightChrome(Theme theme) => theme is Theme.Light or Theme.SE98;
 
+        // ── PdfCraft families ─────────────────────────────────────────────
+        // Light and Dark carry PdfCraft's workbench look: Inter for every UI role (PdfCraft's
+        // interface face), at PdfCraft's sizes. The other themes keep the Killer typography.
+        private static object? _defaultBrandSans;
+
+        internal static bool IsCraftFamily(Theme theme) => theme is Theme.Light or Theme.Dark;
+
+        internal static bool IsCraft => IsCraftFamily(_current);
+
+        private static void ApplyCraftTypography(ResourceDictionary d)
+        {
+            var inter = KillerPDF.UiKit.CraftSansStack;
+            foreach (string key in new[] { "UiFont", "BrandSansFont", "ChromeFontFamily", "MenuFontFamily",
+                                           "FooterStatusFont", "FooterMetaFont", "FileNameFont" })
+                if (!d.Contains(key)) d[key] = inter;
+        }
+
         private static void CompleteAppPalette(ResourceDictionary d)
         {
             object Pick(string key, string fallback) => d.Contains(key) ? d[key] : d[fallback];
@@ -430,6 +460,24 @@ namespace KillerPDF.Services
             // Sans Serif; the other themes use Killer Sans UI over the Segoe stack).
             if (!d.Contains("UiFont"))
                 d["UiFont"] = KillerPDF.UiKit.KillerSansUiStack;
+            // PdfCraft shell roles (MainWindow's mode bar, tools panel and tool palette). Light and
+            // Dark define them from PdfCraft's tokens; every other theme derives them from its own
+            // palette, so the same layout reads in that theme's colors.
+            Alias("CraftChromeBrush", "PaneBrush");
+            Alias("CraftDividerBrush", "PaneBorderBrush");
+            Alias("CraftBorderBrush", "CardBorderBrush");
+            Alias("CraftIconBrush", "TextBrush");
+            Alias("CraftFaintBrush", "MutedTextBrush");
+            Alias("CraftHoverBrush", "RowHoverBrush");
+            Alias("CraftPressedBrush", "RowHoverBrush");
+            Alias("CraftTabBrush", "PaneBrush");
+            Alias("CraftTitleHoverBrush", "RowHoverBrush");
+            Alias("CraftFieldBrush", "PaneBrush");
+            Alias("CraftCardBrush", "MenuBackgroundBrush");
+            if (!d.Contains("CraftPaletteShadow")) d["CraftPaletteShadow"] = new SolidColorBrush(Color.FromArgb(0x44, 0, 0, 0));
+            if (!d.Contains("FooterTextSize")) d["FooterTextSize"] = 16.0;
+            if (!d.Contains("DocPaneInset")) d["DocPaneInset"] = 8.0;
+            if (!d.Contains("CraftPanelEdge")) d["CraftPanelEdge"] = new Thickness(0, 0, 1, 0);
             Alias("ComboFieldBrush", "PaneBrush");
             Alias("ComboFieldHoverBrush", "RowHoverBrush");
             Alias("ComboPopupBrush", "PaneBrush");

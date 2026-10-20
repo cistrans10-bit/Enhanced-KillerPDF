@@ -1032,4 +1032,43 @@ Windows সেটিংস - ডিফল্ট অ্যাপ খুলবে�
     <sys:String x:Key="Str_PasswordProtected">“{0}” পাসওয়ার্ড দিয়ে সুরক্ষিত।</sys:String>
     <sys:String x:Key="Str_About_Aka">অন্য নাম</sys:String>
     <sys:String x:Key="Str_Btn_Run">চালু করুন</sys:String>
+
+    <!-- ── PdfCraft shell: mode bar, All tools panel, menu ───────────── -->
+    <sys:String x:Key="Str_Craft_Menu">মেনু</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_AllTools">সব টুল</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Read">পড়ুন</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Edit">সম্পাদনা</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Convert">রূপান্তর</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_ESign">ই-স্বাক্ষর</sys:String>
+    <sys:String x:Key="Str_Craft_FindTools">টুল ও কমান্ড খুঁজুন</sys:String>
+    <sys:String x:Key="Str_Craft_SearchHint">Ctrl K</sys:String>
+    <sys:String x:Key="Str_Craft_ViewMore">আরও দেখুন</sys:String>
+    <sys:String x:Key="Str_Craft_ViewLess">কম দেখুন</sys:String>
+    <sys:String x:Key="Str_Craft_ClosePanel">প্যানেল বন্ধ করুন</sys:String>
+    <sys:String x:Key="Str_Craft_ToggleTheme">লাইট ও ডার্কের মধ্যে বদলান</sys:String>
+    <sys:String x:Key="Str_Craft_NoTools">আপনার অনুসন্ধানের সাথে কোনো টুল মেলেনি।</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_DocInfo">ডকুমেন্টের বৈশিষ্ট্য</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_ToolsPanel">টুল প্যানেল</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Toolbar">টুলবার</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Shortcuts">কিবোর্ড শর্টকাট</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_About">KillerPDF সম্পর্কে</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Export">PDF রপ্তানি</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_FillSign">পূরণ ও স্বাক্ষর</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Edit">PDF সম্পাদনা</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Create">PDF তৈরি</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Combine">ফাইল একত্র করুন</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Organize">পৃষ্ঠা সাজান</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Comment">মন্তব্য যোগ করুন</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Ocr">স্ক্যান ও OCR</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Extract">পৃষ্ঠা বের করুন</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compress">ZIP-এ সংকুচিত করুন</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Form">ফর্ম প্রস্তুত করুন</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Stamp">স্ট্যাম্প যোগ করুন</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Certificate">সার্টিফিকেট ব্যবহার করুন</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Print">PDF মুদ্রণ</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Measure">বস্তু পরিমাপ</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compare">ফাইল তুলনা</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Crop">পৃষ্ঠা ক্রপ করুন</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Image">ছবি যোগ করুন</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Flatten">PDF ফ্ল্যাটেন করুন</sys:String>
 </ResourceDictionary>

@@ -1038,4 +1038,43 @@ Auf eine unterstützte Größe skalieren? Aussehen und Proportionen der Seiten b
     <sys:String x:Key="Str_PasswordProtected">„{0}“ ist passwortgeschützt.</sys:String>
     <sys:String x:Key="Str_About_Aka">Auch bekannt als</sys:String>
     <sys:String x:Key="Str_Btn_Run">Starten</sys:String>
+
+    <!-- ── PdfCraft shell: mode bar, All tools panel, menu ───────────── -->
+    <sys:String x:Key="Str_Craft_Menu">Menü</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_AllTools">Alle Werkzeuge</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Read">Lesen</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Edit">Bearbeiten</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Convert">Konvertieren</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_ESign">E-Signatur</sys:String>
+    <sys:String x:Key="Str_Craft_FindTools">Werkzeuge und Befehle suchen</sys:String>
+    <sys:String x:Key="Str_Craft_SearchHint">Strg K</sys:String>
+    <sys:String x:Key="Str_Craft_ViewMore">Mehr anzeigen</sys:String>
+    <sys:String x:Key="Str_Craft_ViewLess">Weniger anzeigen</sys:String>
+    <sys:String x:Key="Str_Craft_ClosePanel">Bereich schließen</sys:String>
+    <sys:String x:Key="Str_Craft_ToggleTheme">Zwischen hell und dunkel wechseln</sys:String>
+    <sys:String x:Key="Str_Craft_NoTools">Keine Werkzeuge entsprechen der Suche.</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_DocInfo">Dokumenteigenschaften</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_ToolsPanel">Werkzeugbereich</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Toolbar">Symbolleiste</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Shortcuts">Tastenkürzel</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_About">Über KillerPDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Export">PDF exportieren</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_FillSign">Ausfüllen &amp; unterschreiben</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Edit">PDF bearbeiten</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Create">PDF erstellen</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Combine">Dateien kombinieren</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Organize">Seiten organisieren</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Comment">Kommentare hinzufügen</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Ocr">Scannen &amp; OCR</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Extract">Seiten extrahieren</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compress">Als ZIP komprimieren</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Form">Formular vorbereiten</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Stamp">Stempel hinzufügen</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Certificate">Zertifikat verwenden</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Print">PDF drucken</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Measure">Objekte messen</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compare">Dateien vergleichen</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Crop">Seiten zuschneiden</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Image">Bild hinzufügen</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Flatten">PDF reduzieren</sys:String>
 </ResourceDictionary>

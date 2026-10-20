@@ -136,6 +136,10 @@
     <Resource Include="Fonts\KillerSansUI-Regular.ttf" />
     <Resource Include="Fonts\Punktype.ttf" />
     <Resource Include="Fonts\Lacquer-Regular.ttf" />
+    <!-- Inter (OFL, Fonts/Inter-OFL.txt): PdfCraft's interface face, used by the Light and Dark themes. -->
+    <Resource Include="Fonts\Inter-Regular.ttf" />
+    <Resource Include="Fonts\Inter-Medium.ttf" />
+    <Resource Include="Fonts\Inter-SemiBold.ttf" />
 	<Resource Include="Resources\open_hand.cur" />
 	<Resource Include="Resources\closed_hand.cur" />
     <EmbeddedResource Include="Resources\pdf-file.ico" />

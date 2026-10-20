@@ -779,10 +779,10 @@ namespace KillerPDF
         private enum ToolbarStyle { SmallIcons, LargeIcons, TextBeside, TextUnder, TextOnly }
         private enum ToolbarIconSize { Small, Large }
         private enum ToolbarLabelMode { None, Beside, Under, Only }
-        // Large icons with the text underneath is the family default for new installs; migration
-        // keeps whatever an existing install was on.
-        private ToolbarIconSize  _toolbarIconSize  = ToolbarIconSize.Large;
-        private ToolbarLabelMode _toolbarLabelMode = ToolbarLabelMode.Under;
+        // PdfCraft look: small icons without captions, the compact contextual strip under the mode
+        // bar. Migration still keeps whatever an existing install was on.
+        private ToolbarIconSize  _toolbarIconSize  = ToolbarIconSize.Small;
+        private ToolbarLabelMode _toolbarLabelMode = ToolbarLabelMode.None;
 
         // Each toolbar icon button paired with its glyph and label-resource key, built once so the
         // appearance can be rebuilt without re-walking the tree.
@@ -1007,7 +1007,7 @@ namespace KillerPDF
             {
                 btn.Width = double.NaN; btn.MinWidth = 0; btn.Height = 34; btn.MinHeight = 0; btn.Padding = new Thickness(8, 5, 8, 5);
                 var row = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center };
-                row.Children.Add(MakeToolbarGlyph(glyph, glyphSize));
+                row.Children.Add(MakeToolbarIcon(glyph, key, glyphSize));
                 row.Children.Add(new TextBlock
                 {
                     Text = Loc(key),
@@ -1026,7 +1026,7 @@ namespace KillerPDF
                 btn.Width = double.NaN; btn.MinWidth = 0; btn.Height = double.NaN;
                 btn.MinHeight = large ? 56 : 52; btn.Padding = new Thickness(6, 4, 6, 4);
                 var col = new StackPanel { Orientation = Orientation.Vertical, HorizontalAlignment = HorizontalAlignment.Center };
-                col.Children.Add(MakeToolbarGlyph(glyph, glyphSize));
+                col.Children.Add(MakeToolbarIcon(glyph, key, glyphSize));
                 col.Children.Add(new TextBlock
                 {
                     Text = Loc(key),
@@ -1048,7 +1048,7 @@ namespace KillerPDF
             btn.MinWidth = 0;
             btn.Height = large ? 42 : 32; btn.MinHeight = 0;
             btn.Padding = new Thickness(10, 6, 10, 6);
-            btn.Content = MakeToolbarGlyph(glyph, glyphSize);
+            btn.Content = MakeToolbarIcon(glyph, key, glyphSize);
         }
 
         // Order in which Text-beside buttons shed their captions when the bar runs short of room:

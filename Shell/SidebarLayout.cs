@@ -38,16 +38,16 @@ namespace KillerPDF
             // Carry the sized column's current width across a flip (24px when collapsed, else the
             // user's width). A star length means it isn't the sized column yet, so fall back.
             GridLength sized = _sidebarCollapsed
-                ? new GridLength(SbPx(24))
+                ? new GridLength(SbPx(RailWidth))
                 : (_sidebarCol != null && _sidebarCol.Width.GridUnitType == GridUnitType.Pixel)
                     ? _sidebarCol.Width
-                    : new GridLength(SbPx(180));
+                    : new GridLength(SbPx(200));
             double maxW = SbPx(_sidebarShowingOutlines ? SidebarMaxOutlines : SidebarMaxPages);
 
             if (!_sidebarRight)
             {
                 // Sidebar on the LEFT (column 0); document fills column 2.
-                sidebarColDef.MinWidth = SbPx(_sidebarCollapsed ? 24 : SidebarMinOpen); sidebarColDef.MaxWidth = maxW; sidebarColDef.Width = sized;
+                sidebarColDef.MinWidth = SbPx(_sidebarCollapsed ? RailWidth : SidebarMinOpen); sidebarColDef.MaxWidth = maxW; sidebarColDef.Width = sized;
                 docColDef.MinWidth = 0; docColDef.MaxWidth = double.PositiveInfinity;
                 docColDef.Width = new GridLength(1, GridUnitType.Star);
                 Grid.SetColumn(sbOuter, 0);
@@ -55,25 +55,26 @@ namespace KillerPDF
                 _sidebarCol = sidebarColDef;
                 // Toggle strip faces the document: right edge of the sidebar.
                 sbContentCol.Width = new GridLength(1, GridUnitType.Star);
-                sbToggleCol.Width  = new GridLength(24, GridUnitType.Pixel);
+                sbToggleCol.Width  = new GridLength(RailWidth, GridUnitType.Pixel);
                 Grid.SetColumn(sbContent, 0);
                 Grid.SetColumn(sbToggle, 1);
             }
             else
             {
                 // Sidebar on the RIGHT (column 2); document fills column 0.
-                docColDef.MinWidth = SbPx(_sidebarCollapsed ? 24 : SidebarMinOpen); docColDef.MaxWidth = maxW; docColDef.Width = sized;
+                docColDef.MinWidth = SbPx(_sidebarCollapsed ? RailWidth : SidebarMinOpen); docColDef.MaxWidth = maxW; docColDef.Width = sized;
                 sidebarColDef.MinWidth = 0; sidebarColDef.MaxWidth = double.PositiveInfinity;
                 sidebarColDef.Width = new GridLength(1, GridUnitType.Star);
                 Grid.SetColumn(sbOuter, 2);
                 Grid.SetColumn(docPane, 0);
                 _sidebarCol = docColDef;
-                // Toggle strip faces the document: left edge of the sidebar (inner column 0). The
-                // inner column defs are fixed in position, so size them by position, not by name.
-                sbContentCol.Width = new GridLength(24, GridUnitType.Pixel);   // inner col 0 -> toggle
-                sbToggleCol.Width  = new GridLength(1, GridUnitType.Star);     // inner col 1 -> content
-                Grid.SetColumn(sbToggle, 0);
-                Grid.SetColumn(sbContent, 1);
+                // PdfCraft layout: the panel sits against the document and the rail runs down the
+                // window's right edge, so the rail is the OUTER inner column here (inner column 1) -
+                // the left-hand arrangement read from the other side.
+                sbContentCol.Width = new GridLength(1, GridUnitType.Star);           // inner col 0 -> content
+                sbToggleCol.Width  = new GridLength(RailWidth, GridUnitType.Pixel);  // inner col 1 -> rail
+                Grid.SetColumn(sbContent, 0);
+                Grid.SetColumn(sbToggle, 1);
             }
 
             // The splitter's edge line follows its alignment at the content/rail boundary.
@@ -92,7 +93,9 @@ namespace KillerPDF
             // inner lip: right edge with the sidebar on the left, left edge with it on the right.
             if (FindName("SidebarSplitter") is Thumb grip)
             {
-                Grid.SetColumn(grip, _sidebarRight ? 1 : 0);
+                // The content is inner column 0 on both sides now (the rail is outside it on the
+                // right), so the grip always rides column 0 and only its edge flips.
+                Grid.SetColumn(grip, 0);
                 grip.HorizontalAlignment = _sidebarRight ? HorizontalAlignment.Left
                                                          : HorizontalAlignment.Right;
             }
@@ -133,7 +136,10 @@ namespace KillerPDF
         {
             // This is layout geometry, not a palette value. Keep the zero-inset exception scoped
             // to 98SE so it cannot leak into the rounded themes after a live theme switch.
-            double inset = Services.ThemeManager.Current == Services.Theme.SE98 ? 0 : 8;
+            // The PdfCraft-styled themes (Light, Dark) set DocPaneInset to 0: their pasteboard
+            // runs flush to the chrome around it instead of sitting in an inset card.
+            double inset = Services.ThemeManager.Current == Services.Theme.SE98 ? 0
+                : TryFindResource("DocPaneInset") is double themed ? themed : 8;
             return _sidebarRight ? new Thickness(inset, -1, 0, 0)
                                  : new Thickness(0, -1, inset, 0);
         }
@@ -152,7 +158,7 @@ namespace KillerPDF
         {
             if (_sidebarCol == null) return;
             double w = _sidebarCol.ActualWidth + (_sidebarRight ? -e.HorizontalChange : e.HorizontalChange);
-            double min = _sidebarCol.MinWidth > 0 ? _sidebarCol.MinWidth : SbPx(24);
+            double min = _sidebarCol.MinWidth > 0 ? _sidebarCol.MinWidth : SbPx(RailWidth);
             double max = double.IsPositiveInfinity(_sidebarCol.MaxWidth) ? double.MaxValue : _sidebarCol.MaxWidth;
             _sidebarCol.Width = new GridLength(Math.Max(min, Math.Min(max, w)));
             OnSidebarSplitterMove(sender, new System.Windows.Input.MouseEventArgs(
@@ -251,6 +257,7 @@ namespace KillerPDF
         // depends on both the side and the collapsed state.
         private void UpdateSidebarToggleGlyph()
         {
+            SyncCraftRail();   // the rail lights the open panel (CraftShell.cs)
             if (_sidebarToggleBtn == null) return;
             bool pointLeft = _sidebarRight ? _sidebarCollapsed : !_sidebarCollapsed;
             _sidebarToggleBtn.Content = pointLeft ? "" : "";   // ChevronLeft / ChevronRight

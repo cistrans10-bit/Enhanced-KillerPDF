@@ -409,11 +409,13 @@ namespace KillerPDF
             NoRecentCheck.IsChecked = App.GetSetting(App.NoRecentFilesSetting) == "1";
             // Same deal for the link-confirm toggle beside it (default off).
             LinkConfirmCheck.IsChecked = App.GetSetting(ConfirmLinksSetting) == "1";
-            if (string.Equals(App.GetSetting("SidebarSide"), "Right", StringComparison.OrdinalIgnoreCase))
-                _sidebarRight = true;
+            // PdfCraft layout: the tools panel owns the left edge, so the pages/outline panel and
+            // its rail default to the right. A saved "Left" still wins.
+            _sidebarRight = !string.Equals(App.GetSetting("SidebarSide"), "Left", StringComparison.OrdinalIgnoreCase);
             RestoreToolSettings();   // Draw + Text tool styles carry across sessions
             Loaded += (_, _) => AdjustZoomBoxWidth();   // fit the zoom box to the longest localized term
             IndexToolbarButtons();
+            InitCraftShell();   // PdfCraft shell: mode bar, tools panel, palette (Shell/CraftShell.cs)
             OutlineTree.SelectedItemChanged += OutlineTree_SelectedItemChanged;
             LoadSignatures();
             BuildContextMenu();

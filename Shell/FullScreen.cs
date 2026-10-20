@@ -71,6 +71,7 @@ namespace KillerPDF
             Viewer.TabStripBorderCtl.Visibility  = v;
             ViewerB.TabStripBorderCtl.Visibility = v;
             FooterBorder.Visibility       = v;
+            ApplyCraftFullScreen(entering);   // mode bar, tools panel and palette (CraftShell.cs)
             SidebarOuterGrid.Visibility   = v;
             SidebarToggleStrip.Visibility = v;
             SidebarSplitter.Visibility    = v;

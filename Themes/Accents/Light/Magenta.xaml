@@ -9,18 +9,17 @@
     <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#A60070" po:Freeze="True"/>
     <SolidColorBrush x:Key="HeaderLineBrush"     Color="#A60070" po:Freeze="True"/>
     <SolidColorBrush x:Key="SelectionAccent" Color="#A60070" po:Freeze="True"/>
-    <SolidColorBrush x:Key="RowSelectedBrush"    Color="#A60070" po:Freeze="True"/>
-    <SolidColorBrush x:Key="OutlinePressedBrush" Color="#F6DAEB" po:Freeze="True"/>
-    <LinearGradientBrush x:Key="SelectionBg"     po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#B71E85" Offset="0"/><GradientStop Color="#92005F" Offset="1"/></LinearGradientBrush>
-    <SolidColorBrush x:Key="ScrollThumbBrush"      Color="#88A60070" po:Freeze="True"/>
-    <SolidColorBrush x:Key="ScrollThumbHoverBrush" Color="#A60070" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RowSelectedBrush"    Color="#F3DBEB" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OutlinePressedBrush" Color="#F4E0EE" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionBg" Color="#F4E0EE" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionFg" Color="#8D005F" po:Freeze="True"/>
     <SolidColorBrush x:Key="RadioAccent"     Color="#A60070" po:Freeze="True"/>
     <SolidColorBrush x:Key="RadioAccentText" Color="#A60070" po:Freeze="True"/>
 
-    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"                      Color="#F6DAEB" po:Freeze="True"/>
-    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"                  Color="#A60070" po:Freeze="True"/>
-    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"     Color="#F6DAEB" po:Freeze="True"/>
-    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#A60070" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"                      Color="#F3DBEB" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"                  Color="#8D005F" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"     Color="#F3DBEB" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#8D005F" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#1A1A1A"/>
     <SolidColorBrush x:Key="AccentLogo"        Color="#A60070" po:Freeze="True"/>

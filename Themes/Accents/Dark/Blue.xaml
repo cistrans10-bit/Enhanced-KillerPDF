@@ -2,27 +2,26 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-    <!-- Dark family - BLUE accent overlay. Text keys are a lighter cyan-blue so they read on the
-         dark panels; the selection-background keys stay deep navy. The wordmark follows this overlay's accent. -->
-    <SolidColorBrush x:Key="PrimaryBrush"        Color="#50AEE8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#50AEE8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#50AEE8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#50AEE8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="HeaderLineBrush"     Color="#50AEE8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="SelectionAccent" Color="#50AEE8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="RowSelectedBrush"    Color="#0D1B2A" po:Freeze="True"/>
-    <SolidColorBrush x:Key="OutlinePressedBrush" Color="#0D1B2A" po:Freeze="True"/>
-    <LinearGradientBrush x:Key="SelectionBg"     po:Freeze="True" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#385575" Offset="0"/><GradientStop Color="#102D4E" Offset="1"/></LinearGradientBrush>
-    <SolidColorBrush x:Key="ScrollThumbBrush"      Color="#5550AEE8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="ScrollThumbHoverBrush" Color="#50AEE8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="RadioAccent"     Color="#50AEE8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="RadioAccentText" Color="#50AEE8" po:Freeze="True"/>
+    <!-- Dark family - BLUE accent overlay, the default. PdfCraft's own dark tokens: accent
+         4B8BF5, accent text 8CB6FA, selection the deep wash 243657 / 233A63 with accent text. -->
+    <SolidColorBrush x:Key="PrimaryBrush"        Color="#4B8BF5" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush"   Color="#4B8BF5" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#4B8BF5" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OutlineBtnBrush"     Color="#4B8BF5" po:Freeze="True"/>
+    <SolidColorBrush x:Key="HeaderLineBrush"     Color="#4B8BF5" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionAccent" Color="#4B8BF5" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RowSelectedBrush"    Color="#233A63" po:Freeze="True"/>
+    <SolidColorBrush x:Key="OutlinePressedBrush" Color="#243657" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionBg" Color="#243657" po:Freeze="True"/>
+    <SolidColorBrush x:Key="SelectionFg" Color="#8CB6FA" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RadioAccent"     Color="#4B8BF5" po:Freeze="True"/>
+    <SolidColorBrush x:Key="RadioAccentText" Color="#4B8BF5" po:Freeze="True"/>
 
-    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"                      Color="#0D1B2A" po:Freeze="True"/>
-    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"                  Color="#50AEE8" po:Freeze="True"/>
-    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"     Color="#0D1B2A" po:Freeze="True"/>
-    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#50AEE8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"                      Color="#233A63" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"                  Color="#8CB6FA" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"     Color="#233A63" po:Freeze="True"/>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#8CB6FA" po:Freeze="True"/>
 
     <SolidColorBrush x:Key="ComboHighlightTextBrush" Color="#E0E0E0"/>
-    <SolidColorBrush x:Key="AccentLogo"        Color="#50AEE8" po:Freeze="True"/>
+    <SolidColorBrush x:Key="AccentLogo"        Color="#4B8BF5" po:Freeze="True"/>
 </ResourceDictionary>

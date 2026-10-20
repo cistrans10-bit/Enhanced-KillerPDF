@@ -1052,4 +1052,43 @@ KillerPDF не будет создавать две установленные �
     <sys:String x:Key="Str_PasswordProtected">«{0}» защищен паролем.</sys:String>
     <sys:String x:Key="Str_About_Aka">Также известен как</sys:String>
     <sys:String x:Key="Str_Btn_Run">Запустить</sys:String>
+
+    <!-- ── PdfCraft shell: mode bar, All tools panel, menu ───────────── -->
+    <sys:String x:Key="Str_Craft_Menu">Меню</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_AllTools">Все инструменты</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Read">Чтение</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Edit">Правка</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Convert">Преобразование</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_ESign">Эл. подпись</sys:String>
+    <sys:String x:Key="Str_Craft_FindTools">Найти инструменты и команды</sys:String>
+    <sys:String x:Key="Str_Craft_SearchHint">Ctrl K</sys:String>
+    <sys:String x:Key="Str_Craft_ViewMore">Показать больше</sys:String>
+    <sys:String x:Key="Str_Craft_ViewLess">Показать меньше</sys:String>
+    <sys:String x:Key="Str_Craft_ClosePanel">Закрыть панель</sys:String>
+    <sys:String x:Key="Str_Craft_ToggleTheme">Переключить светлую и тёмную тему</sys:String>
+    <sys:String x:Key="Str_Craft_NoTools">Нет инструментов, соответствующих поиску.</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_DocInfo">Свойства документа</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_ToolsPanel">Панель инструментов</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Toolbar">Панель кнопок</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Shortcuts">Сочетания клавиш</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_About">О программе KillerPDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Export">Экспорт PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_FillSign">Заполнить и подписать</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Edit">Редактировать PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Create">Создать PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Combine">Объединить файлы</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Organize">Упорядочить страницы</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Comment">Добавить комментарии</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Ocr">Сканирование и OCR</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Extract">Извлечь страницы</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compress">Сжать в ZIP</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Form">Подготовить форму</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Stamp">Добавить штамп</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Certificate">Использовать сертификат</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Print">Печать PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Measure">Измерить объекты</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compare">Сравнить файлы</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Crop">Обрезать страницы</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Image">Добавить изображение</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Flatten">Сгладить PDF</sys:String>
 </ResourceDictionary>

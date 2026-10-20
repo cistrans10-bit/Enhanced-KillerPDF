@@ -1051,4 +1051,43 @@ Windows параметрлері - Әдепкі қолданбалар ашыл�
     <sys:String x:Key="Str_PasswordProtected">«{0}» құпиясөзбен қорғалған.</sys:String>
     <sys:String x:Key="Str_About_Aka">Басқа аты</sys:String>
     <sys:String x:Key="Str_Btn_Run">Іске қосу</sys:String>
+
+    <!-- ── PdfCraft shell: mode bar, All tools panel, menu ───────────── -->
+    <sys:String x:Key="Str_Craft_Menu">Мәзір</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_AllTools">Барлық құралдар</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Read">Оқу</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Edit">Өңдеу</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Convert">Түрлендіру</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_ESign">Э-қолтаңба</sys:String>
+    <sys:String x:Key="Str_Craft_FindTools">Құралдар мен командаларды іздеу</sys:String>
+    <sys:String x:Key="Str_Craft_SearchHint">Ctrl K</sys:String>
+    <sys:String x:Key="Str_Craft_ViewMore">Көбірек көрсету</sys:String>
+    <sys:String x:Key="Str_Craft_ViewLess">Азырақ көрсету</sys:String>
+    <sys:String x:Key="Str_Craft_ClosePanel">Панельді жабу</sys:String>
+    <sys:String x:Key="Str_Craft_ToggleTheme">Ашық және күңгірт арасында ауыстыру</sys:String>
+    <sys:String x:Key="Str_Craft_NoTools">Іздеуге сәйкес құрал жоқ.</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_DocInfo">Құжат қасиеттері</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_ToolsPanel">Құралдар панелі</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Toolbar">Саймандар тақтасы</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Shortcuts">Пернетақта тіркесімдері</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_About">KillerPDF туралы</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Export">PDF экспорттау</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_FillSign">Толтыру және қол қою</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Edit">PDF өңдеу</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Create">PDF жасау</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Combine">Файлдарды біріктіру</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Organize">Беттерді реттеу</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Comment">Түсініктеме қосу</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Ocr">Сканерлеу және OCR</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Extract">Беттерді шығарып алу</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compress">ZIP-ке сығу</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Form">Пішін дайындау</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Stamp">Мөр қосу</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Certificate">Сертификатты пайдалану</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Print">PDF басып шығару</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Measure">Нысандарды өлшеу</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compare">Файлдарды салыстыру</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Crop">Беттерді кесу</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Image">Сурет қосу</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Flatten">PDF-ті тегістеу</sys:String>
 </ResourceDictionary>

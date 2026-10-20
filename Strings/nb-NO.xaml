@@ -1052,4 +1052,43 @@ Vil du skalere dem til en støttet størrelse? Sidene beholder utseende og propo
     <sys:String x:Key="Str_PasswordProtected">«{0}» er passordbeskyttet.</sys:String>
     <sys:String x:Key="Str_About_Aka">AKA</sys:String>
     <sys:String x:Key="Str_Btn_Run">Kjør</sys:String>
+
+    <!-- ── PdfCraft shell: mode bar, All tools panel, menu ───────────── -->
+    <sys:String x:Key="Str_Craft_Menu">Meny</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_AllTools">Alle verktøy</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Read">Les</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Edit">Rediger</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Convert">Konverter</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_ESign">E-signatur</sys:String>
+    <sys:String x:Key="Str_Craft_FindTools">Finn verktøy og kommandoer</sys:String>
+    <sys:String x:Key="Str_Craft_SearchHint">Ctrl K</sys:String>
+    <sys:String x:Key="Str_Craft_ViewMore">Vis mer</sys:String>
+    <sys:String x:Key="Str_Craft_ViewLess">Vis mindre</sys:String>
+    <sys:String x:Key="Str_Craft_ClosePanel">Lukk panelet</sys:String>
+    <sys:String x:Key="Str_Craft_ToggleTheme">Bytt mellom lyst og mørkt</sys:String>
+    <sys:String x:Key="Str_Craft_NoTools">Ingen verktøy samsvarer med søket.</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_DocInfo">Dokumentegenskaper</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_ToolsPanel">Verktøypanel</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Toolbar">Verktøylinje</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Shortcuts">Hurtigtaster</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_About">Om KillerPDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Export">Eksporter en PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_FillSign">Fyll ut og signer</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Edit">Rediger en PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Create">Opprett en PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Combine">Kombiner filer</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Organize">Organiser sider</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Comment">Legg til kommentarer</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Ocr">Skann og OCR</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Extract">Trekk ut sider</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compress">Komprimer til ZIP</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Form">Klargjør et skjema</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Stamp">Legg til et stempel</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Certificate">Bruk et sertifikat</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Print">Skriv ut en PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Measure">Mål objekter</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compare">Sammenlign filer</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Crop">Beskjær sider</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Image">Legg til et bilde</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Flatten">Flat ut en PDF</sys:String>
 </ResourceDictionary>

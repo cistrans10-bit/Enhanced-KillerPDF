@@ -1052,4 +1052,43 @@ Windows の設定 - 既定のアプリ を開きます。</sys:String>
     <sys:String x:Key="Str_PasswordProtected">「{0}」はパスワードで保護されています。</sys:String>
     <sys:String x:Key="Str_About_Aka">別名</sys:String>
     <sys:String x:Key="Str_Btn_Run">実行</sys:String>
+
+    <!-- ── PdfCraft shell: mode bar, All tools panel, menu ───────────── -->
+    <sys:String x:Key="Str_Craft_Menu">メニュー</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_AllTools">すべてのツール</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Read">閲覧</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Edit">編集</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Convert">変換</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_ESign">電子署名</sys:String>
+    <sys:String x:Key="Str_Craft_FindTools">ツールとコマンドを検索</sys:String>
+    <sys:String x:Key="Str_Craft_SearchHint">Ctrl K</sys:String>
+    <sys:String x:Key="Str_Craft_ViewMore">さらに表示</sys:String>
+    <sys:String x:Key="Str_Craft_ViewLess">表示を減らす</sys:String>
+    <sys:String x:Key="Str_Craft_ClosePanel">パネルを閉じる</sys:String>
+    <sys:String x:Key="Str_Craft_ToggleTheme">ライトとダークを切り替え</sys:String>
+    <sys:String x:Key="Str_Craft_NoTools">検索に一致するツールはありません。</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_DocInfo">文書のプロパティ</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_ToolsPanel">ツールパネル</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Toolbar">ツールバー</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Shortcuts">キーボードショートカット</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_About">KillerPDF について</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Export">PDF を書き出す</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_FillSign">入力と署名</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Edit">PDF を編集</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Create">PDF を作成</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Combine">ファイルを結合</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Organize">ページを整理</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Comment">コメントを追加</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Ocr">スキャンと OCR</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Extract">ページを抽出</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compress">ZIP に圧縮</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Form">フォームを準備</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Stamp">スタンプを追加</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Certificate">証明書を使用</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Print">PDF を印刷</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Measure">オブジェクトを測定</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compare">ファイルを比較</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Crop">ページをトリミング</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Image">画像を追加</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Flatten">PDF をフラット化</sys:String>
 </ResourceDictionary>

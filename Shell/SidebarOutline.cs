@@ -27,13 +27,16 @@ namespace KillerPDF
         private void SidebarPagesTab_Click(object sender, RoutedEventArgs e) => SwitchSidebarToPagesTab();
         private void SidebarOutlinesTab_Click(object sender, RoutedEventArgs e) => SwitchSidebarToOutlinesTab();
 
-        private const double SidebarMaxPages = 234;   // stops when the 200px-capped thumbnail fills (200 + margins + scrollbar)
+        private const double SidebarMaxPages = 254;   // stops when the 200px-capped thumbnail fills (200 + margins + scrollbar)
         private const double SidebarMaxOutlines = 480;
-        private const double SidebarMinOpen = 120;   // narrowest readable width before labels/header clip
+        private const double SidebarMinOpen = 140;   // narrowest readable width before labels/header clip
+        /// <summary>Width of the icon rail beside the pages/outline panel (PdfCraft's 44px rail).</summary>
+        internal const double RailWidth = 44;
 
         private void SwitchSidebarToPagesTab()
         {
             _sidebarShowingOutlines = false;
+            SyncCraftRail();
             PageList.Visibility = Visibility.Visible;
             OutlineScrollViewer.Visibility = Visibility.Collapsed;
             OutlineExpandCollapseAllButton.Visibility = Visibility.Collapsed;
@@ -62,6 +65,7 @@ namespace KillerPDF
                 _savedPagesWidth = Math.Min(_sidebarCol.ActualWidth, SbPx(SidebarMaxPages));
 
             _sidebarShowingOutlines = true;
+            SyncCraftRail();
             PageList.Visibility = Visibility.Collapsed;
             OutlineScrollViewer.Visibility = Visibility.Visible;
             OutlineExpandCollapseAllButton.Visibility = Visibility.Visible;

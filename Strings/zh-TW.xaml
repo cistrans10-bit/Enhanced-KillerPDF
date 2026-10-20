@@ -1034,4 +1034,43 @@ KillerPDF 不會建立兩個已安裝的複本。</sys:String>
     <sys:String x:Key="Str_PasswordProtected">「{0}」受密碼保護。</sys:String>
     <sys:String x:Key="Str_About_Aka">別名</sys:String>
     <sys:String x:Key="Str_Btn_Run">執行</sys:String>
+
+    <!-- ── PdfCraft shell: mode bar, All tools panel, menu ───────────── -->
+    <sys:String x:Key="Str_Craft_Menu">選單</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_AllTools">所有工具</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Read">閱讀</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Edit">編輯</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Convert">轉換</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_ESign">電子簽章</sys:String>
+    <sys:String x:Key="Str_Craft_FindTools">尋找工具和命令</sys:String>
+    <sys:String x:Key="Str_Craft_SearchHint">Ctrl K</sys:String>
+    <sys:String x:Key="Str_Craft_ViewMore">檢視更多</sys:String>
+    <sys:String x:Key="Str_Craft_ViewLess">收合</sys:String>
+    <sys:String x:Key="Str_Craft_ClosePanel">關閉面板</sys:String>
+    <sys:String x:Key="Str_Craft_ToggleTheme">在淺色和深色之間切換</sys:String>
+    <sys:String x:Key="Str_Craft_NoTools">沒有符合搜尋的工具。</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_DocInfo">文件內容</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_ToolsPanel">工具面板</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Toolbar">工具列</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Shortcuts">鍵盤快速鍵</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_About">關於 KillerPDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Export">匯出 PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_FillSign">填寫並簽署</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Edit">編輯 PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Create">建立 PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Combine">合併檔案</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Organize">組織頁面</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Comment">新增註解</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Ocr">掃描和 OCR</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Extract">擷取頁面</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compress">壓縮為 ZIP</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Form">準備表單</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Stamp">新增印章</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Certificate">使用憑證</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Print">列印 PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Measure">測量物件</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compare">比較檔案</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Crop">裁切頁面</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Image">新增影像</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Flatten">平面化 PDF</sys:String>
 </ResourceDictionary>

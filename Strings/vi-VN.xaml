@@ -1052,4 +1052,43 @@ Thu phóng chúng về kích thước được hỗ trợ? Các trang vẫn gi�
     <sys:String x:Key="Str_PasswordProtected">“{0}” được bảo vệ bằng mật khẩu.</sys:String>
     <sys:String x:Key="Str_About_Aka">CÒN GỌI LÀ</sys:String>
     <sys:String x:Key="Str_Btn_Run">Chạy</sys:String>
+
+    <!-- ── PdfCraft shell: mode bar, All tools panel, menu ───────────── -->
+    <sys:String x:Key="Str_Craft_Menu">Menu</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_AllTools">Tất cả công cụ</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Read">Đọc</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Edit">Chỉnh sửa</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Convert">Chuyển đổi</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_ESign">Ký điện tử</sys:String>
+    <sys:String x:Key="Str_Craft_FindTools">Tìm công cụ và lệnh</sys:String>
+    <sys:String x:Key="Str_Craft_SearchHint">Ctrl K</sys:String>
+    <sys:String x:Key="Str_Craft_ViewMore">Xem thêm</sys:String>
+    <sys:String x:Key="Str_Craft_ViewLess">Thu gọn</sys:String>
+    <sys:String x:Key="Str_Craft_ClosePanel">Đóng bảng</sys:String>
+    <sys:String x:Key="Str_Craft_ToggleTheme">Chuyển giữa sáng và tối</sys:String>
+    <sys:String x:Key="Str_Craft_NoTools">Không có công cụ nào khớp với tìm kiếm.</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_DocInfo">Thuộc tính tài liệu</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_ToolsPanel">Bảng công cụ</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Toolbar">Thanh công cụ</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Shortcuts">Phím tắt</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_About">Giới thiệu KillerPDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Export">Xuất PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_FillSign">Điền và ký</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Edit">Chỉnh sửa PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Create">Tạo PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Combine">Kết hợp tệp</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Organize">Sắp xếp trang</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Comment">Thêm nhận xét</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Ocr">Quét và OCR</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Extract">Trích xuất trang</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compress">Nén thành ZIP</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Form">Chuẩn bị biểu mẫu</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Stamp">Thêm con dấu</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Certificate">Dùng chứng chỉ</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Print">In PDF</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Measure">Đo đối tượng</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compare">So sánh tệp</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Crop">Cắt trang</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Image">Thêm hình ảnh</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Flatten">Làm phẳng PDF</sys:String>
 </ResourceDictionary>

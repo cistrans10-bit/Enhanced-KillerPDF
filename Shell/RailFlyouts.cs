@@ -45,7 +45,13 @@ namespace KillerPDF
             // rail-adjacent edge is left when the sidebar is left and right when the
             // sidebar is right. Using one viewer pane here stranded the flyouts on the left after
             // the sidebar moved right, and could place them in the middle of a split document.
-            if (SplitHost is FrameworkElement pane)
+            // PdfCraft layout: with the sidebar on the right the rail sits at the window edge,
+            // OUTSIDE the pages panel, so while that panel is open its edge is the one beside
+            // the rail.
+            FrameworkElement? pane = _sidebarRight && !_sidebarCollapsed && SidebarBorder.ActualWidth > 0
+                ? SidebarBorder
+                : SplitHost;
+            if (pane is not null)
                 FlyoutPlacement.UsePane(pane, _sidebarRight);
             FlyoutPlacement.AttachAtButtonHeight(menu, menu == LangFlyout ? RailLangBtn : RailThemeBtn);
 

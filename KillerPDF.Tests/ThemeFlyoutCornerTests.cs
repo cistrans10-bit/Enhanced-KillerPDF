@@ -22,8 +22,13 @@ public sealed class ThemeFlyoutCornerTests
                 .Single(element => (string?)element.Attribute(x + "Key") == "FlyoutCornerRadius")
                 .Value.Trim();
 
-            if (Path.GetFileName(themePath).Equals("98SE.xaml", StringComparison.OrdinalIgnoreCase))
+            string name = Path.GetFileName(themePath);
+            if (name.Equals("98SE.xaml", StringComparison.OrdinalIgnoreCase))
                 Assert.Equal("0", radius);
+            // Light and Dark carry PdfCraft's workbench look, whose menus round to 8.
+            else if (name.Equals("Light.xaml", StringComparison.OrdinalIgnoreCase)
+                     || name.Equals("Dark.xaml", StringComparison.OrdinalIgnoreCase))
+                Assert.Equal("8", radius);
             else
                 Assert.Equal("4", radius);
         }

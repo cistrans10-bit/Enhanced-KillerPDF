@@ -96,6 +96,7 @@ namespace KillerPDF
                     btn.ClearValue(Control.ForegroundProperty);
                 }
             }
+            SyncCraftPalette(tool);   // the floating palette mirrors the active tool (CraftShell.cs)
 
             // Apply the tool cursor to every page surface, not just the primary page.
             // In Grid / Two-Page / Continuous modes the secondary tiles are separate
@@ -174,7 +175,7 @@ namespace KillerPDF
             if (_sidebarCollapsed)
             {
                 // Save current width before collapsing so expand restores it.
-                if (_sidebarCol.ActualWidth > 24)
+                if (_sidebarCol.ActualWidth > RailWidth)
                 {
                     if (_sidebarShowingOutlines)
                         _savedOutlinesWidth = Math.Min(_sidebarCol.ActualWidth, SbPx(SidebarMaxOutlines));
@@ -187,8 +188,8 @@ namespace KillerPDF
                 // border once the strip width is reached. MinWidth drops first so the
                 // animation isn't clamped at the readable floor.
                 BeginSidebarSlide(SidebarContentPanel.ActualWidth);
-                _sidebarCol.MinWidth = SbPx(24);
-                AnimateSidebarWidth(SbPx(24), () =>
+                _sidebarCol.MinWidth = SbPx(RailWidth);
+                AnimateSidebarWidth(SbPx(RailWidth), () =>
                 {
                     _sidebarBorder.Visibility = Visibility.Collapsed;
                     EndSidebarSlide();
@@ -202,7 +203,7 @@ namespace KillerPDF
                 // Slide in at full size: content fixed at the target width from the first
                 // frame, revealed by the growing border instead of reflowing up to size.
                 BeginSidebarSlide(_sbSlideContentW > 0 ? _sbSlideContentW
-                    : Math.Max(0, restore / Math.Max(0.01, _appScale) - 24));
+                    : Math.Max(0, restore / Math.Max(0.01, _appScale) - RailWidth));
                 AnimateSidebarWidth(restore, () =>
                 {
                     _sidebarCol.MinWidth = SbPx(SidebarMinOpen);   // open: clamp so the list can't be dragged below readable
@@ -322,7 +323,7 @@ namespace KillerPDF
                 {
                     // Released below the readable minimum: snap to whichever end the user let go nearer
                     // to - fully closed, or the minimum open width.
-                    double mid = SbPx((24 + SidebarMinOpen) / 2.0);
+                    double mid = SbPx((RailWidth + SidebarMinOpen) / 2.0);
                     if (w < mid) { CollapseSidebarToStrip(); return; }
                     _sidebarCol.Width = new GridLength(SbPx(SidebarMinOpen));
                     w = SbPx(SidebarMinOpen);
@@ -343,8 +344,8 @@ namespace KillerPDF
             _sidebarToggleBtn.ToolTip = Loc("Str_TT_ExpandSidebar");
             _sidebarBorder.Visibility = Visibility.Collapsed;
             SidebarContentPanel.Visibility = Visibility.Visible;   // reset so the next border-show has content
-            _sidebarCol.Width = new GridLength(SbPx(24));
-            _sidebarCol.MinWidth = SbPx(24);
+            _sidebarCol.Width = new GridLength(SbPx(RailWidth));
+            _sidebarCol.MinWidth = SbPx(RailWidth);
             UpdateSidebarToggleGlyph();   // splitter stays enabled so it can be dragged back open
         }
 

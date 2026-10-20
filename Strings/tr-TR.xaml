@@ -1032,4 +1032,43 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_PasswordProtected">“{0}” parola korumalıdır.</sys:String>
     <sys:String x:Key="Str_About_Aka">Diğer adıyla</sys:String>
     <sys:String x:Key="Str_Btn_Run">Çalıştır</sys:String>
+
+    <!-- ── PdfCraft shell: mode bar, All tools panel, menu ───────────── -->
+    <sys:String x:Key="Str_Craft_Menu">Menü</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_AllTools">Tüm araçlar</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Read">Oku</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Edit">Düzenle</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_Convert">Dönüştür</sys:String>
+    <sys:String x:Key="Str_Craft_Mode_ESign">E-İmza</sys:String>
+    <sys:String x:Key="Str_Craft_FindTools">Araç ve komut bul</sys:String>
+    <sys:String x:Key="Str_Craft_SearchHint">Ctrl K</sys:String>
+    <sys:String x:Key="Str_Craft_ViewMore">Daha fazla göster</sys:String>
+    <sys:String x:Key="Str_Craft_ViewLess">Daha az göster</sys:String>
+    <sys:String x:Key="Str_Craft_ClosePanel">Paneli kapat</sys:String>
+    <sys:String x:Key="Str_Craft_ToggleTheme">Açık ve koyu arasında geçiş yap</sys:String>
+    <sys:String x:Key="Str_Craft_NoTools">Aramanızla eşleşen araç yok.</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_DocInfo">Belge özellikleri</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_ToolsPanel">Araçlar paneli</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Toolbar">Araç çubuğu</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_Shortcuts">Klavye kısayolları</sys:String>
+    <sys:String x:Key="Str_Craft_Menu_About">KillerPDF hakkında</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Export">PDF dışa aktar</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_FillSign">Doldur ve imzala</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Edit">PDF düzenle</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Create">PDF oluştur</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Combine">Dosyaları birleştir</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Organize">Sayfaları düzenle</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Comment">Yorum ekle</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Ocr">Tara ve OCR</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Extract">Sayfaları ayıkla</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compress">ZIP olarak sıkıştır</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Form">Form hazırla</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Stamp">Damga ekle</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Certificate">Sertifika kullan</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Print">PDF yazdır</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Measure">Nesneleri ölç</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Compare">Dosyaları karşılaştır</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Crop">Sayfaları kırp</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Image">Resim ekle</sys:String>
+    <sys:String x:Key="Str_Craft_Tool_Flatten">PDF düzleştir</sys:String>
 </ResourceDictionary>

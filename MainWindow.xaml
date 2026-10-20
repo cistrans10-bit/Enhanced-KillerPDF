@@ -27,6 +27,9 @@
                  the footer's Install button uses it below. Already used by the file dialog; merged
                  here too rather than duplicating the style, so the two never drift apart. -->
             <ResourceDictionary Source="pack://application:,,,/Controls/PickerStyles.xaml"/>
+            <!-- PdfCraft-style shell: Lucide icons and the tab strip / mode bar / tools panel /
+                 tool palette controls (Themes/Craft/CraftStyles.xaml). -->
+            <ResourceDictionary Source="pack://application:,,,/Themes/Craft/CraftStyles.xaml"/>
         </ResourceDictionary.MergedDictionaries>
         <!-- Brush keys come from Application.Resources (theme dicts) via DynamicResource.
              Only non-color styles live here. -->
@@ -1376,9 +1379,14 @@
             <Grid>
             <Border IsHitTestVisible="False" Opacity="{DynamicResource GrainOpacity}" Background="{StaticResource GrainBrushShared}"/>
             <Grid>
+                <!-- PdfCraft's tab strip: home (the app icon) | the open document as a tab | + Open
+                     | caption space | help, light/dark | window buttons. -->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <!-- Logo: app icon + wordmark. Hit-test-visible in the chrome so the wheel can
@@ -1415,12 +1423,57 @@
                     </Grid>
                 </StackPanel>
                 </Border>
-                <!-- File name: takes the middle space and truncates before the window buttons -->
-                <TextBlock Grid.Column="1" Text="" x:Name="FileNameLabel" VerticalAlignment="Center"
-                           Margin="16,0,12,0" TextTrimming="CharacterEllipsis"
-                           Foreground="{DynamicResource FilenameBrush}" FontFamily="{DynamicResource FileNameFont}" FontSize="{DynamicResource FileNameFontSize}"
-                           RenderTransform="{DynamicResource FileNameTransform}" TextOptions.TextFormattingMode="Ideal"/>
-                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="{DynamicResource CaptionButtonsMargin}">
+                <!-- The open document, drawn as a tab that runs down into the mode bar (PdfCraft).
+                     Collapsed with no document. It is not a control, so it still drags the window
+                     like the rest of the strip; only its close button is client input. -->
+                <Border x:Name="CraftDocTab" Grid.Column="1" Margin="6,7,0,0" Padding="12,0,6,0"
+                        MaxWidth="340" VerticalAlignment="Stretch"
+                        Background="{DynamicResource CraftTabBrush}" CornerRadius="8,8,0,0">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=FileNameLabel}" Value="">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <DockPanel VerticalAlignment="Center" LastChildFill="True">
+                        <Viewbox DockPanel.Dock="Left" Width="16" Height="16" Margin="0,0,8,0">
+                            <Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.file-text}"
+                                  Stroke="{DynamicResource PrimaryBrush}"/>
+                        </Viewbox>
+                        <Button DockPanel.Dock="Right" Style="{StaticResource CraftTabCloseButton}"
+                                Click="CloseFile_Click" ToolTip="{DynamicResource Str_TT_CloseFile}">
+                            <Viewbox Width="12" Height="12"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.x}"/></Viewbox>
+                        </Button>
+                        <TextBlock Text="" x:Name="FileNameLabel" VerticalAlignment="Center"
+                                   TextTrimming="CharacterEllipsis"
+                                   Foreground="{DynamicResource FilenameBrush}" FontFamily="{DynamicResource FileNameFont}" FontSize="{DynamicResource FileNameFontSize}"
+                                   RenderTransform="{DynamicResource FileNameTransform}" TextOptions.TextFormattingMode="Ideal"/>
+                    </DockPanel>
+                </Border>
+                <Button Grid.Column="2" Style="{StaticResource CraftTitleButton}" Margin="6,0,0,0"
+                        Click="Open_Click" ToolTip="{DynamicResource Str_TT_Open}">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Width="16" Height="16" Margin="0,0,7,0"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.plus}"/></Viewbox>
+                        <TextBlock Text="{DynamicResource Str_Lbl_Open}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <!-- Help and the light/dark switch, PdfCraft's right end of the strip. -->
+                <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,6,0">
+                    <Button Style="{StaticResource CraftTitleButton}" Width="32" Padding="0"
+                            Click="ShortcutHelp_Click" ToolTip="{DynamicResource Str_TT_KeyboardShortcuts}">
+                        <Viewbox Width="17" Height="17"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.circle-help}"/></Viewbox>
+                    </Button>
+                    <Button x:Name="CraftThemeToggleBtn" Style="{StaticResource CraftTitleButton}" Width="32" Padding="0"
+                            Click="CraftThemeToggle_Click" ToolTip="{DynamicResource Str_Craft_ToggleTheme}">
+                        <Viewbox Width="17" Height="17">
+                            <Path x:Name="CraftThemeToggleIcon" Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.moon}"/>
+                        </Viewbox>
+                    </Button>
+                </StackPanel>
+                <StackPanel Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="{DynamicResource CaptionButtonsMargin}">
                     <Button Click="MinimizeBtn_Click" Style="{StaticResource ChromeButton}" ToolTip="{DynamicResource Str_Sys_Minimize}"
                             Foreground="{DynamicResource CaptionGlyphBrush}">
                         <Grid Height="{DynamicResource CaptionButtonHeight}">
@@ -1457,7 +1510,60 @@
         <!-- Toolbar -->
         <!-- Keep the toolbar explicitly in the client hit-test area. This is also a safety net for
              compact titlebar themes: native caption pixels must never swallow toolbar input. -->
-        <Border Grid.Row="1" x:Name="ToolbarRowBorder" Background="{DynamicResource BackgroundBrush}">
+        <!-- Row 1 is PdfCraft's header: the mode bar (Menu, mode tabs, Find tools and commands,
+             document info / save / print), then KillerPDF's toolbar as the contextual strip under
+             it. Stacked rather than given their own grid rows so the root rows - and everything
+             that spans them (full-screen cover, toasts, overlays) - keep their indices. -->
+        <StackPanel Grid.Row="1" x:Name="CraftHeaderStack">
+        <Border x:Name="CraftModeBar" Height="53" Background="{DynamicResource CraftChromeBrush}"
+                BorderBrush="{DynamicResource CraftDividerBrush}" BorderThickness="0,0,0,1"
+                SizeChanged="CraftModeBar_SizeChanged">
+            <Grid Margin="10,0,12,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="CraftMenuBtn" Style="{StaticResource CraftMenuButton}" VerticalAlignment="Center"
+                        Click="CraftMenu_Click" ToolTip="{DynamicResource Str_Craft_Menu}">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.panel-left}"/></Viewbox>
+                        <TextBlock Text="{DynamicResource Str_Craft_Menu}" Margin="9,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <StackPanel x:Name="CraftModeTabs" Grid.Column="1" Orientation="Horizontal" Margin="16,0,0,0">
+                            <RadioButton x:Name="CraftModeAllTools" GroupName="CraftMode" Style="{StaticResource CraftModeTab}"
+                                         Content="{DynamicResource Str_Craft_Mode_AllTools}" Tag="all" IsChecked="True" Click="CraftMode_Click"/>
+                            <RadioButton x:Name="CraftModeRead" GroupName="CraftMode" Style="{StaticResource CraftModeTab}"
+                                         Content="{DynamicResource Str_Craft_Mode_Read}" Tag="read" Click="CraftMode_Click"/>
+                            <RadioButton x:Name="CraftModeEdit" GroupName="CraftMode" Style="{StaticResource CraftModeTab}"
+                                         Content="{DynamicResource Str_Craft_Mode_Edit}" Tag="edit" Click="CraftMode_Click"/>
+                            <RadioButton x:Name="CraftModeConvert" GroupName="CraftMode" Style="{StaticResource CraftModeTab}"
+                                         Content="{DynamicResource Str_Craft_Mode_Convert}" Tag="convert" Click="CraftMode_Click"/>
+                            <RadioButton x:Name="CraftModeESign" GroupName="CraftMode" Style="{StaticResource CraftModeTab}"
+                                         Content="{DynamicResource Str_Craft_Mode_ESign}" Tag="sign" Click="CraftMode_Click"/>
+                </StackPanel>
+                <TextBox x:Name="CraftSearchBox" Grid.Column="3" Width="290" VerticalAlignment="Center"
+                         Style="{StaticResource CraftSearchBox}" Tag="{DynamicResource Str_Craft_FindTools}"
+                         AutomationProperties.Name="{DynamicResource Str_Craft_FindTools}"
+                         TextChanged="CraftSearch_TextChanged" PreviewKeyDown="CraftSearch_PreviewKeyDown"/>
+                <StackPanel x:Name="CraftModeBarActions" Grid.Column="4" Orientation="Horizontal" Margin="12,0,0,0" VerticalAlignment="Center">
+                    <Button Style="{StaticResource CraftIconButton}" Margin="2,0" Click="DocInfo_Click" ToolTip="{DynamicResource Str_TT_DocInfo}">
+                        <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.info}"/></Viewbox>
+                    </Button>
+                    <Button Style="{StaticResource CraftIconButton}" Margin="2,0" Click="Save_Click" ToolTip="{DynamicResource Str_TT_Save}">
+                        <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.save}"/></Viewbox>
+                    </Button>
+                    <Button Style="{StaticResource CraftIconButton}" Margin="2,0" Click="Print_Click" ToolTip="{DynamicResource Str_TT_Print}">
+                        <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.printer}"/></Viewbox>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border x:Name="ToolbarRowBorder" Background="{DynamicResource CraftChromeBrush}"
+                BorderBrush="{DynamicResource CraftDividerBrush}" BorderThickness="0,0,0,1">
             <Grid>
             <Border IsHitTestVisible="False" Opacity="{DynamicResource GrainOpacity}" Background="{StaticResource GrainBrushShared}"/>
             <!-- Background=Transparent is load-bearing: without it the grid's empty stretches have no
@@ -1652,6 +1758,7 @@
             </Grid>
             </Grid>
         </Border>
+        </StackPanel>
 
         <!-- Main content -->
         <!-- BackgroundBrush, not the window's SurfaceBrush, is what the document card is inset
@@ -1662,14 +1769,51 @@
              BackgroundBrush #1c1c1c, thirty steps; this is the identical relationship, and it also
              matches the sidebar and footer, which already paint BackgroundBrush. The sidebar and
              the card both paint over this, so only the exposed gutter changes. -->
-        <Grid Grid.Row="2" Grid.RowSpan="2" x:Name="MainContentGrid"
+        <!-- PdfCraft's body: the All tools panel on the left, then KillerPDF's content grid
+             (pages/outline sidebar, rail, document panes) unchanged inside its own column. -->
+        <Grid Grid.Row="2" Grid.RowSpan="2" x:Name="CraftBodyGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!-- Edge: the flush document pane draws the divider itself in the PdfCraft themes
+                 (CraftPanelEdge 0 there), so the two hairlines never double up. -->
+            <Border x:Name="CraftToolsPanel" Grid.Column="0" Width="280"
+                    Background="{DynamicResource CraftChromeBrush}"
+                    BorderBrush="{DynamicResource CraftDividerBrush}" BorderThickness="{DynamicResource CraftPanelEdge}">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Top" Margin="17,14,10,6">
+                        <TextBlock x:Name="CraftToolsTitle" Text="{DynamicResource Str_Craft_Mode_AllTools}"
+                                   FontFamily="{DynamicResource UiFont}" FontSize="17" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+                        <Button HorizontalAlignment="Right" Style="{StaticResource CraftIconButton}" Width="28" Height="28"
+                                Click="CraftToolsClose_Click" ToolTip="{DynamicResource Str_Craft_ClosePanel}">
+                            <Viewbox Width="14" Height="14"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.x}"/></Viewbox>
+                        </Button>
+                    </Grid>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                  FocusVisualStyle="{x:Null}">
+                        <StackPanel Margin="0,4,0,14">
+                            <StackPanel x:Name="CraftToolsList"/>
+                            <TextBlock x:Name="CraftToolsEmpty" Visibility="Collapsed" Margin="17,8,17,0"
+                                       Text="{DynamicResource Str_Craft_NoTools}" TextWrapping="Wrap"
+                                       FontFamily="{DynamicResource UiFont}" FontSize="13.5"
+                                       Foreground="{DynamicResource CraftFaintBrush}"/>
+                            <Button x:Name="CraftToolsMoreBtn" Style="{StaticResource CraftLinkButton}" HorizontalAlignment="Left"
+                                    Margin="17,8,0,0" Click="CraftToolsMore_Click"
+                                    Content="{DynamicResource Str_Craft_ViewMore}"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+        <Grid Grid.Column="1" x:Name="MainContentGrid"
               Background="{DynamicResource BackgroundBrush}">
             <Grid.ColumnDefinitions>
                 <!-- The sidebar lives in column 0 (left, default) or column 2 (right). ApplySidebarSide
                      swaps which column is the sized sidebar (24-260px) and which is the star document
                      area, and repoints _sidebarCol accordingly. SidebarCol never collapses to 0 - it
                      shrinks to 24px (the toggle strip width). -->
-                <ColumnDefinition x:Name="SidebarCol" Width="180" MinWidth="24" MaxWidth="234"/>
+                <ColumnDefinition x:Name="SidebarCol" Width="200" MinWidth="44" MaxWidth="254"/>
                 <!-- Was a 6px drag-handle column. The splitter has since moved INSIDE the sidebar
                      (SidebarSplitter, Grid.Column 0, right-aligned, ZIndex 50 - the KillerNotes
                      pattern), so nothing lives here any more and the 6px was pure dead space
@@ -1700,7 +1844,7 @@
             <Grid x:Name="SidebarOuterGrid" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="SbContentCol" Width="*"/>   <!-- page list content -->
-                    <ColumnDefinition x:Name="SbToggleCol" Width="24"/>   <!-- toggle strip - always visible -->
+                    <ColumnDefinition x:Name="SbToggleCol" Width="44"/>   <!-- toggle strip - always visible -->
                 </Grid.ColumnDefinitions>
 
                 <!-- Page list content (hidden when collapsed) -->
@@ -1908,125 +2052,52 @@
                     </Grid>
                 </Border>
 
-                <!-- Toggle strip - 24px wide vertical icon bar -->
+                <!-- Rail - PdfCraft's 44px icon strip. Panel toggles at the top, window and app
+                     buttons pinned to the bottom. -->
                 <Border x:Name="SidebarToggleStrip" Grid.Column="1"
                         Background="{DynamicResource SidebarRailBrush}"
                         BorderThickness="0"
                         MouseRightButtonUp="SidebarArea_MouseRightButtonUp">
                     <Grid>
-                        <!-- Collapse/expand arrow at top -->
-                        <Button x:Name="SidebarToggleBtn"
+                        <!-- Collapse/expand arrow: hidden (the panel toggles below replace it) but kept,
+                             because F9 and the collapse animation still drive it. -->
+                        <Button x:Name="SidebarToggleBtn" Visibility="Collapsed"
                                 Content="&#xE76B;" ToolTip="{DynamicResource Str_TT_CollapseSidebar}"
                                 Style="{StaticResource ToolbarButton}"
-                                Width="24" Padding="0" FontSize="10"
-                                VerticalAlignment="Top" Margin="0,6,0,0"
+                                Width="32" Height="32" Padding="0" FontSize="10"
+                                VerticalAlignment="Top" Margin="0,8,0,0"
                                 Click="SidebarToggle_Click"/>
+                        <StackPanel VerticalAlignment="Top" Margin="0,8,0,0">
+                            <Button x:Name="CraftRailPages" Style="{StaticResource CraftRailButton}"
+                                    Click="CraftRailPanel_Click" ToolTip="{DynamicResource Str_TabPages}">
+                                <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.copy}"/></Viewbox>
+                            </Button>
+                            <Button x:Name="CraftRailOutline" Style="{StaticResource CraftRailButton}"
+                                    Click="CraftRailPanel_Click" ToolTip="{DynamicResource Str_TabOutlines}">
+                                <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.bookmark}"/></Viewbox>
+                            </Button>
+                        </StackPanel>
                         <!-- Settings and help icons pinned to bottom -->
-                        <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,6">
-                            <!-- E9A6 (two panes): open or close the second document pane, F10 from
+                        <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,8">
+                            <!-- Two columns: open or close the second document pane, F10 from
                                  the keyboard. On the rail rather than the toolbar because it acts
                                  on the WINDOW, not on the document the toolbar is editing. Lit in
                                  the accent while the split is open (Tag="on", set from OpenSplit /
                                  CloseSplit). -->
                             <Button x:Name="SplitPaneRailBtn" Click="SplitPaneRailBtn_Click"
-                                    Cursor="Hand" FocusVisualStyle="{x:Null}"
-                                    ToolTip="{DynamicResource Str_TT_SplitPane}"
-                                    Width="24" Height="24" Padding="0" Margin="0,0,0,6">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="Transparent">
-                                            <!-- Glyph swaps with the split state via the same Tag="on" the accent
-                                                 tint rides: E89F (pane pushed out) while CLOSED - the action is
-                                                 "open one" - and E8A0 (pane pulled in) while OPEN. Deliberately
-                                                 opposite the MDL2 catalog names (2026-08-01). Text lives in
-                                                 the Style, not on the element: a local Text= would override the
-                                                 trigger and the glyph would never swap. -->
-                                            <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="14"
-                                                       HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <TextBlock.Effect>
-                                                    <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="2" Direction="270" Opacity="{DynamicResource IconShadowOpacity}"/>
-                                                </TextBlock.Effect>
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-                                                        <Setter Property="Text" Value="&#xE89F;"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
-                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}" Value="on">
-                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
-                                                                <Setter Property="Text" Value="&#xE8A0;"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
+                                    ToolTip="{DynamicResource Str_TT_SplitPane}" Style="{StaticResource CraftRailButton}">
+                                <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.columns-2}"/></Viewbox>
                             </Button>
-                            <!-- Invert document colors (#135): moon toggle, lit in the accent while
+                            <!-- Invert document colors (#135): contrast toggle, lit in the accent while
                                  active (Tag="on", set from ToggleDocInvert). Ctrl+I does the same. -->
                             <Button x:Name="DocInvertBtn" Click="DocInvertBtn_Click"
                                     MouseRightButtonUp="DocInvertBtn_RightClick"
-                                    Cursor="Hand" FocusVisualStyle="{x:Null}"
-                                    ToolTip="{DynamicResource Str_TT_DocInvert}"
-                                    Width="24" Height="24" Padding="0" Margin="0,0,0,6">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="Transparent">
-                                            <TextBlock Text="&#xE708;"
-                                                       FontFamily="Segoe MDL2 Assets" FontSize="15"
-                                                       HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <TextBlock.Effect>
-                                                    <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="2" Direction="270" Opacity="{DynamicResource IconShadowOpacity}"/>
-                                                </TextBlock.Effect>
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
-                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}" Value="on">
-                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
+                                    ToolTip="{DynamicResource Str_TT_DocInvert}" Style="{StaticResource CraftRailButton}">
+                                <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.contrast}"/></Viewbox>
                             </Button>
                             <Button Click="DocInfo_Click"
-                                    Cursor="Hand" FocusVisualStyle="{x:Null}"
-                                    ToolTip="{DynamicResource Str_TT_DocInfo}"
-                                    Width="24" Height="24" Padding="0" Margin="1,0,0,6">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="Transparent">
-                                            <TextBlock Text="&#xE946;"
-                                                       FontFamily="Segoe MDL2 Assets" FontSize="15"
-                                                       Foreground="{DynamicResource TextBrush}"
-                                                       HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <TextBlock.Effect>
-                                                    <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="2" Direction="270" Opacity="{DynamicResource IconShadowOpacity}"/>
-                                                </TextBlock.Effect>
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
-                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
+                                    ToolTip="{DynamicResource Str_TT_DocInfo}" Style="{StaticResource CraftRailButton}">
+                                <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.info}"/></Viewbox>
                             </Button>
                             <!-- Family rail order (locked 2026-07-30): app-specific toggles above, then
                                  ? / language / theme - the three universal buttons, theme bottom-most, so
@@ -2034,61 +2105,12 @@
                                  ContextMenus with FlyoutCard/FlyoutGrain chrome, opened against the content
                                  pane's rail-adjacent edge at the opening button's height (Shell/RailFlyouts.cs). -->
                             <Button Click="ShortcutHelp_Click"
-                                    Cursor="Hand" FocusVisualStyle="{x:Null}"
-                                    ToolTip="{DynamicResource Str_TT_KeyboardShortcuts}"
-                                    Width="24" Height="24" Padding="0" Margin="0,0,0,6">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="Transparent">
-                                            <TextBlock Text="?"
-                                                       Foreground="{DynamicResource TextBrush}"
-                                                       FontFamily="{DynamicResource UiFont}" FontSize="18"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center">
-                                                <TextBlock.Effect>
-                                                    <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="2" Direction="270" Opacity="{DynamicResource IconShadowOpacity}"/>
-                                                </TextBlock.Effect>
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
-                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
+                                    ToolTip="{DynamicResource Str_TT_KeyboardShortcuts}" Style="{StaticResource CraftRailButton}">
+                                <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.circle-help}"/></Viewbox>
                             </Button>
                             <Button x:Name="RailLangBtn" Click="RailLang_Click" ContextMenuOpening="RailMenu_Opening"
-                                    Cursor="Hand" FocusVisualStyle="{x:Null}"
-                                    ToolTip="{DynamicResource Str_Language}"
-                                    Width="24" Height="24" Padding="0" Margin="0,0,0,6">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="Transparent">
-                                            <TextBlock Text="&#xF2B7;"
-                                                       FontFamily="Segoe MDL2 Assets" FontSize="15"
-                                                       HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <TextBlock.Effect>
-                                                    <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="2" Direction="270" Opacity="{DynamicResource IconShadowOpacity}"/>
-                                                </TextBlock.Effect>
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
-                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
+                                    ToolTip="{DynamicResource Str_Language}" Style="{StaticResource CraftRailButton}">
+                                <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.languages}"/></Viewbox>
                                 <Button.ContextMenu>
                                     <ContextMenu x:Name="LangFlyout">
                                         <!-- Family flyout standard: chrome ONLY from FlyoutCard/FlyoutGrain, grain LAST. -->
@@ -2375,32 +2397,8 @@
                                 </Button.ContextMenu>
                             </Button>
                             <Button x:Name="RailThemeBtn" Click="RailTheme_Click" ContextMenuOpening="RailMenu_Opening"
-                                    Cursor="Hand" FocusVisualStyle="{x:Null}"
-                                    ToolTip="{DynamicResource Str_Theme}"
-                                    Width="24" Height="24" Padding="0">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="Transparent">
-                                            <TextBlock Text="&#xE790;"
-                                                       FontFamily="Segoe MDL2 Assets" FontSize="15"
-                                                       HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <TextBlock.Effect>
-                                                    <DropShadowEffect Color="Black" BlurRadius="4" ShadowDepth="2" Direction="270" Opacity="{DynamicResource IconShadowOpacity}"/>
-                                                </TextBlock.Effect>
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
-                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
+                                    ToolTip="{DynamicResource Str_Theme}" Style="{StaticResource CraftRailButton}">
+                                <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.palette}"/></Viewbox>
                                 <Button.ContextMenu>
                                     <ContextMenu x:Name="ThemeFlyout">
                                         <!-- Family flyout standard: chrome ONLY from FlyoutCard/FlyoutGrain, grain LAST. -->
@@ -2658,6 +2656,43 @@
 
                 <ctrl:PdfViewer x:Name="Viewer" Grid.Column="0" SizeChanged="FooterAnchor_SizeChanged"/>
 
+                <!-- PdfCraft's floating tool palette, top left over the page. The same handlers as
+                     the toolbar's tool buttons; SetTool lights the active one (SyncCraftPalette). -->
+                <Border x:Name="CraftToolPalette" Grid.Column="0" Panel.ZIndex="40"
+                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,16,0,0" Padding="4"
+                        Background="{DynamicResource CraftCardBrush}" BorderBrush="{DynamicResource CraftBorderBrush}"
+                        BorderThickness="1" CornerRadius="10" Visibility="Collapsed">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="2" Direction="270" Opacity="0.10"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <Button x:Name="CraftPalSelect" Style="{StaticResource CraftIconButton}" Width="34" Height="34" Margin="0,1"
+                                Click="ToolSelect_Click" ToolTip="{DynamicResource Str_TT_SelectTool}">
+                            <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.mouse-pointer-2}"/></Viewbox>
+                        </Button>
+                        <Button x:Name="CraftPalText" Style="{StaticResource CraftIconButton}" Width="34" Height="34" Margin="0,1"
+                                Click="ToolText_Click" ToolTip="{DynamicResource Str_TT_TextTool}">
+                            <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.type}"/></Viewbox>
+                        </Button>
+                        <Button x:Name="CraftPalHighlight" Style="{StaticResource CraftIconButton}" Width="34" Height="34" Margin="0,1"
+                                Click="ToolHighlight_Click" ToolTip="{DynamicResource Str_TT_HighlightTool}">
+                            <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.highlighter}"/></Viewbox>
+                        </Button>
+                        <Button x:Name="CraftPalDraw" Style="{StaticResource CraftIconButton}" Width="34" Height="34" Margin="0,1"
+                                Click="ToolDraw_Click" ToolTip="{DynamicResource Str_TT_DrawTool}">
+                            <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.pencil}"/></Viewbox>
+                        </Button>
+                        <Button x:Name="CraftPalShape" Style="{StaticResource CraftIconButton}" Width="34" Height="34" Margin="0,1"
+                                Click="ToolShape_Click" ToolTip="{DynamicResource Str_TT_ShapeTool}">
+                            <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.pentagon}"/></Viewbox>
+                        </Button>
+                        <Button x:Name="CraftPalSignature" Style="{StaticResource CraftIconButton}" Width="34" Height="34" Margin="0,1"
+                                Click="ToolSignature_Click" ToolTip="{DynamicResource Str_TT_SignatureTool}">
+                            <Viewbox Width="18" Height="18"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.signature}"/></Viewbox>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
                 <!-- Both handles live in the gutter column, hugging opposite edges, so the grab
                      targets are exactly on each pane's inner edge. Transparent: the gutter shows
                      the window background between the two cards, same as the outer inset. -->
@@ -2811,6 +2846,7 @@
                  rounded inset card now, so a full-width rule at that ZIndex would cut straight
                  across both curved corners and over the 8px gap. (2026-07-31.) -->
         </Grid>
+        </Grid>
 
         <!-- Status bar.
              ZIndex -1 so the document pane's PaneShadow lands ON the footer instead of being
@@ -2840,7 +2876,7 @@
                          status before it reaches the Install action (stretch + MaxWidth would center). -->
                     <TextBlock x:Name="StatusText" Text="{DynamicResource Str_Ready}"
                                Foreground="{DynamicResource TextBrush}"
-                               FontFamily="{DynamicResource BrandSansFont}" FontSize="16" Cursor="Hand"
+                               FontFamily="{DynamicResource BrandSansFont}" FontSize="{DynamicResource FooterTextSize}" Cursor="Hand"
                                TextOptions.TextFormattingMode="Ideal"
                                ToolTip="{DynamicResource Str_KS_FileSize}"
                                MouseLeftButtonUp="StatusText_Click"
@@ -2877,7 +2913,7 @@
                     <Button x:Name="PageSizeLabel" Margin="4,0,5,0" MinWidth="90" Width="Auto"
                             ToolTip="{DynamicResource Str_Crop_Size}"
                             Style="{StaticResource FooterNavButton}" Click="PageSizeLabel_Click" Height="Auto"
-                            FontFamily="{DynamicResource BrandSansFont}" FontSize="16"
+                            FontFamily="{DynamicResource BrandSansFont}" FontSize="{DynamicResource FooterTextSize}"
                             TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center"/>
                     <Border Width="1" Height="14" Background="{DynamicResource CardBorderBrush}" Margin="2,0,5,0"/>
                     <RadioButton x:Name="ViewContinuousRadio" GroupName="ViewGroup"
@@ -2959,11 +2995,11 @@
                             Visibility="{DynamicResource FooterVersionDividerVisibility}"/>
                     <TextBlock x:Name="VersionLabel" Text="v1.6.3"
                                Foreground="{DynamicResource TextFooter}" FontFamily="{DynamicResource BrandSansFont}"
-                               FontSize="16" TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center" Margin="0,0,12,0"
+                               FontSize="{DynamicResource FooterTextSize}" TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center" Margin="0,0,12,0"
                                Cursor="Hand" ToolTip="{DynamicResource Str_TT_About}"
                                MouseLeftButtonDown="VersionLabel_MouseLeftButtonDown"/>
                     <!-- 14px trailing margin keeps the copyright clear of the corner grip (family standard) -->
-                    <TextBlock FontSize="16" TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center"
+                    <TextBlock FontSize="{DynamicResource FooterTextSize}" TextOptions.TextFormattingMode="Ideal" VerticalAlignment="Center"
                                FontFamily="{DynamicResource BrandSansFont}" Margin="0,0,14,0">
                         <Run Text="&#x00A9; 2026 " Foreground="{DynamicResource TextFooter}"/>
                         <Hyperlink NavigateUri="https://thekiller.net"
