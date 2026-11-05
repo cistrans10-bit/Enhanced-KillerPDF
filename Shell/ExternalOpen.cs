@@ -50,7 +50,7 @@ namespace KillerPDF
 
             if (!string.IsNullOrEmpty(path) && File.Exists(path))
             {
-                ActiveViewer.OpenInNewTabExt(path!);
+                OpenInNewTab(path!);   // routes Word documents to DOCX mode
                 return;
             }
             if (ProtocolRegistrar.TryGetTargetUrl(path, out var target, out var rejection) && target != null)

@@ -461,8 +461,13 @@ namespace KillerPDF
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
+            // PDFs open in PDF mode; Word-family documents in DOCX mode (OpenInNewTab routes them).
+            const string word = "*.docx;*.docm;*.dotx;*.dotm;*.doc;*.dot;*.rtf;*.odt;*.fodt;*.md;*.markdown";
             var dlg = new Controls.FileDialog(Controls.FileDialogMode.Open)
-                          { Filter = Loc("Str_Filter_Pdf") + "|*.pdf", Title = Loc("Str_Dlg_OpenPdf") };
+                          { Filter = Loc("Str_Studio_FilterAll") + "|*.pdf;" + word + "|"
+                                     + Loc("Str_Filter_Pdf") + "|*.pdf|"
+                                     + Loc("Str_Studio_FilterWord") + "|" + word,
+                            Title = Loc("Str_Dlg_OpenPdf") };
             if (dlg.ShowDialog(this) == true) OpenInNewTab(dlg.FileName);
         }
 

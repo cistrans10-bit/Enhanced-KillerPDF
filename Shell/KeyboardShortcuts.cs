@@ -41,6 +41,10 @@ namespace KillerPDF
                 return;
             }
 
+            // DOCX mode: the keyboard belongs to WordCraft. A key that reaches this window (focus
+            // left on the tab strip, say) must not run PDF commands on the hidden PDF view.
+            if (_appMode == AppMode.Docx) return;
+
             // Keyboard view of the shortcuts overlay: holding Ctrl / Shift / Alt previews that layer.
             KbSyncLayerFromModifiers();
 

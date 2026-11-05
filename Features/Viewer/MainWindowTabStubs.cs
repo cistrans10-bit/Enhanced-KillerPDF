@@ -13,7 +13,20 @@ namespace KillerPDF
     /// </summary>
     public partial class MainWindow
     {
-        private void OpenInNewTab(string path) => ActiveViewer.OpenInNewTabExt(path);
+        // Every open (Open dialog, Recent, command line, second launch) passes through here:
+        // Word-family documents go to DOCX mode (Shell/WordMode.cs), everything else to a PDF tab.
+        private void OpenInNewTab(string path)
+        {
+            if (IsWordPath(path)) { OpenInWordMode(path); return; }
+            if (_appMode != AppMode.Pdf)
+            {
+                SetAppMode(AppMode.Pdf);
+                // The PDF view was collapsed (zero-sized) in DOCX mode: lay it out first, or the
+                // new tab renders against the old size and shows the previous page's bitmap.
+                UpdateLayout();
+            }
+            ActiveViewer.OpenInNewTabExt(path);
+        }
         private void CloseTab(Controls.PdfViewer.DocumentSession? s)
         {
             if (s == null) return;

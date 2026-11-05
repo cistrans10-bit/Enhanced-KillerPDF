@@ -77,6 +77,12 @@ namespace KillerPDF
         {
             if (paths == null || paths.Length == 0) return;
 
+            // Word documents dropped anywhere open in DOCX mode; the rest carry on as PDFs/images.
+            foreach (var w in paths.Where(p => File.Exists(p) && IsWordPath(p)))
+                OpenInWordMode(w);
+            paths = [.. paths.Where(p => !(File.Exists(p) && IsWordPath(p)))];
+            if (paths.Length == 0) return;
+
             var found    = new List<string>();
             var tempDirs = new List<string>();   // extracted-zip temp dirs we may need to clean up
             bool expanded = false;               // a folder or archive was opened

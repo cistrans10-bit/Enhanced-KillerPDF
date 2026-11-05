@@ -425,6 +425,9 @@ namespace KillerPDF
             ApplyToolNumberTooltips();   // append the 1-9 toolbar positions to the tool tooltips
             BuildShortcutsOverlay();     // generate the shortcuts card from the single-source table (ShortcutsOverlay.cs)
             SourceInitialized += MainWindow_SourceInitialized;
+            Closed += (_, _) => ShutDownWord();   // DOCX mode's WordCraft goes with the window
+            // Coming back to the window in DOCX mode puts the keyboard back in the document.
+            Activated += (_, _) => { if (_appMode == AppMode.Docx) WordHostSlot.FocusChild(); };
             Closed += (_, _) =>
             {
                 _continuousRenderCts?.Cancel();

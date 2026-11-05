@@ -6,6 +6,29 @@ KillerPDF is a free, open-source PDF editor for Windows. View, annotate, OCR, me
 
 Full how-tos live on the [help page](https://killerpdf.net/help.html); internals, formats, and limits on the [technical page](https://killerpdf.net/technical.html).
 
+## PDF and DOCX modes
+
+This branch makes KillerPDF a unified document editor with two modes in one window, switched from the
+**PDF / DOCX** control in the middle of the tab strip (Affinity-style personas):
+
+- **PDF mode** is KillerPDF: view, annotate, sign, fill, OCR, organize and print PDFs, with the
+  PdfCraft-style All tools panel, mode bar and tool palette.
+- **DOCX mode** is [WordCraft](WordCraft/README.md), an open-source Rust word processor, hosted inside
+  the same window: its ribbon, styles, tables, track changes, references and mail merge, reading and
+  writing .docx, .doc, .rtf, .odt and Markdown.
+
+Opening a Word document (Open, Recent, drag and drop, double-click, the command line) switches to DOCX
+mode; opening a PDF switches back. In DOCX mode, **Open as PDF** in the tab strip exports the document
+and opens it in PDF mode, ready to annotate, sign, stamp, combine or OCR. Closing the window asks about
+unsaved Word documents as well as PDFs.
+
+How it fits together: `Shell/WordMode.cs` starts `WordCraft\wordcraft.exe --embedded --control <port>`
+and talks to it over WordCraft's localhost control channel (`file.open`, `file.exportPdf`, `file.info`,
+`file.save`); `Controls/WordHost.cs` hosts its window in the WPF layout. WordCraft's source lives in
+[`WordCraft/`](WordCraft/) and is built with `build-wordcraft.ps1` (Windows) or `build-wordcraft.sh`
+(cross-build from Linux or macOS) before building KillerPDF. Without it the app still builds and runs,
+and DOCX mode says the editor is missing.
+
 ## The KillerPDF.Engine
 
 KillerPDF 1.8 introduces The KillerPDF.Engine, an independent and reusable .NET library for PDF 2.0, PDF/A, and PDF/UA document processing. It is a first-class area of this monorepo with its own public API, tests, corpus tooling, architecture documentation, [README](engine/README.md), and release history.

@@ -1453,13 +1453,45 @@
                                    RenderTransform="{DynamicResource FileNameTransform}" TextOptions.TextFormattingMode="Ideal"/>
                     </DockPanel>
                 </Border>
-                <Button Grid.Column="2" Style="{StaticResource CraftTitleButton}" Margin="6,0,0,0"
-                        Click="Open_Click" ToolTip="{DynamicResource Str_TT_Open}">
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="6,0,0,0">
+                    <!-- "+ Open": a PDF or a Word document in PDF mode; WordCraft's Open in DOCX mode. -->
+                    <Button Style="{StaticResource CraftTitleButton}"
+                            Click="StudioOpen_Click" ToolTip="{DynamicResource Str_TT_Open}">
+                        <StackPanel Orientation="Horizontal">
+                            <Viewbox Width="16" Height="16" Margin="0,0,7,0"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.plus}"/></Viewbox>
+                            <TextBlock Text="{DynamicResource Str_Lbl_Open}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <!-- DOCX mode only: export the Word document and open it in PDF mode. -->
+                    <Button x:Name="WordToPdfBtn" Style="{StaticResource CraftTitleButton}" Visibility="Collapsed"
+                            Click="WordToPdf_Click" ToolTip="{DynamicResource Str_Studio_ToPdfTip}">
+                        <StackPanel Orientation="Horizontal">
+                            <Viewbox Width="16" Height="16" Margin="0,0,7,0"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.file-output}"/></Viewbox>
+                            <TextBlock Text="{DynamicResource Str_Studio_ToPdf}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <!-- The persona switch (Affinity-style): PDF mode is KillerPDF, DOCX mode is
+                     WordCraft hosted in this window (Shell/WordMode.cs). Centred in the strip. -->
+                <Border Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Background="{DynamicResource CraftPressedBrush}" CornerRadius="9" Padding="3">
                     <StackPanel Orientation="Horizontal">
-                        <Viewbox Width="16" Height="16" Margin="0,0,7,0"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.plus}"/></Viewbox>
-                        <TextBlock Text="{DynamicResource Str_Lbl_Open}" VerticalAlignment="Center"/>
+                        <Button x:Name="ModePdfBtn" Style="{StaticResource CraftSegmentButton}" Tag="selected"
+                                Click="ModePdf_Click" ToolTip="{DynamicResource Str_Studio_PdfTip}">
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="15" Height="15" Margin="0,0,6,0"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.file-text}"/></Viewbox>
+                                <TextBlock Text="{DynamicResource Str_Studio_ModePdf}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="ModeDocxBtn" Style="{StaticResource CraftSegmentButton}"
+                                Click="ModeDocx_Click" ToolTip="{DynamicResource Str_Studio_DocxTip}">
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="15" Height="15" Margin="0,0,6,0"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.file-pen-line}"/></Viewbox>
+                                <TextBlock Text="{DynamicResource Str_Studio_ModeDocx}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
-                </Button>
+                </Border>
                 <!-- Help and the light/dark switch, PdfCraft's right end of the strip. -->
                 <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,6,0">
                     <Button Style="{StaticResource CraftTitleButton}" Width="32" Padding="0"
@@ -2846,6 +2878,18 @@
                  rounded inset card now, so a full-width rule at that ZIndex would cut straight
                  across both curved corners and over the 8px gap. (2026-07-31.) -->
         </Grid>
+        </Grid>
+
+        <!-- DOCX mode (Shell/WordMode.cs): WordCraft's window, re-parented into WordHostSlot,
+             fills everything under the tab strip. Status text sits in its own row, because WPF
+             cannot draw over a native child window. -->
+        <Grid x:Name="WordModePanel" Grid.Row="1" Grid.RowSpan="4" Visibility="Collapsed"
+              Background="{DynamicResource CraftChromeBrush}">
+            <TextBlock x:Name="WordStatus" Visibility="Collapsed" Margin="24"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                       TextWrapping="Wrap" MaxWidth="520" FontSize="14"
+                       FontFamily="{DynamicResource UiFont}" Foreground="{DynamicResource MutedTextBrush}"/>
+            <ctrl:WordHost x:Name="WordHostSlot" Visibility="{Binding Visibility, ElementName=WordStatus, Converter={StaticResource CraftInverseVisibility}}"/>
         </Grid>
 
         <!-- Status bar.

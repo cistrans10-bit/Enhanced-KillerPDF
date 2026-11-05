@@ -59,36 +59,50 @@
     <Compile Remove="src\**" />
     <Compile Remove="tests\**" />
     <Compile Remove="tools\**" />
+    <Compile Remove="WordCraft\**" />
     <EmbeddedResource Remove="engine\**" />
     <EmbeddedResource Remove="third_party\**" />
     <EmbeddedResource Remove="Packaging\**" />
     <EmbeddedResource Remove="src\**" />
     <EmbeddedResource Remove="tests\**" />
     <EmbeddedResource Remove="tools\**" />
+    <EmbeddedResource Remove="WordCraft\**" />
     <None Remove="engine\**" />
     <None Remove="third_party\**" />
     <None Remove="Packaging\**" />
     <None Remove="src\**" />
     <None Remove="tests\**" />
     <None Remove="tools\**" />
+    <None Remove="WordCraft\**" />
     <Content Remove="engine\**" />
     <Content Remove="third_party\**" />
     <Content Remove="Packaging\**" />
     <Content Remove="src\**" />
     <Content Remove="tests\**" />
     <Content Remove="tools\**" />
+    <Content Remove="WordCraft\**" />
     <Page Remove="engine\**" />
     <Page Remove="third_party\**" />
     <Page Remove="Packaging\**" />
     <Page Remove="src\**" />
     <Page Remove="tests\**" />
     <Page Remove="tools\**" />
+    <Page Remove="WordCraft\**" />
     <Resource Remove="engine\**" />
     <Resource Remove="third_party\**" />
     <Resource Remove="Packaging\**" />
     <Resource Remove="src\**" />
     <Resource Remove="tests\**" />
     <Resource Remove="tools\**" />
+    <Resource Remove="WordCraft\**" />
+  </ItemGroup>
+
+  <!-- DOCX mode (Shell/WordMode.cs) runs WordCraft, the Rust word processor in WordCraft/,
+       from a WordCraft folder next to KillerPDF.exe. build-wordcraft.ps1 / build-wordcraft.sh
+       put the built wordcraft.exe in WordCraft\dist; it is copied to the output when present.
+       Without it the app still builds and runs, and DOCX mode says the editor is missing. -->
+  <ItemGroup Condition="Exists('WordCraft\dist\wordcraft.exe')">
+    <None Include="WordCraft\dist\**" Link="WordCraft\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>

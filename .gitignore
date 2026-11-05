@@ -44,3 +44,7 @@ obj/
 /vera-*.csv
 /vera-err.txt
 /qpdf-*.csv
+
+# DOCX mode: WordCraft build output
+/WordCraft/target/
+/WordCraft/dist/

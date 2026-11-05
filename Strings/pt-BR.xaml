@@ -1091,4 +1091,23 @@ Dimensioná-las para um tamanho aceito? As páginas mantêm a aparência e as pr
     <sys:String x:Key="Str_Craft_Tool_Crop">Cortar páginas</sys:String>
     <sys:String x:Key="Str_Craft_Tool_Image">Adicionar uma imagem</sys:String>
     <sys:String x:Key="Str_Craft_Tool_Flatten">Achatar um PDF</sys:String>
+
+    <!-- ── Unified editor: PDF / DOCX modes ───────────────────────────── -->
+    <sys:String x:Key="Str_Studio_ModePdf">PDF</sys:String>
+    <sys:String x:Key="Str_Studio_ModeDocx">DOCX</sys:String>
+    <sys:String x:Key="Str_Studio_PdfTip">Modo PDF: ver, anotar, assinar e editar PDFs</sys:String>
+    <sys:String x:Key="Str_Studio_DocxTip">Modo DOCX: escrever e diagramar documentos do Word</sys:String>
+    <sys:String x:Key="Str_Studio_ToPdf">Abrir como PDF</sys:String>
+    <sys:String x:Key="Str_Studio_ToPdfTip">Exportar este documento para PDF e abri-lo no modo PDF</sys:String>
+    <sys:String x:Key="Str_Studio_Starting">Iniciando o editor de documentos…</sys:String>
+    <sys:String x:Key="Str_Studio_Missing">O modo DOCX precisa do editor de documentos (WordCraft\wordcraft.exe), que está faltando nesta instalação. Reinstale o KillerPDF para usá-lo.</sys:String>
+    <sys:String x:Key="Str_Studio_Failed">Não foi possível iniciar o editor de documentos: {0}</sys:String>
+    <sys:String x:Key="Str_Studio_Exited">O editor de documentos foi fechado. Volte ao modo DOCX para reiniciá-lo.</sys:String>
+    <sys:String x:Key="Str_Studio_OpenFailed">Não foi possível abrir o documento.</sys:String>
+    <sys:String x:Key="Str_Studio_ExportFailed">Não foi possível exportar o documento para PDF.</sys:String>
+    <sys:String x:Key="Str_Studio_Exporting">Exportando para PDF…</sys:String>
+    <sys:String x:Key="Str_Studio_SaveDocx">Salvar as alterações no documento do Word "{0}" antes de fechar?</sys:String>
+    <sys:String x:Key="Str_Studio_Untitled">Documento sem título</sys:String>
+    <sys:String x:Key="Str_Studio_FilterAll">PDFs e documentos</sys:String>
+    <sys:String x:Key="Str_Studio_FilterWord">Documentos do Word</sys:String>
 </ResourceDictionary>

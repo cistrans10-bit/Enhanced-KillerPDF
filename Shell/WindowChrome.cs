@@ -756,6 +756,10 @@ namespace KillerPDF
             // Second pass (our own Close after the fade): let it through.
             if (_fadingOut) { base.OnClosing(e); return; }
 
+            // DOCX mode's document first: a Word document with unsaved changes asks here, and
+            // Cancel (or a Save that still needs a file name) keeps the window open.
+            if (!ConfirmCloseWord()) { e.Cancel = true; return; }
+
             // Fold the live (active-tab) dirty flag back into its session, then prompt once if
             // any open tab has unsaved changes.
             // Capture BOTH panes' live state, then ask across BOTH. `_sessions` is only the focused
