@@ -1110,4 +1110,15 @@ Les redimensionner à une taille prise en charge ? Les pages conservent leur app
     <sys:String x:Key="Str_Studio_Untitled">Document sans titre</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF et documents</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Documents Word</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX : le même document en Word et en PDF, côte à côte et liés, page par page</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">Modifier en DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Ouvrez un PDF ou un document Word pour le modifier sous les deux formes.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">Conversion du PDF en document Word modifiable…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">Impossible de convertir le PDF en document Word.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">Lié à {0}. Les modifications du document Word mettent le PDF à jour.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">Impossible de mettre le PDF à jour : {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">PDF mis à jour depuis le document Word</sys:String>
 </ResourceDictionary>

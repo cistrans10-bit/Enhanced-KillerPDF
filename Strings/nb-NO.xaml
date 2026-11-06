@@ -1110,4 +1110,15 @@ Vil du skalere dem til en støttet størrelse? Sidene beholder utseende og propo
     <sys:String x:Key="Str_Studio_Untitled">Dokument uten navn</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF-er og dokumenter</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Word-dokumenter</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: det samme dokumentet som Word og som PDF, side om side og koblet, side for side</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">Rediger som DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Åpne en PDF eller et Word-dokument for å redigere det i begge former.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">Konverterer PDF-en til et redigerbart Word-dokument…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">PDF-en kunne ikke konverteres til et Word-dokument.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">Koblet til {0}. Endringer i Word-dokumentet oppdaterer PDF-en.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">PDF-en kunne ikke oppdateres: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">PDF oppdatert fra Word-dokumentet</sys:String>
 </ResourceDictionary>

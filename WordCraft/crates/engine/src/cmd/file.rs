@@ -414,6 +414,10 @@ fn info(s: &mut Session, _: &Value) -> CmdResult {
         "sections": s.doc.sections().len(),
         "encrypted": s.password.is_some(),
         "layoutMs": l.ms,
+        // For hosts that keep something in step with the document (KillerPDF's linked PDF):
+        // `revision` changes with every edit, `documentId` when another document replaces it.
+        "revision": s.rev(),
+        "documentId": s.document_id(),
     }))
 }
 

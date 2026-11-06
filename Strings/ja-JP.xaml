@@ -1110,4 +1110,15 @@ Windows の設定 - 既定のアプリ を開きます。</sys:String>
     <sys:String x:Key="Str_Studio_Untitled">無題の文書</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF と文書</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Word 文書</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: 同じ文書を Word と PDF の両方で、並べてリンクし、ページごとに表示</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">DOCX として編集</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">PDF または Word 文書を開くと、両方の形式で編集できます。</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">PDF を編集可能な Word 文書に変換しています…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">PDF を Word 文書に変換できませんでした。</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">{0} にリンクしました。Word 文書の編集は PDF に反映されます。</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">PDF を更新できませんでした: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">Word 文書から PDF を更新しました</sys:String>
 </ResourceDictionary>

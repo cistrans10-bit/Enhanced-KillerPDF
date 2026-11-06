@@ -1110,4 +1110,15 @@ KillerPDF не будет создавать две установленные �
     <sys:String x:Key="Str_Studio_Untitled">Документ без названия</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF и документы</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Документы Word</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: один документ как Word и как PDF, рядом и связанно, страница к странице</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">Редактировать как DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Откройте PDF или документ Word, чтобы редактировать его в обоих видах.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">Преобразование PDF в редактируемый документ Word…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">Не удалось преобразовать PDF в документ Word.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">Связано с {0}. Изменения в документе Word обновляют PDF.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">Не удалось обновить PDF: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">PDF обновлён из документа Word</sys:String>
 </ResourceDictionary>

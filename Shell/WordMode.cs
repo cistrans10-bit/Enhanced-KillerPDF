@@ -14,8 +14,9 @@ using KillerPDF.Controls;
 
 namespace KillerPDF
 {
-    /// <summary>The two personas of the unified editor.</summary>
-    internal enum AppMode { Pdf, Docx }
+    /// <summary>The personas of the unified editor: PDF (KillerPDF), DOCX (WordCraft), and
+    /// both side by side on one linked document (Shell/LinkedEditing.cs).</summary>
+    internal enum AppMode { Pdf, Docx, Both }
 
     // DOCX mode: one window, two personas (Affinity-style). PDF mode is KillerPDF itself; DOCX
     // mode is WordCraft (github.com/cistrans10-bit/wordcraft-pages, built from WordCraft/ in this
@@ -66,8 +67,10 @@ namespace KillerPDF
         /// (and keeps its document) while PDF mode is showing.</summary>
         private void SetAppMode(AppMode mode)
         {
+            var from = _appMode;
             _appMode = mode;
             bool docx = mode == AppMode.Docx;
+            bool word = mode != AppMode.Pdf;          // WordCraft on screen (alone or beside the PDF)
             var pdfVis = docx ? Visibility.Collapsed : Visibility.Visible;
 
             // PDF persona: the mode bar and toolbar, the tools panel / document / pages body, the
@@ -79,13 +82,15 @@ namespace KillerPDF
             if (!docx) CraftDocTab.ClearValue(VisibilityProperty);   // its style hides it with no PDF open
 
             // DOCX persona: WordCraft's window, and Open as PDF beside + Open.
-            WordModePanel.Visibility = docx ? Visibility.Visible : Visibility.Collapsed;
+            WordModePanel.Visibility = word ? Visibility.Visible : Visibility.Collapsed;
             WordToPdfBtn.Visibility = docx ? Visibility.Visible : Visibility.Collapsed;
 
-            ModePdfBtn.Tag = docx ? null : "selected";
+            ModePdfBtn.Tag = mode == AppMode.Pdf ? "selected" : null;
             ModeDocxBtn.Tag = docx ? "selected" : null;
+            ModeBothBtn.Tag = mode == AppMode.Both ? "selected" : null;
+            OnAppModeChangedForLink(from, mode);
 
-            if (docx)
+            if (word)
             {
                 Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Input, (Action)(() =>
                 {
@@ -102,19 +107,28 @@ namespace KillerPDF
         /// <summary>Opens a Word-family document in DOCX mode.</summary>
         internal async void OpenInWordMode(string path)
         {
-            SetAppMode(AppMode.Docx);
+            // PDF + DOCX stays side by side: the document gets a linked PDF of its own there.
+            if (_appMode != AppMode.Both) SetAppMode(AppMode.Docx);
             if (_word is null || _word.HasExited)
             {
                 // A fresh start opens the file from its command line: no round trip to wait for.
                 await EnsureWordAsync(path);
+                if (_appMode == AppMode.Both && _wordKey is not null) await LinkFromWordAsync();
                 return;
             }
             if (!await EnsureWordAsync()) return;
+            // WordCraft would replace an unsaved document without asking.
+            if (!await ConfirmReplaceWordDocAsync()) return;
             var reply = await WordExecuteAsync("file.open", new JsonObject { ["path"] = path });
             if (reply?["ok"]?.GetValue<bool>() != true)
                 ShowWordError(Loc("Str_Studio_OpenFailed"), reply?["error"]?.ToString());
             else
+            {
                 App.AddRecentFile(path);
+                // Side by side with no link yet: give it its PDF now (a live link re-links on its
+                // next sync, when it sees the new document).
+                if (_appMode == AppMode.Both && !LinkAlive()) await LinkFromWordAsync();
+            }
         }
 
         /// <summary>"+ Open": in DOCX mode WordCraft shows its own Open dialog.</summary>
@@ -125,7 +139,7 @@ namespace KillerPDF
                 Open_Click(sender, e);
                 return;
             }
-            if (await EnsureWordAsync())
+            if (await EnsureWordAsync() && await ConfirmReplaceWordDocAsync())
                 await WordExecuteAsync("file.open", new JsonObject());
         }
 
@@ -229,7 +243,7 @@ namespace KillerPDF
                 WordHostSlot.Embed(window);
                 WordStatus.Visibility = Visibility.Collapsed;
                 if (!string.IsNullOrEmpty(openPath)) App.AddRecentFile(openPath);
-                if (_appMode == AppMode.Docx) WordHostSlot.FocusChild();
+                if (_appMode != AppMode.Pdf) WordHostSlot.FocusChild();
                 return true;
             }
             catch (Exception ex)

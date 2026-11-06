@@ -1110,4 +1110,15 @@ Dimensioná-las para um tamanho aceito? As páginas mantêm a aparência e as pr
     <sys:String x:Key="Str_Studio_Untitled">Documento sem título</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDFs e documentos</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Documentos do Word</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: o mesmo documento como Word e como PDF, lado a lado e vinculados, página por página</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">Editar como DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Abra um PDF ou um documento do Word para editá-lo das duas formas.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">Convertendo o PDF em um documento do Word editável…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">Não foi possível converter o PDF em um documento do Word.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">Vinculado a {0}. As edições no documento do Word atualizam o PDF.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">Não foi possível atualizar o PDF: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">PDF atualizado a partir do documento do Word</sys:String>
 </ResourceDictionary>

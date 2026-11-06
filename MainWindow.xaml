@@ -1490,6 +1490,14 @@
                                 <TextBlock Text="{DynamicResource Str_Studio_ModeDocx}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
+                        <!-- Both at once, side by side and linked (Shell/LinkedEditing.cs). -->
+                        <Button x:Name="ModeBothBtn" Style="{StaticResource CraftSegmentButton}"
+                                Click="ModeBoth_Click" ToolTip="{DynamicResource Str_Linked_ModeTip}">
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="15" Height="15" Margin="0,0,6,0"><Path Style="{StaticResource CraftIcon}" Data="{StaticResource Lucide.columns-2}"/></Viewbox>
+                                <TextBlock Text="{DynamicResource Str_Linked_Mode}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                 </Border>
                 <!-- Help and the light/dark switch, PdfCraft's right end of the strip. -->
@@ -2891,6 +2899,19 @@
                        FontFamily="{DynamicResource UiFont}" Foreground="{DynamicResource MutedTextBrush}"/>
             <ctrl:WordHost x:Name="WordHostSlot" Visibility="{Binding Visibility, ElementName=WordStatus, Converter={StaticResource CraftInverseVisibility}}"/>
         </Grid>
+
+        <!-- PDF + DOCX: the bar between WordCraft (left) and the PDF (right). Drag to resize. -->
+        <Thumb x:Name="LinkSplitter" Grid.Row="1" Grid.RowSpan="4" HorizontalAlignment="Left" Width="6"
+               Visibility="Collapsed" Cursor="SizeWE" Focusable="False"
+               DragDelta="LinkSplitter_DragDelta" DragCompleted="LinkSplitter_DragCompleted">
+            <Thumb.Template>
+                <ControlTemplate TargetType="Thumb">
+                    <Border Background="{DynamicResource CraftChromeBrush}" BorderBrush="{DynamicResource CraftBorderBrush}" BorderThickness="1,0,1,0">
+                        <Border Width="2" Height="36" CornerRadius="1" Background="{DynamicResource CraftBorderBrush}" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Thumb.Template>
+        </Thumb>
 
         <!-- Status bar.
              ZIndex -1 so the document pane's PaneShadow lands ON the footer instead of being

@@ -18,7 +18,7 @@ namespace KillerPDF
         private void OpenInNewTab(string path)
         {
             if (IsWordPath(path)) { OpenInWordMode(path); return; }
-            if (_appMode != AppMode.Pdf)
+            if (_appMode == AppMode.Docx)
             {
                 SetAppMode(AppMode.Pdf);
                 // The PDF view was collapsed (zero-sized) in DOCX mode: lay it out first, or the

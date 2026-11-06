@@ -1097,4 +1097,15 @@ Megnyílik a Windows Beállítások - Alapértelmezett alkalmazások.</sys:Strin
     <sys:String x:Key="Str_Studio_Untitled">Névtelen dokumentum</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF-ek és dokumentumok</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Word-dokumentumok</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: ugyanaz a dokumentum Wordként és PDF-ként, egymás mellett, összekapcsolva, oldalról oldalra</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">Szerkesztés DOCX-ként</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Nyisson meg egy PDF-et vagy Word-dokumentumot, hogy mindkét formában szerkessze.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">A PDF átalakítása szerkeszthető Word-dokumentummá…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">A PDF-et nem sikerült Word-dokumentummá alakítani.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">Összekapcsolva: {0}. A Word-dokumentum módosításai frissítik a PDF-et.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">A PDF-et nem sikerült frissíteni: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">A PDF frissítve a Word-dokumentumból</sys:String>
 </ResourceDictionary>

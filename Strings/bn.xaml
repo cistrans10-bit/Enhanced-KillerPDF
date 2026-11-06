@@ -1090,4 +1090,15 @@ Windows সেটিংস - ডিফল্ট অ্যাপ খুলবে�
     <sys:String x:Key="Str_Studio_Untitled">শিরোনামহীন ডকুমেন্ট</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF ও ডকুমেন্ট</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Word ডকুমেন্ট</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: একই ডকুমেন্ট Word ও PDF হিসেবে, পাশাপাশি ও সংযুক্ত, পৃষ্ঠায় পৃষ্ঠায়</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">DOCX হিসেবে সম্পাদনা</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">দুইভাবে সম্পাদনা করতে একটি PDF বা Word ডকুমেন্ট খুলুন।</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">PDF-কে সম্পাদনাযোগ্য Word ডকুমেন্টে রূপান্তর করা হচ্ছে…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">PDF-কে Word ডকুমেন্টে রূপান্তর করা যায়নি।</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">{0}-এর সাথে সংযুক্ত। Word ডকুমেন্টের পরিবর্তন PDF-এ যায়।</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">PDF হালনাগাদ করা যায়নি: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">Word ডকুমেন্ট থেকে PDF হালনাগাদ হয়েছে</sys:String>
 </ResourceDictionary>

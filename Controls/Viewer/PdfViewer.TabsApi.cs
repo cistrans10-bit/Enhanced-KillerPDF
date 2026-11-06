@@ -54,6 +54,8 @@ namespace KillerPDF.Controls
         internal void EnsureInitialSessionExt() => EnsureInitialSession();
         internal void MaterializeDeferredExt(DocumentSession target) => MaterializeDeferred(target);
         internal void SwitchToTabExt(DocumentSession target) => SwitchToTab(target);
+        /// <summary>Whether this pane still has that document open (PDF + DOCX's linked tab).</summary>
+        internal bool OwnsSessionExt(DocumentSession s) => _sessions.Contains(s);
 
         // ── The load handshake (FileOperations / ImportAndZip drive this) ────────────────────
         internal DocumentSession BeginTabLoadExt(out DocumentSession? prev, out bool createdNew)

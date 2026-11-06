@@ -428,6 +428,7 @@ namespace KillerPDF
             Closed += (_, _) => ShutDownWord();   // DOCX mode's WordCraft goes with the window
             // Coming back to the window in DOCX mode puts the keyboard back in the document.
             Activated += (_, _) => { if (_appMode == AppMode.Docx) WordHostSlot.FocusChild(); };
+            SizeChanged += (_, _) => { if (_appMode == AppMode.Both) ApplyBothLayout(true); };
             Closed += (_, _) =>
             {
                 _continuousRenderCts?.Cancel();

@@ -1098,4 +1098,15 @@ Przeskalować je do obsługiwanego rozmiaru? Strony zachowują swój wygląd i p
     <sys:String x:Key="Str_Studio_Untitled">Dokument bez tytułu</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">Pliki PDF i dokumenty</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Dokumenty Word</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: ten sam dokument jako Word i jako PDF, obok siebie i połączone, strona po stronie</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">Edytuj jako DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Otwórz plik PDF lub dokument Word, aby edytować go w obu postaciach.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">Konwertowanie PDF na edytowalny dokument Word…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">Nie udało się przekonwertować PDF na dokument Word.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">Połączono z {0}. Zmiany w dokumencie Word aktualizują PDF.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">Nie udało się zaktualizować PDF: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">PDF zaktualizowany z dokumentu Word</sys:String>
 </ResourceDictionary>

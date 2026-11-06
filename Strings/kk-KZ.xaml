@@ -1109,4 +1109,15 @@ Windows параметрлері - Әдепкі қолданбалар ашыл�
     <sys:String x:Key="Str_Studio_Untitled">Атаусыз құжат</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF және құжаттар</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Word құжаттары</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: бір құжат Word және PDF ретінде, қатар және байланысқан, бет-бетімен</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">DOCX ретінде өңдеу</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Екі түрде өңдеу үшін PDF немесе Word құжатын ашыңыз.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">PDF өңделетін Word құжатына түрлендірілуде…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">PDF-ті Word құжатына түрлендіру мүмкін болмады.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">{0} құжатымен байланысты. Word құжатындағы өзгерістер PDF-ті жаңартады.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">PDF-ті жаңарту мүмкін болмады: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">PDF Word құжатынан жаңартылды</sys:String>
 </ResourceDictionary>

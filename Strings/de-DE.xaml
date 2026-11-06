@@ -1096,4 +1096,15 @@ Auf eine unterstützte Größe skalieren? Aussehen und Proportionen der Seiten b
     <sys:String x:Key="Str_Studio_Untitled">Unbenanntes Dokument</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDFs und Dokumente</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Word-Dokumente</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: dasselbe Dokument als Word und als PDF, nebeneinander und verknüpft, Seite für Seite</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">Als DOCX bearbeiten</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Öffnen Sie ein PDF oder Word-Dokument, um es in beiden Formen zu bearbeiten.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">PDF wird in ein bearbeitbares Word-Dokument umgewandelt…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">Das PDF konnte nicht in ein Word-Dokument umgewandelt werden.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">Verknüpft mit {0}. Änderungen im Word-Dokument aktualisieren das PDF.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">Das PDF konnte nicht aktualisiert werden: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">PDF aus dem Word-Dokument aktualisiert</sys:String>
 </ResourceDictionary>

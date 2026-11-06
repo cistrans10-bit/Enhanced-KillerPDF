@@ -1110,4 +1110,15 @@ Scale them to a supported size? The pages keep their look and proportions.</sys:
     <sys:String x:Key="Str_Studio_Untitled">Untitled document</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDFs and documents</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Word documents</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: the same document as Word and as PDF, side by side and linked, page for page</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">Edit as DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Open a PDF or a Word document to edit it as both.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">Converting the PDF to an editable Word document…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">The PDF could not be converted to a Word document.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">Linked to {0}. Edits in the Word document update the PDF.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">The PDF could not be updated: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">PDF updated from the Word document</sys:String>
 </ResourceDictionary>

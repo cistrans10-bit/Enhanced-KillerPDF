@@ -58,6 +58,7 @@ namespace KillerPDF
             return
             [
                 new("Str_Craft_Tool_Export",      "file-output",         CraftBlue,   Convert,        () => ExportImages_Click(this, e),               "export image png jpeg pages"),
+                new("Str_Linked_EditAsDocx",        "columns-2",           CraftTeal,   Edit | Convert, () => EditAsDocx_Click(this, e),                 "edit as docx word convert pdf to word side by side linked"),
                 new("Str_Craft_Tool_FillSign",    "pen-line",            CraftPurple, Sign | Edit,    () => ToolSignature_Click(ToolSignatureBtn, e),  "fill sign signature initials"),
                 new("Str_Craft_Tool_Edit",        "file-pen-line",       CraftPink,   Edit,           () => ToolText_Click(ToolTextBtn, e),            "edit text type write"),
                 new("Str_Craft_Tool_Create",      "file-plus-2",         CraftRed,    Convert,        () => New_Click(this, e),                        "create new blank document"),
@@ -153,7 +154,9 @@ namespace KillerPDF
             if (!_craftShellReady) return;
             bool read = _craftMode == "read";
             bool searching = CraftSearchBox.Text.Length > 0;
-            bool panel = !_fullScreen && (searching || (!read && !_craftToolsPanelClosed));
+            // Side by side with the Word document the PDF needs the room: the panel then only
+            // shows search results.
+            bool panel = !_fullScreen && (searching || (!read && !_craftToolsPanelClosed && _appMode != AppMode.Both));
             CraftToolsPanel.Visibility = panel ? Visibility.Visible : Visibility.Collapsed;
             bool hasDoc = Viewer.DocumentRef is not null;
             CraftToolPalette.Visibility = hasDoc && !read && !_fullScreen ? Visibility.Visible : Visibility.Collapsed;

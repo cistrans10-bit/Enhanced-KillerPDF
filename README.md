@@ -8,14 +8,41 @@ Full how-tos live on the [help page](https://killerpdf.net/help.html); internals
 
 ## PDF and DOCX modes
 
-This branch makes KillerPDF a unified document editor with two modes in one window, switched from the
-**PDF / DOCX** control in the middle of the tab strip (Affinity-style personas):
+This branch makes KillerPDF a unified document editor with three modes in one window, switched from the
+**PDF / DOCX / PDF + DOCX** control in the middle of the tab strip (Affinity-style personas):
 
 - **PDF mode** is KillerPDF: view, annotate, sign, fill, OCR, organize and print PDFs, with the
   PdfCraft-style All tools panel, mode bar and tool palette.
 - **DOCX mode** is [WordCraft](WordCraft/README.md), an open-source Rust word processor, hosted inside
   the same window: its ribbon, styles, tables, track changes, references and mail merge, reading and
   writing .docx, .doc, .rtf, .odt and Markdown.
+- **PDF + DOCX** shows one document both ways at once, side by side and linked: the Word document on
+  the left, the PDF on the right, page for page.
+
+### PDF + DOCX: edit the same pages as Word and as PDF
+
+- **Start from a PDF** (PDF + DOCX, or **Edit as DOCX** in All tools): the PDF is converted to an
+  editable `.docx` beside it (`report.pdf` → `report.docx`) and opened on the left. Every PDF page
+  becomes one section of the same size, so page 7 of the Word document is page 7 of the PDF. Text
+  becomes reflowable paragraphs at their places with their fonts, sizes, colours and weights; lines
+  with wide gaps (tables, two-column rows) get tab stops; the footer band and text beside other text
+  are pinned in frames; pictures and vector drawing (rules, table fills, panels) are anchored to the
+  page behind the text.
+- **Start from a Word document**: it is exported and opened in a linked PDF tab that saves as
+  `<document>.pdf` beside it.
+- **Edits flow from the Word document into the PDF.** When you pause typing, the document is exported
+  again and the linked tab switches to it in place, keeping its page, zoom and everything drawn on it
+  in KillerPDF (highlights, notes, ink, stamps, signatures, text boxes: they are a layer over the PDF
+  until you save it).
+- **Pages follow each other both ways**: scroll the Word document and the PDF turns to the same page;
+  turn a page in the PDF and the Word document follows.
+- Drag the bar between the two to resize them.
+
+Limits: content edits go Word → PDF (text you change with PDF mode's own tools is not written back
+into the .docx); page operations on the linked PDF (delete, rotate, reorder) are replaced by the next
+re-export; the converter doesn't rebuild real Word tables, columns or vertical text from a PDF (tables
+become tabbed rows over their drawn grid), and scanned PDFs need OCR first. Fonts the PDF embeds but
+your machine lacks are shown in a stand-in at the same apparent size.
 
 Opening a Word document (Open, Recent, drag and drop, double-click, the command line) switches to DOCX
 mode; opening a PDF switches back. In DOCX mode, **Open as PDF** in the tab strip exports the document
@@ -24,7 +51,9 @@ unsaved Word documents as well as PDFs.
 
 How it fits together: `Shell/WordMode.cs` starts `WordCraft\wordcraft.exe --embedded --control <port>`
 and talks to it over WordCraft's localhost control channel (`file.open`, `file.exportPdf`, `file.info`,
-`file.save`); `Controls/WordHost.cs` hosts its window in the WPF layout. WordCraft's source lives in
+`file.save`, `edit.goto`, `ui.inspect`); `Controls/WordHost.cs` hosts its window in the WPF layout.
+`Shell/LinkedEditing.cs` is PDF + DOCX (link, re-export, page sync, split layout) and
+`Services/PdfToDocx.cs` the PDF → DOCX converter. WordCraft's source lives in
 [`WordCraft/`](WordCraft/) and is built with `build-wordcraft.ps1` (Windows) or `build-wordcraft.sh`
 (cross-build from Linux or macOS) before building KillerPDF. Without it the app still builds and runs,
 and DOCX mode says the editor is missing.

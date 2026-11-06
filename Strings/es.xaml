@@ -1090,4 +1090,15 @@ Abre Configuración de Windows - Aplicaciones predeterminadas.</sys:String>
     <sys:String x:Key="Str_Studio_Untitled">Documento sin título</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF y documentos</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Documentos de Word</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: el mismo documento como Word y como PDF, uno al lado del otro y vinculados, página a página</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">Editar como DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Abra un PDF o un documento de Word para editarlo de las dos formas.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">Convirtiendo el PDF en un documento de Word editable…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">No se pudo convertir el PDF en un documento de Word.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">Vinculado a {0}. Los cambios en el documento de Word actualizan el PDF.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">No se pudo actualizar el PDF: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">PDF actualizado desde el documento de Word</sys:String>
 </ResourceDictionary>

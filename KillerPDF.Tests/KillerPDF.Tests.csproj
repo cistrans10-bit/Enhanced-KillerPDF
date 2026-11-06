@@ -18,7 +18,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageReference Include="PdfPig" Version="0.1.14" />
+    <PackageReference Include="PdfPig" Version="0.1.15" />
     <PackageReference Include="SixLabors.Fonts" Version="1.0.0-beta17" />
   </ItemGroup>
 
@@ -34,6 +34,7 @@
     <Compile Include="..\Services\PerspectiveWarp.cs" Link="Services\PerspectiveWarp.cs" />
     <Compile Include="..\Services\PdfFontStyle.cs" Link="Services\PdfFontStyle.cs" />
     <Compile Include="..\Services\PdfBurn.cs" Link="Services\PdfBurn.cs" />
+    <Compile Include="..\Services\PdfToDocx.cs" Link="Services\PdfToDocx.cs" />
     <Compile Include="..\Services\AnnotationRotate.cs" Link="Services\AnnotationRotate.cs" />
     <Compile Include="..\Services\WheelPageFlipGate.cs" Link="Services\WheelPageFlipGate.cs" />
     <Compile Include="..\Services\PinchZoomMath.cs" Link="Services\PinchZoomMath.cs" />

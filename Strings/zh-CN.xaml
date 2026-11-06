@@ -1094,4 +1094,15 @@ KillerPDF 不会创建两个已安装的副本。</sys:String>
     <sys:String x:Key="Str_Studio_Untitled">无标题文档</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF 和文档</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Word 文档</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX：同一文档同时以 Word 和 PDF 显示，并排链接，逐页对应</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">以 DOCX 编辑</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">打开 PDF 或 Word 文档，即可同时以两种形式编辑。</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">正在将 PDF 转换为可编辑的 Word 文档…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">无法将 PDF 转换为 Word 文档。</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">已链接到 {0}。Word 文档中的编辑会更新 PDF。</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">无法更新 PDF：{0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">已根据 Word 文档更新 PDF</sys:String>
 </ResourceDictionary>

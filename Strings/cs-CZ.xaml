@@ -1095,4 +1095,15 @@ Změnit jejich velikost na podporovanou? Stránky si zachovají vzhled i proporc
     <sys:String x:Key="Str_Studio_Untitled">Dokument bez názvu</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF a dokumenty</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Dokumenty Word</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: tentýž dokument jako Word i jako PDF, vedle sebe a propojené, stránku po stránce</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">Upravit jako DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Otevřete PDF nebo dokument Word a upravujte ho oběma způsoby.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">Převod PDF na upravitelný dokument Word…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">PDF se nepodařilo převést na dokument Word.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">Propojeno s {0}. Úpravy dokumentu Word se promítají do PDF.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">PDF se nepodařilo aktualizovat: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">PDF aktualizováno z dokumentu Word</sys:String>
 </ResourceDictionary>

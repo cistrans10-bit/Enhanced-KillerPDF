@@ -1090,4 +1090,15 @@ Desteklenen bir boyuta ölçeklensin mi? Sayfaların görünümü ve oranları k
     <sys:String x:Key="Str_Studio_Untitled">Adsız belge</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF'ler ve belgeler</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Word belgeleri</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: aynı belge Word ve PDF olarak, yan yana ve bağlantılı, sayfa sayfa</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">DOCX olarak düzenle</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">İki biçimde düzenlemek için bir PDF veya Word belgesi açın.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">PDF düzenlenebilir bir Word belgesine dönüştürülüyor…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">PDF bir Word belgesine dönüştürülemedi.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">{0} ile bağlantılı. Word belgesindeki değişiklikler PDF'i günceller.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">PDF güncellenemedi: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">PDF, Word belgesinden güncellendi</sys:String>
 </ResourceDictionary>

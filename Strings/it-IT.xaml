@@ -1110,4 +1110,15 @@ Vuoi ridimensionare le pagine ad una dimensione supportata? Le pagine manterrann
     <sys:String x:Key="Str_Studio_Untitled">Documento senza titolo</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF e documenti</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Documenti Word</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: lo stesso documento come Word e come PDF, affiancati e collegati, pagina per pagina</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">Modifica come DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Apri un PDF o un documento Word per modificarlo in entrambe le forme.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">Conversione del PDF in un documento Word modificabile…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">Impossibile convertire il PDF in un documento Word.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">Collegato a {0}. Le modifiche al documento Word aggiornano il PDF.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">Impossibile aggiornare il PDF: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">PDF aggiornato dal documento Word</sys:String>
 </ResourceDictionary>

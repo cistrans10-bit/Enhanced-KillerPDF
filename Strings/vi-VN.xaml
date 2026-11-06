@@ -1110,4 +1110,15 @@ Thu phóng chúng về kích thước được hỗ trợ? Các trang vẫn gi�
     <sys:String x:Key="Str_Studio_Untitled">Tài liệu chưa đặt tên</sys:String>
     <sys:String x:Key="Str_Studio_FilterAll">PDF và tài liệu</sys:String>
     <sys:String x:Key="Str_Studio_FilterWord">Tài liệu Word</sys:String>
+
+    <!-- ── Unified editor: PDF + DOCX, linked side by side ─────────────── -->
+    <sys:String x:Key="Str_Linked_Mode">PDF + DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_ModeTip">PDF + DOCX: cùng một tài liệu ở dạng Word và PDF, cạnh nhau và liên kết, từng trang</sys:String>
+    <sys:String x:Key="Str_Linked_EditAsDocx">Sửa dạng DOCX</sys:String>
+    <sys:String x:Key="Str_Linked_OpenSomething">Mở một PDF hoặc tài liệu Word để sửa ở cả hai dạng.</sys:String>
+    <sys:String x:Key="Str_Linked_Converting">Đang chuyển PDF thành tài liệu Word có thể sửa…</sys:String>
+    <sys:String x:Key="Str_Linked_ConvertFailed">Không thể chuyển PDF thành tài liệu Word.</sys:String>
+    <sys:String x:Key="Str_Linked_Converted">Đã liên kết với {0}. Thay đổi trong tài liệu Word sẽ cập nhật PDF.</sys:String>
+    <sys:String x:Key="Str_Linked_SyncFailed">Không thể cập nhật PDF: {0}</sys:String>
+    <sys:String x:Key="Str_Linked_Synced">Đã cập nhật PDF từ tài liệu Word</sys:String>
 </ResourceDictionary>
